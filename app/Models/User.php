@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,11 +17,16 @@ use Illuminate\Support\Carbon;
  * @property string $email
  * @property string $password
  * @property string $remember_token
+ * @property UserRole $role
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon|null $email_verified_at
- * 
+ *
  * @method static UserFactory factory(int $count = null, array $state = [])
+ * @method static Builder|static ofRole(UserRole $role)
+ * @method static Builder|static admins()
+ * @method static Builder|static managers()
+ * @method static Builder|static technicians()
  */
 class User extends Authenticatable
 {
@@ -34,6 +41,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -41,7 +49,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes = [
+        'role' => UserRole::Technician,
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,7 +72,52 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'role' => UserRole::class,
             'email_verified_at' => 'datetime',
         ];
+    }
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Determine if the user is an administrator.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role->isAdmin();
+    }
+
+    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include users with the specified role.
+     */
+    public function scopeOfRole(Builder $query, UserRole $role): void
+    {
+        $query->where('role', $role->value);
+    }
+
+    /**
+     * Scope a query to only include administrators.
+     */
+    public function scopeAdmins(Builder $query): void
+    {
+        $query->ofRole(UserRole::Admin);
+    }
+
+    /**
+     * Scope a query to only include managers.
+     */
+    public function scopeManagers(Builder $query): void
+    {
+        $query->ofRole(UserRole::Manager);
+    }
+
+    /**
+     * Scope a query to only include technicians.
+     */
+    public function scopeTechnicians(Builder $query): void
+    {
+        $query->ofRole(UserRole::Technician);
     }
 }
