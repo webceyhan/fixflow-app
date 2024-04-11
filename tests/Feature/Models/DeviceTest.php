@@ -2,6 +2,7 @@
 
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
+use App\Models\Customer;
 use App\Models\Device;
 use Illuminate\Support\Carbon;
 
@@ -9,6 +10,7 @@ it('can initialize device', function () {
     $device = new Device();
 
     expect($device->id)->toBeNull();
+    expect($device->customer_id)->toBeNull();
     expect($device->model)->toBeNull();
     expect($device->brand)->toBeNull();
     expect($device->serial_number)->toBeNull();
@@ -23,6 +25,7 @@ it('can create device', function () {
     $device = Device::factory()->create();
 
     expect($device->id)->toBeInt();
+    expect($device->customer_id)->toBeInt();
     expect($device->model)->toBeString();
     expect($device->brand)->toBeString();
     expect($device->serial_number)->toBeString();
@@ -89,6 +92,16 @@ it('can delete device', function () {
     $device->delete();
 
     expect(Device::find($device->id))->toBeNull();
+});
+
+// Customer ////////////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to a customer', function () {
+    $customer = Customer::factory()->create();
+    $device = Device::factory()->forCustomer($customer)->create();
+
+    expect($device->customer)->toBeInstanceOf(Customer::class);
+    expect($device->customer->id)->toBe($customer->id);
 });
 
 // Warranty ////////////////////////////////////////////////////////////////////////////////////////

@@ -8,10 +8,12 @@ use Database\Factories\DeviceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $customer_id
  * @property string $model
  * @property string|null $brand
  * @property string|null $serial_number
@@ -20,6 +22,8 @@ use Illuminate\Support\Carbon;
  * @property DeviceStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * 
+ * @property-read Customer $customer
  *
  * @method static DeviceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static withWarranty()
@@ -66,6 +70,13 @@ class Device extends Model
             'type' => DeviceType::class,
             'status' => DeviceStatus::class,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

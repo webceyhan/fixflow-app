@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use App\Models\Device;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,12 +14,12 @@ class DeviceSeeder extends Seeder
      */
     public function run(): void
     {
-        Device::factory(10)->create();
+        Customer::all()->each(function (Customer $customer) {
+            Device::factory()->forCustomer($customer)->create();
+        });
 
-        Device::factory()->withoutBrand()->create();
-
-        Device::factory()->withoutSerialNumber()->create();
-
-        Device::factory()->withWarranty()->create();
+        Customer::all()->random(10)->each(function (Customer $customer) {
+            Device::factory()->forCustomer($customer)->withWarranty()->create();
+        });
     }
 }

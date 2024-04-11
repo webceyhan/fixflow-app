@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Database\Factories\CustomerFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -20,6 +22,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  * 
  * @property-read Company|null $company
+ * @property-read Collection<int, Device> $devices
  *
  * @method static CustomerFactory factory(int $count = null, array $state = [])
  */
@@ -45,5 +48,10 @@ class Customer extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function devices(): HasMany
+    {
+        return $this->hasMany(Device::class);
     }
 }

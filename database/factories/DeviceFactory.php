@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,12 +20,25 @@ class DeviceFactory extends Factory
     public function definition(): array
     {
         return [
+            'customer_id' => Customer::factory(),
             'model' => fake()->word(),
             'brand' => fake()->company(),
             'serial_number' => fake()->uuid(),
             'type' => DeviceType::Other,
             'status' => DeviceStatus::CheckedIn,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the device belongs to the given customer.
+     */
+    public function forCustomer(Customer $customer): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'customer_id' => $customer->id,
+        ]);
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////

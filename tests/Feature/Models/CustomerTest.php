@@ -2,6 +2,7 @@
 
 use App\Models\Company;
 use App\Models\Customer;
+use App\Models\Device;
 use Illuminate\Support\Carbon;
 
 it('can initialize customer', function () {
@@ -88,4 +89,21 @@ it('can belong to a company', function () {
 
     expect($customer->company)->toBeInstanceOf(Company::class);
     expect($customer->company->id)->toBe($company->id);
+});
+
+// Devices /////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have many devices', function () {
+    $customer = Customer::factory()->hasDevices(2)->create();
+
+    expect($customer->devices)->toHaveCount(2);
+});
+
+it('can delete customer with devices', function () {
+    $customer = Customer::factory()->hasDevices(2)->create();
+
+    $customer->delete();
+
+    expect(Customer::find($customer->id))->toBeNull();
+    expect(Device::count())->toBe(0);
 });
