@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Customer;
 use Illuminate\Support\Carbon;
 
@@ -79,3 +80,12 @@ it('can delete customer', function () {
     expect(Customer::find($customer->id))->toBeNull();
 });
 
+// Company /////////////////////////////////////////////////////////////////////////////////////////
+
+it('can belong to a company', function () {
+    $company = Company::factory()->create();
+    $customer = Customer::factory()->forCompany($company)->create();
+
+    expect($customer->company)->toBeInstanceOf(Company::class);
+    expect($customer->company->id)->toBe($company->id);
+});

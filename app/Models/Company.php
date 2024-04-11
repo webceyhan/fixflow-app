@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Database\Factories\CompanyFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -15,6 +17,8 @@ use Illuminate\Support\Carbon;
  * @property string|null $vat_number
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * 
+ * @property-read Collection<int, Customer> $members
  *
  * @method static CompanyFactory factory(int $count = null, array $state = [])
  */
@@ -33,4 +37,11 @@ class Company extends Model
         'phone',
         'vat_number',
     ];
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function members(): HasMany
+    {
+        return $this->hasMany(Customer::class);
+    }
 }

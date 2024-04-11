@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,18 @@ class CustomerFactory extends Factory
             'address' => fake()->address(),
             'note' => fake()->sentence(),
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the customer belongs to the given company.
+     */
+    public function forCompany(Company $company): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'company_id' => $company->id,
+        ]);
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////

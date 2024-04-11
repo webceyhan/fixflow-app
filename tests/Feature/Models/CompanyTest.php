@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Company;
+use App\Models\Customer;
 use Illuminate\Support\Carbon;
 
 it('can initialize company', function () {
@@ -67,5 +68,22 @@ it('can delete company', function () {
     $company->delete();
 
     expect(Company::find($company->id))->toBeNull();
+});
+
+// Members /////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have many members', function () {
+    $company = Company::factory()->hasMembers(2)->create();
+
+    expect($company->members)->toHaveCount(2);
+});
+
+it('can delete company while members remain', function () {
+    $company = Company::factory()->hasMembers(1)->create();
+
+    $company->delete();
+
+    expect(Company::find($company->id))->toBeNull();
+    expect(Customer::first()->company_id)->toBeNull();
 });
 

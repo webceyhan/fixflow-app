@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Customer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,5 +21,9 @@ class CustomerSeeder extends Seeder
         Customer::factory(10)->withoutPhone()->create();
 
         Customer::factory(10)->withoutAddress()->create();
+
+        Company::all()->each(function (Company $company) {
+            Customer::factory()->forCompany($company)->create();
+        });
     }
 }
