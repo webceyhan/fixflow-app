@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use Database\Factories\DeviceFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,12 +17,14 @@ use Illuminate\Support\Carbon;
  * @property string|null $serial_number
  * @property Carbon|null $warranty_expire_date
  * @property DeviceType $type
+ * @property DeviceStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
  * @method static DeviceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static withWarranty()
  * @method static Builder|static ofType(DeviceType $type)
+ * @method static Builder|static ofStatus(DeviceStatus $status)
  */
 class Device extends Model
 {
@@ -38,6 +41,7 @@ class Device extends Model
         'serial_number',
         'warranty_expire_date',
         'type',
+        'status',
     ];
 
     /**
@@ -47,6 +51,7 @@ class Device extends Model
      */
     protected $attributes = [
         'type' => DeviceType::Other,
+        'status' => DeviceStatus::CheckedIn,
     ];
 
     /**
@@ -59,6 +64,7 @@ class Device extends Model
         return [
             'warranty_expire_date' => 'date',
             'type' => DeviceType::class,
+            'status' => DeviceStatus::class,
         ];
     }
 
@@ -88,5 +94,13 @@ class Device extends Model
     public function scopeOfType(Builder $query, DeviceType $type): void
     {
         $query->where('type', $type->value);
+    }
+
+    /**
+     * Scope a query to only include devices of a given status.
+     */
+    public function scopeOfStatus(Builder $query, DeviceStatus $status): void
+    {
+        $query->where('status', $status->value);
     }
 }

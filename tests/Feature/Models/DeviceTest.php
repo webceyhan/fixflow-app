@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Device;
 use Illuminate\Support\Carbon;
@@ -13,6 +14,7 @@ it('can initialize device', function () {
     expect($device->serial_number)->toBeNull();
     expect($device->warranty_expire_date)->toBeNull();
     expect($device->type)->toBe(DeviceType::Other);
+    expect($device->status)->toBe(DeviceStatus::CheckedIn);
     expect($device->created_at)->toBeNull();
     expect($device->updated_at)->toBeNull();
 });
@@ -26,6 +28,7 @@ it('can create device', function () {
     expect($device->serial_number)->toBeString();
     expect($device->warranty_expire_date)->toBeNull();
     expect($device->type)->toBe(DeviceType::Other);
+    expect($device->status)->toBe(DeviceStatus::CheckedIn);
     expect($device->created_at)->toBeInstanceOf(Carbon::class);
     expect($device->updated_at)->toBeInstanceOf(Carbon::class);
 });
@@ -54,6 +57,12 @@ it('can create device of type', function (DeviceType $type) {
     expect($device->type)->toBe($type);
 })->with(DeviceType::cases());
 
+it('can create device of status', function (DeviceStatus $status) {
+    $device = Device::factory()->ofStatus($status)->create();
+
+    expect($device->status)->toBe($status);
+})->with(DeviceStatus::cases());
+
 it('can update device', function () {
     $device = Device::factory()->create();
 
@@ -63,6 +72,7 @@ it('can update device', function () {
         'serial_number' => '1234567890',
         'warranty_expire_date' => '2024-04-11',
         'type' => DeviceType::Phone,
+        'status' => DeviceStatus::CheckedOut,
     ]);
 
     expect($device->model)->toBe('iPhone 13 Pro');
@@ -70,6 +80,7 @@ it('can update device', function () {
     expect($device->serial_number)->toBe('1234567890');
     expect($device->warranty_expire_date)->toBeInstanceOf(Carbon::class);
     expect($device->type)->toBe(DeviceType::Phone);
+    expect($device->status)->toBe(DeviceStatus::CheckedOut);
 });
 
 it('can delete device', function () {
@@ -105,3 +116,12 @@ it('can filter devices by type scope', function (DeviceType $type) {
     expect(Device::ofType($type)->count())->toBe(1);
     expect(Device::ofType($type)->first()->type)->toBe($type);
 })->with(DeviceType::cases());
+
+// Status //////////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter devices by status scope', function (DeviceStatus $status) {
+    Device::factory()->ofStatus($status)->create();
+
+    expect(Device::ofStatus($status)->count())->toBe(1);
+    expect(Device::ofStatus($status)->first()->status)->toBe($status);
+})->with(DeviceStatus::cases());

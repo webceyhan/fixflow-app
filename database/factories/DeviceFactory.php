@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class DeviceFactory extends Factory
             'brand' => fake()->company(),
             'serial_number' => fake()->uuid(),
             'type' => DeviceType::Other,
+            'status' => DeviceStatus::CheckedIn,
         ];
     }
 
@@ -64,6 +66,16 @@ class DeviceFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'type' => $type,
+        ]);
+    }
+
+    /**
+     * Indicate that the device is of the given status.
+     */
+    public function ofStatus(DeviceStatus $status): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => $status,
         ]);
     }
 }
