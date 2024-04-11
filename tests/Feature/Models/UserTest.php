@@ -2,6 +2,7 @@
 
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 
@@ -85,6 +86,24 @@ it('can delete user', function () {
     $user->delete();
 
     expect(User::find($user->id))->toBeNull();
+});
+
+// Assigned Tickets ////////////////////////////////////////////////////////////////////////////////
+
+it('can have many assigned tickets', function () {
+    $user = User::factory()->hasAssignedTickets(2)->create();
+
+    expect($user->assignedTickets)->toHaveCount(2);
+});
+
+it('can delete user while assigned tickets remain unassigned', function () {
+    $user = User::factory()->hasAssignedTickets(2)->create();
+
+    $user->delete();
+
+    expect(User::find($user->id))->toBeNull();
+    expect(Ticket::count())->toBe(2);
+    expect(Ticket::pluck('assignee_id'))->each->toBeNull();
 });
 
 // Role ////////////////////////////////////////////////////////////////////////////////////////////

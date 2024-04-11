@@ -7,7 +7,9 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -24,6 +26,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon|null $email_verified_at
+ * 
+ * @property-read Collection<int, Ticket> $assignedTickets
  *
  * @method static UserFactory factory(int $count = null, array $state = [])
  * @method static Builder|static ofRole(UserRole $role)
@@ -83,6 +87,13 @@ class User extends Authenticatable
             'status' => UserStatus::class,
             'email_verified_at' => 'datetime',
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assignee_id');
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

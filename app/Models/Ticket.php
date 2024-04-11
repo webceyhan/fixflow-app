@@ -8,17 +8,23 @@ use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int|null $assignee_id
  * @property string $description
  * @property Priority $priority
  * @property TicketStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
+ * @property-read User|null $assignee
+ * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
+ * @method static Builder|static assignable()
+ * @method static Builder|static assigned()
  * @method static Builder|static ofPriority(Priority $priority)
  * @method static Builder|static prioritized()
  * @method static Builder|static ofStatus(TicketStatus $status)
@@ -61,7 +67,40 @@ class Ticket extends Model
         ];
     }
 
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function assignee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assignee_id');
+    }
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Determine if the ticket is assignable.
+     */
+    public function isAssignable(): bool
+    {
+        return $this->assignee_id === null;
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include tickets that are assignable.
+     */
+    public function scopeAssignable(Builder $query): void
+    {
+        $query->whereNull('assignee_id');
+    }
+
+    /**
+     * Scope a query to only include tickets that are already assigned.
+     */
+    public function scopeAssigned(Builder $query): void
+    {
+        $query->whereNotNull('assignee_id');
+    }
 
     /**
      * Scope a query to only include models of a given priority.

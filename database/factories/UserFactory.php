@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * 
+ * @method static hasAssignedTickets(int $count = 1, array $attributes = [])
  */
 class UserFactory extends Factory
 {

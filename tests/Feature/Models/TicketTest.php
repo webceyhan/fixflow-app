@@ -3,12 +3,14 @@
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 
 it('can initialize ticket', function () {
     $ticket = new Ticket();
 
     expect($ticket->id)->toBeNull();
+    expect($ticket->assignee_id)->toBeNull();
     expect($ticket->description)->toBeNull();
     expect($ticket->priority)->toBe(Priority::Normal);
     expect($ticket->status)->toBe(TicketStatus::New);
@@ -20,11 +22,18 @@ it('can create ticket', function () {
     $ticket = Ticket::factory()->create();
 
     expect($ticket->id)->toBeInt();
+    expect($ticket->assignee_id)->toBeNull();
     expect($ticket->description)->toBeString();
     expect($ticket->priority)->toBe(Priority::Normal);
     expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeInstanceOf(Carbon::class);
     expect($ticket->updated_at)->toBeInstanceOf(Carbon::class);
+});
+
+it('can create ticket with assignee', function () {
+    $ticket = Ticket::factory()->assigned()->create();
+
+    expect($ticket->assignee->id)->toBe(User::first()->id);
 });
 
 it('can create ticket of priority', function () {
@@ -59,6 +68,55 @@ it('can delete ticket', function () {
     $ticket->delete();
 
     expect(Ticket::find($ticket->id))->toBeNull();
+});
+
+// Assignee ////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have assignee', function () {
+    $user = User::factory()->create();
+    $ticket = Ticket::factory()->forAssignee($user)->create();
+
+    expect($ticket->assignee)->toBeInstanceOf(User::class);
+    expect($ticket->assignee->id)->toBe($user->id);
+});
+
+it('can determine if ticket is assignable', function () {
+    $ticket = Ticket::factory()->create();
+
+    expect($ticket->isAssignable())->toBeTrue();
+    expect($ticket->assignee_id)->toBeNull();
+});
+
+it('can assign ticket to a user', function () {
+    $user = User::factory()->create();
+    $ticket = Ticket::factory()->create();
+
+    // assign
+    $ticket->assignee()->associate($user)->save();
+
+    expect($ticket->isAssignable())->toBeFalse();
+
+    // unassign
+    $ticket->assignee()->dissociate()->save();
+
+    expect($ticket->isAssignable())->toBeTrue();
+});
+
+describe('scopes', function () {
+    beforeEach(function () {
+        Ticket::factory()->create();
+        Ticket::factory()->assigned()->create();
+    });
+
+    it('can filter tickets by assignable scope', function () {
+        expect(Ticket::assignable()->count())->toBe(1);
+        expect(Ticket::assignable()->first()->isAssignable())->toBeTrue();
+    });
+
+    it('can filter tickets by assigned scope', function () {
+        expect(Ticket::assigned()->count())->toBe(1);
+        expect(Ticket::assigned()->first()->isAssignable())->toBeFalse();
+    });
 });
 
 // Priority ////////////////////////////////////////////////////////////////////////////////////////

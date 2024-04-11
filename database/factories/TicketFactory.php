@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,27 @@ class TicketFactory extends Factory
         ];
     }
 
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the ticket is assigned to the given user.
+     */
+    public function forAssignee(User $user): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'assignee_id' => $user->id,
+        ]);
+    }
+
     // STATES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the ticket is assigned to a user.
+     */
+    public function assigned(): static
+    {
+        return $this->forAssignee(User::factory()->create());
+    }
 
     /**
      * Indicate that the ticket is of the given priority.
