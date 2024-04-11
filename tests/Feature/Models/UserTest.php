@@ -11,6 +11,7 @@ it('can initialize user', function () {
     expect($user->id)->toBeNull();
     expect($user->name)->toBeNull();
     expect($user->email)->toBeNull();
+    expect($user->phone)->toBeNull();
     expect($user->password)->toBeNull();
     expect($user->remember_token)->toBeNull();
     expect($user->role)->toBe(UserRole::Technician);
@@ -26,6 +27,7 @@ it('can create user', function () {
     expect($user->id)->toBeInt();
     expect($user->name)->toBeString();
     expect($user->email)->toBeString();
+    expect($user->phone)->toBeString();
     expect($user->password)->toBeString();
     expect($user->remember_token)->toBeString();
     expect($user->role)->toBe(UserRole::Technician);
@@ -33,6 +35,12 @@ it('can create user', function () {
     expect($user->created_at)->toBeInstanceOf(Carbon::class);
     expect($user->updated_at)->toBeInstanceOf(Carbon::class);
     expect($user->email_verified_at)->toBeInstanceOf(Carbon::class);
+});
+
+it('can create user without phone number', function () {
+    $user = User::factory()->withoutPhone()->create();
+
+    expect($user->phone)->toBeNull();
 });
 
 it('can create user of role', function (UserRole $role) {
@@ -59,12 +67,14 @@ it('can update user', function () {
     $user->update([
         'name' => 'Bill Gates',
         'email' => 'bill.gates@mail.com',
+        'phone' => '+1234567890',
         'role' => UserRole::Manager,
         'status' => UserStatus::OnLeave,
     ]);
 
     expect($user->name)->toBe('Bill Gates');
     expect($user->email)->toBe('bill.gates@mail.com');
+    expect($user->phone)->toBe('+1234567890');
     expect($user->role)->toBe(UserRole::Manager);
     expect($user->status)->toBe(UserStatus::OnLeave);
 });

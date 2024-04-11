@@ -28,6 +28,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->unique()->e164PhoneNumber(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'role' => UserRole::Technician,
@@ -37,6 +38,16 @@ class UserFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the user has no phone number.
+     */
+    public function withoutPhone(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'phone' => null,
+        ]);
+    }
 
     /**
      * Indicate that the user has the specified role.
