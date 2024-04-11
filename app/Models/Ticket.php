@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Priority;
+use App\Enums\TicketStatus;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,12 +14,14 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $description
  * @property Priority $priority
+ * @property TicketStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
  * @method static Builder|static ofPriority(Priority $priority)
  * @method static Builder|static prioritized()
+ * @method static Builder|static ofStatus(TicketStatus $status)
  */
 class Ticket extends Model
 {
@@ -32,6 +35,7 @@ class Ticket extends Model
     protected $fillable = [
         'description',
         'priority',
+        'status',
     ];
 
     /**
@@ -41,6 +45,7 @@ class Ticket extends Model
      */
     protected $attributes = [
         'priority' => Priority::Normal,
+        'status' => TicketStatus::New,
     ];
 
     /**
@@ -52,6 +57,7 @@ class Ticket extends Model
     {
         return [
             'priority' => Priority::class,
+            'status' => TicketStatus::class,
         ];
     }
 
@@ -71,5 +77,13 @@ class Ticket extends Model
     public function scopePrioritized(Builder $query): void
     {
         $query->orderBy('priority', 'desc');
+    }
+
+    /**
+     * Scope a query to only include tickets of a given status.
+     */
+    public function scopeOfStatus(Builder $query, TicketStatus $status): void
+    {
+        $query->where('status', $status->value);
     }
 }

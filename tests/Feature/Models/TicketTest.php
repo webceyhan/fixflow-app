@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Priority;
+use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use Illuminate\Support\Carbon;
 
@@ -10,6 +11,7 @@ it('can initialize ticket', function () {
     expect($ticket->id)->toBeNull();
     expect($ticket->description)->toBeNull();
     expect($ticket->priority)->toBe(Priority::Normal);
+    expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeNull();
     expect($ticket->updated_at)->toBeNull();
 });
@@ -20,6 +22,7 @@ it('can create ticket', function () {
     expect($ticket->id)->toBeInt();
     expect($ticket->description)->toBeString();
     expect($ticket->priority)->toBe(Priority::Normal);
+    expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeInstanceOf(Carbon::class);
     expect($ticket->updated_at)->toBeInstanceOf(Carbon::class);
 });
@@ -30,16 +33,24 @@ it('can create ticket of priority', function () {
     expect($ticket->priority)->toBe(Priority::High);
 });
 
+it('can create ticket of status', function () {
+    $ticket = Ticket::factory()->ofStatus(TicketStatus::Closed)->create();
+
+    expect($ticket->status)->toBe(TicketStatus::Closed);
+});
+
 it('can update ticket', function () {
     $ticket = Ticket::factory()->create();
 
     $ticket->update([
         'description' => 'Repair iPhone 13 Pro',
         'priority' => Priority::High,
+        'status' => TicketStatus::InProgress,
     ]);
 
     expect($ticket->description)->toBe('Repair iPhone 13 Pro');
     expect($ticket->priority)->toBe(Priority::High);
+    expect($ticket->status)->toBe(TicketStatus::InProgress);
 });
 
 it('can delete ticket', function () {
@@ -70,3 +81,12 @@ it('can sort tickets by prioritized scope', function () {
         Priority::Low,
     ]);
 });
+
+// Status ////////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter tickets by status scope', function (TicketStatus $status) {
+    Ticket::factory()->ofStatus($status)->create();
+
+    expect(Ticket::ofStatus($status)->count())->toBe(1);
+    expect(Ticket::ofStatus($status)->first()->status)->toBe($status);
+})->with(TicketStatus::cases());

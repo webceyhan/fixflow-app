@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\Priority;
+use App\Enums\TicketStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class TicketFactory extends Factory
         return [
             'description' => fake()->paragraph(),
             'priority' => Priority::Normal,
+            'status' => TicketStatus::New,
         ];
     }
 
@@ -32,6 +34,16 @@ class TicketFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'priority' => $priority,
+        ]);
+    }
+
+    /**
+     * Indicate that the ticket is of the given status.
+     */
+    public function ofStatus(TicketStatus $status): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => $status,
         ]);
     }
 }
