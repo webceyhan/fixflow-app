@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 
@@ -13,6 +14,7 @@ it('can initialize user', function () {
     expect($user->password)->toBeNull();
     expect($user->remember_token)->toBeNull();
     expect($user->role)->toBe(UserRole::Technician);
+    expect($user->status)->toBe(UserStatus::Active);
     expect($user->created_at)->toBeNull();
     expect($user->updated_at)->toBeNull();
     expect($user->email_verified_at)->toBeNull();
@@ -27,6 +29,7 @@ it('can create user', function () {
     expect($user->password)->toBeString();
     expect($user->remember_token)->toBeString();
     expect($user->role)->toBe(UserRole::Technician);
+    expect($user->status)->toBe(UserStatus::Active);
     expect($user->created_at)->toBeInstanceOf(Carbon::class);
     expect($user->updated_at)->toBeInstanceOf(Carbon::class);
     expect($user->email_verified_at)->toBeInstanceOf(Carbon::class);
@@ -37,6 +40,12 @@ it('can create user of role', function (UserRole $role) {
 
     expect($user->role)->toBe($role);
 })->with(UserRole::cases());
+
+it('can create user of status', function (UserStatus $status) {
+    $user = User::factory()->ofStatus($status)->create();
+
+    expect($user->status)->toBe($status);
+})->with(UserStatus::cases());
 
 it('can create user unverified', function () {
     $user = User::factory()->unverified()->create();
@@ -51,11 +60,13 @@ it('can update user', function () {
         'name' => 'Bill Gates',
         'email' => 'bill.gates@mail.com',
         'role' => UserRole::Manager,
+        'status' => UserStatus::OnLeave,
     ]);
 
     expect($user->name)->toBe('Bill Gates');
     expect($user->email)->toBe('bill.gates@mail.com');
     expect($user->role)->toBe(UserRole::Manager);
+    expect($user->status)->toBe(UserStatus::OnLeave);
 });
 
 it('can delete user', function () {
@@ -84,3 +95,19 @@ it('can filter users by role scope', function () {
     expect(User::managers()->count())->toBe(2);
     expect(User::admins()->count())->toBe(1);
 });
+
+// Status //////////////////////////////////////////////////////////////////////////////////////////
+
+it('can determine if status is active', function (UserStatus $status) {
+    $user = User::factory()->ofStatus($status)->create();
+
+    expect($user->status)->toBe($status);
+    expect($user->status->isActive())->toBe($status->isActive());
+})->with(UserStatus::cases());
+
+it('can filter users by status scope', function (UserStatus $status) {
+    User::factory()->ofStatus($status)->create();
+
+    expect(User::ofStatus($status)->count())->toBe(1);
+    expect(User::ofStatus($status)->first()->status)->toBe($status);
+})->with(UserStatus::cases());

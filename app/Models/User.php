@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property string $password
  * @property string $remember_token
  * @property UserRole $role
+ * @property UserStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon|null $email_verified_at
@@ -27,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|static admins()
  * @method static Builder|static managers()
  * @method static Builder|static technicians()
+ * @method static Builder|static ofStatus(UserStatus $status)
  */
 class User extends Authenticatable
 {
@@ -42,6 +45,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'status',
     ];
 
     /**
@@ -51,6 +55,7 @@ class User extends Authenticatable
      */
     protected $attributes = [
         'role' => UserRole::Technician,
+        'status' => UserStatus::Active,
     ];
 
     /**
@@ -73,6 +78,7 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
             'role' => UserRole::class,
+            'status' => UserStatus::class,
             'email_verified_at' => 'datetime',
         ];
     }
@@ -85,6 +91,14 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role->isAdmin();
+    }
+
+    /**
+     * Determine if the user is active.
+     */
+    public function isActive(): bool
+    {
+        return $this->status->isActive();
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
@@ -119,5 +133,13 @@ class User extends Authenticatable
     public function scopeTechnicians(Builder $query): void
     {
         $query->ofRole(UserRole::Technician);
+    }
+
+    /**
+     * Scope a query to only include users with the specified status.
+     */
+    public function scopeOfStatus(Builder $query, UserStatus $status): void
+    {
+        $query->where('status', $status->value);
     }
 }
