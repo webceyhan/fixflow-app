@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Priority;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,19 @@ class TicketFactory extends Factory
     {
         return [
             'description' => fake()->paragraph(),
+            'priority' => Priority::Normal,
         ];
+    }
+
+    // STATES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the ticket is of the given priority.
+     */
+    public function ofPriority(Priority $priority): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'priority' => $priority,
+        ]);
     }
 }
