@@ -18,5 +18,7 @@ class DeviceSeeder extends Seeder
         Device::factory()->withoutBrand()->create();
 
         Device::factory()->withoutSerialNumber()->create();
+
+        Device::factory()->withWarranty()->create();
     }
 }

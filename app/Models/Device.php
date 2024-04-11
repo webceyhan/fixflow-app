@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\DeviceFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -12,10 +13,12 @@ use Illuminate\Support\Carbon;
  * @property string $model
  * @property string|null $brand
  * @property string|null $serial_number
+ * @property Carbon|null $warranty_expire_date
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
  * @method static DeviceFactory factory(int $count = null, array $state = [])
+ * @method static Builder|static withWarranty()
  */
 class Device extends Model
 {
@@ -30,5 +33,38 @@ class Device extends Model
         'model',
         'brand',
         'serial_number',
+        'warranty_expire_date',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'warranty_expire_date' => 'date',
+        ];
+    }
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Determine if the device has warranty.
+     */
+    public function hasWarranty(): bool
+    {
+        return $this->warranty_expire_date > now();
+    }
+
+    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include devices with warranty.
+     */
+    public function scopeWithWarranty(Builder $query): void
+    {
+        $query->where('warranty_expire_date', '>', now());
+    }
 }

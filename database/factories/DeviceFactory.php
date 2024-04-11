@@ -44,4 +44,14 @@ class DeviceFactory extends Factory
             'serial_number' => null
         ]);
     }
+
+    /**
+     * Indicate that the device has warranty.
+     */
+    public function withWarranty(int $years = 1): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'warranty_expire_date' => now()->addYear($years),
+        ]);
+    }
 }
