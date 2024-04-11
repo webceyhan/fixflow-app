@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DeviceType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->string('brand')->nullable();
             $table->string('serial_number')->unique()->nullable();
             $table->date('warranty_expire_date')->nullable();
+            $table->enum('type', DeviceType::values())->default(DeviceType::Other);
             $table->timestamps();
         });
     }

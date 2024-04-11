@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\DeviceType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class DeviceFactory extends Factory
             'model' => fake()->word(),
             'brand' => fake()->company(),
             'serial_number' => fake()->uuid(),
+            'type' => DeviceType::Other,
         ];
     }
 
@@ -52,6 +54,16 @@ class DeviceFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'warranty_expire_date' => now()->addYear($years),
+        ]);
+    }
+
+    /**
+     * Indicate that the device is of the given type.
+     */
+    public function ofType(DeviceType $type): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => $type,
         ]);
     }
 }
