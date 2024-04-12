@@ -23,6 +23,7 @@ use Illuminate\Support\Carbon;
  * 
  * @property-read User|null $assignee
  * @property-read Customer $customer
+ * @property-read Device $device
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
  * @method static Builder|static assignable()
@@ -79,6 +80,11 @@ class Ticket extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function device(): BelongsTo
+    {
+        return $this->belongsTo(Device::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

@@ -3,6 +3,7 @@
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
+use App\Models\Device;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Carbon;
@@ -130,6 +131,16 @@ it('belongs to a customer', function () {
 
     expect($ticket->customer)->toBeInstanceOf(Customer::class);
     expect($ticket->customer->id)->toBe($customer->id);
+});
+
+// Device //////////////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to a device', function () {
+    $device = Device::factory()->create();
+    $ticket = Ticket::factory()->forDevice($device)->create();
+
+    expect($ticket->device)->toBeInstanceOf(Device::class);
+    expect($ticket->device->id)->toBe($device->id);
 });
 
 // Priority ////////////////////////////////////////////////////////////////////////////////////////

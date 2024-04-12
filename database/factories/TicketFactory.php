@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
+use App\Models\Device;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class TicketFactory extends Factory
     {
         return [
             'customer_id' => Customer::factory(),
+            'device_id' => Device::factory(),
             'description' => fake()->paragraph(),
             'priority' => Priority::Normal,
             'status' => TicketStatus::New,
@@ -47,6 +49,17 @@ class TicketFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'customer_id' => $customer->id,
+        ]);
+    }
+
+    /**
+     * Indicate that the ticket is for the given device.
+     */
+    public function forDevice(Device $device): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'device_id' => $device->id,
+            'customer_id' => $device->customer_id,
         ]);
     }
 

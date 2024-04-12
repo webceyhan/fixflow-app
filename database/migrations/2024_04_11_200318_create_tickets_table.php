@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('assignee_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('device_id')->constrained()->cascadeOnDelete();
             $table->text('description');
             $table->enum('priority', Priority::values())->default(Priority::Normal);
             $table->enum('status', TicketStatus::values())->default(TicketStatus::New);

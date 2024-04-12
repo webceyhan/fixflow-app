@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Customer;
+use App\Models\Device;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,14 +15,14 @@ class TicketSeeder extends Seeder
      */
     public function run(): void
     {
-        Customer::all()->each(function (Customer $customer) {
-            Ticket::factory()->forCustomer($customer)->create();
+        Device::all()->each(function (Device $device) {
+            Ticket::factory()->forDevice($device)->create();
         });
 
         $users = User::all();
 
-        Customer::all()->random(10)->each(function (Customer $customer) use ($users) {
-            Ticket::factory()->forCustomer($customer)->forAssignee($users->random())->create();
+        Device::all()->random(10)->each(function (Device $device) use ($users) {
+            Ticket::factory()->forDevice($device)->forAssignee($users->random())->create();
         });
     }
 }

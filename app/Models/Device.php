@@ -6,9 +6,11 @@ use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use Database\Factories\DeviceFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -24,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  * 
  * @property-read Customer $customer
+ * @property-read Collection<int, Ticket> $tickets
  *
  * @method static DeviceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static withWarranty()
@@ -77,6 +80,11 @@ class Device extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

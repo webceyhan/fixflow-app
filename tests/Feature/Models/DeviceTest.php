@@ -4,6 +4,7 @@ use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Ticket;
 use Illuminate\Support\Carbon;
 
 it('can initialize device', function () {
@@ -102,6 +103,23 @@ it('belongs to a customer', function () {
 
     expect($device->customer)->toBeInstanceOf(Customer::class);
     expect($device->customer->id)->toBe($customer->id);
+});
+
+// Tickets /////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have many tickets', function () {
+    $device = Device::factory()->hasTickets(2)->create();
+
+    expect($device->tickets)->toHaveCount(2);
+});
+
+it('can delete device with tickets', function () {
+    $device = Device::factory()->hasTickets(2)->create();
+
+    $device->delete();
+
+    expect(Device::find($device->id))->toBeNull();
+    expect(Ticket::count())->toBe(0);
 });
 
 // Warranty ////////////////////////////////////////////////////////////////////////////////////////
