@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $id
  * @property int|null $assignee_id
+ * @property int $customer_id
  * @property string $description
  * @property Priority $priority
  * @property TicketStatus $status
@@ -21,6 +22,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  * 
  * @property-read User|null $assignee
+ * @property-read Customer $customer
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
  * @method static Builder|static assignable()
@@ -72,6 +74,11 @@ class Ticket extends Model
     public function assignee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assignee_id');
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

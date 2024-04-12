@@ -23,6 +23,7 @@ use Illuminate\Support\Carbon;
  * 
  * @property-read Company|null $company
  * @property-read Collection<int, Device> $devices
+ * @property-read Collection<int, Ticket> $tickets
  *
  * @method static CustomerFactory factory(int $count = null, array $state = [])
  */
@@ -53,5 +54,10 @@ class Customer extends Model
     public function devices(): HasMany
     {
         return $this->hasMany(Device::class);
+    }
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
+use App\Models\Customer;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Carbon;
@@ -11,6 +12,7 @@ it('can initialize ticket', function () {
 
     expect($ticket->id)->toBeNull();
     expect($ticket->assignee_id)->toBeNull();
+    expect($ticket->customer_id)->toBeNull();
     expect($ticket->description)->toBeNull();
     expect($ticket->priority)->toBe(Priority::Normal);
     expect($ticket->status)->toBe(TicketStatus::New);
@@ -23,6 +25,7 @@ it('can create ticket', function () {
 
     expect($ticket->id)->toBeInt();
     expect($ticket->assignee_id)->toBeNull();
+    expect($ticket->customer_id)->toBeInt();
     expect($ticket->description)->toBeString();
     expect($ticket->priority)->toBe(Priority::Normal);
     expect($ticket->status)->toBe(TicketStatus::New);
@@ -117,6 +120,16 @@ describe('scopes', function () {
         expect(Ticket::assigned()->count())->toBe(1);
         expect(Ticket::assigned()->first()->isAssignable())->toBeFalse();
     });
+});
+
+// Customer ////////////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to a customer', function () {
+    $customer = Customer::factory()->create();
+    $ticket = Ticket::factory()->forCustomer($customer)->create();
+
+    expect($ticket->customer)->toBeInstanceOf(Customer::class);
+    expect($ticket->customer->id)->toBe($customer->id);
 });
 
 // Priority ////////////////////////////////////////////////////////////////////////////////////////

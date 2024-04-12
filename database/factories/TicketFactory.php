@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
+            'customer_id' => Customer::factory(),
             'description' => fake()->paragraph(),
             'priority' => Priority::Normal,
             'status' => TicketStatus::New,
@@ -35,6 +37,16 @@ class TicketFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'assignee_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * Indicate that the ticket is for the given customer.
+     */
+    public function forCustomer(Customer $customer): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'customer_id' => $customer->id,
         ]);
     }
 
