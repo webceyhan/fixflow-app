@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             DeviceSeeder::class,
             TicketSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }
