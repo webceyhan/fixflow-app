@@ -7,10 +7,12 @@ use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $ticket_id
  * @property string $name
  * @property string|null $url
  * @property int $quantity
@@ -19,6 +21,8 @@ use Illuminate\Support\Carbon;
  * @property OrderStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * 
+ * @property-read Ticket $ticket
  * 
  * @method static OrderFactory factory(int $count = null, array $state = [])
  * @method static Builder|static billable()
@@ -66,6 +70,13 @@ class Order extends Model
             'is_billable' => 'boolean',
             'status' => OrderStatus::class,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Ticket::class);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////

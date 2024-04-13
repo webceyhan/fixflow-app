@@ -2,12 +2,14 @@
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\Ticket;
 use Illuminate\Support\Carbon;
 
 it('can initialize order', function () {
     $order = new Order();
 
     expect($order->id)->toBeNull();
+    expect($order->ticket_id)->toBeNull();
     expect($order->name)->toBeNull();
     expect($order->url)->toBeNull();
     expect($order->quantity)->toBe(1);
@@ -22,6 +24,7 @@ it('can create order', function () {
     $order = Order::factory()->create();
 
     expect($order->id)->toBeInt();
+    expect($order->ticket_id)->toBeInt();
     expect($order->name)->toBeString();
     expect($order->url)->toBeString();
     expect($order->quantity)->toBeInt();
@@ -70,6 +73,16 @@ it('can delete order', function () {
     $order->delete();
 
     expect(Order::find($order->id))->toBeNull();
+});
+
+// Ticket //////////////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to a ticket', function () {
+    $ticket = Ticket::factory()->create();
+    $order = Order::factory()->forTicket($ticket)->create();
+
+    expect($order->ticket)->toBeInstanceOf(Ticket::class);
+    expect($order->ticket->id)->toBe($ticket->id);
 });
 
 // Billable ////////////////////////////////////////////////////////////////////////////////////////

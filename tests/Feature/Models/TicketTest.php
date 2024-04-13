@@ -4,6 +4,7 @@ use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
@@ -159,6 +160,23 @@ it('can delete ticket with tasks', function () {
 
     expect(Ticket::find($ticket->id))->toBeNull();
     expect(Task::count())->toBe(0);
+});
+
+// Orders //////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have many orders', function () {
+    $ticket = Ticket::factory()->hasOrders(2)->create();
+
+    expect($ticket->orders)->toHaveCount(2);
+});
+
+it('can delete ticket with orders', function () {
+    $ticket = Ticket::factory()->hasOrders(2)->create();
+
+    $ticket->delete();
+
+    expect(Ticket::find($ticket->id))->toBeNull();
+    expect(Order::count())->toBe(0);
 });
 
 // Priority ////////////////////////////////////////////////////////////////////////////////////////

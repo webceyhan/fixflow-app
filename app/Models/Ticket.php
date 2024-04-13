@@ -27,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @property-read Customer $customer
  * @property-read Device $device
  * @property-read Collection<int, Task> $tasks
+ * @property-read Collection<int, Order> $orders
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
  * @method static Builder|static assignable()
@@ -93,6 +94,11 @@ class Ticket extends Model
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

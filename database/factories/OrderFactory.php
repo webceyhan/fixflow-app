@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\OrderStatus;
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
+            'ticket_id' => Ticket::factory(),
             'name' => fake()->randomElement(self::PARTS),
             'url' => fake()->url(),
             'quantity' => rand(1, 2),
@@ -27,6 +29,15 @@ class OrderFactory extends Factory
             'is_billable' => true,
             'status' => OrderStatus::New,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function forTicket(Ticket $ticket): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'ticket_id' => $ticket->id,
+        ]);
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
