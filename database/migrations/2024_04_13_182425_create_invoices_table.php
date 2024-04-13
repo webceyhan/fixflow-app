@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ticket_id')->constrained()->cascadeOnDelete();
             $table->decimal('total')->default(0);
             $table->boolean('is_paid')->default(false);
             $table->date('due_date');

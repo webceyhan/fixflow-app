@@ -6,15 +6,19 @@ use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $ticket_id
  * @property float $total
  * @property bool $is_paid
  * @property Carbon $due_date
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * 
+ * @property-read Ticket $ticket
  * 
  * @method static InvoiceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static unpaid()
@@ -57,6 +61,13 @@ class Invoice extends Model
             'is_paid' => 'boolean',
             'due_date' => 'date',
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Ticket::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

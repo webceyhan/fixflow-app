@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,10 +18,20 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
+            'ticket_id' => Ticket::factory(),
             'total' => fake()->randomFloat(2, 10, 100),
             'is_paid' => false,
             'due_date' => now()->addDays(7),
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function forTicket(Ticket $ticket): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'ticket_id' => $ticket->id,
+        ]);
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////

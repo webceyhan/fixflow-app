@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -28,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @property-read Device $device
  * @property-read Collection<int, Task> $tasks
  * @property-read Collection<int, Order> $orders
+ * @property-read Invoice|null $invoice
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
  * @method static Builder|static assignable()
@@ -99,6 +101,11 @@ class Ticket extends Model
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(Invoice::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

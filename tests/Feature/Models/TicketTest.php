@@ -4,6 +4,7 @@ use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
@@ -177,6 +178,23 @@ it('can delete ticket with orders', function () {
 
     expect(Ticket::find($ticket->id))->toBeNull();
     expect(Order::count())->toBe(0);
+});
+
+// Invoice /////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have one invoice', function () {
+    $ticket = Ticket::factory()->hasInvoice()->create();
+
+    expect($ticket->invoice)->toBeInstanceOf(Invoice::class);
+});
+
+it('can delete ticket with invoice', function () {
+    $ticket = Ticket::factory()->hasInvoice()->create();
+
+    $ticket->delete();
+
+    expect(Ticket::find($ticket->id))->toBeNull();
+    expect(Invoice::count())->toBe(0);
 });
 
 // Priority ////////////////////////////////////////////////////////////////////////////////////////

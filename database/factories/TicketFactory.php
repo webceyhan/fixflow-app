@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  * 
  * @method static hasTasks(int $count = 1, array $attributes = [])
  * @method static hasOrders(int $count = 1, array $attributes = [])
+ * @method static hasInvoice(array $attributes = [])
  */
 class TicketFactory extends Factory
 {

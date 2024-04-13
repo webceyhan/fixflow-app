@@ -1,12 +1,14 @@
 <?php
 
 use App\Models\Invoice;
+use App\Models\Ticket;
 use Illuminate\Support\Carbon;
 
 it('can initialize invoice', function () {
     $invoice = new Invoice();
 
     expect($invoice->id)->toBeNull();
+    expect($invoice->ticket_id)->toBeNull();
     expect($invoice->total)->toBe(0.0);
     expect($invoice->is_paid)->toBeFalse();
     expect($invoice->due_date)->toBeNull();
@@ -18,6 +20,7 @@ it('can create invoice', function () {
     $invoice = Invoice::factory()->create();
 
     expect($invoice->id)->toBeInt();
+    expect($invoice->ticket_id)->toBeInt();
     expect($invoice->total)->toBeFloat();
     expect($invoice->is_paid)->toBeFalse();
     expect($invoice->due_date)->toBeInstanceOf(Carbon::class);
@@ -58,6 +61,16 @@ it('can delete invoice', function () {
     $invoice->delete();
 
     expect(Invoice::find($invoice->id))->toBeNull();
+});
+
+// Ticket //////////////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to a ticket', function () {
+    $ticket = Ticket::factory()->create();
+    $invoice = Invoice::factory()->forTicket($ticket)->create();
+
+    expect($invoice->ticket)->toBeInstanceOf(Ticket::class);
+    expect($invoice->ticket->id)->toBe($ticket->id);
 });
 
 // Unpaid //////////////////////////////////////////////////////////////////////////////////////////
