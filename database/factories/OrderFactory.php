@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,7 @@ class OrderFactory extends Factory
             'quantity' => rand(1, 2),
             'cost' => fake()->randomFloat(2, 10, 100),
             'is_billable' => true,
+            'status' => OrderStatus::New,
         ];
     }
 
@@ -36,6 +38,16 @@ class OrderFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'is_billable' => false,
+        ]);
+    }
+
+    /**
+     * Indicate that the order is of a specified status.
+     */
+    public function ofStatus(OrderStatus $status): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => $status,
         ]);
     }
 }

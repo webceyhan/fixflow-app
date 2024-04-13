@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,11 +16,13 @@ use Illuminate\Support\Carbon;
  * @property int $quantity
  * @property float $cost
  * @property bool $is_billable
+ * @property OrderStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
  * @method static OrderFactory factory(int $count = null, array $state = [])
  * @method static Builder|static billable()
+ * @method static Builder|static ofStatus(OrderStatus $status)
  */
 class Order extends Model
 {
@@ -36,6 +39,7 @@ class Order extends Model
         'quantity',
         'cost',
         'is_billable',
+        'status',
     ];
 
     /**
@@ -47,6 +51,7 @@ class Order extends Model
         'quantity' => 1,
         'cost' => 0,
         'is_billable' => true,
+        'status' => OrderStatus::New,
     ];
 
     /**
@@ -59,6 +64,7 @@ class Order extends Model
         return [
             'cost' => 'float',
             'is_billable' => 'boolean',
+            'status' => OrderStatus::class,
         ];
     }
 
@@ -70,5 +76,13 @@ class Order extends Model
     public function scopeBillable(Builder $query): void
     {
         $query->where('is_billable', true);
+    }
+
+    /**
+     * Scope a query to only include tasks of a given status.
+     */
+    public function scopeOfStatus(Builder $query, OrderStatus $status): void
+    {
+        $query->where('status', $status->value);
     }
 }
