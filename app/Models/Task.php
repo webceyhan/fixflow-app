@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,12 +16,14 @@ use Illuminate\Support\Carbon;
  * @property float $cost
  * @property bool $is_billable
  * @property TaskType $type
+ * @property TaskStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
  * @method static TaskFactory factory(int $count = null, array $state = [])
  * @method static Builder|static billable()
  * @method static Builder|static ofType(TaskType $type)
+ * @method static Builder|static ofStatus(TaskStatus $status)
  */
 class Task extends Model
 {
@@ -36,6 +39,7 @@ class Task extends Model
         'cost',
         'is_billable',
         'type',
+        'status'
     ];
 
     /**
@@ -47,6 +51,7 @@ class Task extends Model
         'cost' => 0,
         'is_billable' => true,
         'type' => TaskType::Repair,
+        'status' => TaskStatus::New,
     ];
 
     /**
@@ -60,6 +65,7 @@ class Task extends Model
             'cost' => 'float',
             'is_billable' => 'boolean',
             'type' => TaskType::class,
+            'status' => TaskStatus::class,
         ];
     }
 
@@ -79,5 +85,13 @@ class Task extends Model
     public function scopeOfType(Builder $query, TaskType $type): void
     {
         $query->where('type', $type->value);
+    }
+
+    /**
+     * Scope a query to only include tasks of a given status.
+     */
+    public function scopeOfStatus(Builder $query, TaskStatus $status): void
+    {
+        $query->where('status', $status->value);
     }
 }

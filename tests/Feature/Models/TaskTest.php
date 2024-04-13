@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Task;
 use Illuminate\Support\Carbon;
@@ -12,6 +13,7 @@ it('can initialize task', function () {
     expect($task->cost)->toBe(0.0);
     expect($task->is_billable)->toBeTrue();
     expect($task->type)->toBe(TaskType::Repair);
+    expect($task->status)->toBe(TaskStatus::New);
     expect($task->created_at)->toBeNull();
     expect($task->updated_at)->toBeNull();
 });
@@ -24,6 +26,7 @@ it('can create task', function () {
     expect($task->cost)->toBeFloat();
     expect($task->is_billable)->toBeTrue();
     expect($task->type)->toBe(TaskType::Repair);
+    expect($task->status)->toBe(TaskStatus::New);
     expect($task->created_at)->toBeInstanceOf(Carbon::class);
     expect($task->updated_at)->toBeInstanceOf(Carbon::class);
 });
@@ -40,6 +43,12 @@ it('can create task of type', function (TaskType $type) {
     expect($task->type)->toBe($type);
 })->with(TaskType::cases());
 
+it('can create task of status', function (TaskStatus $status) {
+    $task = Task::factory()->ofStatus($status)->create();
+
+    expect($task->status)->toBe($status);
+})->with(TaskStatus::cases());
+
 it('can update task', function () {
     $task = Task::factory()->create();
 
@@ -48,12 +57,14 @@ it('can update task', function () {
         'cost' => 100,
         'is_billable' => false,
         'type' => TaskType::Maintenance,
+        'status' => TaskStatus::Completed,
     ]);
 
     expect($task->description)->toBe('Replace the battery');
     expect($task->cost)->toBe(100.0);
     expect($task->is_billable)->toBeFalse();
     expect($task->type)->toBe(TaskType::Maintenance);
+    expect($task->status)->toBe(TaskStatus::Completed);
 });
 
 it('can delete task', function () {
@@ -82,3 +93,12 @@ it('can filter tasks by type scope', function (TaskType $type) {
     expect(Task::ofType($type)->count())->toBe(1);
     expect(Task::ofType($type)->first()->type)->toBe($type);
 })->with(TaskType::cases());
+
+// Status //////////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter tasks by status scope', function (TaskStatus $status) {
+    Task::factory()->ofStatus($status)->create();
+
+    expect(Task::ofStatus($status)->count())->toBe(1);
+    expect(Task::ofStatus($status)->first()->status)->toBe($status);
+})->with(TaskStatus::cases());

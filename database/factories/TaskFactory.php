@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class TaskFactory extends Factory
             'cost' => fake()->randomFloat(2, 10, 100),
             'is_billable' => true,
             'type' => TaskType::Repair,
+            'status' => TaskStatus::New,
         ];
     }
 
@@ -44,6 +46,16 @@ class TaskFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'type' => $type,
+        ]);
+    }
+
+    /**
+     * Indicate that the task has specified status.
+     */
+    public function ofStatus(TaskStatus $status): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => $status,
         ]);
     }
 }

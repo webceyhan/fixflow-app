@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->decimal('cost')->default(0);
             $table->boolean('is_billable')->default(true);
             $table->enum('type', TaskType::values())->default(TaskType::Repair);
+            $table->enum('status', TaskStatus::values())->default(TaskStatus::New);
             $table->timestamps();
         });
     }
