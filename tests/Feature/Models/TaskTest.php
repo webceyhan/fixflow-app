@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskType;
 use App\Models\Task;
 use Illuminate\Support\Carbon;
 
@@ -10,6 +11,7 @@ it('can initialize task', function () {
     expect($task->description)->toBeNull();
     expect($task->cost)->toBe(0.0);
     expect($task->is_billable)->toBeTrue();
+    expect($task->type)->toBe(TaskType::Repair);
     expect($task->created_at)->toBeNull();
     expect($task->updated_at)->toBeNull();
 });
@@ -21,6 +23,7 @@ it('can create task', function () {
     expect($task->description)->toBeString();
     expect($task->cost)->toBeFloat();
     expect($task->is_billable)->toBeTrue();
+    expect($task->type)->toBe(TaskType::Repair);
     expect($task->created_at)->toBeInstanceOf(Carbon::class);
     expect($task->updated_at)->toBeInstanceOf(Carbon::class);
 });
@@ -31,6 +34,12 @@ it('can create task as free', function () {
     expect($task->is_billable)->toBeFalse();
 });
 
+it('can create task of type', function (TaskType $type) {
+    $task = Task::factory()->ofType($type)->create();
+
+    expect($task->type)->toBe($type);
+})->with(TaskType::cases());
+
 it('can update task', function () {
     $task = Task::factory()->create();
 
@@ -38,11 +47,13 @@ it('can update task', function () {
         'description' => 'Replace the battery',
         'cost' => 100,
         'is_billable' => false,
+        'type' => TaskType::Maintenance,
     ]);
 
     expect($task->description)->toBe('Replace the battery');
     expect($task->cost)->toBe(100.0);
     expect($task->is_billable)->toBeFalse();
+    expect($task->type)->toBe(TaskType::Maintenance);
 });
 
 it('can delete task', function () {
@@ -62,3 +73,12 @@ it('can filter tasks by billable scope', function () {
     expect(Task::billable()->count())->toBe(1);
     expect(Task::billable()->first()->is_billable)->toBeTrue();
 });
+
+// Type ////////////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter tasks by type scope', function (TaskType $type) {
+    Task::factory()->ofType($type)->create();
+
+    expect(Task::ofType($type)->count())->toBe(1);
+    expect(Task::ofType($type)->first()->type)->toBe($type);
+})->with(TaskType::cases());

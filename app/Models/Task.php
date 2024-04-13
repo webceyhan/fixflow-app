@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TaskType;
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,11 +14,13 @@ use Illuminate\Support\Carbon;
  * @property string $description
  * @property float $cost
  * @property bool $is_billable
+ * @property TaskType $type
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
  * @method static TaskFactory factory(int $count = null, array $state = [])
  * @method static Builder|static billable()
+ * @method static Builder|static ofType(TaskType $type)
  */
 class Task extends Model
 {
@@ -32,6 +35,7 @@ class Task extends Model
         'description',
         'cost',
         'is_billable',
+        'type',
     ];
 
     /**
@@ -42,6 +46,7 @@ class Task extends Model
     protected $attributes = [
         'cost' => 0,
         'is_billable' => true,
+        'type' => TaskType::Repair,
     ];
 
     /**
@@ -54,6 +59,7 @@ class Task extends Model
         return [
             'cost' => 'float',
             'is_billable' => 'boolean',
+            'type' => TaskType::class,
         ];
     }
 
@@ -65,5 +71,13 @@ class Task extends Model
     public function scopeBillable(Builder $query): void
     {
         $query->where('is_billable', true);
+    }
+
+    /**
+     * Scope a query to only include tasks of a given type.
+     */
+    public function scopeOfType(Builder $query, TaskType $type): void
+    {
+        $query->where('type', $type->value);
     }
 }

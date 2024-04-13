@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TaskType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class TaskFactory extends Factory
             'description' => fake()->sentence(),
             'cost' => fake()->randomFloat(2, 10, 100),
             'is_billable' => true,
+            'type' => TaskType::Repair,
         ];
     }
 
@@ -32,6 +34,16 @@ class TaskFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'is_billable' => false,
+        ]);
+    }
+
+    /**
+     * Indicate that the task has the specified type.
+     */
+    public function ofType(TaskType $type): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => $type,
         ]);
     }
 }
