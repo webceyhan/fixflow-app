@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ticket_id')->constrained()->cascadeOnDelete();
             $table->string('description');
             $table->decimal('cost')->default(0);
             $table->boolean('is_billable')->default(true);

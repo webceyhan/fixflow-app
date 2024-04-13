@@ -4,6 +4,7 @@ use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Carbon;
@@ -141,6 +142,23 @@ it('belongs to a device', function () {
 
     expect($ticket->device)->toBeInstanceOf(Device::class);
     expect($ticket->device->id)->toBe($device->id);
+});
+
+// Tasks ///////////////////////////////////////////////////////////////////////////////////////////
+
+it('can have many tasks', function () {
+    $ticket = Ticket::factory()->hasTasks(2)->create();
+
+    expect($ticket->tasks)->toHaveCount(2);
+});
+
+it('can delete ticket with tasks', function () {
+    $ticket = Ticket::factory()->hasTasks(2)->create();
+
+    $ticket->delete();
+
+    expect(Ticket::find($ticket->id))->toBeNull();
+    expect(Task::count())->toBe(0);
 });
 
 // Priority ////////////////////////////////////////////////////////////////////////////////////////

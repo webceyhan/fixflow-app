@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,12 +20,22 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
+            'ticket_id' => Ticket::factory(),
             'description' => fake()->sentence(),
             'cost' => fake()->randomFloat(2, 10, 100),
             'is_billable' => true,
             'type' => TaskType::Repair,
             'status' => TaskStatus::New,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function forTicket(Ticket $ticket): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'ticket_id' => $ticket->id,
+        ]);
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////

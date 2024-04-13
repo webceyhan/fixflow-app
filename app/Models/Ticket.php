@@ -6,9 +6,11 @@ use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -24,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property-read User|null $assignee
  * @property-read Customer $customer
  * @property-read Device $device
+ * @property-read Collection<int, Task> $tasks
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
  * @method static Builder|static assignable()
@@ -85,6 +88,11 @@ class Ticket extends Model
     public function device(): BelongsTo
     {
         return $this->belongsTo(Device::class);
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

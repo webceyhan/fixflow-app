@@ -8,10 +8,12 @@ use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $ticket_id
  * @property string $description
  * @property float $cost
  * @property bool $is_billable
@@ -19,6 +21,8 @@ use Illuminate\Support\Carbon;
  * @property TaskStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * 
+ * @property-read Ticket $ticket
  * 
  * @method static TaskFactory factory(int $count = null, array $state = [])
  * @method static Builder|static billable()
@@ -67,6 +71,13 @@ class Task extends Model
             'type' => TaskType::class,
             'status' => TaskStatus::class,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Ticket::class);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////

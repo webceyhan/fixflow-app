@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Task;
+use App\Models\Ticket;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,11 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        Task::factory(10)->create();
+        Ticket::all()->each(function (Ticket $ticket) {
+            // Create a random number of tasks for each ticket.
+            $amount = rand(1, 2);
+
+            Task::factory($amount)->forTicket($ticket)->create();
+        });
     }
 }
