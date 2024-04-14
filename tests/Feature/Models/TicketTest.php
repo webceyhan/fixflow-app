@@ -77,55 +77,6 @@ it('can delete ticket', function () {
     expect(Ticket::find($ticket->id))->toBeNull();
 });
 
-// Assignee ////////////////////////////////////////////////////////////////////////////////////////
-
-it('can have assignee', function () {
-    $user = User::factory()->create();
-    $ticket = Ticket::factory()->forAssignee($user)->create();
-
-    expect($ticket->assignee)->toBeInstanceOf(User::class);
-    expect($ticket->assignee->id)->toBe($user->id);
-});
-
-it('can determine if ticket is assignable', function () {
-    $ticket = Ticket::factory()->create();
-
-    expect($ticket->isAssignable())->toBeTrue();
-    expect($ticket->assignee_id)->toBeNull();
-});
-
-it('can assign ticket to a user', function () {
-    $user = User::factory()->create();
-    $ticket = Ticket::factory()->create();
-
-    // assign
-    $ticket->assignee()->associate($user)->save();
-
-    expect($ticket->isAssignable())->toBeFalse();
-
-    // unassign
-    $ticket->assignee()->dissociate()->save();
-
-    expect($ticket->isAssignable())->toBeTrue();
-});
-
-describe('scopes', function () {
-    beforeEach(function () {
-        Ticket::factory()->create();
-        Ticket::factory()->assigned()->create();
-    });
-
-    it('can filter tickets by assignable scope', function () {
-        expect(Ticket::assignable()->count())->toBe(1);
-        expect(Ticket::assignable()->first()->isAssignable())->toBeTrue();
-    });
-
-    it('can filter tickets by assigned scope', function () {
-        expect(Ticket::assigned()->count())->toBe(1);
-        expect(Ticket::assigned()->first()->isAssignable())->toBeFalse();
-    });
-});
-
 // Customer ////////////////////////////////////////////////////////////////////////////////////////
 
 it('belongs to a customer', function () {

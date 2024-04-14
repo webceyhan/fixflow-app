@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
+use App\Models\Concerns\Assignable;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,7 +25,6 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
- * @property-read User|null $assignee
  * @property-read Customer $customer
  * @property-read Device $device
  * @property-read Collection<int, Task> $tasks
@@ -32,15 +32,13 @@ use Illuminate\Support\Carbon;
  * @property-read Invoice|null $invoice
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
- * @method static Builder|static assignable()
- * @method static Builder|static assigned()
  * @method static Builder|static ofPriority(Priority $priority)
  * @method static Builder|static prioritized()
  * @method static Builder|static ofStatus(TicketStatus $status)
  */
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, Assignable;
 
     /**
      * The attributes that are mass assignable.
@@ -78,11 +76,6 @@ class Ticket extends Model
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
-    public function assignee(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'assignee_id');
-    }
-
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
@@ -108,33 +101,7 @@ class Ticket extends Model
         return $this->hasOne(Invoice::class);
     }
 
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Determine if the ticket is assignable.
-     */
-    public function isAssignable(): bool
-    {
-        return $this->assignee_id === null;
-    }
-
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tickets that are assignable.
-     */
-    public function scopeAssignable(Builder $query): void
-    {
-        $query->whereNull('assignee_id');
-    }
-
-    /**
-     * Scope a query to only include tickets that are already assigned.
-     */
-    public function scopeAssigned(Builder $query): void
-    {
-        $query->whereNotNull('assignee_id');
-    }
 
     /**
      * Scope a query to only include models of a given priority.
