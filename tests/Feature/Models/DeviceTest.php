@@ -122,23 +122,6 @@ it('can delete device with tickets', function () {
     expect(Ticket::count())->toBe(0);
 });
 
-// Warranty ////////////////////////////////////////////////////////////////////////////////////////
-
-it('can check if device has warranty', function () {
-    $device = Device::factory()->withWarranty()->create();
-
-    expect($device->hasWarranty())->toBeTrue();
-    expect($device->warranty_expire_date)->toBeInstanceOf(Carbon::class);
-});
-
-it('can filter devices by warranty scope', function () {
-    Device::factory()->create();
-    Device::factory()->withWarranty()->create();
-
-    expect(Device::withWarranty()->count())->toBe(1);
-    expect(Device::withWarranty()->first()->hasWarranty())->toBeTrue();
-});
-
 // Type ////////////////////////////////////////////////////////////////////////////////////////////
 
 it('can filter devices by type scope', function (DeviceType $type) {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
+use App\Models\Concerns\HasWarranty;
 use Database\Factories\DeviceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,13 +30,12 @@ use Illuminate\Support\Carbon;
  * @property-read Collection<int, Ticket> $tickets
  *
  * @method static DeviceFactory factory(int $count = null, array $state = [])
- * @method static Builder|static withWarranty()
  * @method static Builder|static ofType(DeviceType $type)
  * @method static Builder|static ofStatus(DeviceStatus $status)
  */
 class Device extends Model
 {
-    use HasFactory;
+    use HasFactory, HasWarranty;
 
     /**
      * The attributes that are mass assignable.
@@ -69,7 +69,6 @@ class Device extends Model
     protected function casts(): array
     {
         return [
-            'warranty_expire_date' => 'date',
             'type' => DeviceType::class,
             'status' => DeviceStatus::class,
         ];
@@ -87,25 +86,7 @@ class Device extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Determine if the device has warranty.
-     */
-    public function hasWarranty(): bool
-    {
-        return $this->warranty_expire_date > now();
-    }
-
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include devices with warranty.
-     */
-    public function scopeWithWarranty(Builder $query): void
-    {
-        $query->where('warranty_expire_date', '>', now());
-    }
 
     /**
      * Scope a query to only include devices of a given type.
