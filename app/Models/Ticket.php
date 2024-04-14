@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Concerns\Assignable;
+use App\Models\Concerns\HasPriority;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -32,13 +33,11 @@ use Illuminate\Support\Carbon;
  * @property-read Invoice|null $invoice
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
- * @method static Builder|static ofPriority(Priority $priority)
- * @method static Builder|static prioritized()
  * @method static Builder|static ofStatus(TicketStatus $status)
  */
 class Ticket extends Model
 {
-    use HasFactory, Assignable;
+    use HasFactory, Assignable, HasPriority;
 
     /**
      * The attributes that are mass assignable.
@@ -57,7 +56,6 @@ class Ticket extends Model
      * @var array
      */
     protected $attributes = [
-        'priority' => Priority::Normal,
         'status' => TicketStatus::New,
     ];
 
@@ -69,7 +67,6 @@ class Ticket extends Model
     protected function casts(): array
     {
         return [
-            'priority' => Priority::class,
             'status' => TicketStatus::class,
         ];
     }
@@ -102,22 +99,6 @@ class Ticket extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include models of a given priority.
-     */
-    public function scopeOfPriority(Builder $query, Priority $priority): void
-    {
-        $query->where('priority', $priority->value);
-    }
-
-    /**
-     * Scope a query to order models by priority from high to low.
-     */
-    public function scopePrioritized(Builder $query): void
-    {
-        $query->orderBy('priority', 'desc');
-    }
 
     /**
      * Scope a query to only include tickets of a given status.
