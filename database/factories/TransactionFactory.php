@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\TransactionMethod;
+use App\Enums\TransactionType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class TransactionFactory extends Factory
             'amount' => fake()->randomFloat(2, 10, 100),
             'note' => fake()->sentence(),
             'method' => TransactionMethod::Cash,
+            'type' => TransactionType::Payment,
         ];
     }
 
@@ -43,6 +45,16 @@ class TransactionFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'method' => $method,
+        ]);
+    }
+
+    /**
+     * Indicate that the transaction is of a specified type.
+     */
+    public function ofType(TransactionType $type): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => $type,
         ]);
     }
 }

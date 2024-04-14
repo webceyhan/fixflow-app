@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TransactionMethod;
+use App\Enums\TransactionType;
 use Database\Factories\TransactionFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,11 +15,13 @@ use Illuminate\Support\Carbon;
  * @property float $amount
  * @property string|null $note
  * @property TransactionMethod $method
+ * @property TransactionType $type
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
  * @method static TransactionFactory factory(int $count = null, array $state = [])
  * @method static Builder|static ofMethod(TransactionMethod $method)
+ * @method static Builder|static ofType(TransactionType $type)
  */
 class Transaction extends Model
 {
@@ -33,6 +36,7 @@ class Transaction extends Model
         'amount',
         'note',
         'method',
+        'type',
     ];
 
     /**
@@ -43,6 +47,7 @@ class Transaction extends Model
     protected $attributes = [
         'amount' => 0,
         'method' => TransactionMethod::Cash,
+        'type' => TransactionType::Payment,
     ];
 
     /**
@@ -55,6 +60,7 @@ class Transaction extends Model
         return [
             'amount' => 'float',
             'method' => TransactionMethod::class,
+            'type' => TransactionType::class,
         ];
     }
 
@@ -66,5 +72,13 @@ class Transaction extends Model
     public function scopeOfMethod(Builder $query, TransactionMethod $method): void
     {
         $query->where('method', $method->value);
+    }
+
+    /**
+     * Scope a query to only include transactions of a given type.
+     */
+    public function scopeOfType(Builder $query, TransactionType $type): void
+    {
+        $query->where('type', $type->value);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\TransactionMethod;
+use App\Enums\TransactionType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2)->default(0);
             $table->string('note')->nullable();
             $table->enum('method', TransactionMethod::values())->default(TransactionMethod::Cash);
+            $table->enum('type', TransactionType::values())->default(TransactionType::Payment);
             $table->timestamps();
         });
     }
