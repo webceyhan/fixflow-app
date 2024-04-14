@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -19,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  * 
  * @property-read Ticket $ticket
+ * @property-read Collection<int, Transaction> $transactions
  * 
  * @method static InvoiceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static unpaid()
@@ -68,6 +71,11 @@ class Invoice extends Model
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

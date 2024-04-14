@@ -2,6 +2,7 @@
 
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
+use App\Models\Invoice;
 use App\Models\Transaction;
 use Illuminate\Support\Carbon;
 
@@ -9,6 +10,7 @@ it('can initialize transaction', function () {
     $transaction = new Transaction();
 
     expect($transaction->id)->toBeNull();
+    expect($transaction->invoice_id)->toBeNull();
     expect($transaction->amount)->toBe(0.0);
     expect($transaction->note)->toBeNull();
     expect($transaction->method)->toBe(TransactionMethod::Cash);
@@ -21,6 +23,7 @@ it('can create transaction', function () {
     $transaction = Transaction::factory()->create();
 
     expect($transaction->id)->toBeInt();
+    expect($transaction->invoice_id)->toBeInt();
     expect($transaction->amount)->toBeFloat();
     expect($transaction->note)->toBeString();
     expect($transaction->method)->toBe(TransactionMethod::Cash);
@@ -69,6 +72,16 @@ it('can delete transaction', function () {
     $transaction->delete();
 
     expect(Transaction::find($transaction->id))->toBeNull();
+});
+
+// Invoice /////////////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to an invoice', function () {
+    $invoice = Invoice::factory()->create();
+    $transaction = Transaction::factory()->forInvoice($invoice)->create();
+
+    expect($transaction->invoice)->toBeInstanceOf(Invoice::class);
+    expect($transaction->invoice->id)->toBe($invoice->id);
 });
 
 // Method //////////////////////////////////////////////////////////////////////////////////////////

@@ -8,16 +8,20 @@ use Database\Factories\TransactionFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property int $invoice_id
  * @property float $amount
  * @property string|null $note
  * @property TransactionMethod $method
  * @property TransactionType $type
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * 
+ * @property-read Invoice $invoice
  * 
  * @method static TransactionFactory factory(int $count = null, array $state = [])
  * @method static Builder|static ofMethod(TransactionMethod $method)
@@ -62,6 +66,13 @@ class Transaction extends Model
             'method' => TransactionMethod::class,
             'type' => TransactionType::class,
         ];
+    }
+
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
