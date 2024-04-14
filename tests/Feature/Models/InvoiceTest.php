@@ -100,25 +100,3 @@ it('can filter invoices by unpaid scope', function () {
     expect(Invoice::unpaid()->count())->toBe(1);
     expect(Invoice::unpaid()->first()->is_paid)->toBeFalse();
 });
-
-// Overdue /////////////////////////////////////////////////////////////////////////////////////////
-
-it('can determine if invoice is overdue', function () {
-    $invoice = Invoice::factory()->overdue()->create();
-
-    expect($invoice->isOverdue())->toBeTrue();
-
-    // update due date
-    $invoice->update(['due_date' => now()->addDays(7)]);
-    $invoice->refresh();
-
-    expect($invoice->isOverdue())->toBeFalse();
-});
-
-it('can filter invoices by overdue scope', function () {
-    Invoice::factory()->create();
-    Invoice::factory()->overdue()->create();
-
-    expect(Invoice::overdue()->count())->toBe(1);
-    expect(Invoice::overdue()->first()->isOverdue())->toBeTrue();
-});

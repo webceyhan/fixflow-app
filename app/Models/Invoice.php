@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasDueDate;
 use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,11 +26,10 @@ use Illuminate\Support\Carbon;
  * 
  * @method static InvoiceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static unpaid()
- * @method static Builder|static overdue()
  */
 class Invoice extends Model
 {
-    use HasFactory;
+    use HasFactory, HasDueDate;
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +39,7 @@ class Invoice extends Model
     protected $fillable = [
         'total',
         'is_paid',
-        'due_date'
+        'due_date',
     ];
 
     /**
@@ -78,16 +78,6 @@ class Invoice extends Model
         return $this->hasMany(Transaction::class);
     }
 
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Determine if the invoice is overdue.
-     */
-    public function isOverdue(): bool
-    {
-        return $this->due_date->isPast();
-    }
-
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -96,13 +86,5 @@ class Invoice extends Model
     public function scopeUnpaid(Builder $query): void
     {
         $query->where('is_paid', false);
-    }
-
-    /**
-     * Scope a query to only include overdue invoices.
-     */
-    public function scopeOverdue(Builder $query): void
-    {
-        $query->where('due_date', '<', now());
     }
 }
