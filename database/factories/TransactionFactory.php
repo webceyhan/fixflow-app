@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TransactionMethod;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class TransactionFactory extends Factory
         return [
             'amount' => fake()->randomFloat(2, 10, 100),
             'note' => fake()->sentence(),
+            'method' => TransactionMethod::Cash,
         ];
     }
 
@@ -31,6 +33,16 @@ class TransactionFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'note' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the transaction is of a specified method.
+     */
+    public function ofMethod(TransactionMethod $method): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'method' => $method,
         ]);
     }
 }
