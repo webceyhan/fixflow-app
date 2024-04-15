@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Concerns\Assignable;
+use App\Models\Concerns\Completable;
 use App\Models\Concerns\HasPriority;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,7 +38,7 @@ use Illuminate\Support\Carbon;
  */
 class Ticket extends Model
 {
-    use HasFactory, Assignable, HasPriority;
+    use HasFactory, Assignable, HasPriority, Completable;
 
     /**
      * The attributes that are mass assignable.

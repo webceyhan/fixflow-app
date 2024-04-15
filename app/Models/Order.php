@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\OrderStatus;
 use App\Models\Concerns\Billable;
+use App\Models\Concerns\Completable;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +31,7 @@ use Illuminate\Support\Carbon;
  */
 class Order extends Model
 {
-    use HasFactory, Billable;
+    use HasFactory, Billable, Completable;
 
     /**
      * The attributes that are mass assignable.

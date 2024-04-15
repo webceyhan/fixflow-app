@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
+use App\Models\Concerns\Completable;
 use App\Models\Concerns\HasWarranty;
 use Database\Factories\DeviceFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,7 +36,7 @@ use Illuminate\Support\Carbon;
  */
 class Device extends Model
 {
-    use HasFactory, HasWarranty;
+    use HasFactory, HasWarranty, Completable;
 
     /**
      * The attributes that are mass assignable.

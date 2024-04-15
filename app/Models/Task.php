@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Concerns\Billable;
+use App\Models\Concerns\Completable;
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +32,7 @@ use Illuminate\Support\Carbon;
  */
 class Task extends Model
 {
-    use HasFactory, Billable;
+    use HasFactory, Billable, Completable;
 
     /**
      * The attributes that are mass assignable.
