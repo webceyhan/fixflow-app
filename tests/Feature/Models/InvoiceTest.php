@@ -15,6 +15,8 @@ it('can initialize invoice', function () {
     expect($invoice->due_date)->toBeNull();
     expect($invoice->created_at)->toBeNull();
     expect($invoice->updated_at)->toBeNull();
+    expect($invoice->total_paid)->toBe(0.0);
+    expect($invoice->total_refunded)->toBe(0.0);
 });
 
 it('can create invoice', function () {
@@ -27,6 +29,8 @@ it('can create invoice', function () {
     expect($invoice->due_date)->toBeInstanceOf(Carbon::class);
     expect($invoice->created_at)->toBeInstanceOf(Carbon::class);
     expect($invoice->updated_at)->toBeInstanceOf(Carbon::class);
+    expect($invoice->total_paid)->toBe(0.0);
+    expect($invoice->total_refunded)->toBe(0.0);
 });
 
 it('can create invoice as paid', function () {

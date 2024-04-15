@@ -20,6 +20,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon $due_date
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read float $total_paid
+ * @property-read float $total_refunded
  * 
  * @property-read Ticket $ticket
  * @property-read Collection<int, Transaction> $transactions
@@ -50,6 +52,8 @@ class Invoice extends Model
     protected $attributes = [
         'total' => 0,
         'is_paid' => false,
+        'total_paid' => 0,
+        'total_refunded' => 0,
     ];
 
     /**
@@ -63,6 +67,8 @@ class Invoice extends Model
             'total' => 'float',
             'is_paid' => 'boolean',
             'due_date' => 'date',
+            'total_paid' => 'float',
+            'total_refunded' => 'float',
         ];
     }
 
@@ -76,6 +82,22 @@ class Invoice extends Model
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    public function fillTotalPaid(): static
+    {
+        return $this->forceFill([
+            'total_paid' => $this->transactions()->payments()->sum('amount'),
+        ]);
+    }
+
+    public function fillTotalRefunded(): static
+    {
+        return $this->forceFill([
+            'total_refunded' => $this->transactions()->refunds()->sum('amount'),
+        ]);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////

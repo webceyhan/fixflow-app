@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
+use App\Observers\TransactionObserver;
 use Database\Factories\TransactionFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +28,10 @@ use Illuminate\Support\Carbon;
  * @method static TransactionFactory factory(int $count = null, array $state = [])
  * @method static Builder|static ofMethod(TransactionMethod $method)
  * @method static Builder|static ofType(TransactionType $type)
+ * @method static Builder|static payments()
+ * @method static Builder|static refunds()
  */
+#[ObservedBy([TransactionObserver::class])]
 class Transaction extends Model
 {
     use HasFactory;
@@ -91,5 +96,21 @@ class Transaction extends Model
     public function scopeOfType(Builder $query, TransactionType $type): void
     {
         $query->where('type', $type->value);
+    }
+
+    /**
+     * Scope a query to only include payments.
+     */
+    public function scopePayments(Builder $query): void
+    {
+        $query->ofType(TransactionType::Payment);
+    }
+
+    /**
+     * Scope a query to only include refunds.
+     */
+    public function scopeRefunds(Builder $query): void
+    {
+        $query->ofType(TransactionType::Refund);
     }
 }

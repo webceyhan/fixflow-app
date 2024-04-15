@@ -24,6 +24,8 @@ class InvoiceFactory extends Factory
             'total' => fake()->randomFloat(2, 10, 100),
             'is_paid' => false,
             'due_date' => now()->addDays(7),
+            'total_paid' => 0,
+            'total_refunded' => 0,
         ];
     }
 
