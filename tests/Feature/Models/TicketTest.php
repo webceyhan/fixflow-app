@@ -22,6 +22,7 @@ it('can initialize ticket', function () {
     expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeNull();
     expect($ticket->updated_at)->toBeNull();
+    expect($ticket->total_cost)->toBe(0.0);
 });
 
 it('can create ticket', function () {
@@ -35,6 +36,7 @@ it('can create ticket', function () {
     expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeInstanceOf(Carbon::class);
     expect($ticket->updated_at)->toBeInstanceOf(Carbon::class);
+    expect($ticket->total_cost)->toBe(0.0);
 });
 
 it('can create ticket with assignee', function () {
@@ -156,3 +158,19 @@ it('can filter tickets by status scope', function (TicketStatus $status) {
     expect(Ticket::ofStatus($status)->count())->toBe(1);
     expect(Ticket::ofStatus($status)->first()->status)->toBe($status);
 })->with(TicketStatus::cases());
+
+// Total Cost //////////////////////////////////////////////////////////////////////////////////////
+
+it('can update ticket total_cost automatically', function () {
+    $ticket = Ticket::factory()->create();
+    $task = Task::factory()->forTicket($ticket)->create();
+    $order = Order::factory()->forTicket($ticket)->create();
+
+    // ignore non-billable tasks, orders
+    Task::factory()->forTicket($ticket)->free()->create();
+    Order::factory()->forTicket($ticket)->free()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_cost)->toBe($task->cost + $order->cost);
+});

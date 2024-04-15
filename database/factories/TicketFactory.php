@@ -31,6 +31,7 @@ class TicketFactory extends Factory
             'description' => fake()->paragraph(),
             'priority' => Priority::Normal,
             'status' => TicketStatus::New,
+            'total_cost' => 0,
         ];
     }
 

@@ -26,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property TicketStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property float $total_cost
  * 
  * @property-read Customer $customer
  * @property-read Device $device
@@ -58,6 +59,7 @@ class Ticket extends Model
      */
     protected $attributes = [
         'status' => TicketStatus::New,
+        'total_cost' => 0,
     ];
 
     /**
@@ -69,6 +71,7 @@ class Ticket extends Model
     {
         return [
             'status' => TicketStatus::class,
+            'total_cost' => 'float',
         ];
     }
 
@@ -97,6 +100,17 @@ class Ticket extends Model
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class);
+    }
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////    
+
+    public function fillTotalCost(): static
+    {
+        return $this->forceFill([
+            'total_cost' => 0
+                + $this->tasks()->billable()->sum('cost')
+                + $this->orders()->billable()->sum('cost')
+        ]);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////

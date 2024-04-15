@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\Completable;
+use App\Observers\OrderObserver;
 use Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static OrderFactory factory(int $count = null, array $state = [])
  * @method static Builder|static ofStatus(OrderStatus $status)
  */
+#[ObservedBy([OrderObserver::class])]
 class Order extends Model
 {
     use HasFactory, Billable, Completable;

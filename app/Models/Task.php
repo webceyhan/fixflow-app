@@ -6,7 +6,9 @@ use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\Completable;
+use App\Observers\TaskObserver;
 use Database\Factories\TaskFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|static ofType(TaskType $type)
  * @method static Builder|static ofStatus(TaskStatus $status)
  */
+#[ObservedBy([TaskObserver::class])]
 class Task extends Model
 {
     use HasFactory, Billable, Completable;
