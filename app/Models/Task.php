@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Concerns\Billable;
+use App\Models\Concerns\Cancellable;
 use App\Models\Concerns\Completable;
 use App\Observers\TaskObserver;
 use Database\Factories\TaskFactory;
@@ -35,7 +36,7 @@ use Illuminate\Support\Carbon;
 #[ObservedBy([TaskObserver::class])]
 class Task extends Model
 {
-    use HasFactory, Billable, Completable;
+    use HasFactory, Billable, Completable, Cancellable;
 
     /**
      * The attributes that are mass assignable.

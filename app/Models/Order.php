@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\OrderStatus;
 use App\Models\Concerns\Billable;
+use App\Models\Concerns\Cancellable;
 use App\Models\Concerns\Completable;
 use App\Observers\OrderObserver;
 use Database\Factories\OrderFactory;
@@ -34,7 +35,7 @@ use Illuminate\Support\Carbon;
 #[ObservedBy([OrderObserver::class])]
 class Order extends Model
 {
-    use HasFactory, Billable, Completable;
+    use HasFactory, Billable, Completable, Cancellable;
 
     /**
      * The attributes that are mass assignable.
