@@ -47,4 +47,14 @@ class OrderObserver
     {
         //
     }
+
+    /**
+     * Handle the Order "saving" event.
+     */
+    public function saving(Order $order): void
+    {
+        if ($order->isCancelled()) {
+            $order->is_billable = false;
+        }
+    }
 }

@@ -3,11 +3,23 @@
 use App\Models\Order;
 use App\Models\Ticket;
 
+it('can save cancelled order as non-billable', function () {
+    $order = Order::factory()->create();
+
+    expect($order->is_billable)->toBeTrue();
+
+    $order->cancel();
+    $order->refresh();
+
+    expect($order->is_billable)->toBeFalse();
+});
+
 it('can update ticket total_cost on all events', function () {
     $ticket = Ticket::factory()->create();
     $order = Order::factory()->forTicket($ticket)->create();
 
-    // ignore non-billable orders
+    // ignore cancelled, non-billable orders
+    Order::factory()->forTicket($ticket)->cancelled()->create();
     Order::factory()->forTicket($ticket)->free()->create();
 
     $ticket->refresh();

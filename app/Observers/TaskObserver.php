@@ -47,4 +47,14 @@ class TaskObserver
     {
         //
     }
+
+    /**
+     * Handle the Task "saving" event.
+     */
+    public function saving(Task $task): void
+    {
+        if ($task->isCancelled()) {
+            $task->is_billable = false;
+        }
+    }
 }

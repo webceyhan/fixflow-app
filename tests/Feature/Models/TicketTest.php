@@ -166,11 +166,13 @@ it('can update ticket total_cost automatically', function () {
     $task = Task::factory()->forTicket($ticket)->create();
     $order = Order::factory()->forTicket($ticket)->create();
 
-    // ignore non-billable tasks, orders
+    // ignore cancelled, non-billable tasks, orders
+    Task::factory()->forTicket($ticket)->cancelled()->create();
     Task::factory()->forTicket($ticket)->free()->create();
+    Order::factory()->forTicket($ticket)->cancelled()->create();
     Order::factory()->forTicket($ticket)->free()->create();
 
     $ticket->refresh();
 
-    expect($ticket->total_cost)->toBe($task->cost + $order->cost);
+    expect($ticket->total_cost)->toBe(round($task->cost + $order->cost, 2));
 });

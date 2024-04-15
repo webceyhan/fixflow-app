@@ -3,11 +3,23 @@
 use App\Models\Task;
 use App\Models\Ticket;
 
+it('can save cancelled task as non-billable', function () {
+    $task = Task::factory()->create();
+
+    expect($task->is_billable)->toBeTrue();
+
+    $task->cancel();
+    $task->refresh();
+
+    expect($task->is_billable)->toBeFalse();
+});
+
 it('can update ticket total_cost on all events', function () {
     $ticket = Ticket::factory()->create();
     $task = Task::factory()->forTicket($ticket)->create();
 
-    // ignore non-billable tasks
+    // ignore cancelled, non-billable tasks
+    Task::factory()->forTicket($ticket)->cancelled()->create();
     Task::factory()->forTicket($ticket)->free()->create();
 
     $ticket->refresh();
