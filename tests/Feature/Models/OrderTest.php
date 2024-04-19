@@ -85,16 +85,6 @@ it('belongs to a ticket', function () {
     expect($order->ticket->id)->toBe($ticket->id);
 });
 
-// Billable ////////////////////////////////////////////////////////////////////////////////////////
-
-it('can filter orders by billable scope', function () {
-    Order::factory()->create();
-    Order::factory()->free()->create();
-
-    expect(Order::billable()->count())->toBe(1);
-    expect(Order::billable()->first()->is_billable)->toBeTrue();
-});
-
 // Status //////////////////////////////////////////////////////////////////////////////////////////
 
 it('can filter orders by status scope', function (OrderStatus $status) {

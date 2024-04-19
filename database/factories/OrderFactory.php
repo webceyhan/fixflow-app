@@ -61,4 +61,12 @@ class OrderFactory extends Factory
             'status' => $status,
         ]);
     }
+
+    /**
+     * Indicate that the order is cancelled.
+     */
+    public function cancelled(): static
+    {
+        return $this->ofStatus(OrderStatus::Cancelled);
+    }
 }

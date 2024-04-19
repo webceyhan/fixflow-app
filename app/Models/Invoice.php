@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasDueDate;
 use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,17 +20,18 @@ use Illuminate\Support\Carbon;
  * @property Carbon $due_date
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read float $total_paid
+ * @property-read float $total_refunded
  * 
  * @property-read Ticket $ticket
  * @property-read Collection<int, Transaction> $transactions
  * 
  * @method static InvoiceFactory factory(int $count = null, array $state = [])
  * @method static Builder|static unpaid()
- * @method static Builder|static overdue()
  */
 class Invoice extends Model
 {
-    use HasFactory;
+    use HasFactory, HasDueDate;
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +41,7 @@ class Invoice extends Model
     protected $fillable = [
         'total',
         'is_paid',
-        'due_date'
+        'due_date',
     ];
 
     /**
@@ -50,6 +52,8 @@ class Invoice extends Model
     protected $attributes = [
         'total' => 0,
         'is_paid' => false,
+        'total_paid' => 0,
+        'total_refunded' => 0,
     ];
 
     /**
@@ -63,6 +67,8 @@ class Invoice extends Model
             'total' => 'float',
             'is_paid' => 'boolean',
             'due_date' => 'date',
+            'total_paid' => 'float',
+            'total_refunded' => 'float',
         ];
     }
 
@@ -80,12 +86,18 @@ class Invoice extends Model
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Determine if the invoice is overdue.
-     */
-    public function isOverdue(): bool
+    public function fillTotalPaid(): static
     {
-        return $this->due_date->isPast();
+        return $this->forceFill([
+            'total_paid' => $this->transactions()->payments()->sum('amount'),
+        ]);
+    }
+
+    public function fillTotalRefunded(): static
+    {
+        return $this->forceFill([
+            'total_refunded' => $this->transactions()->refunds()->sum('amount'),
+        ]);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
@@ -96,13 +108,5 @@ class Invoice extends Model
     public function scopeUnpaid(Builder $query): void
     {
         $query->where('is_paid', false);
-    }
-
-    /**
-     * Scope a query to only include overdue invoices.
-     */
-    public function scopeOverdue(Builder $query): void
-    {
-        $query->where('due_date', '<', now());
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\Completable;
 use App\Enums\Concerns\HasValues;
 
 enum DeviceStatus: string
 {
-    use HasValues;
+    use HasValues, Completable;
 
     /**
      * Represents a device that has been checked in and is awaiting repair.
@@ -33,4 +34,17 @@ enum DeviceStatus: string
      * Represents a device that has been returned to the customer.
      */
     case CheckedOut = 'checked_out';
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Get list of completed enum cases.
+     */
+    public static function completedCases(): array
+    {
+        return [
+            self::Finished,
+            self::CheckedOut,
+        ];
+    }
 }

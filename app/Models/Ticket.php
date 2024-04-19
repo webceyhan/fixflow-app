@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
+use App\Models\Concerns\Assignable;
+use App\Models\Concerns\Completable;
+use App\Models\Concerns\HasPriority;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,8 +26,12 @@ use Illuminate\Support\Carbon;
  * @property TicketStatus $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property float $total_cost
+ * @property-read int $total_tasks_count
+ * @property-read int $pending_tasks_count
+ * @property-read int $total_orders_count
+ * @property-read int $pending_orders_count
  * 
- * @property-read User|null $assignee
  * @property-read Customer $customer
  * @property-read Device $device
  * @property-read Collection<int, Task> $tasks
@@ -32,15 +39,11 @@ use Illuminate\Support\Carbon;
  * @property-read Invoice|null $invoice
  * 
  * @method static TicketFactory factory(int $count = null, array $state = [])
- * @method static Builder|static assignable()
- * @method static Builder|static assigned()
- * @method static Builder|static ofPriority(Priority $priority)
- * @method static Builder|static prioritized()
  * @method static Builder|static ofStatus(TicketStatus $status)
  */
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, Assignable, HasPriority, Completable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,8 +62,12 @@ class Ticket extends Model
      * @var array
      */
     protected $attributes = [
-        'priority' => Priority::Normal,
         'status' => TicketStatus::New,
+        'total_cost' => 0,
+        'total_tasks_count' => 0,
+        'pending_tasks_count' => 0,
+        'total_orders_count' => 0,
+        'pending_orders_count' => 0,
     ];
 
     /**
@@ -71,17 +78,12 @@ class Ticket extends Model
     protected function casts(): array
     {
         return [
-            'priority' => Priority::class,
             'status' => TicketStatus::class,
+            'total_cost' => 'float',
         ];
     }
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function assignee(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'assignee_id');
-    }
 
     public function customer(): BelongsTo
     {
@@ -108,49 +110,34 @@ class Ticket extends Model
         return $this->hasOne(Invoice::class);
     }
 
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////    
 
-    /**
-     * Determine if the ticket is assignable.
-     */
-    public function isAssignable(): bool
+    public function fillTotalCost(): static
     {
-        return $this->assignee_id === null;
+        return $this->forceFill([
+            'total_cost' => 0
+                + $this->tasks()->billable()->sum('cost')
+                + $this->orders()->billable()->sum('cost')
+        ]);
+    }
+
+    public function fillTaskCounters(): static
+    {
+        return $this->forceFill([
+            'total_tasks_count' => $this->tasks()->count(),
+            'pending_tasks_count' => $this->tasks()->pending()->count(),
+        ]);
+    }
+
+    public function fillOrderCounters(): static
+    {
+        return $this->forceFill([
+            'total_orders_count' => $this->orders()->count(),
+            'pending_orders_count' => $this->orders()->pending()->count(),
+        ]);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tickets that are assignable.
-     */
-    public function scopeAssignable(Builder $query): void
-    {
-        $query->whereNull('assignee_id');
-    }
-
-    /**
-     * Scope a query to only include tickets that are already assigned.
-     */
-    public function scopeAssigned(Builder $query): void
-    {
-        $query->whereNotNull('assignee_id');
-    }
-
-    /**
-     * Scope a query to only include models of a given priority.
-     */
-    public function scopeOfPriority(Builder $query, Priority $priority): void
-    {
-        $query->where('priority', $priority->value);
-    }
-
-    /**
-     * Scope a query to order models by priority from high to low.
-     */
-    public function scopePrioritized(Builder $query): void
-    {
-        $query->orderBy('priority', 'desc');
-    }
 
     /**
      * Scope a query to only include tickets of a given status.

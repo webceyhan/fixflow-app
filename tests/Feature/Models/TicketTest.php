@@ -22,6 +22,11 @@ it('can initialize ticket', function () {
     expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeNull();
     expect($ticket->updated_at)->toBeNull();
+    expect($ticket->total_cost)->toBe(0.0);
+    expect($ticket->total_tasks_count)->toBe(0);
+    expect($ticket->pending_tasks_count)->toBe(0);
+    expect($ticket->total_orders_count)->toBe(0);
+    expect($ticket->pending_orders_count)->toBe(0);
 });
 
 it('can create ticket', function () {
@@ -35,6 +40,11 @@ it('can create ticket', function () {
     expect($ticket->status)->toBe(TicketStatus::New);
     expect($ticket->created_at)->toBeInstanceOf(Carbon::class);
     expect($ticket->updated_at)->toBeInstanceOf(Carbon::class);
+    expect($ticket->total_cost)->toBe(0.0);
+    expect($ticket->total_tasks_count)->toBe(0);
+    expect($ticket->pending_tasks_count)->toBe(0);
+    expect($ticket->total_orders_count)->toBe(0);
+    expect($ticket->pending_orders_count)->toBe(0);
 });
 
 it('can create ticket with assignee', function () {
@@ -75,55 +85,6 @@ it('can delete ticket', function () {
     $ticket->delete();
 
     expect(Ticket::find($ticket->id))->toBeNull();
-});
-
-// Assignee ////////////////////////////////////////////////////////////////////////////////////////
-
-it('can have assignee', function () {
-    $user = User::factory()->create();
-    $ticket = Ticket::factory()->forAssignee($user)->create();
-
-    expect($ticket->assignee)->toBeInstanceOf(User::class);
-    expect($ticket->assignee->id)->toBe($user->id);
-});
-
-it('can determine if ticket is assignable', function () {
-    $ticket = Ticket::factory()->create();
-
-    expect($ticket->isAssignable())->toBeTrue();
-    expect($ticket->assignee_id)->toBeNull();
-});
-
-it('can assign ticket to a user', function () {
-    $user = User::factory()->create();
-    $ticket = Ticket::factory()->create();
-
-    // assign
-    $ticket->assignee()->associate($user)->save();
-
-    expect($ticket->isAssignable())->toBeFalse();
-
-    // unassign
-    $ticket->assignee()->dissociate()->save();
-
-    expect($ticket->isAssignable())->toBeTrue();
-});
-
-describe('scopes', function () {
-    beforeEach(function () {
-        Ticket::factory()->create();
-        Ticket::factory()->assigned()->create();
-    });
-
-    it('can filter tickets by assignable scope', function () {
-        expect(Ticket::assignable()->count())->toBe(1);
-        expect(Ticket::assignable()->first()->isAssignable())->toBeTrue();
-    });
-
-    it('can filter tickets by assigned scope', function () {
-        expect(Ticket::assigned()->count())->toBe(1);
-        expect(Ticket::assigned()->first()->isAssignable())->toBeFalse();
-    });
 });
 
 // Customer ////////////////////////////////////////////////////////////////////////////////////////
@@ -197,27 +158,6 @@ it('can delete ticket with invoice', function () {
     expect(Invoice::count())->toBe(0);
 });
 
-// Priority ////////////////////////////////////////////////////////////////////////////////////////
-
-it('can filter tickets by priority scope', function (Priority $priority) {
-    Ticket::factory()->ofPriority($priority)->create();
-
-    expect(Ticket::ofPriority($priority)->count())->toBe(1);
-    expect(Ticket::ofPriority($priority)->first()->priority)->toBe($priority);
-})->with(Priority::cases());
-
-it('can sort tickets by prioritized scope', function () {
-    Ticket::factory()->create();
-    Ticket::factory()->ofPriority(Priority::Low)->create();
-    Ticket::factory()->ofPriority(Priority::High)->create();
-
-    expect(Ticket::prioritized()->get()->map->priority->all())->toBe([
-        Priority::High,
-        Priority::Normal,
-        Priority::Low,
-    ]);
-});
-
 // Status ////////////////////////////////////////////////////////////////////////////////////////
 
 it('can filter tickets by status scope', function (TicketStatus $status) {
@@ -226,3 +166,47 @@ it('can filter tickets by status scope', function (TicketStatus $status) {
     expect(Ticket::ofStatus($status)->count())->toBe(1);
     expect(Ticket::ofStatus($status)->first()->status)->toBe($status);
 })->with(TicketStatus::cases());
+
+// Total Cost //////////////////////////////////////////////////////////////////////////////////////
+
+it('can update ticket total_cost automatically', function () {
+    $ticket = Ticket::factory()->create();
+    $task = Task::factory()->forTicket($ticket)->create();
+    $order = Order::factory()->forTicket($ticket)->create();
+
+    // ignore cancelled, non-billable tasks, orders
+    Task::factory()->forTicket($ticket)->cancelled()->create();
+    Task::factory()->forTicket($ticket)->free()->create();
+    Order::factory()->forTicket($ticket)->cancelled()->create();
+    Order::factory()->forTicket($ticket)->free()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_cost)->toBe(round($task->cost + $order->cost, 2));
+});
+
+// Task Counters ///////////////////////////////////////////////////////////////////////////////////
+
+it('can update ticket task counters automatically', function () {
+    $ticket = Ticket::factory()->create();
+    Task::factory()->forTicket($ticket)->create();
+    Task::factory()->forTicket($ticket)->cancelled()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_tasks_count)->toBe(2);
+    expect($ticket->pending_tasks_count)->toBe(1);
+});
+
+// Order Counters //////////////////////////////////////////////////////////////////////////////////
+
+it('can update ticket order counters automatically', function () {
+    $ticket = Ticket::factory()->create();
+    Order::factory()->forTicket($ticket)->create();
+    Order::factory()->forTicket($ticket)->cancelled()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_orders_count)->toBe(2);
+    expect($ticket->pending_orders_count)->toBe(1);
+});
