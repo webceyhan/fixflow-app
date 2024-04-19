@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskStatus;
 use App\Models\Task;
 use App\Models\Ticket;
 
@@ -37,4 +38,29 @@ it('can update ticket total_cost on all events', function () {
     $ticket->refresh();
 
     expect($ticket->total_cost)->toBe(0.0);
+});
+
+it('can update ticket task counters on all events', function () {
+    $ticket = Ticket::factory()->create();
+    $task = Task::factory()->forTicket($ticket)->create();
+    Task::factory()->forTicket($ticket)->cancelled()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_tasks_count)->toBe(2);
+    expect($ticket->pending_tasks_count)->toBe(1);
+
+    // update task status
+    $task->update(['status' => TaskStatus::Completed]);
+    $ticket->refresh();
+
+    expect($ticket->total_tasks_count)->toBe(2);
+    expect($ticket->pending_tasks_count)->toBe(0);
+
+    // delete task
+    $task->delete();
+    $ticket->refresh();
+
+    expect($ticket->total_tasks_count)->toBe(1);
+    expect($ticket->pending_tasks_count)->toBe(0);
 });

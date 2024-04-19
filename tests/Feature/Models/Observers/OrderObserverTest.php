@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\Ticket;
 
@@ -37,4 +38,29 @@ it('can update ticket total_cost on all events', function () {
     $ticket->refresh();
 
     expect($ticket->total_cost)->toBe(0.0);
+});
+
+it('can update ticket order counters on all events', function () {
+    $ticket = Ticket::factory()->create();
+    $order = Order::factory()->forTicket($ticket)->create();
+    Order::factory()->forTicket($ticket)->cancelled()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_orders_count)->toBe(2);
+    expect($ticket->pending_orders_count)->toBe(1);
+
+    // update order status
+    $order->update(['status' => OrderStatus::Received]);
+    $ticket->refresh();
+
+    expect($ticket->total_orders_count)->toBe(2);
+    expect($ticket->pending_orders_count)->toBe(0);
+
+    // delete order
+    $order->delete();
+    $ticket->refresh();
+
+    expect($ticket->total_orders_count)->toBe(1);
+    expect($ticket->pending_orders_count)->toBe(0);
 });

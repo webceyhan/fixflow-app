@@ -11,7 +11,7 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        $order->ticket->fillTotalCost()->save();
+        $order->ticket->fillTotalCost()->fillOrderCounters()->save();
     }
 
     /**
@@ -20,7 +20,7 @@ class OrderObserver
     public function updated(Order $order): void
     {
         if ($order->wasChanged(['cost', 'status'])) {
-            $order->ticket->fillTotalCost()->save();
+            $order->ticket->fillTotalCost()->fillOrderCounters()->save();
         }
     }
 
@@ -29,7 +29,7 @@ class OrderObserver
      */
     public function deleted(Order $order): void
     {
-        $order->ticket->fillTotalCost()->save();
+        $order->ticket->fillTotalCost()->fillOrderCounters()->save();
     }
 
     /**

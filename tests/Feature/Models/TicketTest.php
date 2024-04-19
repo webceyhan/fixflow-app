@@ -23,6 +23,10 @@ it('can initialize ticket', function () {
     expect($ticket->created_at)->toBeNull();
     expect($ticket->updated_at)->toBeNull();
     expect($ticket->total_cost)->toBe(0.0);
+    expect($ticket->total_tasks_count)->toBe(0);
+    expect($ticket->pending_tasks_count)->toBe(0);
+    expect($ticket->total_orders_count)->toBe(0);
+    expect($ticket->pending_orders_count)->toBe(0);
 });
 
 it('can create ticket', function () {
@@ -37,6 +41,10 @@ it('can create ticket', function () {
     expect($ticket->created_at)->toBeInstanceOf(Carbon::class);
     expect($ticket->updated_at)->toBeInstanceOf(Carbon::class);
     expect($ticket->total_cost)->toBe(0.0);
+    expect($ticket->total_tasks_count)->toBe(0);
+    expect($ticket->pending_tasks_count)->toBe(0);
+    expect($ticket->total_orders_count)->toBe(0);
+    expect($ticket->pending_orders_count)->toBe(0);
 });
 
 it('can create ticket with assignee', function () {
@@ -175,4 +183,30 @@ it('can update ticket total_cost automatically', function () {
     $ticket->refresh();
 
     expect($ticket->total_cost)->toBe(round($task->cost + $order->cost, 2));
+});
+
+// Task Counters ///////////////////////////////////////////////////////////////////////////////////
+
+it('can update ticket task counters automatically', function () {
+    $ticket = Ticket::factory()->create();
+    Task::factory()->forTicket($ticket)->create();
+    Task::factory()->forTicket($ticket)->cancelled()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_tasks_count)->toBe(2);
+    expect($ticket->pending_tasks_count)->toBe(1);
+});
+
+// Order Counters //////////////////////////////////////////////////////////////////////////////////
+
+it('can update ticket order counters automatically', function () {
+    $ticket = Ticket::factory()->create();
+    Order::factory()->forTicket($ticket)->create();
+    Order::factory()->forTicket($ticket)->cancelled()->create();
+
+    $ticket->refresh();
+
+    expect($ticket->total_orders_count)->toBe(2);
+    expect($ticket->pending_orders_count)->toBe(1);
 });

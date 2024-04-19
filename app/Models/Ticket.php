@@ -27,6 +27,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property float $total_cost
+ * @property-read int $total_tasks_count
+ * @property-read int $pending_tasks_count
+ * @property-read int $total_orders_count
+ * @property-read int $pending_orders_count
  * 
  * @property-read Customer $customer
  * @property-read Device $device
@@ -60,6 +64,10 @@ class Ticket extends Model
     protected $attributes = [
         'status' => TicketStatus::New,
         'total_cost' => 0,
+        'total_tasks_count' => 0,
+        'pending_tasks_count' => 0,
+        'total_orders_count' => 0,
+        'pending_orders_count' => 0,
     ];
 
     /**
@@ -110,6 +118,22 @@ class Ticket extends Model
             'total_cost' => 0
                 + $this->tasks()->billable()->sum('cost')
                 + $this->orders()->billable()->sum('cost')
+        ]);
+    }
+
+    public function fillTaskCounters(): static
+    {
+        return $this->forceFill([
+            'total_tasks_count' => $this->tasks()->count(),
+            'pending_tasks_count' => $this->tasks()->pending()->count(),
+        ]);
+    }
+
+    public function fillOrderCounters(): static
+    {
+        return $this->forceFill([
+            'total_orders_count' => $this->orders()->count(),
+            'pending_orders_count' => $this->orders()->pending()->count(),
         ]);
     }
 
