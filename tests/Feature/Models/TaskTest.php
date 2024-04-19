@@ -88,16 +88,6 @@ it('belongs to a ticket', function () {
     expect($task->ticket->id)->toBe($ticket->id);
 });
 
-// Billable ////////////////////////////////////////////////////////////////////////////////////////
-
-it('can filter tasks by billable scope', function () {
-    Task::factory()->create();
-    Task::factory()->free()->create();
-
-    expect(Task::billable()->count())->toBe(1);
-    expect(Task::billable()->first()->is_billable)->toBeTrue();
-});
-
 // Type ////////////////////////////////////////////////////////////////////////////////////////////
 
 it('can filter tasks by type scope', function (TaskType $type) {

@@ -4,7 +4,12 @@ namespace App\Models;
 
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
+use App\Models\Concerns\Billable;
+use App\Models\Concerns\Cancellable;
+use App\Models\Concerns\Completable;
+use App\Observers\TaskObserver;
 use Database\Factories\TaskFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,13 +30,13 @@ use Illuminate\Support\Carbon;
  * @property-read Ticket $ticket
  * 
  * @method static TaskFactory factory(int $count = null, array $state = [])
- * @method static Builder|static billable()
  * @method static Builder|static ofType(TaskType $type)
  * @method static Builder|static ofStatus(TaskStatus $status)
  */
+#[ObservedBy([TaskObserver::class])]
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, Billable, Completable, Cancellable;
 
     /**
      * The attributes that are mass assignable.
@@ -52,8 +57,6 @@ class Task extends Model
      * @var array
      */
     protected $attributes = [
-        'cost' => 0,
-        'is_billable' => true,
         'type' => TaskType::Repair,
         'status' => TaskStatus::New,
     ];
@@ -66,8 +69,6 @@ class Task extends Model
     protected function casts(): array
     {
         return [
-            'cost' => 'float',
-            'is_billable' => 'boolean',
             'type' => TaskType::class,
             'status' => TaskStatus::class,
         ];
@@ -81,14 +82,6 @@ class Task extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include billable tasks.
-     */
-    public function scopeBillable(Builder $query): void
-    {
-        $query->where('is_billable', true);
-    }
 
     /**
      * Scope a query to only include tasks of a given type.

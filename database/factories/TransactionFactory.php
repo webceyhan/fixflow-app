@@ -68,4 +68,12 @@ class TransactionFactory extends Factory
             'type' => $type,
         ]);
     }
+
+    /**
+     * Indicate that the transaction is a refund.
+     */
+    public function refund(): static
+    {
+        return $this->ofType(TransactionType::Refund);
+    }
 }

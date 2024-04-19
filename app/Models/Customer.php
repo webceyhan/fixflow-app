@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Contactable;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,7 +30,7 @@ use Illuminate\Support\Carbon;
  */
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, Contactable;
 
     /**
      * The attributes that are mass assignable.

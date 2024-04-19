@@ -22,6 +22,13 @@ return new class extends Migration
             $table->enum('priority', Priority::values())->default(Priority::Normal);
             $table->enum('status', TicketStatus::values())->default(TicketStatus::New);
             $table->timestamps();
+
+            // aggregate columns
+            $table->decimal('total_cost')->default(0);
+            $table->integer('total_tasks_count')->default(0);
+            $table->integer('pending_tasks_count')->default(0);
+            $table->integer('total_orders_count')->default(0);
+            $table->integer('pending_orders_count')->default(0);
         });
     }
 

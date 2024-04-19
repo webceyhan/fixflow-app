@@ -18,6 +18,10 @@ return new class extends Migration
             $table->boolean('is_paid')->default(false);
             $table->date('due_date');
             $table->timestamps();
+
+            // aggregate columns
+            $table->decimal('total_paid')->default(0);
+            $table->decimal('total_refunded')->default(0);
         });
     }
 

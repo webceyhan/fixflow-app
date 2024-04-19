@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\Completable;
 use App\Enums\Concerns\HasValues;
 
 enum TaskStatus: string
 {
-    use HasValues;
+    use HasValues, Completable;
 
     /**
      * Represents an task that has been created and is pending approval.
@@ -28,4 +29,17 @@ enum TaskStatus: string
      * Represents an task that has been cancelled.
      */
     case Cancelled = 'cancelled';
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Get list of completed enum cases.
+     */
+    public static function completedCases(): array
+    {
+        return [
+            self::Completed,
+            self::Cancelled,
+        ];
+    }
 }

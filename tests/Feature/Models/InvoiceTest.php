@@ -15,6 +15,8 @@ it('can initialize invoice', function () {
     expect($invoice->due_date)->toBeNull();
     expect($invoice->created_at)->toBeNull();
     expect($invoice->updated_at)->toBeNull();
+    expect($invoice->total_paid)->toBe(0.0);
+    expect($invoice->total_refunded)->toBe(0.0);
 });
 
 it('can create invoice', function () {
@@ -27,6 +29,8 @@ it('can create invoice', function () {
     expect($invoice->due_date)->toBeInstanceOf(Carbon::class);
     expect($invoice->created_at)->toBeInstanceOf(Carbon::class);
     expect($invoice->updated_at)->toBeInstanceOf(Carbon::class);
+    expect($invoice->total_paid)->toBe(0.0);
+    expect($invoice->total_refunded)->toBe(0.0);
 });
 
 it('can create invoice as paid', function () {
@@ -99,26 +103,4 @@ it('can filter invoices by unpaid scope', function () {
 
     expect(Invoice::unpaid()->count())->toBe(1);
     expect(Invoice::unpaid()->first()->is_paid)->toBeFalse();
-});
-
-// Overdue /////////////////////////////////////////////////////////////////////////////////////////
-
-it('can determine if invoice is overdue', function () {
-    $invoice = Invoice::factory()->overdue()->create();
-
-    expect($invoice->isOverdue())->toBeTrue();
-
-    // update due date
-    $invoice->update(['due_date' => now()->addDays(7)]);
-    $invoice->refresh();
-
-    expect($invoice->isOverdue())->toBeFalse();
-});
-
-it('can filter invoices by overdue scope', function () {
-    Invoice::factory()->create();
-    Invoice::factory()->overdue()->create();
-
-    expect(Invoice::overdue()->count())->toBe(1);
-    expect(Invoice::overdue()->first()->isOverdue())->toBeTrue();
 });

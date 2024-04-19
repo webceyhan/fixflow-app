@@ -69,4 +69,12 @@ class TaskFactory extends Factory
             'status' => $status,
         ]);
     }
+
+    /**
+     * Indicate that the task is cancelled.
+     */
+    public function cancelled(): static
+    {
+        return $this->ofStatus(TaskStatus::Cancelled);
+    }
 }
