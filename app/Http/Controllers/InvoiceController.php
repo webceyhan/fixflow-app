@@ -39,9 +39,11 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
+    public function show(Invoice $invoice): Response
     {
-        //
+        return Inertia::render('Invoices/Show', [
+            'invoice' => $invoice,
+        ]);
     }
 
     /**

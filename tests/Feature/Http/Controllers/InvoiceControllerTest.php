@@ -30,3 +30,25 @@ it('can view all invoices', function () {
                 )
         );
 });
+
+it('can view an invoice', function () {
+    $user = User::factory()->create();
+    $invoice = Invoice::factory()->create();
+
+    $response = $this->actingAs($user)->get('/invoices/' . $invoice->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Invoices/Show')
+                ->has('invoice')
+                ->where('invoice.id', $invoice->id)
+                ->where('invoice.ticket_id', $invoice->ticket_id)
+                ->where('invoice.total', $invoice->total)
+                ->where('invoice.is_paid', $invoice->is_paid)
+                // ->where('invoice.due_date', $invoice->due_date)
+                ->where('invoice.total_paid', (int)$invoice->total_paid)
+                ->where('invoice.total_refunded', (int)$invoice->total_refunded)
+        );
+});
