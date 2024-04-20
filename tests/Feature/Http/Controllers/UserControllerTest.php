@@ -28,3 +28,27 @@ it('can view all users', function () {
                 )
         );
 });
+
+it('can view a user', function () {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get('/users/' . $user->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Users/Show')
+                ->has(
+                    'user',
+                    fn (Assert $page) => $page
+                        ->where('id', $user->id)
+                        ->where('name', $user->name)
+                        ->where('email', $user->email)
+                        ->where('phone', $user->phone)
+                        ->where('role', $user->role->value)
+                        ->where('status', $user->status->value)
+                        ->etc()
+                )
+        );
+});
