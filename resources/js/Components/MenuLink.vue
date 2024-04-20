@@ -14,7 +14,7 @@ defineProps<{
 </script>
 
 <template>
-  <li>
+  <li class="w-full">
     <Link :href="href" :class="{ active }" v-bind="$attrs">
       <slot />
     </Link>

@@ -10,7 +10,7 @@ defineProps<{
   <div :class="['dropdown', { 'dropdown-end': alignEnd }]">
     <!-- trigger -->
     <slot name="trigger">
-      <div tabindex="0" role="button" class="btn m-1">
+      <div tabindex="0" role="button" class="btn">
         {{ label }}
         <svg
           class="ms-2 -me-0.5 h-4 w-4"
