@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import MenuLink from "@/Components/MenuLink.vue";
 import Menu from "@/Components/Menu.vue";
 import Navbar from "@/Components/Navbar.vue";
 import Drawer from "@/Components/Drawer.vue";
+import Icon from "@/Components/Icon.vue";
 </script>
 
 <template>
@@ -16,7 +16,7 @@ import Drawer from "@/Components/Drawer.vue";
         <!-- Logo -->
         <div class="flex-1">
           <Link :href="route('dashboard')">
-            <ApplicationLogo class="block h-9 w-auto fill-current px-2" />
+            <Icon name="logo" class="w-16 h-10 px-2" />
           </Link>
         </div>
 
