@@ -41,6 +41,12 @@ import Icon from "@/Components/Icon.vue";
             <MenuLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </MenuLink>
+            <MenuLink
+              :href="route('users.index')"
+              :active="route().current('users.index')"
+            >
+              Users
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->
