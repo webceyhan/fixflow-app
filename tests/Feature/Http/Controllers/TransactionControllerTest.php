@@ -29,3 +29,28 @@ it('can view all transactions', function () {
                 )
         );
 });
+
+it('can view a transaction', function () {
+    $user = User::factory()->create();
+    $transaction = Transaction::factory()->create();
+
+    $response = $this->actingAs($user)->get('/transactions/' . $transaction->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Transactions/Show')
+                ->has(
+                    'transaction',
+                    fn (Assert $page) => $page
+                        ->where('id', $transaction->id)
+                        ->where('invoice_id', $transaction->invoice_id)
+                        ->where('amount', $transaction->amount)
+                        ->where('note', $transaction->note)
+                        ->where('method', $transaction->method->value)
+                        ->where('type', $transaction->type->value)
+                        ->etc()
+                )
+        );
+});
