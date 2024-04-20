@@ -13,7 +13,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
   <div>
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen">
       <Navbar class="gap-2 sm:px-4">
         <!-- Logo -->
         <div class="max-sm:flex-1">
@@ -104,7 +104,7 @@ const showingNavigationDropdown = ref(false);
       </Navbar>
 
       <!-- Page Heading -->
-      <header class="bg-white shadow" v-if="$slots.header">
+      <header class="bg-neutral text-neutral-content shadow" v-if="$slots.header">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <slot name="header" />
         </div>
