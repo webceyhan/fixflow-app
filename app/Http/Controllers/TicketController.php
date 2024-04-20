@@ -39,9 +39,11 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show(Ticket $ticket): Response
     {
-        //
+        return Inertia::render('Tickets/Show', [
+            'ticket' => $ticket,
+        ]);
     }
 
     /**

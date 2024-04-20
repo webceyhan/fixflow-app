@@ -34,3 +34,33 @@ it('can view all tickets', function () {
                 )
         );
 });
+
+it('can view a ticket', function () {
+    $user = User::factory()->create();
+    $ticket = Ticket::factory()->create();
+
+    $response = $this->actingAs($user)->get('/tickets/' . $ticket->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Tickets/Show')
+                ->has(
+                    'ticket',
+                    fn (Assert $page) => $page
+                        ->where('id', $ticket->id)
+                        ->where('assignee_id', $ticket->assignee_id)
+                        ->where('customer_id', $ticket->customer_id)
+                        ->where('description', $ticket->description)
+                        ->where('priority', $ticket->priority->value)
+                        ->where('status', $ticket->status->value)
+                        ->where('total_cost', (int)$ticket->total_cost)
+                        ->where('total_tasks_count', $ticket->total_tasks_count)
+                        ->where('pending_tasks_count', $ticket->pending_tasks_count)
+                        ->where('total_orders_count', $ticket->total_orders_count)
+                        ->where('pending_orders_count', $ticket->pending_orders_count)
+                        ->etc()
+                )
+        );
+});
