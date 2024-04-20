@@ -29,3 +29,28 @@ it('can view all customers', function () {
                 )
         );
 });
+
+it('can view a customer', function () {
+    $user = User::factory()->create();
+    $customer = Customer::factory()->create();
+
+    $response = $this->actingAs($user)->get('/customers/' . $customer->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Customers/Show')
+                ->has(
+                    'customer',
+                    fn (Assert $page) => $page
+                        ->where('id', $customer->id)
+                        ->where('name', $customer->name)
+                        ->where('email', $customer->email)
+                        ->where('phone', $customer->phone)
+                        ->where('address', $customer->address)
+                        ->where('note', $customer->note)
+                        ->etc()
+                )
+        );
+});

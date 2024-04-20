@@ -39,9 +39,11 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(Customer $customer): Response
     {
-        //
+        return Inertia::render('Customers/Show', [
+            'customer' => $customer,
+        ]);
     }
 
     /**
