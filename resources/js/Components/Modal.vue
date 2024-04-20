@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, watch } from "vue";
+import Icon from "@/Components/Icon.vue";
 
 const emit = defineEmits(["update:open"]);
 
@@ -51,7 +52,7 @@ watch(
             class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             @click="emit('update:open', false)"
           >
-            ✕
+            <Icon name="close" class="w-6 h-6" />
           </button>
         </form>
 

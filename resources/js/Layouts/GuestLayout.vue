@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Card from "@/Components/Card.vue";
+import Icon from "@/Components/Icon.vue";
 import { Link } from "@inertiajs/vue3";
 </script>
 
@@ -8,7 +8,7 @@ import { Link } from "@inertiajs/vue3";
   <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
     <div>
       <Link href="/">
-        <ApplicationLogo class="w-20 h-20 fill-current" />
+        <Icon name="logo" class="w-20 h-20" />
       </Link>
     </div>
 
