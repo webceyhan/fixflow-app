@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('tasks', TaskController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('invoices', InvoiceController::class);
+    Route::resource('transactions', TransactionController::class);
 });
 
 require __DIR__ . '/auth.php';
