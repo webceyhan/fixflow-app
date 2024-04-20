@@ -30,3 +30,29 @@ it('can view all tasks', function () {
                 )
         );
 });
+
+it('can view a task', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->create();
+
+    $response = $this->actingAs($user)->get('/tasks/' . $task->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Tasks/Show')
+                ->has(
+                    'task',
+                    fn (Assert $page) => $page
+                        ->where('id', $task->id)
+                        ->where('ticket_id', $task->ticket_id)
+                        ->where('description', $task->description)
+                        ->where('cost', $task->cost)
+                        ->where('is_billable', $task->is_billable)
+                        ->where('type', $task->type->value)
+                        ->where('status', $task->status->value)
+                        ->etc()
+                )
+        );
+});
