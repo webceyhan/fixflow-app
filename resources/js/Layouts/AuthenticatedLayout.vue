@@ -53,6 +53,12 @@ import Icon from "@/Components/Icon.vue";
             >
               Companies
             </MenuLink>
+            <MenuLink
+              :href="route('customers.index')"
+              :active="route().current('customers.index')"
+            >
+              Customers
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->
