@@ -31,3 +31,30 @@ it('can view all devices', function () {
                 )
         );
 });
+
+it('can view a device', function () {
+    $user = User::factory()->create();
+    $device = Device::factory()->create();
+
+    $response = $this->actingAs($user)->get('/devices/' . $device->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Devices/Show')
+                ->has(
+                    'device',
+                    fn (Assert $page) => $page
+                        ->where('id', $device->id)
+                        ->where('customer_id', $device->customer_id)
+                        ->where('model', $device->model)
+                        ->where('brand', $device->brand)
+                        ->where('serial_number', $device->serial_number)
+                        ->where('warranty_expire_date', $device->warranty_expire_date)
+                        ->where('type', $device->type->value)
+                        ->where('status', $device->status->value)
+                        ->etc()
+                )
+        );
+});

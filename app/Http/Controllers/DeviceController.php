@@ -39,9 +39,11 @@ class DeviceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Device $device)
+    public function show(Device $device): Response
     {
-        //
+        return Inertia::render('Devices/Show', [
+            'device' => $device,
+        ]);
     }
 
     /**
