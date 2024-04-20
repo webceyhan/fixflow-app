@@ -59,6 +59,12 @@ import Icon from "@/Components/Icon.vue";
             >
               Customers
             </MenuLink>
+            <MenuLink
+              :href="route('devices.index')"
+              :active="route().current('devices.index')"
+            >
+              Devices
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->
