@@ -28,3 +28,27 @@ it('can view all companies', function () {
                 )
         );
 });
+
+it('can view a company', function () {
+    $user = User::factory()->create();
+    $company = Company::factory()->create();
+
+    $response = $this->actingAs($user)->get('/companies/' . $company->id);
+
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Companies/Show')
+                ->has(
+                    'company',
+                    fn (Assert $page) => $page
+                        ->where('id', $company->id)
+                        ->where('name', $company->name)
+                        ->where('email', $company->email)
+                        ->where('phone', $company->phone)
+                        ->where('vat_number', $company->vat_number)
+                        ->etc()
+                )
+        );
+});

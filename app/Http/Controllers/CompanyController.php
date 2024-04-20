@@ -39,9 +39,11 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(Company $company): Response
     {
-        //
+        return Inertia::render('Companies/Show', [
+            'company' => $company,
+        ]);
     }
 
     /**
