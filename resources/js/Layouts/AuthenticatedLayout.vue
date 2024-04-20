@@ -65,6 +65,12 @@ import Icon from "@/Components/Icon.vue";
             >
               Devices
             </MenuLink>
+            <MenuLink
+              :href="route('tickets.index')"
+              :active="route().current('tickets.index')"
+            >
+              Tickets
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->
