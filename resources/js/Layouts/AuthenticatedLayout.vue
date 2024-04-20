@@ -71,6 +71,12 @@ import Icon from "@/Components/Icon.vue";
             >
               Tickets
             </MenuLink>
+            <MenuLink
+              :href="route('tasks.index')"
+              :active="route().current('tasks.index')"
+            >
+              Tasks
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->
