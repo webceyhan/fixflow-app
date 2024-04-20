@@ -77,6 +77,12 @@ import Icon from "@/Components/Icon.vue";
             >
               Tasks
             </MenuLink>
+            <MenuLink
+              :href="route('orders.index')"
+              :active="route().current('orders.index')"
+            >
+              Orders
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->

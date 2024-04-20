@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TicketController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('devices', DeviceController::class);
     Route::resource('tickets', TicketController::class);
     Route::resource('tasks', TaskController::class);
+    Route::resource('orders', OrderController::class);
 });
 
 require __DIR__ . '/auth.php';
