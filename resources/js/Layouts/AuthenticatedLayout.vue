@@ -83,6 +83,12 @@ import Icon from "@/Components/Icon.vue";
             >
               Orders
             </MenuLink>
+            <MenuLink
+              :href="route('invoices.index')"
+              :active="route().current('invoices.index')"
+            >
+              Invoices
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->
