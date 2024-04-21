@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import DeleteButton from "@/Components/DeleteButton.vue";
 
 defineProps<{
   company: any;
@@ -18,6 +19,10 @@ defineProps<{
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <pre>{{ company }}</pre>
+
+        <br />
+
+        <DeleteButton :href="route('companies.destroy', company.id)" />
       </div>
     </div>
   </AuthenticatedLayout>

@@ -52,3 +52,14 @@ it('can view a company', function () {
                 )
         );
 });
+
+it('can delete a company', function () {
+    $user = User::factory()->create();
+    $company = Company::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/companies/' . $company->id);
+
+    $response->assertRedirect('/companies');
+
+    $this->assertNull($company->fresh());
+});
