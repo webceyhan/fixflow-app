@@ -54,3 +54,14 @@ it('can view a transaction', function () {
                 )
         );
 });
+
+it('can delete a transaction', function () {
+    $user = User::factory()->create();
+    $transaction = Transaction::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/transactions/' . $transaction->id);
+
+    $response->assertRedirect('/transactions');
+
+    $this->assertNull($transaction->fresh());
+});
