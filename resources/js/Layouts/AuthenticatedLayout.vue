@@ -6,7 +6,6 @@ import Menu from "@/Components/Menu/Menu.vue";
 import MenuLink from "@/Components/Menu/MenuLink.vue";
 import MenuGroup from "@/Components/Menu/MenuGroup.vue";
 import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
 import Icon from "@/Components/Icon.vue";
 </script>
 
@@ -24,8 +23,8 @@ import Icon from "@/Components/Icon.vue";
         <!-- Settings Dropdown -->
         <div class="max-sm:hidden flex-none">
           <Dropdown :label="$page.props.auth.user.name" align-end ghost>
-            <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-            <DropdownLink :href="route('logout')" method="post"> Log Out </DropdownLink>
+            <MenuLink label="Profile" :href="route('profile.edit')" />
+            <MenuLink label="Log Out" :href="route('logout')" method="post" />
           </Dropdown>
         </div>
 
