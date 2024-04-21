@@ -56,3 +56,14 @@ it('can view a task', function () {
                 )
         );
 });
+
+it('can delete a task', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/tasks/' . $task->id);
+
+    $response->assertRedirect('/tasks');
+
+    $this->assertNull($task->fresh());
+});
