@@ -54,3 +54,14 @@ it('can view a customer', function () {
                 )
         );
 });
+
+it('can delete a customer', function () {
+    $user = User::factory()->create();
+    $customer = Customer::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/customers/' . $customer->id);
+
+    $response->assertRedirect('/customers');
+
+    $this->assertNull($customer->fresh());
+});
