@@ -52,3 +52,14 @@ it('can view an invoice', function () {
                 ->where('invoice.total_refunded', (int)$invoice->total_refunded)
         );
 });
+
+it('can delete an invoice', function () {
+    $user = User::factory()->create();
+    $invoice = Invoice::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/invoices/' . $invoice->id);
+
+    $response->assertRedirect('/invoices');
+
+    $this->assertNull($invoice->fresh());
+});
