@@ -1,16 +1,20 @@
 <script setup lang="ts">
-defineProps<{
+/**
+ * DiasyUI classes
+ */
+interface Props {
   label?: string;
   error?: string;
   inline?: boolean;
-}>();
+}
+
+defineProps<Props>();
 </script>
 
 <template>
   <div v-if="inline" class="form-control">
     <label class="label cursor-pointer justify-start gap-3">
-      <slot />
-      <span class="label-text">{{ label }}</span>
+      <slot /> <span class="label-text">{{ label }}</span>
     </label>
   </div>
 
