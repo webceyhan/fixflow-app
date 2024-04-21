@@ -4,6 +4,7 @@ import Navbar from "@/Components/Navbar.vue";
 import Drawer from "@/Components/Drawer.vue";
 import Menu from "@/Components/Menu/Menu.vue";
 import MenuLink from "@/Components/Menu/MenuLink.vue";
+import MenuGroup from "@/Components/Menu/MenuGroup.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import Icon from "@/Components/Icon.vue";
@@ -49,19 +50,13 @@ import Icon from "@/Components/Icon.vue";
           <div class="sm:hidden divider" />
 
           <Menu class="sm:hidden">
-            <li>
-              <h2 class="menu-title">
-                <p class="text-base text-base-content">
-                  {{ $page.props.auth.user.name }}
-                </p>
-                {{ $page.props.auth.user.email }}
-              </h2>
-
-              <ul>
-                <MenuLink label="Profile" :href="route('profile.edit')" />
-                <MenuLink label="Log Out" :href="route('logout')" method="post" />
-              </ul>
-            </li>
+            <MenuGroup
+              :title="$page.props.auth.user.name"
+              :subtitle="$page.props.auth.user.email"
+            >
+              <MenuLink label="Profile" :href="route('profile.edit')" />
+              <MenuLink label="Log Out" :href="route('logout')" method="post" />
+            </MenuGroup>
           </Menu>
         </template>
 
