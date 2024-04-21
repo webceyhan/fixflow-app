@@ -23,7 +23,7 @@ import Icon from "@/Components/Icon.vue";
 
         <!-- Settings Dropdown -->
         <div class="max-sm:hidden flex-none">
-          <Dropdown align-end :label="$page.props.auth.user.name">
+          <Dropdown :label="$page.props.auth.user.name" align-end ghost>
             <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
             <DropdownLink :href="route('logout')" method="post"> Log Out </DropdownLink>
           </Dropdown>

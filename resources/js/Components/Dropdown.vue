@@ -1,30 +1,33 @@
 <script setup lang="ts">
+import Menu from "./Menu/Menu.vue";
 import Icon from "@/Components/Icon.vue";
+import BaseButton from "@/Components/Button/BaseButton.vue";
 
-defineProps<{
+/**
+ * DiasyUI classes
+ */
+interface Props {
   label?: string;
+  ghost?: boolean;
   alignEnd?: boolean;
-  contentClasses?: string;
-}>();
+}
+
+defineProps<Props>();
 </script>
 
 <template>
   <div :class="['dropdown', { 'dropdown-end': alignEnd }]">
     <!-- trigger -->
     <slot name="trigger">
-      <div tabindex="0" role="button" class="btn">
+      <BaseButton tabindex="0" v-bind="{ ghost }">
         {{ label }}
-        <Icon name="arrow-down" class="ms-2 -me-0.5 h-4 w-4" />
-      </div>
+        <Icon name="arrow-down" class="-me-0.5 size-4" />
+      </BaseButton>
     </slot>
 
     <!-- content -->
-    <ul
-      tabindex="0"
-      class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-      :class="contentClasses"
-    >
+    <Menu tabindex="0" class="dropdown-content z-[1] w-52 shadow">
       <slot />
-    </ul>
+    </Menu>
   </div>
 </template>
