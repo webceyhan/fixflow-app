@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onEscaped } from "@/Composables/onEscaped";
 import Menu from "@/Components/Menu/Menu.vue";
 import Icon from "@/Components/Icon.vue";
 import BaseButton from "@/Components/Button/BaseButton.vue";
@@ -13,6 +14,10 @@ interface Props {
 }
 
 defineProps<Props>();
+
+onEscaped(() => {
+  (document.activeElement as HTMLElement)?.blur();
+});
 </script>
 
 <template>
