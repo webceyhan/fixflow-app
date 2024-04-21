@@ -41,6 +41,60 @@ import Icon from "@/Components/Icon.vue";
             <MenuLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </MenuLink>
+            <MenuLink
+              :href="route('users.index')"
+              :active="route().current('users.index')"
+            >
+              Users
+            </MenuLink>
+            <MenuLink
+              :href="route('companies.index')"
+              :active="route().current('companies.index')"
+            >
+              Companies
+            </MenuLink>
+            <MenuLink
+              :href="route('customers.index')"
+              :active="route().current('customers.index')"
+            >
+              Customers
+            </MenuLink>
+            <MenuLink
+              :href="route('devices.index')"
+              :active="route().current('devices.index')"
+            >
+              Devices
+            </MenuLink>
+            <MenuLink
+              :href="route('tickets.index')"
+              :active="route().current('tickets.index')"
+            >
+              Tickets
+            </MenuLink>
+            <MenuLink
+              :href="route('tasks.index')"
+              :active="route().current('tasks.index')"
+            >
+              Tasks
+            </MenuLink>
+            <MenuLink
+              :href="route('orders.index')"
+              :active="route().current('orders.index')"
+            >
+              Orders
+            </MenuLink>
+            <MenuLink
+              :href="route('invoices.index')"
+              :active="route().current('invoices.index')"
+            >
+              Invoices
+            </MenuLink>
+            <MenuLink
+              :href="route('transactions.index')"
+              :active="route().current('transactions.index')"
+            >
+              Transactions
+            </MenuLink>
           </Menu>
 
           <!-- Responsive Settings Options -->

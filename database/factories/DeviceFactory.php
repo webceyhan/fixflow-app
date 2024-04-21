@@ -14,6 +14,41 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeviceFactory extends Factory
 {
+    private const MODELS = [
+        'Apple' => [
+            'iMac' => DeviceType::Desktop,
+            'MacBook' => DeviceType::Laptop,
+            'iPad' => DeviceType::Tablet,
+            'iPhone' => DeviceType::Phone,
+        ],
+        'Samsung' => [
+            'Galaxy' => DeviceType::Phone,
+            'Galaxy Tab' => DeviceType::Tablet,
+            'Galaxy Book' => DeviceType::Laptop,
+            'QLED Tv' => DeviceType::Other,
+        ],
+        'Sony' => [
+            'Vaio' => DeviceType::Laptop,
+            'Xperia' => DeviceType::Phone,
+            'PlayStation' => DeviceType::Other,
+            'BRAVIA Tv' => DeviceType::Other,
+        ],
+        'Hp' => [
+            'Pavilion' => DeviceType::Desktop,
+            'Envy' => DeviceType::Laptop,
+            'Deskjet' => DeviceType::Other,
+        ],
+        'Lenovo' => [
+            'Legion' => DeviceType::Desktop,
+            'IdeaPad' => DeviceType::Laptop,
+            'Thinkpad' => DeviceType::Laptop,
+        ],
+        'TomTom' => [
+            'Go Basic' => DeviceType::Other,
+            'Go Comfort' => DeviceType::Other,
+        ],
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -21,12 +56,16 @@ class DeviceFactory extends Factory
      */
     public function definition(): array
     {
+        $brand = fake()->randomElement(array_keys(self::MODELS));
+        $model = fake()->randomElement(array_keys(self::MODELS[$brand]));
+        $type = self::MODELS[$brand][$model];
+
         return [
             'customer_id' => Customer::factory(),
-            'model' => fake()->word(),
-            'brand' => fake()->company(),
+            'model' => $model,
+            'brand' => $brand,
             'serial_number' => fake()->uuid(),
-            'type' => DeviceType::Other,
+            'type' => $type,
             'status' => DeviceStatus::CheckedIn,
         ];
     }

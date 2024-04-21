@@ -31,7 +31,7 @@ it('can create device', function () {
     expect($device->brand)->toBeString();
     expect($device->serial_number)->toBeString();
     expect($device->warranty_expire_date)->toBeNull();
-    expect($device->type)->toBe(DeviceType::Other);
+    expect($device->type)->toBeInstanceOf(DeviceType::class);
     expect($device->status)->toBe(DeviceStatus::CheckedIn);
     expect($device->created_at)->toBeInstanceOf(Carbon::class);
     expect($device->updated_at)->toBeInstanceOf(Carbon::class);
