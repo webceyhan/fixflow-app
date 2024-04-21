@@ -58,3 +58,14 @@ it('can view a device', function () {
                 )
         );
 });
+
+it('can delete a device', function () {
+    $user = User::factory()->create();
+    $device = Device::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/devices/' . $device->id);
+
+    $response->assertRedirect('/devices');
+
+    $this->assertNull($device->fresh());
+});

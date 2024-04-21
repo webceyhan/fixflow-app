@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeviceStoreRequest;
 use App\Http\Requests\DeviceUpdateRequest;
 use App\Models\Device;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -65,8 +67,10 @@ class DeviceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Device $device)
+    public function destroy(Device $device): RedirectResponse
     {
-        //
+        $device->delete();
+
+        return Redirect::route('devices.index');
     }
 }
