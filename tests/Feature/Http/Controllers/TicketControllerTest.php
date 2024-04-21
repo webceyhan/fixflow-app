@@ -64,3 +64,14 @@ it('can view a ticket', function () {
                 )
         );
 });
+
+it('can delete a ticket', function () {
+    $user = User::factory()->create();
+    $ticket = Ticket::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/tickets/' . $ticket->id);
+
+    $response->assertRedirect('/tickets');
+
+    $this->assertNull($ticket->fresh());
+});

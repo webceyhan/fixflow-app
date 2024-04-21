@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TicketStoreRequest;
 use App\Http\Requests\TicketUpdateRequest;
 use App\Models\Ticket;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -65,8 +67,10 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(Ticket $ticket): RedirectResponse
     {
-        //
+        $ticket->delete();
+
+        return Redirect::route('tickets.index');
     }
 }
