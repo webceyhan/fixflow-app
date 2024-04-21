@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Menu from "@/Components/Menu.vue";
 import MenuLink from "@/Components/MenuLink.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 
 defineProps<{
   companies: any[];
@@ -19,8 +20,13 @@ defineProps<{
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <CreateButton :href="route('companies.create')" />
+
         <Menu>
-          <MenuLink v-for="company of companies" :href="route('companies.show', company.id)">
+          <MenuLink
+            v-for="company of companies"
+            :href="route('companies.show', company.id)"
+          >
             {{ company.name }}
           </MenuLink>
         </Menu>

@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Menu from "@/Components/Menu.vue";
 import MenuLink from "@/Components/MenuLink.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 
 defineProps<{
   orders: any[];
@@ -19,6 +20,8 @@ defineProps<{
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <CreateButton :href="route('orders.create')" />
+
         <Menu>
           <MenuLink v-for="order of orders" :href="route('orders.show', order.id)">
             {{ order.name }}

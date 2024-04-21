@@ -2,6 +2,7 @@
 import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeleteButton from "@/Components/DeleteButton.vue";
+import EditButton from "@/Components/EditButton.vue";
 
 defineProps<{
   transaction: any;
@@ -22,9 +23,10 @@ defineProps<{
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <pre>{{ transaction }}</pre>
 
-        <br />
-
-        <DeleteButton :href="route('transactions.destroy', transaction.id)" />
+        <div class="flex gap-4 my-4">
+          <EditButton :href="route('transactions.edit', transaction.id)" />
+          <DeleteButton :href="route('transactions.destroy', transaction.id)" />
+        </div>
       </div>
     </div>
   </AuthenticatedLayout>

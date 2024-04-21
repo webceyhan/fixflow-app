@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Menu from "@/Components/Menu.vue";
 import MenuLink from "@/Components/MenuLink.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 
 defineProps<{
   transactions: any[];
@@ -19,8 +20,13 @@ defineProps<{
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <CreateButton :href="route('transactions.create')" />
+
         <Menu>
-          <MenuLink v-for="transaction of transactions" :href="route('transactions.show', transaction.id)">
+          <MenuLink
+            v-for="transaction of transactions"
+            :href="route('transactions.show', transaction.id)"
+          >
             #{{ transaction.id }} - ${{ transaction.amount }}
           </MenuLink>
         </Menu>
