@@ -52,3 +52,14 @@ it('can view a user', function () {
                 )
         );
 });
+
+it('can delete a user', function () {
+    $admin = User::factory()->asAdmin()->create();
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($admin)->delete('/users/' . $user->id);
+
+    $response->assertRedirect('/users');
+
+    $this->assertNull($user->fresh());
+});
