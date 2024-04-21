@@ -38,9 +38,11 @@ import Icon from "@/Components/Icon.vue";
         <template #aside>
           <!-- Navigation Links -->
           <Menu class="mb-auto">
-            <MenuLink :href="route('dashboard')" :active="route().current('dashboard')">
-              Dashboard
-            </MenuLink>
+            <MenuLink
+              label="Dashboard"
+              :href="route('dashboard')"
+              :active="route().current('dashboard')"
+            />
           </Menu>
 
           <!-- Responsive Settings Options -->
@@ -56,10 +58,8 @@ import Icon from "@/Components/Icon.vue";
               </h2>
 
               <ul>
-                <MenuLink :href="route('profile.edit')"> Profile </MenuLink>
-                <MenuLink :href="route('logout')" method="post" as="button">
-                  Log Out
-                </MenuLink>
+                <MenuLink label="Profile" :href="route('profile.edit')" />
+                <MenuLink label="Log Out" :href="route('logout')" method="post" />
               </ul>
             </li>
           </Menu>
