@@ -2,16 +2,23 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 
-class UserStoreRequest extends FormRequest
+class UserStoreRequest extends UserUpdateRequest
 {
+    const PASSWORD = 'password';
+
     /**
-     * Determine if the user is authorized to make this request.
+     * Prepare the data for validation.
      */
-    public function authorize(): bool
+    protected function prepareForValidation(): void
     {
-        return false;
+        // auto-generate random password
+        $this->merge([
+            'password' => Hash::make(Str::password())
+        ]);
     }
 
     /**
@@ -22,7 +29,11 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            ...parent::rules(),
+            self::PASSWORD => [
+                'required',
+                Password::defaults()
+            ],
         ];
     }
 }

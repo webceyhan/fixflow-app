@@ -25,17 +25,20 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return $this->edit(new User());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $request)
+    public function store(UserStoreRequest $request): RedirectResponse
     {
-        //
+        $params = $request->validated();
+        $user = User::create($params);
+
+        return Redirect::route('users.show', $user);
     }
 
     /**
@@ -51,17 +54,23 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): Response
     {
-        //
+        return Inertia::render('Users/Edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        //
+        $params = $request->validated();
+
+        $user->update($params);
+
+        return Redirect::route('users.show', $user);
     }
 
     /**
