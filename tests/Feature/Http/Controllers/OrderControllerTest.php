@@ -58,3 +58,14 @@ it('can view an order', function () {
                 )
         );
 });
+
+it('can delete an order', function () {
+    $user = User::factory()->create();
+    $order = Order::factory()->create();
+
+    $response = $this->actingAs($user)->delete('/orders/' . $order->id);
+
+    $response->assertRedirect('/orders');
+
+    $this->assertNull($order->fresh());
+});
