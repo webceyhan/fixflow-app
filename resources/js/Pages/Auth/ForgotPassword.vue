@@ -47,9 +47,7 @@ const submit = () => {
       </div>
 
       <div class="flex items-center justify-end mt-4">
-        <PrimaryButton :disabled="form.processing">
-          Email Password Reset Link
-        </PrimaryButton>
+        <PrimaryButton label="Email Password Reset Link" :disabled="form.processing" />
       </div>
     </form>
   </GuestLayout>

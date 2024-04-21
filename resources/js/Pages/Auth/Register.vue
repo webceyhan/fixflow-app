@@ -87,7 +87,7 @@ const submit = () => {
           Already registered?
         </Link>
 
-        <PrimaryButton class="ms-4" :disabled="form.processing"> Register </PrimaryButton>
+        <PrimaryButton class="ms-4" label="Register" :disabled="form.processing" />
       </div>
     </form>
   </GuestLayout>

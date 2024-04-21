@@ -72,7 +72,7 @@ const submit = () => {
       </div>
 
       <div class="flex items-center justify-end mt-4">
-        <PrimaryButton :disabled="form.processing"> Reset Password </PrimaryButton>
+        <PrimaryButton label="Reset Password" :disabled="form.processing" />
       </div>
     </form>
   </GuestLayout>

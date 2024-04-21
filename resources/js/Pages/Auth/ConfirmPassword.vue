@@ -43,7 +43,7 @@ const submit = () => {
       </div>
 
       <div class="flex justify-end mt-4">
-        <PrimaryButton class="ms-4" :disabled="form.processing"> Confirm </PrimaryButton>
+        <PrimaryButton class="ms-4" label="Confirm" :disabled="form.processing" />
       </div>
     </form>
   </GuestLayout>

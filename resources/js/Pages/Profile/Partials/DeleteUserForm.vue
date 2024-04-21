@@ -50,7 +50,7 @@ const closeModal = () => {
       </p>
     </header>
 
-    <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
+    <DangerButton label="Delete Account" @click="confirmUserDeletion" />
 
     <Modal v-model:open="confirmingUserDeletion">
       <template #title> Are you sure you want to delete your account? </template>
@@ -72,11 +72,13 @@ const closeModal = () => {
       </FormControl>
 
       <template #actions>
-        <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+        <SecondaryButton label="Cancel" @click="closeModal" />
 
-        <DangerButton :disabled="form.processing" @click="deleteUser">
-          Delete Account
-        </DangerButton>
+        <DangerButton
+          label="Delete Account"
+          :disabled="form.processing"
+          @click="deleteUser"
+        />
       </template>
     </Modal>
   </section>
