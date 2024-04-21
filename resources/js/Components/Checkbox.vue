@@ -1,23 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
+/**
+ * DiasyUI classes
+ */
+interface Props {}
 
-const emit = defineEmits(["update:checked"]);
-
-const props = defineProps<{
-  checked: boolean;
-  value?: any;
-}>();
-
-const proxyChecked = computed({
-  get() {
-    return props.checked;
-  },
-  set(val) {
-    emit("update:checked", val);
-  },
-});
+const model = defineModel<boolean>({ required: true });
 </script>
 
 <template>
-  <input type="checkbox" :value="value" v-model="proxyChecked" class="checkbox" />
+  <input type="checkbox" class="checkbox" v-model="model" />
 </template>

@@ -65,7 +65,7 @@ const submit = () => {
 
       <div class="block mt-4">
         <FormControl label="Remember me" inline>
-          <Checkbox name="remember" v-model:checked="form.remember" />
+          <Checkbox name="remember" v-model="form.remember" />
         </FormControl>
       </div>
 
