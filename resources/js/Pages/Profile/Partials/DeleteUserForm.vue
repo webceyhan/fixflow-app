@@ -74,11 +74,7 @@ const closeModal = () => {
       <template #actions>
         <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
 
-        <DangerButton
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-          @click="deleteUser"
-        >
+        <DangerButton :disabled="form.processing" @click="deleteUser">
           Delete Account
         </DangerButton>
       </template>

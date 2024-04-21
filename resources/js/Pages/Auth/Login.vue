@@ -77,13 +77,7 @@ const submit = () => {
           Forgot your password?
         </Link>
 
-        <PrimaryButton
-          class="ms-4"
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-        >
-          Log in
-        </PrimaryButton>
+        <PrimaryButton class="ms-4" :disabled="form.processing"> Log in </PrimaryButton>
       </div>
     </form>
   </GuestLayout>
