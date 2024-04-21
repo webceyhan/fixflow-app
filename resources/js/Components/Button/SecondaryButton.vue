@@ -1,16 +1,14 @@
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    type?: "button" | "submit" | "reset";
-  }>(),
-  {
-    type: "button",
-  }
-);
+import BaseButton from "@/Components/Button/BaseButton.vue";
+
+/**
+ * DiasyUI classes
+ */
+interface Props {}
 </script>
 
 <template>
-  <button :type="type" class="btn btn-secondary">
+  <BaseButton class="btn-secondary">
     <slot />
-  </button>
+  </BaseButton>
 </template>

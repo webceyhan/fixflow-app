@@ -1,5 +1,14 @@
+<script setup lang="ts">
+import BaseButton from "@/Components/Button/BaseButton.vue";
+
+/**
+ * DiasyUI classes
+ */
+interface Props {}
+</script>
+
 <template>
-  <button class="btn btn-primary">
+  <BaseButton class="btn-primary">
     <slot />
-  </button>
+  </BaseButton>
 </template>
