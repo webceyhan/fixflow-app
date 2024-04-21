@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, watch } from "vue";
 import Icon from "@/Components/Icon.vue";
+import BaseButton from "@/Components/Button/BaseButton.vue";
 
 const emit = defineEmits(["update:open"]);
 
@@ -48,12 +49,15 @@ watch(
       <div class="modal-box">
         <!-- close button -->
         <form v-if="closeable" method="dialog">
-          <button
-            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          <BaseButton
+            class="absolute right-2 top-2"
             @click="emit('update:open', false)"
+            small
+            circle
+            ghost
           >
-            <Icon name="close" class="w-6 h-6" />
-          </button>
+            <Icon name="close" class="size-6" />
+          </BaseButton>
         </form>
 
         <!-- title -->

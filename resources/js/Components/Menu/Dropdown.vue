@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Menu from "./Menu/Menu.vue";
+import Menu from "@/Components/Menu/Menu.vue";
 import Icon from "@/Components/Icon.vue";
 import BaseButton from "@/Components/Button/BaseButton.vue";
 

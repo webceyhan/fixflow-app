@@ -5,7 +5,7 @@ import Drawer from "@/Components/Drawer.vue";
 import Menu from "@/Components/Menu/Menu.vue";
 import MenuLink from "@/Components/Menu/MenuLink.vue";
 import MenuGroup from "@/Components/Menu/MenuGroup.vue";
-import Dropdown from "@/Components/Dropdown.vue";
+import Dropdown from "@/Components/Menu/Dropdown.vue";
 import Icon from "@/Components/Icon.vue";
 </script>
 
