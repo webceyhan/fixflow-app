@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import FormControl from "@/Components/FormControl.vue";
-import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
+import TextInput from "@/Components/Form/TextInput.vue";
+import FormControl from "@/Components/Form/FormControl.vue";
+import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
 
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);

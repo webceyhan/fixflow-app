@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import GuestLayout from "@/Layouts/GuestLayout.vue";
-import FormControl from "@/Components/FormControl.vue";
-import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import FormControl from "@/Components/Form/FormControl.vue";
+import TextInput from "@/Components/Form/TextInput.vue";
+import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
 
 const form = useForm({
   password: "",

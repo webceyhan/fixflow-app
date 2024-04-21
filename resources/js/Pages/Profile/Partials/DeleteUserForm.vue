@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import DangerButton from "@/Components/Button/DangerButton.vue";
-import FormControl from "@/Components/FormControl.vue";
-import Modal from "@/Components/Modal.vue";
-import SecondaryButton from "@/Components/Button/SecondaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { useForm } from "@inertiajs/vue3";
 import { nextTick, ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
+import Modal from "@/Components/Modal.vue";
+import TextInput from "@/Components/Form/TextInput.vue";
+import FormControl from "@/Components/Form/FormControl.vue";
+import SecondaryButton from "@/Components/Button/SecondaryButton.vue";
+import DangerButton from "@/Components/Button/DangerButton.vue";
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<HTMLInputElement | null>(null);
