@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Head, useForm } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Link from "@/Components/Link.vue";
+import TextInput from "@/Components/TextInput.vue";
 import FormControl from "@/Components/FormControl.vue";
 import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const form = useForm({
   name: "",
@@ -80,12 +81,7 @@ const submit = () => {
       </div>
 
       <div class="flex items-center justify-end mt-4">
-        <Link
-          :href="route('login')"
-          class="underline text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Already registered?
-        </Link>
+        <Link :href="route('login')" label="Already registered?" />
 
         <PrimaryButton class="ms-4" label="Register" :disabled="form.processing" />
       </div>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { Head, useForm } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Link from "@/Components/Link.vue";
 import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const props = defineProps<{
   status?: string;
@@ -36,14 +37,7 @@ const verificationLinkSent = computed(() => props.status === "verification-link-
       <div class="mt-4 flex items-center justify-between">
         <PrimaryButton label="Resend Verification Email" :disabled="form.processing" />
 
-        <Link
-          :href="route('logout')"
-          method="post"
-          as="button"
-          class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Log Out
-        </Link>
+        <Link :href="route('logout')" method="post" as="button" label="Log Out" />
       </div>
     </form>
   </GuestLayout>

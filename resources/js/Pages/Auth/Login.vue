@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import Checkbox from "@/Components/Checkbox.vue";
+import { Head, useForm } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Link from "@/Components/Link.vue";
+import Checkbox from "@/Components/Checkbox.vue";
+import TextInput from "@/Components/TextInput.vue";
 import FormControl from "@/Components/FormControl.vue";
 import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps<{
   canResetPassword?: boolean;
@@ -72,10 +73,8 @@ const submit = () => {
         <Link
           v-if="canResetPassword"
           :href="route('password.request')"
-          class="underline text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Forgot your password?
-        </Link>
+          label="Forgot your password?"
+        />
 
         <PrimaryButton class="ms-4" label="Log in" :disabled="form.processing" />
       </div>

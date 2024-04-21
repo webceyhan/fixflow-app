@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
+import Link from "@/Components/Link.vue";
 import Icon from "@/Components/Icon.vue";
 
 defineProps<{
@@ -31,30 +32,17 @@ function handleImageError() {
           <div class="flex lg:justify-center lg:col-start-2">
             <Icon name="logo" class="h-12 w-auto lg:h-16" />
           </div>
-          <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
+          <nav v-if="canLogin" class="flex flex-1 justify-end gap-6">
             <Link
               v-if="$page.props.auth.user"
               :href="route('dashboard')"
-              class="rounded-md px-3 py-2 ring-1 ring-transparent transition focus:outline-none"
-            >
-              Dashboard
-            </Link>
+              label="Dashboard"
+            />
 
             <template v-else>
-              <Link
-                :href="route('login')"
-                class="rounded-md px-3 py-2 ring-1 ring-transparent transition focus:outline-none"
-              >
-                Log in
-              </Link>
+              <Link :href="route('login')" label="Log in" />
 
-              <Link
-                v-if="canRegister"
-                :href="route('register')"
-                class="rounded-md px-3 py-2 ring-1 ring-transparent transition focus:outline-none"
-              >
-                Register
-              </Link>
+              <Link v-if="canRegister" :href="route('register')" label="Register" />
             </template>
           </nav>
         </header>

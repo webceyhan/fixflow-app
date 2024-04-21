@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { useForm, usePage } from "@inertiajs/vue3";
+import Link from "@/Components/Link.vue";
+import TextInput from "@/Components/TextInput.vue";
 import FormControl from "@/Components/FormControl.vue";
 import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps<{
   mustVerifyEmail?: Boolean;
@@ -60,12 +61,10 @@ const form = useForm({
           Your email address is unverified.
           <Link
             :href="route('verification.send')"
+            label="Click here to re-send the verification email."
             method="post"
             as="button"
-            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Click here to re-send the verification email.
-          </Link>
+          />
         </p>
 
         <div

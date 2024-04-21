@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
-import DropdownLink from "@/Components/DropdownLink.vue";
-import Dropdown from "@/Components/Dropdown.vue";
-import MenuLink from "@/Components/MenuLink.vue";
-import Menu from "@/Components/Menu.vue";
+import Link from "@/Components/Link.vue";
 import Navbar from "@/Components/Navbar.vue";
 import Drawer from "@/Components/Drawer.vue";
+import Menu from "@/Components/Menu.vue";
+import MenuLink from "@/Components/MenuLink.vue";
+import Dropdown from "@/Components/Dropdown.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
 import Icon from "@/Components/Icon.vue";
 </script>
 
