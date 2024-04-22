@@ -1,57 +1,52 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from "vue";
+import { onUnmounted, watch } from "vue";
+import { onEscaped } from "@/Composables/onEscaped";
 import Icon from "@/Components/Icon.vue";
-import BaseButton from "@/Components/Button/BaseButton.vue";
+import BaseButton from "./Button/BaseButton.vue";
 
-const emit = defineEmits(["update:open"]);
+/**
+ * DiasyUI classes
+ */
+interface Props {
+  wide?: boolean;
+  closeable?: boolean;
+}
 
-const props = withDefaults(
-  defineProps<{
-    open?: boolean;
-    closeable?: boolean;
-  }>(),
-  {
-    closeable: true,
-  }
-);
-
-const proxyOpen = computed({
-  get: () => props.open,
-  set: (value: boolean) => emit("update:open", value),
+withDefaults(defineProps<Props>(), {
+  closeable: true,
 });
 
-const closeOnEscape = (e: KeyboardEvent) => {
-  if (e.key === "Escape" && props.open) {
-    proxyOpen.value = false;
-  }
-};
+const open = defineModel<boolean>("open", { default: false });
 
 const toggleOverflow = (on: boolean) => {
   document.body.style.overflow = on ? "visible" : "hidden";
 };
 
-onMounted(() => document.addEventListener("keydown", closeOnEscape));
-
-onUnmounted(() => {
-  document.removeEventListener("keydown", closeOnEscape);
-  toggleOverflow(true);
-});
-
 watch(
-  () => props.open,
-  () => toggleOverflow(!props.open)
+  () => open.value,
+  () => toggleOverflow(!open.value)
 );
+
+onEscaped(() => (open.value = false));
+
+onUnmounted(() => toggleOverflow(true));
 </script>
 
 <template>
   <Teleport to="body">
-    <dialog class="modal modal-bottom sm:modal-middle" :open="proxyOpen">
-      <div class="modal-box">
+    <dialog class="modal max-sm:modal-bottom" :open="open">
+      <div
+        :class="[
+          'modal-box bg-base-content/5',
+          'backdrop-blur-lg drop-shadow-lg',
+          { 'w-10/12 max-w-5xl': wide },
+        ]"
+      >
         <!-- close button -->
         <form v-if="closeable" method="dialog">
           <BaseButton
             class="absolute right-2 top-2"
-            @click="emit('update:open', false)"
+            @click="open = false"
             small
             circle
             ghost
