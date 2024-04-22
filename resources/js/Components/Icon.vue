@@ -1,7 +1,12 @@
 <script setup lang="ts">
-defineProps<{
+/**
+ * DiasyUI classes
+ */
+interface Props {
   name: string;
-}>();
+}
+
+defineProps<Props>();
 </script>
 
 <template>
