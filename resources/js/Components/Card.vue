@@ -1,5 +1,12 @@
+<script setup lang="ts">
+/**
+ * DiasyUI classes
+ */
+interface Props {}
+</script>
+
 <template>
-  <div class="card ring-1 shadow-xl">
+  <div class="card ring-1 ring-primary/50 shadow-xl">
     <div class="card-body">
       <!-- title -->
       <h2 v-if="$slots.title" class="card-title">
