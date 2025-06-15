@@ -13,12 +13,21 @@ defineProps<Props>();
 </script>
 
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 42" :class="className" v-bind="$attrs">
-        <path
-            fill="currentColor"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M17.2 5.633 8.6.855 0 5.633v26.51l16.2 9 16.2-9v-8.442l7.6-4.223V9.856l-8.6-4.777-8.6 4.777V18.3l-5.6 3.111V5.633ZM38 18.301l-5.6 3.11v-6.157l5.6-3.11V18.3Zm-1.06-7.856-5.54 3.078-5.54-3.079 5.54-3.078 5.54 3.079ZM24.8 18.3v-6.157l5.6 3.111v6.158L24.8 18.3Zm-1 1.732 5.54 3.078-13.14 7.302-5.54-3.078 13.14-7.3v-.002Zm-16.2 7.89 7.6 4.222V38.3L2 30.966V7.92l5.6 3.111v16.892ZM8.6 9.3 3.06 6.222 8.6 3.143l5.54 3.08L8.6 9.3Zm21.8 15.51-13.2 7.334V38.3l13.2-7.334v-6.156ZM9.6 11.034l5.6-3.11v14.6l-5.6 3.11v-14.6Z"
-        />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490.963 490.963" :class="className" v-bind="$attrs">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier" fill="currentColor">
+            <g>
+                <g>
+                    <circle cx="244.917" cy="186.398" r="22.5"></circle>
+                    <circle cx="305.317" cy="246.798" r="22.5"></circle>
+                    <circle cx="247.017" cy="305.198" r="22.5"></circle>
+                    <circle cx="186.917" cy="245.098" r="22.5"></circle>
+                    <path
+                        d="M443.017,47.698c-35.9-37.7-142.1-85.2-227.3,0l-167.9,168.9c-89.4,102.3-30.2,197,0,227.3c78.1,78.1,187.5,45.3,227.3,0 l167.9-168.9C483.017,234.898,526.017,134.698,443.017,47.698z M413.817,246.798l-167.9,167.9c-21.9,22.9-93.9,66.8-168.9,0 c-46.9-46.9-46.9-123,0-169.9l168.9-167.9c71.2-66.5,147.9-24.5,167.9,1C476.617,140.798,444.617,215.998,413.817,246.798z"
+                    ></path>
+                </g>
+            </g>
+        </g>
     </svg>
 </template>
