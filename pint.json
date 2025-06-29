@@ -1,0 +1,6 @@
+{
+    "preset": "laravel",
+    "notName": [
+        "__ide__*"
+    ]
+}
