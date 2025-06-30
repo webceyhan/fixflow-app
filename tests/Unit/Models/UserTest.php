@@ -3,9 +3,9 @@
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabaseState;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(RefreshDatabaseState::class);
+uses(RefreshDatabase::class);
 
 it('creates a user with default attributes', function () {
     // Arrange & Act
