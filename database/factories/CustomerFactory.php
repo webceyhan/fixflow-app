@@ -1,29 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Database\Factories;
 
-use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Customer>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
  */
 class CustomerFactory extends Factory
 {
-    protected $model = Customer::class;
-
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'company' => $this->faker->company(),
-            'vat_number' => $this->faker->unique()->ean13(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->unique()->phoneNumber(),
-            'address' => $this->faker->address(),
-            'note' => $this->faker->optional()->sentence(),
+            'name' => fake()->name(),
+            'company' => fake()->company(),
+            'vat_number' => fake()->unique()->ean13(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->unique()->phoneNumber(),
+            'address' => fake()->address(),
+            'note' => fake()->optional()->sentence(),
         ];
     }
 
