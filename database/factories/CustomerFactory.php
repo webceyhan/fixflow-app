@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
+ *
+ * @method static hasDevices(int $count = 1, array $attributes = [])
  */
 class CustomerFactory extends Factory
 {
