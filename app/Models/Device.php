@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Device extends Model
 {
+    /** @use HasFactory<\Database\Factories\DeviceFactory> */
     use HasFactory;
 
     /**
