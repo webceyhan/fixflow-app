@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,16 +28,67 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'phone' => fake()->unique()->e164PhoneNumber(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => UserRole::Technician,
+            'status' => UserStatus::Active,
+            'email_verified_at' => now(),
         ];
     }
 
+    // STATES //////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user has no phone number.
      */
-    public function unverified(): static
+    public function withoutPhone(): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'phone' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user has the specified role.
+     */
+    public function ofRole(UserRole $role): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => $role,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is an administrator.
+     */
+    public function admin(): self
+    {
+        return $this->ofRole(UserRole::Admin);
+    }
+
+    /**
+     * Indicate that the user is a manager.
+     */
+    public function manager(): self
+    {
+        return $this->ofRole(UserRole::Manager);
+    }
+
+    /**
+     * Indicate that the user has the specified status.
+     */
+    public function ofStatus(UserStatus $status): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => $status,
+        ]);
+    }
+
+    /**
+     * Indicate that the user's email address is unverified.
+     */
+    public function unverified(): self
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
