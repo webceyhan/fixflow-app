@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Device>
+ *
+ * @method static hasTickets(int $count = 1, array $attributes = [])
  */
 class DeviceFactory extends Factory
 {
