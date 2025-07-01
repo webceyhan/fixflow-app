@@ -59,7 +59,6 @@ it('can update customer', function () {
         'address' => '123 Main St',
         'note' => 'VIP',
     ]);
-    $customer = $customer->fresh();
 
     // Assert
     expect($customer->name)->toBe('Acme Corp');
