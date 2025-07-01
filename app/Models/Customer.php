@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Customer extends Model
 {
@@ -40,8 +41,15 @@ class Customer extends Model
         return $this->hasMany(Device::class);
     }
 
+    /**
+     * Get the tickets associated with the customer via devices.
+     */
+    public function tickets(): HasManyThrough
+    {
+        return $this->hasManyThrough(Ticket::class, Device::class);
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
 }

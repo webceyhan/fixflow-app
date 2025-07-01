@@ -105,6 +105,12 @@ it('can delete a device', function () {
     expect(Device::find($device->id))->toBeNull();
 });
 
+it('can have many tickets', function () {
+    $device = Device::factory()->hasTickets(2)->create();
+
+    expect($device->tickets)->toHaveCount(2);
+});
+
 it('can determine if device has warranty', function () {
     // Arrange
     $device = Device::factory()->outOfWarranty()->create();
@@ -130,7 +136,7 @@ it('can get the customer that owns the device', function () {
     expect($device->customer->id)->toBe($customer->id);
 });
 
-it('can scope devices with warranty', function () {
+it('can filter devices with warranty scope', function () {
     // Arrange
     Device::factory()->outOfWarranty()->create();
     $deviceWithWarranty = Device::factory()->create([
