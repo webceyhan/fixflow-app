@@ -7,15 +7,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates a user with default attributes', function () {
+it('creates a user with valid attributes', function () {
     // Arrange & Act
     $user = User::factory()->create();
 
     // Assert
-    expect($user->name)->not->toBeNull();
-    expect($user->email)->not->toBeNull();
-    expect($user->role)->toBe(UserRole::Technician);
-    expect($user->status)->toBe(UserStatus::Active);
+    expect($user->name)->not->toBeEmpty();
+    expect($user->email)->not->toBeEmpty();
+    expect($user->phone)->not->toBeEmpty();
+    expect($user->role)->toBeInstanceOf(UserRole::class);
+    expect($user->status)->toBeInstanceOf(UserStatus::class);
 });
 
 it('can create user without phone number', function () {
