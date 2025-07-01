@@ -113,6 +113,12 @@ it('can have many tasks', function () {
     expect($ticket->tasks)->toHaveCount(2);
 });
 
+it('can have many orders', function () {
+    $ticket = Ticket::factory()->hasOrders(2)->create();
+
+    expect($ticket->orders)->toHaveCount(2);
+});
+
 it('can assign a ticket to a user', function () {
     // Arrange
     $user = User::factory()->create();

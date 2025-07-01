@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket>
  *
  * @method static hasTasks(int $count = 1, array $attributes = [])
+ * @method static hasOrders(int $count = 1, array $attributes = [])
  */
 class TicketFactory extends Factory
 {
