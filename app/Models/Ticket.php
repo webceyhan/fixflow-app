@@ -83,6 +83,14 @@ class Ticket extends Model
         return $this->hasMany(Task::class);
     }
 
+    /**
+     * Get the orders associated with the ticket.
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
