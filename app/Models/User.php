@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -65,6 +66,14 @@ class User extends Authenticatable
     // ACCESSORS ///////////////////////////////////////////////////////////////////////////////////
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Get the tickets assigned to the user.
+     */
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assignee_id');
+    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

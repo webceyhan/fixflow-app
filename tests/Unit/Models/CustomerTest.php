@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Customer;
+use App\Models\Device;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -77,4 +78,19 @@ it('can delete customer', function () {
 
     // Assert
     expect(Customer::find($customer->id))->toBeNull();
+});
+
+it('can have many devices', function () {
+    // Arrange & Act
+    $customer = Customer::factory()->hasDevices(2)->create();
+
+    // Assert
+    expect($customer->devices)->toHaveCount(2);
+});
+
+it('can have many tickets via devices', function () {
+    $customer = Customer::factory()->create();
+    Device::factory()->count(2)->forCustomer($customer)->hasTickets(2)->create();
+
+    expect($customer->tickets)->toHaveCount(4);
 });
