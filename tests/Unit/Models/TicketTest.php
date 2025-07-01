@@ -107,6 +107,12 @@ it('belongs to a customer via device', function () {
     expect($ticket->customer->id)->toBe($customer->id);
 });
 
+it('can have many tasks', function () {
+    $ticket = Ticket::factory()->hasTasks(2)->create();
+
+    expect($ticket->tasks)->toHaveCount(2);
+});
+
 it('can assign a ticket to a user', function () {
     // Arrange
     $user = User::factory()->create();
