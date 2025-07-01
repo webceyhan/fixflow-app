@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ticket extends Model
 {
@@ -74,6 +75,14 @@ class Ticket extends Model
     public function customer(): BelongsTo
     {
         return $this->device->customer();
+    }
+
+    /**
+     * Get the tasks associated with the ticket.
+     */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
