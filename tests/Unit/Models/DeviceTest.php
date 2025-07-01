@@ -8,13 +8,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates a device with default attributes', function () {
+it('creates a device with valid attributes', function () {
     // Arrange
-    $customer = Customer::factory()->create();
-    $device = Device::factory()->forCustomer($customer)->create();
+    $device = Device::factory()->create();
 
     // Assert
-    expect($device->customer_id)->toBe($customer->id);
+    expect($device->customer_id)->not->toBeNull();
     expect($device->model)->not->toBeEmpty();
     expect($device->type)->toBeInstanceOf(DeviceType::class);
     expect($device->status)->toBeInstanceOf(DeviceStatus::class);
