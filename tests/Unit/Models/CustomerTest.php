@@ -5,14 +5,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates a customer with default attributes', function () {
+it('creates a customer with valid attributes', function () {
     // Arrange & Act
     $customer = Customer::factory()->create();
 
     // Assert
-    expect($customer->name)->not->toBeNull();
-    expect($customer->email)->not->toBeNull();
-    expect($customer->address)->not->toBeNull();
+    expect($customer->name)->not->toBeEmpty();
+    expect($customer->email)->not->toBeEmpty();
+    expect($customer->address)->not->toBeEmpty();
 });
 
 it('can create customer without email', function () {
