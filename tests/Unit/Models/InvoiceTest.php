@@ -74,20 +74,20 @@ it('can update an invoice', function () {
 
     // Act
     $invoice->update([
-        'total' => 180,
-        'subtotal' => 200,
-        'discount_amount' => 20,
-        'paid_amount' => 100,
-        'refunded_amount' => 0,
+        'total' => 180.0,
+        'subtotal' => 200.0,
+        'discount_amount' => 20.0,
+        'paid_amount' => 100.0,
+        'refunded_amount' => 0.0,
         'status' => InvoiceStatus::Sent,
     ]);
 
     // Assert
-    expect($invoice->total)->toBe(180);
-    expect($invoice->subtotal)->toBe(200);
-    expect($invoice->discount_amount)->toBe(20);
-    expect($invoice->paid_amount)->toBe(100);
-    expect($invoice->refunded_amount)->toBe(0);
+    expect($invoice->total)->toBe(180.0);
+    expect($invoice->subtotal)->toBe(200.0);
+    expect($invoice->discount_amount)->toBe(20.0);
+    expect($invoice->paid_amount)->toBe(100.0);
+    expect($invoice->refunded_amount)->toBe(0.0);
     expect($invoice->status)->toBe(InvoiceStatus::Sent);
 });
 
