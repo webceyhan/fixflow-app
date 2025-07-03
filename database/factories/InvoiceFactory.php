@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Invoice>
+ *
+ * @method static hasTransactions(int $count = 1, array $attributes = [])
  */
 class InvoiceFactory extends Factory
 {
