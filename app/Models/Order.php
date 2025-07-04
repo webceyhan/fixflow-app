@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\OrderStatus;
 use App\Models\Concerns\Billable;
+use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderFactory> */
-    use Billable, HasFactory, HasProgress;
+    use Billable, HasApproval, HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -49,7 +50,6 @@ class Order extends Model
         'quantity' => 'integer',
         'cost' => 'float',
         'status' => OrderStatus::class,
-        'approved_at' => 'datetime',
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -70,13 +70,5 @@ class Order extends Model
     public function scopeOfStatus(Builder $query, OrderStatus $status): void
     {
         $query->where('status', $status->value);
-    }
-
-    /**
-     * Scope a query to only include approved orders.
-     */
-    public function scopeApproved(Builder $query): void
-    {
-        $query->whereNotNull('approved_at');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Concerns\Billable;
+use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */
-    use Billable, HasFactory, HasProgress;
+    use Billable, HasApproval, HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -48,7 +49,6 @@ class Task extends Model
         'cost' => 'float',
         'type' => TaskType::class,
         'status' => TaskStatus::class,
-        'approved_at' => 'datetime',
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -77,13 +77,5 @@ class Task extends Model
     public function scopeOfStatus(Builder $query, TaskStatus $status): void
     {
         $query->where('status', $status->value);
-    }
-
-    /**
-     * Scope a query to only include approved tasks.
-     */
-    public function scopeApproved(Builder $query): void
-    {
-        $query->whereNotNull('approved_at');
     }
 }

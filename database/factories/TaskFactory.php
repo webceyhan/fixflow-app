@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Ticket;
+use Database\Factories\States\HasApprovalStates;
 use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
-    use HasBillableStates, HasProgressStates;
+    use HasApprovalStates, HasBillableStates, HasProgressStates;
 
     /**
      * Define the model's default state.
@@ -66,16 +67,6 @@ class TaskFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => $status,
-        ]);
-    }
-
-    /**
-     * Indicate that the task needs customer approval.
-     */
-    public function needsApproval(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'approved_at' => null,
         ]);
     }
 }

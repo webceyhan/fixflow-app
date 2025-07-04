@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\OrderStatus;
 use App\Models\Ticket;
+use Database\Factories\States\HasApprovalStates;
 use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class OrderFactory extends Factory
 {
-    use HasBillableStates, HasProgressStates;
+    use HasApprovalStates, HasBillableStates, HasProgressStates;
 
     const PARTS = [
         'Dell XPS 13 Battery',
@@ -78,16 +79,6 @@ class OrderFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => $status,
-        ]);
-    }
-
-    /**
-     * Indicate that the order needs customer approval.
-     */
-    public function needsApproval(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'approved_at' => null,
         ]);
     }
 }

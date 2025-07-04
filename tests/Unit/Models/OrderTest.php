@@ -100,15 +100,3 @@ it('can filter orders by status scope', function (OrderStatus $status) {
     expect($orders)->toHaveCount(1);
     expect($orders->first()->status)->toBe($status);
 })->with(OrderStatus::cases());
-
-it('can filter orders by approved scope', function () {
-    // Arrange
-    Order::factory()->create();
-
-    // Act
-    $orders = Order::query()->approved()->get();
-
-    // Assert
-    expect($orders)->toHaveCount(1);
-    expect($orders->first()->approved_at)->not->toBeNull();
-});

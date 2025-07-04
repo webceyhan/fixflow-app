@@ -5,6 +5,7 @@ use App\Enums\TaskType;
 use App\Models\Task;
 use App\Models\Ticket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
 
@@ -19,6 +20,7 @@ it('creates a task with valid attributes', function () {
     expect($task->is_billable)->toBeTrue();
     expect($task->status)->toBeInstanceOf(TaskStatus::class);
     expect($task->type)->toBeInstanceOf(TaskType::class);
+    expect($task->approved_at)->toBeInstanceOf(Carbon::class);
 });
 
 it('can create a task for a ticket', function () {
@@ -59,6 +61,7 @@ it('can update a task', function () {
         'is_billable' => false,
         'type' => TaskType::Inspection,
         'status' => TaskStatus::Completed,
+        'approved_at' => now(),
     ]);
 
     // Assert
@@ -67,6 +70,7 @@ it('can update a task', function () {
     expect($task->is_billable)->toBeFalse();
     expect($task->type)->toBe(TaskType::Inspection);
     expect($task->status)->toBe(TaskStatus::Completed);
+    expect($task->approved_at)->toBeInstanceOf(Carbon::class);
 });
 
 it('can delete a task', function () {
@@ -111,15 +115,3 @@ it('can filter tasks by status scope', function (TaskStatus $status) {
     expect($tasks)->tohavecount(1);
     expect($tasks->first()->status)->toBe($status);
 })->with(TaskStatus::cases());
-
-it('can filter tasks by approved scope', function () {
-    // Arrange
-    Task::factory()->create();
-
-    // Act
-    $tasks = Task::query()->approved()->get();
-
-    // Assert
-    expect($tasks)->toHaveCount(1);
-    expect($tasks->first()->approved_at)->not->toBeNull();
-});
