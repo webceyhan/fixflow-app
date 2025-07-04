@@ -16,6 +16,7 @@ it('creates a task with valid attributes', function () {
     expect($task->ticket_id)->not->toBeNull();
     expect($task->description)->not->toBeEmpty();
     expect($task->cost)->toBeGreaterThan(0);
+    expect($task->is_billable)->toBeTrue();
     expect($task->status)->toBeInstanceOf(TaskStatus::class);
     expect($task->type)->toBeInstanceOf(TaskType::class);
 });
@@ -85,28 +86,6 @@ it('belongs to a ticket', function () {
 
     expect($task->ticket)->toBeInstanceOf(Ticket::class);
     expect($task->ticket->id)->toBe($ticket->id);
-});
-
-it('can determine if a task is billable', function () {
-    // Arrange & Act & Assert
-    $task = Task::factory()->make(['is_billable' => true]);
-    expect($task->is_billable)->toBeTrue();
-
-    $task = Task::factory()->make(['is_billable' => false]);
-    expect($task->is_billable)->toBeFalse();
-});
-
-it('can filter tasks by billable scope', function () {
-    // Arrange
-    Task::factory()->create();
-    Task::factory()->nonBillable()->create();
-
-    // Act
-    $tasks = Task::query()->billable()->get();
-
-    // Assert
-    expect($tasks)->toHaveCount(1);
-    expect($tasks->first()->is_billable)->toBeTrue();
 });
 
 it('can filter tasks by type scope', function (TaskType $type) {

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\OrderStatus;
 use App\Models\Ticket;
+use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class OrderFactory extends Factory
 {
-    use HasProgressStates;
+    use HasBillableStates, HasProgressStates;
 
     const PARTS = [
         'Dell XPS 13 Battery',
@@ -69,16 +70,6 @@ class OrderFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the order is non-billable.
-     */
-    public function nonBillable(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'is_billable' => false,
-        ]);
-    }
 
     /**
      * Indicate that the order is of a specified status.

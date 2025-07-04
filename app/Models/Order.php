@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderFactory> */
-    use HasFactory, HasProgress;
+    use Billable, HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -20,7 +21,6 @@ class Order extends Model
      */
     protected $attributes = [
         'quantity' => 1,
-        'is_billable' => true,
         'status' => OrderStatus::New,
     ];
 
@@ -48,7 +48,6 @@ class Order extends Model
     protected $casts = [
         'quantity' => 'integer',
         'cost' => 'float',
-        'is_billable' => 'boolean',
         'status' => OrderStatus::class,
         'approved_at' => 'datetime',
     ];
@@ -64,14 +63,6 @@ class Order extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include orders that are billable.
-     */
-    public function scopeBillable(Builder $query): void
-    {
-        $query->where('is_billable', true);
-    }
 
     /**
      * Scope a query to only include orders of a given status.

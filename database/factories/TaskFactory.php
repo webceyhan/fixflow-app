@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Ticket;
+use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
-    use HasProgressStates;
+    use HasBillableStates, HasProgressStates;
 
     /**
      * Define the model's default state.
@@ -47,16 +48,6 @@ class TaskFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the task is non-billable.
-     */
-    public function nonBillable(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'is_billable' => false,
-        ]);
-    }
 
     /**
      * Indicate that the task is of a specific type.

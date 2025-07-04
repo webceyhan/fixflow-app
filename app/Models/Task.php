@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
+use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */
-    use HasFactory, HasProgress;
+    use Billable, HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -20,7 +21,6 @@ class Task extends Model
      * @var array
      */
     protected $attributes = [
-        'is_billable' => true,
         'type' => TaskType::Repair,
         'status' => TaskStatus::New,
     ];
@@ -46,7 +46,6 @@ class Task extends Model
      */
     protected $casts = [
         'cost' => 'float',
-        'is_billable' => 'boolean',
         'type' => TaskType::class,
         'status' => TaskStatus::class,
         'approved_at' => 'datetime',
@@ -63,14 +62,6 @@ class Task extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tasks that are billable.
-     */
-    public function scopeBillable(Builder $query): void
-    {
-        $query->where('is_billable', true);
-    }
 
     /**
      * Scope a query to only include tasks of a given type.
