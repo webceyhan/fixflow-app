@@ -51,15 +51,6 @@ it('can create a refunded invoice', function () {
     expect($invoice->refunded_amount)->toBe($invoice->total);
 });
 
-it('can create an overdue invoice', function () {
-    // Arrange
-    $invoice = Invoice::factory()->overdue()->create();
-
-    // Assert
-    expect($invoice->isOverdue())->toBeTrue();
-    expect($invoice->status)->toBe(InvoiceStatus::Issued);
-});
-
 it('can create an invoice of status', function (InvoiceStatus $status) {
     // Arrange & Act
     $invoice = Invoice::factory()->ofStatus($status)->create();
@@ -140,24 +131,3 @@ it('can filter invoices by status scope', function (InvoiceStatus $status) {
     expect($invoices)->toHaveCount(2);
     expect($invoices->first()->status)->toBe($status);
 })->with(InvoiceStatus::cases());
-
-it('can filter invoices by overdue scope', function () {
-    // Arrange
-    Invoice::factory()->create();
-    Invoice::factory()->overdue()->create();
-
-    // Act
-    $overdueInvoices = Invoice::query()->overdue()->get();
-
-    // Assert
-    expect($overdueInvoices)->toHaveCount(1);
-    expect($overdueInvoices->first()->isOverdue())->toBeTrue();
-});
-
-it('can determine if an invoice is overdue', function () {
-    // Arrange
-    $invoice = Invoice::factory()->overdue()->create();
-
-    // Assert
-    expect($invoice->isOverdue())->toBeTrue();
-});

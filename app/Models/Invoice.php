@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\InvoiceStatus;
+use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
-    use HasFactory, HasProgress;
+    use HasDueDate, HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -50,7 +51,6 @@ class Invoice extends Model
         'discount_amount' => 'float',
         'paid_amount' => 'float',
         'refunded_amount' => 'float',
-        'due_date' => 'date',
         'status' => InvoiceStatus::class,
     ];
 
@@ -96,21 +96,5 @@ class Invoice extends Model
     public function scopeOfStatus(Builder $query, InvoiceStatus $status): void
     {
         $query->where('status', $status->value);
-    }
-
-    /**
-     * Scope a query to only include tickets that are overdue.
-     */
-    public function scopeOverdue(Builder $query): void
-    {
-        $query->where('due_date', '<', now())->pending();
-    }
-
-    /**
-     * Determine if the invoice is overdue.
-     */
-    public function isOverdue(): bool
-    {
-        return $this->due_date->isPast() && $this->isPending();
     }
 }

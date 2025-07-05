@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\InvoiceStatus;
 use App\Models\Ticket;
+use Database\Factories\States\HasDueDateStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InvoiceFactory extends Factory
 {
-    use HasProgressStates;
+    use HasDueDateStates, HasProgressStates;
 
     /**
      * Define the model's default state.
@@ -94,17 +95,6 @@ class InvoiceFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'status' => InvoiceStatus::Refunded,
             'refunded_amount' => $attributes['total'] ?? 0,
-        ]);
-    }
-
-    /**
-     * Indicate that the invoice is overdue.
-     */
-    public function overdue(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'due_date' => now()->subDays(1),
-            'status' => InvoiceStatus::Issued,
         ]);
     }
 }

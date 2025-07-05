@@ -49,15 +49,6 @@ it('can create a ticket of status', function () {
     expect($ticket->status)->toBe(TicketStatus::InProgress);
 });
 
-it('can create an overdue ticket', function () {
-    // Arrange
-    $ticket = Ticket::factory()->overdue()->create();
-
-    // Assert
-    expect($ticket->due_date->isPast())->toBeTrue();
-    expect($ticket->status)->not->toBe(TicketStatus::Closed);
-});
-
 it('can update a ticket', function () {
     // Arrange
     $ticket = Ticket::factory()->create();
@@ -193,26 +184,3 @@ it('can filter tickets by status scope', function (TicketStatus $status) {
     expect($tickets->count())->toBe(1);
     expect($tickets->first()->status)->toBe($status);
 })->with(TicketStatus::cases());
-
-it('can determine if a ticket is overdue', function () {
-    // Arrange
-    $ticket = Ticket::factory()->overdue()->create();
-
-    // Assert
-    expect($ticket->isOverdue())->toBeTrue();
-    expect($ticket->due_date->isPast())->toBeTrue();
-    expect($ticket->status)->not->toBe(TicketStatus::Closed);
-});
-
-it('can filter tickets by overdue scope', function () {
-    // Arrange
-    Ticket::factory()->create();
-    Ticket::factory()->overdue()->create();
-
-    // Act
-    $tickets = Ticket::overdue()->get();
-
-    // Assert
-    expect($tickets->count())->toBe(1);
-    expect($tickets->first()->due_date->isPast())->toBeTrue();
-});

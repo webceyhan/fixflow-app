@@ -6,6 +6,7 @@ use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
 use App\Models\Device;
 use App\Models\User;
+use Database\Factories\States\HasDueDateStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TicketFactory extends Factory
 {
-    use HasProgressStates;
+    use HasDueDateStates, HasProgressStates;
 
     /**
      * Define the model's default state.
@@ -79,17 +80,6 @@ class TicketFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => $status,
-        ]);
-    }
-
-    /**
-     * Indicate that the ticket is overdue.
-     */
-    public function overdue(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'due_date' => now()->subDay(),
-            'status' => TicketStatus::New,
         ]);
     }
 }
