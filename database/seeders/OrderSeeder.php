@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
             Order::factory()->forTicket($ticket)->create();
 
             // Create an order that needs approval
-            Order::factory()->forTicket($ticket)->needsApproval()->create();
+            Order::factory()->forTicket($ticket)->unapproved()->create();
         });
 
         // Mark some orders as non-billable

@@ -23,7 +23,7 @@ class DeviceSeeder extends Seeder
                 2 => $deviceFactory->withoutBrand()->create(),
                 3 => $deviceFactory->withoutSerialNumber()->create(),
                 4 => $deviceFactory->withoutPurchaseDate()->create(),
-                5 => $deviceFactory->outOfWarranty()->create(),
+                5 => $deviceFactory->withoutWarranty()->create(),
             };
         });
     }

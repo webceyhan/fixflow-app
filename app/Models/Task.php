@@ -4,7 +4,11 @@ namespace App\Models;
 
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\Billable;
+use App\Models\Concerns\HasApproval;
+use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasStatus;
+use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +16,10 @@ class Task extends Model
 {
     /**
      * @use HasFactory<\Database\Factories\TaskFactory>
+     * @use HasStatus<\App\Enums\TaskStatus>
+     * @use HasType<\App\Enums\TaskType>
      */
-    use HasFactory;
+    use Billable, HasApproval, HasFactory, HasProgress, HasStatus, HasType;
 
     /**
      * The model's default values for attributes.
@@ -21,7 +27,6 @@ class Task extends Model
      * @var array
      */
     protected $attributes = [
-        'is_billable' => true,
         'type' => TaskType::Repair,
         'status' => TaskStatus::New,
     ];
@@ -47,10 +52,6 @@ class Task extends Model
      */
     protected $casts = [
         'cost' => 'float',
-        'is_billable' => 'boolean',
-        'type' => TaskType::class,
-        'status' => TaskStatus::class,
-        'approved_at' => 'datetime',
     ];
 
     // ACCESSORS ///////////////////////////////////////////////////////////////////////////////////
@@ -66,38 +67,6 @@ class Task extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tasks that are billable.
-     */
-    public function scopeBillable(Builder $query): void
-    {
-        $query->where('is_billable', true);
-    }
-
-    /**
-     * Scope a query to only include tasks of a given type.
-     */
-    public function scopeOfType(Builder $query, TaskType $type): void
-    {
-        $query->where('type', $type->value);
-    }
-
-    /**
-     * Scope a query to only include tasks of a given status.
-     */
-    public function scopeOfStatus(Builder $query, TaskStatus $status): void
-    {
-        $query->where('status', $status->value);
-    }
-
-    /**
-     * Scope a query to only include approved tasks.
-     */
-    public function scopeApproved(Builder $query): void
-    {
-        $query->whereNotNull('approved_at');
-    }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////
 }

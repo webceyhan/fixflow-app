@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\Billable;
+use App\Models\Concerns\HasApproval;
+use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,8 +14,9 @@ class Order extends Model
 {
     /**
      * @use HasFactory<\Database\Factories\OrderFactory>
+     * @use HasStatus<\App\Enums\OrderStatus>
      */
-    use HasFactory;
+    use Billable, HasApproval, HasFactory, HasProgress, HasStatus;
 
     /**
      * The model's default values for attributes.
@@ -21,7 +25,6 @@ class Order extends Model
      */
     protected $attributes = [
         'quantity' => 1,
-        'is_billable' => true,
         'status' => OrderStatus::New,
     ];
 
@@ -49,9 +52,6 @@ class Order extends Model
     protected $casts = [
         'quantity' => 'integer',
         'cost' => 'float',
-        'is_billable' => 'boolean',
-        'status' => OrderStatus::class,
-        'approved_at' => 'datetime',
     ];
 
     // ACCESSORS ///////////////////////////////////////////////////////////////////////////////////
@@ -67,30 +67,6 @@ class Order extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include orders that are billable.
-     */
-    public function scopeBillable(Builder $query): void
-    {
-        $query->where('is_billable', true);
-    }
-
-    /**
-     * Scope a query to only include orders of a given status.
-     */
-    public function scopeOfStatus(Builder $query, OrderStatus $status): void
-    {
-        $query->where('status', $status->value);
-    }
-
-    /**
-     * Scope a query to only include approved orders.
-     */
-    public function scopeApproved(Builder $query): void
-    {
-        $query->whereNotNull('approved_at');
-    }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////
 }

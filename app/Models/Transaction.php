@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
+use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,8 +14,9 @@ class Transaction extends Model
 {
     /**
      * @use HasFactory<\Database\Factories\TransactionFactory>
+     * @use HasType<\App\Enums\TransactionType>
      */
-    use HasFactory;
+    use HasFactory, HasType;
 
     /**
      * The model's default values for attributes.
@@ -46,7 +48,6 @@ class Transaction extends Model
     protected $casts = [
         'amount' => 'float',
         'method' => TransactionMethod::class,
-        'type' => TransactionType::class,
     ];
 
     // ACCESSORS ///////////////////////////////////////////////////////////////////////////////////
@@ -69,14 +70,6 @@ class Transaction extends Model
     public function scopeOfMethod(Builder $query, TransactionMethod $method): void
     {
         $query->where('method', $method->value);
-    }
-
-    /**
-     * Scope a query to only include transactions of a given type.
-     */
-    public function scopeOfType(Builder $query, TransactionType $type): void
-    {
-        $query->where('type', $type->value);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////
