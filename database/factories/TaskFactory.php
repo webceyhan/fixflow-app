@@ -5,6 +5,12 @@ namespace Database\Factories;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Ticket;
+use Database\Factories\States\HasApprovalStates;
+use Database\Factories\States\HasBillableStates;
+use Database\Factories\States\HasNoteStates;
+use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
+use Database\Factories\States\HasTypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +18,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
+    use HasApprovalStates, HasBillableStates, HasNoteStates, HasProgressStates, HasStatusStates, HasTypeStates;
+
     /**
      * Define the model's default state.
      *
@@ -40,48 +48,6 @@ class TaskFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'ticket_id' => $ticket->id,
             'created_at' => $ticket->created_at,
-        ]);
-    }
-
-    // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the task is non-billable.
-     */
-    public function nonBillable(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'is_billable' => false,
-        ]);
-    }
-
-    /**
-     * Indicate that the task is of a specific type.
-     */
-    public function ofType(TaskType $type): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'type' => $type,
-        ]);
-    }
-
-    /**
-     * Indicate that the task is of a specific status.
-     */
-    public function ofStatus(TaskStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
-        ]);
-    }
-
-    /**
-     * Indicate that the task needs customer approval.
-     */
-    public function needsApproval(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'approved_at' => null,
         ]);
     }
 }

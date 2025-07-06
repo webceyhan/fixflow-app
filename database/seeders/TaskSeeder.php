@@ -18,7 +18,7 @@ class TaskSeeder extends Seeder
             Task::factory()->forTicket($ticket)->create();
 
             // Create a task that needs approval
-            Task::factory()->forTicket($ticket)->needsApproval()->create();
+            Task::factory()->forTicket($ticket)->unapproved()->create();
         });
 
         // Mark some tasks as non-billable

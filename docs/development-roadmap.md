@@ -136,7 +136,7 @@ php artisan test --filter=User
 #### Tasks:
 - [ ] **Ticket Migration & Model**
   - [ ] Create tickets migration with foreign keys (customer_id, device_id, assigned_to)
-  - [ ] Create `TicketPriority` and `TicketStatus` enums
+  - [ ] Create `Priority` and `TicketStatus` enums
   - [ ] Add computed columns (progress_percentage, is_overdue)
   - [ ] Add counter fields (total_tasks, completed_tasks, etc.)
 

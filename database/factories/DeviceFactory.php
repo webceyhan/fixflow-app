@@ -5,6 +5,10 @@ namespace Database\Factories;
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Customer;
+use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
+use Database\Factories\States\HasTypeStates;
+use Database\Factories\States\HasWarrantyStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +18,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeviceFactory extends Factory
 {
+    use HasProgressStates, HasStatusStates, HasTypeStates, HasWarrantyStates;
+
     const VERSIONS = [
         'iMac' => ['21"', '27"'],
         'Mac' => ['Mini', 'Pro', 'Studio'],
@@ -68,6 +74,11 @@ class DeviceFactory extends Factory
         'Go Comfort' => DeviceType::Other,
     ];
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         // Generate random model name and version
@@ -82,7 +93,7 @@ class DeviceFactory extends Factory
             'purchase_date' => now()->subYears(1),
             'warranty_expire_date' => now()->addYears(1),
             'type' => self::TYPES[$name],
-            'status' => fake()->randomElement(DeviceStatus::values()),
+            'status' => DeviceStatus::Received,
         ];
     }
 
@@ -140,37 +151,6 @@ class DeviceFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'purchase_date' => null,
             'warranty_expire_date' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the device is out of warranty.
-     */
-    public function outOfWarranty(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'purchase_date' => now()->subYears(2),
-            'warranty_expire_date' => now()->subYear(),
-        ]);
-    }
-
-    /**
-     * Indicate that the device is of the given type.
-     */
-    public function ofType(DeviceType $type): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'type' => $type,
-        ]);
-    }
-
-    /**
-     * Indicate that the device is of the given status.
-     */
-    public function ofStatus(DeviceStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
         ]);
     }
 }

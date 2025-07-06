@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasProgress;
 use App\Enums\Concerns\HasValues;
 
 enum TicketStatus: string
 {
-    use HasValues;
+    use HasProgress, HasValues;
 
     /**
      * The ticket is new and has not been assigned to anyone.
@@ -35,4 +36,22 @@ enum TicketStatus: string
      */
     case Closed = 'closed';
 
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    public static function pendingCases(): array
+    {
+        return [
+            self::New,
+            self::InProgress,
+            self::OnHold,
+        ];
+    }
+
+    public static function completeCases(): array
+    {
+        return [
+            self::Resolved,
+            self::Closed,
+        ];
+    }
 }

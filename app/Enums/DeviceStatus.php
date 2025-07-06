@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasProgress;
 use App\Enums\Concerns\HasValues;
 
 enum DeviceStatus: string
 {
-    use HasValues;
+    use HasProgress, HasValues;
 
     /**
      * Device has been received and is awaiting repair.
@@ -32,4 +33,23 @@ enum DeviceStatus: string
      * Device has been delivered to the customer.
      */
     case Delivered = 'delivered';
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    public static function pendingCases(): array
+    {
+        return [
+            self::Received,
+            self::OnHold,
+            self::UnderRepair,
+        ];
+    }
+
+    public static function completeCases(): array
+    {
+        return [
+            self::Ready,
+            self::Delivered,
+        ];
+    }
 }

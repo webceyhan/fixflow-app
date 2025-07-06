@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\TicketPriority;
+use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('device_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
-            $table->enum('priority', TicketPriority::values())->default(TicketPriority::Normal);
+            $table->enum('priority', Priority::values())->default(Priority::Medium);
             $table->enum('status', TicketStatus::values())->default(TicketStatus::New);
             $table->date('due_date')->nullable();
             $table->timestamps();

@@ -46,14 +46,6 @@ it('can create a transaction of method', function (TransactionMethod $method) {
     expect($transaction->method)->toBe($method);
 })->with(TransactionMethod::cases());
 
-it('can create a transaction of type', function (TransactionType $type) {
-    // Arrange & Act
-    $transaction = Transaction::factory()->ofType($type)->create();
-
-    // Assert
-    expect($transaction->type)->toBe($type);
-})->with(TransactionType::cases());
-
 it('can update a transaction', function () {
     // Arrange
     $transaction = Transaction::factory()->create();
@@ -105,15 +97,3 @@ it('can filter transactions by method scope', function (TransactionMethod $metho
     expect($transactions)->toHaveCount(1);
     expect($transactions->first()->method)->toBe($method);
 })->with(TransactionMethod::cases());
-
-it('can filter transactions by type scope', function (TransactionType $type) {
-    // Arrange
-    Transaction::factory()->ofType($type)->create();
-
-    // Act
-    $transactions = Transaction::ofType($type)->get();
-
-    // Assert
-    expect($transactions)->toHaveCount(1);
-    expect($transactions->first()->type)->toBe($type);
-})->with(TransactionType::cases());

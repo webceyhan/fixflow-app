@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Database\Factories\States\HasContactableStates;
+use Database\Factories\States\HasNoteStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CustomerFactory extends Factory
 {
+    use HasContactableStates, HasNoteStates;
+
     public function definition(): array
     {
         return [
@@ -48,42 +52,12 @@ class CustomerFactory extends Factory
     }
 
     /**
-     * Indicate that the customer has no email.
-     */
-    public function withoutEmail(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'email' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the customer has no phone number.
-     */
-    public function withoutPhone(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'phone' => null,
-        ]);
-    }
-
-    /**
      * Indicate that the customer has no address.
      */
     public function withoutAddress(): self
     {
         return $this->state(fn (array $attributes) => [
             'address' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the customer has no note.
-     */
-    public function withoutNote(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'note' => null,
         ]);
     }
 }

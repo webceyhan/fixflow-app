@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
 use App\Models\Invoice;
+use Database\Factories\States\HasTypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TransactionFactory extends Factory
 {
+    use HasTypeStates;
+
     /**
      * Define the model's default state.
      *

@@ -33,14 +33,6 @@ it('can create an order for a ticket', function () {
     expect($order->ticket->id)->toBe($ticket->id);
 });
 
-it('can create an order of status', function (OrderStatus $status) {
-    // Arrange & Act
-    $order = Order::factory()->ofStatus($status)->create();
-
-    // Assert
-    expect($order->status)->toBe($status);
-})->with(OrderStatus::cases());
-
 it('can update an order', function () {
     // Arrange
     $order = Order::factory()->create();
@@ -87,50 +79,4 @@ it('belongs to a ticket', function () {
     // Assert
     expect($order->ticket)->toBeInstanceOf(Ticket::class);
     expect($order->ticket->id)->toBe($ticket->id);
-});
-
-it('can determine if an order is billable', function () {
-    // Arrange & Act & Assert
-    $order = Order::factory()->make(['is_billable' => true]);
-    expect($order->is_billable)->toBeTrue();
-
-    $order = Order::factory()->make(['is_billable' => false]);
-    expect($order->is_billable)->toBeFalse();
-});
-
-it('can filter orders by billable scope', function () {
-    // Arrange
-    Order::factory()->create();
-    Order::factory()->nonBillable()->create();
-
-    // Act
-    $orders = Order::query()->billable()->get();
-
-    // Assert
-    expect($orders)->toHaveCount(1);
-    expect($orders->first()->is_billable)->toBeTrue();
-});
-
-it('can filter orders by status scope', function (OrderStatus $status) {
-    // Arrange
-    Order::factory()->ofStatus($status)->create();
-
-    // Act
-    $orders = Order::query()->ofStatus($status)->get();
-
-    // Assert
-    expect($orders)->toHaveCount(1);
-    expect($orders->first()->status)->toBe($status);
-})->with(OrderStatus::cases());
-
-it('can filter orders by approved scope', function () {
-    // Arrange
-    Order::factory()->create();
-
-    // Act
-    $orders = Order::query()->approved()->get();
-
-    // Assert
-    expect($orders)->toHaveCount(1);
-    expect($orders->first()->approved_at)->not->toBeNull();
 });

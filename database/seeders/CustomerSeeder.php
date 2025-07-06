@@ -28,12 +28,12 @@ class CustomerSeeder extends Seeder
             ]);
 
             // Create a customer without email
-            Customer::factory()->withoutEmail()->create([
+            Customer::factory()->notMailable()->create([
                 'created_at' => $startDate,
             ]);
 
             // Create a customer without phone
-            Customer::factory()->withoutPhone()->create([
+            Customer::factory()->notCallable()->create([
                 'created_at' => $startDate,
             ]);
 
