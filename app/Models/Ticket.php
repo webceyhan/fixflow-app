@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
+use App\Models\Concerns\Assignable;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Ticket extends Model
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use HasDueDate, HasFactory, HasProgress;
+    use Assignable, HasDueDate, HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -52,14 +53,6 @@ class Ticket extends Model
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Get the assignee (user) for the ticket.
-     */
-    public function assignee(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'assignee_id');
-    }
 
     /**
      * Get the device for the ticket.
@@ -104,14 +97,6 @@ class Ticket extends Model
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Scope a query to only include tickets that are assignable.
-     */
-    public function scopeAssignable(Builder $query): void
-    {
-        $query->whereNull('assignee_id');
-    }
-
-    /**
      * Scope a query to only include tickets with the specified priority.
      */
     public function scopeOfPriority(Builder $query, TicketPriority $priority): void
@@ -125,29 +110,5 @@ class Ticket extends Model
     public function scopeOfStatus(Builder $query, TicketStatus $status): void
     {
         $query->where('status', $status->value);
-    }
-
-    /**
-     * Determine if the ticket is assignable to a user.
-     */
-    public function isAssignable(): bool
-    {
-        return ! $this->assignee()->exists();
-    }
-
-    /**
-     * Assign the ticket to a user.
-     */
-    public function assignTo(User $user): void
-    {
-        $this->assignee()->associate($user)->save();
-    }
-
-    /**
-     * Unassign the ticket from a user.
-     */
-    public function unassign(): void
-    {
-        $this->assignee()->dissociate()->save();
     }
 }

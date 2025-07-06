@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
 use App\Models\Device;
-use App\Models\User;
+use Database\Factories\States\HasAssignableStates;
 use Database\Factories\States\HasDueDateStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TicketFactory extends Factory
 {
-    use HasDueDateStates, HasProgressStates;
+    use HasAssignableStates, HasDueDateStates, HasProgressStates;
 
     /**
      * Define the model's default state.
@@ -38,16 +38,6 @@ class TicketFactory extends Factory
     }
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the ticket is assigned to a specific user.
-     */
-    public function forAssignee(User $user): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'assignee_id' => $user->id,
-        ]);
-    }
 
     /**
      * Indicate that the ticket belongs to a specific device.
