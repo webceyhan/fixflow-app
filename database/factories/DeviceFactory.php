@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Customer;
+use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeviceFactory extends Factory
 {
+    use HasProgressStates;
+
     const VERSIONS = [
         'iMac' => ['21"', '27"'],
         'Mac' => ['Mini', 'Pro', 'Studio'],
@@ -68,6 +71,11 @@ class DeviceFactory extends Factory
         'Go Comfort' => DeviceType::Other,
     ];
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         // Generate random model name and version
@@ -82,7 +90,7 @@ class DeviceFactory extends Factory
             'purchase_date' => now()->subYears(1),
             'warranty_expire_date' => now()->addYears(1),
             'type' => self::TYPES[$name],
-            'status' => fake()->randomElement(DeviceStatus::values()),
+            'status' => DeviceStatus::Received,
         ];
     }
 

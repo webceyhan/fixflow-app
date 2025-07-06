@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasProgress;
 use App\Enums\Concerns\HasValues;
 
 enum OrderStatus: string
 {
-    use HasValues;
+    use HasProgress, HasValues;
 
     /**
      * Represents an order that has been created and is awaiting processing.
@@ -29,4 +30,21 @@ enum OrderStatus: string
      * Represents an order that has been cancelled by the customer or by the system.
      */
     case Cancelled = 'cancelled';
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    public static function pendingCases(): array
+    {
+        return [
+            self::New,
+            self::Shipped,
+        ];
+    }
+
+    public static function completeCases(): array
+    {
+        return [
+            self::Received,
+        ];
+    }
 }

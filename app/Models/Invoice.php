@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\InvoiceStatus;
+use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
-    use HasFactory;
+    use HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -102,25 +103,14 @@ class Invoice extends Model
      */
     public function scopeOverdue(Builder $query): void
     {
-        $query
-            ->where('due_date', '<', now())
-            ->whereIn('status', [
-                InvoiceStatus::Issued->value,
-                InvoiceStatus::Sent->value,
-            ]);
+        $query->where('due_date', '<', now())->pending();
     }
-
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Determine if the invoice is overdue.
      */
     public function isOverdue(): bool
     {
-        return $this->due_date->isPast()
-            && in_array($this->status, [
-                InvoiceStatus::Issued,
-                InvoiceStatus::Sent,
-            ]);
+        return $this->due_date->isPast() && $this->isPending();
     }
 }

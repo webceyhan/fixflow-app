@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
+use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Device extends Model
 {
     /** @use HasFactory<\Database\Factories\DeviceFactory> */
-    use HasFactory;
+    use HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.

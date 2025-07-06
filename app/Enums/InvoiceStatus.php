@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasProgress;
 use App\Enums\Concerns\HasValues;
 
 enum InvoiceStatus: string
 {
-    use HasValues;
+    use HasProgress, HasValues;
 
     /**
      * Invoice has been created and is awaiting approval.
@@ -37,4 +38,23 @@ enum InvoiceStatus: string
      * Invoice has been cancelled.
      */
     case Cancelled = 'cancelled';
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    public static function pendingCases(): array
+    {
+        return [
+            self::Draft,
+            self::Issued,
+            self::Sent,
+        ];
+    }
+
+    public static function completeCases(): array
+    {
+        return [
+            self::Paid,
+            self::Refunded,
+        ];
+    }
 }

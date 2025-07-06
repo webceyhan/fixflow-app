@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
+use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Ticket extends Model
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use HasFactory;
+    use HasFactory, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -131,12 +132,8 @@ class Ticket extends Model
      */
     public function scopeOverdue(Builder $query): void
     {
-        $query
-            ->where('due_date', '<', now())
-            ->whereNot('status', TicketStatus::Closed->value);
+        $query->where('due_date', '<', now())->pending();
     }
-
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Determine if the ticket is assignable to a user.
@@ -167,7 +164,6 @@ class Ticket extends Model
      */
     public function isOverdue(): bool
     {
-        return $this->due_date->isPast()
-            && $this->status !== TicketStatus::Closed;
+        return $this->due_date->isPast() && $this->isPending();
     }
 }

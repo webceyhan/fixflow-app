@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\TaskStatus;
 use App\Enums\TaskType;
 use App\Models\Ticket;
+use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
+    use HasProgressStates;
+
     /**
      * Define the model's default state.
      *

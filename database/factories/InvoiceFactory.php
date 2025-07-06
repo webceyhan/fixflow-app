@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\InvoiceStatus;
 use App\Models\Ticket;
+use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InvoiceFactory extends Factory
 {
+    use HasProgressStates;
+
     /**
      * Define the model's default state.
      *
