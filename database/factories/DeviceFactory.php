@@ -6,6 +6,7 @@ use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Customer;
 use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasWarrantyStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeviceFactory extends Factory
 {
-    use HasProgressStates;
+    use HasProgressStates, HasWarrantyStates;
 
     const VERSIONS = [
         'iMac' => ['21"', '27"'],
@@ -137,17 +138,6 @@ class DeviceFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'purchase_date' => null,
             'warranty_expire_date' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the device is out of warranty.
-     */
-    public function outOfWarranty(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'purchase_date' => now()->subYears(2),
-            'warranty_expire_date' => now()->subYear(),
         ]);
     }
 

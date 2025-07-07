@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasWarranty;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Device extends Model
 {
     /** @use HasFactory<\Database\Factories\DeviceFactory> */
-    use HasFactory, HasProgress;
+    use HasFactory, HasProgress, HasWarranty;
 
     /**
      * The model's default values for attributes.
@@ -48,7 +49,6 @@ class Device extends Model
      */
     protected $casts = [
         'purchase_date' => 'date',
-        'warranty_expire_date' => 'date',
         'type' => DeviceType::class,
         'status' => DeviceStatus::class,
     ];
@@ -74,14 +74,6 @@ class Device extends Model
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Scope a query to only include devices with warranty.
-     */
-    public function scopeWithWarranty(Builder $query): void
-    {
-        $query->where('warranty_expire_date', '>', now());
-    }
-
-    /**
      * Scope a query to only include devices of a given type.
      */
     public function scopeOfType(Builder $query, DeviceType $type): void
@@ -95,15 +87,5 @@ class Device extends Model
     public function scopeOfStatus(Builder $query, DeviceStatus $status): void
     {
         $query->where('status', $status->value);
-    }
-
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Determine if the device has valid warranty.
-     */
-    public function hasWarranty(): bool
-    {
-        return $this->warranty_expire_date > now();
     }
 }
