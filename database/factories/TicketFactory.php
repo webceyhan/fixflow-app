@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Enums\TicketPriority;
+use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Device;
 use Database\Factories\States\HasAssignableStates;
 use Database\Factories\States\HasDueDateStates;
+use Database\Factories\States\HasPriorityStates;
 use Database\Factories\States\HasProgressStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TicketFactory extends Factory
 {
-    use HasAssignableStates, HasDueDateStates, HasProgressStates;
+    use HasAssignableStates, HasDueDateStates, HasPriorityStates, HasProgressStates;
 
     /**
      * Define the model's default state.
@@ -31,7 +32,7 @@ class TicketFactory extends Factory
             'device_id' => Device::factory(),
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'priority' => TicketPriority::Normal,
+            'priority' => Priority::Medium,
             'status' => TicketStatus::New,
             'due_date' => now()->addWeek(),
         ];
@@ -52,16 +53,6 @@ class TicketFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the ticket is of the given priority.
-     */
-    public function ofPriority(TicketPriority $priority): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'priority' => $priority,
-        ]);
-    }
 
     /**
      * Indicate that the ticket is of the given status.

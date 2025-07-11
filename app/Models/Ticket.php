@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
 use App\Models\Concerns\Assignable;
 use App\Models\Concerns\HasDueDate;
+use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Ticket extends Model
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use Assignable, HasDueDate, HasFactory, HasProgress;
+    use Assignable, HasDueDate, HasFactory, HasPriority, HasProgress;
 
     /**
      * The model's default values for attributes.
@@ -25,7 +25,6 @@ class Ticket extends Model
      * @var array
      */
     protected $attributes = [
-        'priority' => TicketPriority::Normal,
         'status' => TicketStatus::New,
     ];
 
@@ -48,7 +47,6 @@ class Ticket extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'priority' => TicketPriority::class,
         'status' => TicketStatus::class,
     ];
 
@@ -95,14 +93,6 @@ class Ticket extends Model
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tickets with the specified priority.
-     */
-    public function scopeOfPriority(Builder $query, TicketPriority $priority): void
-    {
-        $query->where('priority', $priority->value);
-    }
 
     /**
      * Scope a query to only include tickets with the specified status.

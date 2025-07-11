@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\TicketPriority;
+use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
 use App\Models\Device;
@@ -17,17 +17,9 @@ it('creates a ticket with valid attributes', function () {
     expect($ticket->device_id)->not->toBeNull();
     expect($ticket->title)->not->toBeEmpty();
     expect($ticket->description)->not->toBeEmpty();
-    expect($ticket->priority)->toBeInstanceOf(TicketPriority::class);
+    expect($ticket->priority)->toBeInstanceOf(Priority::class);
     expect($ticket->status)->toBeInstanceOf(TicketStatus::class);
     expect($ticket->due_date)->not->toBeNull();
-});
-
-it('can create a ticket of priority', function () {
-    // Arrange
-    $ticket = Ticket::factory()->ofPriority(TicketPriority::High)->create();
-
-    // Assert
-    expect($ticket->priority)->toBe(TicketPriority::High);
 });
 
 it('can create a ticket of status', function () {
@@ -46,7 +38,7 @@ it('can update a ticket', function () {
     $ticket->update([
         'title' => 'Updated Ticket Title',
         'description' => 'Updated ticket description',
-        'priority' => TicketPriority::High,
+        'priority' => Priority::High,
         'status' => TicketStatus::InProgress,
         'due_date' => now()->addMonth(),
     ]);
@@ -54,7 +46,7 @@ it('can update a ticket', function () {
     // Assert
     expect($ticket->title)->toBe('Updated Ticket Title');
     expect($ticket->description)->toBe('Updated ticket description');
-    expect($ticket->priority)->toBe(TicketPriority::High);
+    expect($ticket->priority)->toBe(Priority::High);
     expect($ticket->status)->toBe(TicketStatus::InProgress);
     expect($ticket->due_date->isFuture())->toBeTrue();
 });
@@ -98,18 +90,6 @@ it('can have many orders', function () {
 
     expect($ticket->orders)->toHaveCount(2);
 });
-
-it('can filter tickets by priority scope', function (TicketPriority $priority) {
-    // Arrange
-    Ticket::factory()->ofPriority($priority)->create();
-
-    // Act
-    $tickets = Ticket::ofPriority($priority)->get();
-
-    // Assert
-    expect($tickets->count())->toBe(1);
-    expect($tickets->first()->priority)->toBe($priority);
-})->with(TicketPriority::cases());
 
 it('can filter tickets by status scope', function (TicketStatus $status) {
     // Arrange
