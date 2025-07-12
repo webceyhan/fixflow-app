@@ -7,6 +7,7 @@ use App\Enums\DeviceType;
 use App\Models\Customer;
 use Database\Factories\States\HasProgressStates;
 use Database\Factories\States\HasStatusStates;
+use Database\Factories\States\HasTypeStates;
 use Database\Factories\States\HasWarrantyStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeviceFactory extends Factory
 {
-    use HasProgressStates, HasStatusStates, HasWarrantyStates;
+    use HasProgressStates, HasStatusStates, HasTypeStates, HasWarrantyStates;
 
     const VERSIONS = [
         'iMac' => ['21"', '27"'],
@@ -139,16 +140,6 @@ class DeviceFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'purchase_date' => null,
             'warranty_expire_date' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the device is of the given type.
-     */
-    public function ofType(DeviceType $type): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'type' => $type,
         ]);
     }
 }

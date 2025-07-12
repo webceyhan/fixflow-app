@@ -34,14 +34,6 @@ it('can create a task for a ticket', function () {
     expect($task->ticket->id)->toBe($ticket->id);
 });
 
-it('can create a task of type', function (TaskType $type) {
-    // Arrange & Act
-    $task = Task::factory()->ofType($type)->create();
-
-    // Assert
-    expect($task->type)->toBe($type);
-})->with(TaskType::cases());
-
 it('can update a task', function () {
     // Arrange
     $task = Task::factory()->create();
@@ -83,15 +75,3 @@ it('belongs to a ticket', function () {
     expect($task->ticket)->toBeInstanceOf(Ticket::class);
     expect($task->ticket->id)->toBe($ticket->id);
 });
-
-it('can filter tasks by type scope', function (TaskType $type) {
-    // Arrange
-    Task::factory()->ofType($type)->create();
-
-    // Act
-    $tasks = Task::query()->ofType($type)->get();
-
-    // Assert
-    expect($tasks)->toHaveCount(1);
-    expect($tasks->first()->type)->toBe($type);
-})->with(TaskType::cases());

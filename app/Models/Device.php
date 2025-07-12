@@ -6,8 +6,8 @@ use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Concerns\HasProgress;
 use App\Models\Concerns\HasStatus;
+use App\Models\Concerns\HasType;
 use App\Models\Concerns\HasWarranty;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,8 +18,9 @@ class Device extends Model
     /**
      * @use HasFactory<\Database\Factories\DeviceFactory>
      * @use HasStatus<\App\Enums\DeviceStatus>
+     * @use HasType<\App\Enums\DeviceType>
      */
-    use HasFactory, HasProgress, HasStatus, HasWarranty;
+    use HasFactory, HasProgress, HasStatus, HasType, HasWarranty;
 
     /**
      * The model's default values for attributes.
@@ -53,7 +54,6 @@ class Device extends Model
      */
     protected $casts = [
         'purchase_date' => 'date',
-        'type' => DeviceType::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -72,15 +72,5 @@ class Device extends Model
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
-    }
-
-    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include devices of a given type.
-     */
-    public function scopeOfType(Builder $query, DeviceType $type): void
-    {
-        $query->where('type', $type->value);
     }
 }

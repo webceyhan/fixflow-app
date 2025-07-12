@@ -44,14 +44,6 @@ it('can create a device without a purchase date', function () {
     expect($device->warranty_expire_date)->toBeNull();
 });
 
-it('can create a device of type', function (DeviceType $type) {
-    // Arrange
-    $device = Device::factory()->ofType($type)->create();
-
-    // Assert
-    expect($device->type)->toBe($type);
-})->with(DeviceType::cases());
-
 it('can update a device', function () {
     // Arrange
     $device = Device::factory()->create();
@@ -102,15 +94,3 @@ it('can get the customer that owns the device', function () {
     // Assert
     expect($device->customer->id)->toBe($customer->id);
 });
-
-it('can filter devices by type scope', function (DeviceType $type) {
-    // Arrange
-    Device::factory()->ofType($type)->create();
-
-    // Act
-    $devices = Device::ofType($type)->get();
-
-    // Assert
-    expect($devices)->toHaveCount(1);
-    expect($devices->first()->type)->toBe($type);
-})->with(DeviceType::cases());

@@ -8,7 +8,7 @@ use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
 use App\Models\Concerns\HasStatus;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,8 +17,9 @@ class Task extends Model
     /**
      * @use HasFactory<\Database\Factories\TaskFactory>
      * @use HasStatus<\App\Enums\TaskStatus>
+     * @use HasType<\App\Enums\TaskType>
      */
-    use Billable, HasApproval, HasFactory, HasProgress, HasStatus;
+    use Billable, HasApproval, HasFactory, HasProgress, HasStatus, HasType;
 
     /**
      * The model's default values for attributes.
@@ -51,7 +52,6 @@ class Task extends Model
      */
     protected $casts = [
         'cost' => 'float',
-        'type' => TaskType::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -62,15 +62,5 @@ class Task extends Model
     public function ticket()
     {
         return $this->belongsTo(Ticket::class);
-    }
-
-    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tasks of a given type.
-     */
-    public function scopeOfType(Builder $query, TaskType $type): void
-    {
-        $query->where('type', $type->value);
     }
 }

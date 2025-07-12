@@ -9,6 +9,7 @@ use Database\Factories\States\HasApprovalStates;
 use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
 use Database\Factories\States\HasStatusStates;
+use Database\Factories\States\HasTypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
-    use HasApprovalStates, HasBillableStates, HasProgressStates, HasStatusStates;
+    use HasApprovalStates, HasBillableStates, HasProgressStates, HasStatusStates, HasTypeStates;
 
     /**
      * Define the model's default state.
@@ -46,18 +47,6 @@ class TaskFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'ticket_id' => $ticket->id,
             'created_at' => $ticket->created_at,
-        ]);
-    }
-
-    // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the task is of a specific type.
-     */
-    public function ofType(TaskType $type): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'type' => $type,
         ]);
     }
 }
