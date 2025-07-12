@@ -16,22 +16,6 @@ it('creates a customer with valid attributes', function () {
     expect($customer->address)->not->toBeEmpty();
 });
 
-it('can create customer without email', function () {
-    // Act
-    $customer = Customer::factory()->withoutEmail()->create();
-
-    // Assert
-    expect($customer->email)->toBeNull();
-});
-
-it('can create customer without phone', function () {
-    // Act
-    $customer = Customer::factory()->withoutPhone()->create();
-
-    // Assert
-    expect($customer->phone)->toBeNull();
-});
-
 it('can create customer without address', function () {
     // Act
     $customer = Customer::factory()->withoutAddress()->create();

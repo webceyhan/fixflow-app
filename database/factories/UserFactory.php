@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
+use Database\Factories\States\HasContactableStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -13,6 +14,11 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    use HasContactableStates {
+        mailable as private;
+        notMailable as private;
+    }
+
     /**
      * The current password being used by the factory.
      */
@@ -38,16 +44,6 @@ class UserFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the user has no phone number.
-     */
-    public function withoutPhone(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'phone' => null,
-        ]);
-    }
 
     /**
      * Indicate that the user has the specified role.

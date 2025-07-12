@@ -19,14 +19,6 @@ it('creates a user with valid attributes', function () {
     expect($user->status)->toBeInstanceOf(UserStatus::class);
 });
 
-it('can create user without phone number', function () {
-    // Act
-    $user = User::factory()->withoutPhone()->create();
-
-    // Assert
-    expect($user->phone)->toBeNull();
-});
-
 it('can create user of role', function (UserRole $role) {
     // Act
     $user = User::factory()->ofRole($role)->create();
