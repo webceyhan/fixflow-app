@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Enums\InvoiceStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasProgress;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +13,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Invoice extends Model
 {
-    /** @use HasFactory<\Database\Factories\InvoiceFactory> */
-    use HasDueDate, HasFactory, HasProgress;
+    /**
+     * @use HasFactory<\Database\Factories\InvoiceFactory>
+     * @use HasStatus<\App\Enums\InvoiceStatus>
+     */
+    use HasDueDate, HasFactory, HasProgress, HasStatus;
 
     /**
      * The model's default values for attributes.
@@ -51,7 +54,6 @@ class Invoice extends Model
         'discount_amount' => 'float',
         'paid_amount' => 'float',
         'refunded_amount' => 'float',
-        'status' => InvoiceStatus::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -86,15 +88,5 @@ class Invoice extends Model
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
-    }
-
-    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include invoices with the specified status.
-     */
-    public function scopeOfStatus(Builder $query, InvoiceStatus $status): void
-    {
-        $query->where('status', $status->value);
     }
 }

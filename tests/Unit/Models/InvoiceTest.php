@@ -51,14 +51,6 @@ it('can create a refunded invoice', function () {
     expect($invoice->refunded_amount)->toBe($invoice->total);
 });
 
-it('can create an invoice of status', function (InvoiceStatus $status) {
-    // Arrange & Act
-    $invoice = Invoice::factory()->ofStatus($status)->create();
-
-    // Assert
-    expect($invoice->status)->toBe($status);
-})->with(InvoiceStatus::cases());
-
 it('can update an invoice', function () {
     // Arrange
     $invoice = Invoice::factory()->create();
@@ -119,15 +111,3 @@ it('belongs to a customer via device', function () {
     expect($invoice->ticket_id)->toBe($ticket->id);
     expect($invoice->customer->id)->toBe($customer->id);
 });
-
-it('can filter invoices by status scope', function (InvoiceStatus $status) {
-    // Arrange
-    Invoice::factory(2)->ofStatus($status)->create();
-
-    // Act
-    $invoices = Invoice::query()->ofStatus($status)->get();
-
-    // Assert
-    expect($invoices)->toHaveCount(2);
-    expect($invoices->first()->status)->toBe($status);
-})->with(InvoiceStatus::cases());

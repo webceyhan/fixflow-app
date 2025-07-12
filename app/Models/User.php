@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Concerns\Contactable;
+use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,8 +14,11 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use Contactable, HasFactory, Notifiable;
+    /**
+     *  @use HasFactory<\Database\Factories\UserFactory>
+     *  @use HasStatus<\App\Enums\UserStatus>
+     */
+    use Contactable, HasFactory, HasStatus, Notifiable;
 
     /**
      * The model's default values for attributes.
@@ -59,7 +63,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'role' => UserRole::class,
-        'status' => UserStatus::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -80,14 +83,6 @@ class User extends Authenticatable
     public function scopeOfRole(Builder $query, UserRole $role): void
     {
         $query->where('role', $role->value);
-    }
-
-    /**
-     * Scope a query to only include users with the specified status.
-     */
-    public function scopeOfStatus(Builder $query, UserStatus $status): void
-    {
-        $query->where('status', $status->value);
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

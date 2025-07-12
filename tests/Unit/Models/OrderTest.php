@@ -33,14 +33,6 @@ it('can create an order for a ticket', function () {
     expect($order->ticket->id)->toBe($ticket->id);
 });
 
-it('can create an order of status', function (OrderStatus $status) {
-    // Arrange & Act
-    $order = Order::factory()->ofStatus($status)->create();
-
-    // Assert
-    expect($order->status)->toBe($status);
-})->with(OrderStatus::cases());
-
 it('can update an order', function () {
     // Arrange
     $order = Order::factory()->create();
@@ -88,15 +80,3 @@ it('belongs to a ticket', function () {
     expect($order->ticket)->toBeInstanceOf(Ticket::class);
     expect($order->ticket->id)->toBe($ticket->id);
 });
-
-it('can filter orders by status scope', function (OrderStatus $status) {
-    // Arrange
-    Order::factory()->ofStatus($status)->create();
-
-    // Act
-    $orders = Order::query()->ofStatus($status)->get();
-
-    // Assert
-    expect($orders)->toHaveCount(1);
-    expect($orders->first()->status)->toBe($status);
-})->with(OrderStatus::cases());

@@ -42,14 +42,6 @@ it('can create a task of type', function (TaskType $type) {
     expect($task->type)->toBe($type);
 })->with(TaskType::cases());
 
-it('can create a task of status', function (TaskStatus $status) {
-    // Arrange & Act
-    $task = Task::factory()->ofStatus($status)->create();
-
-    // Assert
-    expect($task->status)->toBe($status);
-})->with(TaskStatus::cases());
-
 it('can update a task', function () {
     // Arrange
     $task = Task::factory()->create();
@@ -103,15 +95,3 @@ it('can filter tasks by type scope', function (TaskType $type) {
     expect($tasks)->toHaveCount(1);
     expect($tasks->first()->type)->toBe($type);
 })->with(TaskType::cases());
-
-it('can filter tasks by status scope', function (TaskStatus $status) {
-    // Arrange
-    Task::factory()->ofStatus($status)->create();
-
-    // Act
-    $tasks = Task::query()->ofStatus($status)->get();
-
-    // Assert
-    expect($tasks)->tohavecount(1);
-    expect($tasks->first()->status)->toBe($status);
-})->with(TaskStatus::cases());

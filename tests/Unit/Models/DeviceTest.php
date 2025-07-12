@@ -52,14 +52,6 @@ it('can create a device of type', function (DeviceType $type) {
     expect($device->type)->toBe($type);
 })->with(DeviceType::cases());
 
-it('can create a device of status', function (DeviceStatus $status) {
-    // Arrange
-    $device = Device::factory()->ofStatus($status)->create();
-
-    // Assert
-    expect($device->status)->toBe($status);
-})->with(DeviceStatus::cases());
-
 it('can update a device', function () {
     // Arrange
     $device = Device::factory()->create();
@@ -122,15 +114,3 @@ it('can filter devices by type scope', function (DeviceType $type) {
     expect($devices)->toHaveCount(1);
     expect($devices->first()->type)->toBe($type);
 })->with(DeviceType::cases());
-
-it('can filter devices by status scope', function (DeviceStatus $status) {
-    // Arrange
-    Device::factory()->ofStatus($status)->create();
-
-    // Act
-    $devices = Device::ofStatus($status)->get();
-
-    // Assert
-    expect($devices)->toHaveCount(1);
-    expect($devices->first()->status)->toBe($status);
-})->with(DeviceStatus::cases());

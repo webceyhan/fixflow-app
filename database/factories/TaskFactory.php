@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use Database\Factories\States\HasApprovalStates;
 use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
-    use HasApprovalStates, HasBillableStates, HasProgressStates;
+    use HasApprovalStates, HasBillableStates, HasProgressStates, HasStatusStates;
 
     /**
      * Define the model's default state.
@@ -57,16 +58,6 @@ class TaskFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'type' => $type,
-        ]);
-    }
-
-    /**
-     * Indicate that the task is of a specific status.
-     */
-    public function ofStatus(TaskStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
         ]);
     }
 }

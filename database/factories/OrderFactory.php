@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use Database\Factories\States\HasApprovalStates;
 use Database\Factories\States\HasBillableStates;
 use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class OrderFactory extends Factory
 {
-    use HasApprovalStates, HasBillableStates, HasProgressStates;
+    use HasApprovalStates, HasBillableStates, HasProgressStates, HasStatusStates;
 
     const PARTS = [
         'Dell XPS 13 Battery',
@@ -67,18 +68,6 @@ class OrderFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'ticket_id' => $ticket->id,
             'created_at' => $ticket->created_at,
-        ]);
-    }
-
-    // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the order is of a specified status.
-     */
-    public function ofStatus(OrderStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
         ]);
     }
 }

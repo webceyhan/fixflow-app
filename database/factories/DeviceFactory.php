@@ -6,6 +6,7 @@ use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Customer;
 use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
 use Database\Factories\States\HasWarrantyStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeviceFactory extends Factory
 {
-    use HasProgressStates, HasWarrantyStates;
+    use HasProgressStates, HasStatusStates, HasWarrantyStates;
 
     const VERSIONS = [
         'iMac' => ['21"', '27"'],
@@ -148,16 +149,6 @@ class DeviceFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'type' => $type,
-        ]);
-    }
-
-    /**
-     * Indicate that the device is of the given status.
-     */
-    public function ofStatus(DeviceStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
         ]);
     }
 }

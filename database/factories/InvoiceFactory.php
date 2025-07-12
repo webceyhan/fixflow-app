@@ -6,6 +6,7 @@ use App\Enums\InvoiceStatus;
 use App\Models\Ticket;
 use Database\Factories\States\HasDueDateStates;
 use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InvoiceFactory extends Factory
 {
-    use HasDueDateStates, HasProgressStates;
+    use HasDueDateStates, HasProgressStates, HasStatusStates;
 
     /**
      * Define the model's default state.
@@ -65,16 +66,6 @@ class InvoiceFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the invoice is of a specified status.
-     */
-    public function ofStatus(InvoiceStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
-        ]);
-    }
 
     /**
      * Indicate that the invoice has been paid.

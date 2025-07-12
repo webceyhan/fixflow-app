@@ -9,6 +9,7 @@ use Database\Factories\States\HasAssignableStates;
 use Database\Factories\States\HasDueDateStates;
 use Database\Factories\States\HasPriorityStates;
 use Database\Factories\States\HasProgressStates;
+use Database\Factories\States\HasStatusStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TicketFactory extends Factory
 {
-    use HasAssignableStates, HasDueDateStates, HasPriorityStates, HasProgressStates;
+    use HasAssignableStates, HasDueDateStates, HasPriorityStates, HasProgressStates, HasStatusStates;
 
     /**
      * Define the model's default state.
@@ -49,18 +50,6 @@ class TicketFactory extends Factory
             'device_id' => $device->id,
             'created_at' => $device->created_at,
             'due_date' => $device->created_at->addWeek(),
-        ]);
-    }
-
-    // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the ticket is of the given status.
-     */
-    public function ofStatus(TicketStatus $status): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => $status,
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasWarranty;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,8 +15,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Device extends Model
 {
-    /** @use HasFactory<\Database\Factories\DeviceFactory> */
-    use HasFactory, HasProgress, HasWarranty;
+    /**
+     * @use HasFactory<\Database\Factories\DeviceFactory>
+     * @use HasStatus<\App\Enums\DeviceStatus>
+     */
+    use HasFactory, HasProgress, HasStatus, HasWarranty;
 
     /**
      * The model's default values for attributes.
@@ -50,7 +54,6 @@ class Device extends Model
     protected $casts = [
         'purchase_date' => 'date',
         'type' => DeviceType::class,
-        'status' => DeviceStatus::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -79,13 +82,5 @@ class Device extends Model
     public function scopeOfType(Builder $query, DeviceType $type): void
     {
         $query->where('type', $type->value);
-    }
-
-    /**
-     * Scope a query to only include devices of a given status.
-     */
-    public function scopeOfStatus(Builder $query, DeviceStatus $status): void
-    {
-        $query->where('status', $status->value);
     }
 }

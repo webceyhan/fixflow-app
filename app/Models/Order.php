@@ -6,14 +6,17 @@ use App\Enums\OrderStatus;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderFactory> */
-    use Billable, HasApproval, HasFactory, HasProgress;
+    /**
+     * @use HasFactory<\Database\Factories\OrderFactory>
+     * @use HasStatus<\App\Enums\OrderStatus>
+     */
+    use Billable, HasApproval, HasFactory, HasProgress, HasStatus;
 
     /**
      * The model's default values for attributes.
@@ -49,7 +52,6 @@ class Order extends Model
     protected $casts = [
         'quantity' => 'integer',
         'cost' => 'float',
-        'status' => OrderStatus::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -60,15 +62,5 @@ class Order extends Model
     public function ticket()
     {
         return $this->belongsTo(Ticket::class);
-    }
-
-    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include orders of a given status.
-     */
-    public function scopeOfStatus(Builder $query, OrderStatus $status): void
-    {
-        $query->where('status', $status->value);
     }
 }

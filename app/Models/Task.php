@@ -7,14 +7,18 @@ use App\Enums\TaskType;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    /** @use HasFactory<\Database\Factories\TaskFactory> */
-    use Billable, HasApproval, HasFactory, HasProgress;
+    /**
+     * @use HasFactory<\Database\Factories\TaskFactory>
+     * @use HasStatus<\App\Enums\TaskStatus>
+     */
+    use Billable, HasApproval, HasFactory, HasProgress, HasStatus;
 
     /**
      * The model's default values for attributes.
@@ -48,7 +52,6 @@ class Task extends Model
     protected $casts = [
         'cost' => 'float',
         'type' => TaskType::class,
-        'status' => TaskStatus::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -69,13 +72,5 @@ class Task extends Model
     public function scopeOfType(Builder $query, TaskType $type): void
     {
         $query->where('type', $type->value);
-    }
-
-    /**
-     * Scope a query to only include tasks of a given status.
-     */
-    public function scopeOfStatus(Builder $query, TaskStatus $status): void
-    {
-        $query->where('status', $status->value);
     }
 }

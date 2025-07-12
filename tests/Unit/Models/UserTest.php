@@ -27,14 +27,6 @@ it('can create user of role', function (UserRole $role) {
     expect($user->role)->toBe($role);
 })->with(UserRole::cases());
 
-it('can create user of status', function (UserStatus $status) {
-    // Act
-    $user = User::factory()->ofStatus($status)->create();
-
-    // Assert
-    expect($user->status)->toBe($status);
-})->with(UserStatus::cases());
-
 it('can create user unverified', function () {
     // Act
     $user = User::factory()->unverified()->create();
@@ -106,15 +98,3 @@ it('can determine if user is active', function () {
     expect($activeUser->isActive())->toBeTrue();
     expect($suspendedUser->isActive())->toBeFalse();
 });
-
-it('can filter users by status scope', function (UserStatus $status) {
-    // Arrange
-    User::factory()->ofStatus($status)->create();
-
-    // Act
-    $users = User::ofStatus($status);
-
-    // Assert
-    expect($users->count())->toBe(1);
-    expect($users->first()->status)->toBe($status);
-})->with(UserStatus::cases());

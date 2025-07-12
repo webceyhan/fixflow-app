@@ -7,7 +7,7 @@ use App\Models\Concerns\Assignable;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasProgress;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,8 +16,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Ticket extends Model
 {
-    /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use Assignable, HasDueDate, HasFactory, HasPriority, HasProgress;
+    /**
+     * @use HasFactory<\Database\Factories\TicketFactory>
+     * @use HasStatus<\App\Enums\TicketStatus>
+     */
+    use Assignable, HasDueDate, HasFactory, HasPriority, HasProgress, HasStatus;
 
     /**
      * The model's default values for attributes.
@@ -47,7 +50,6 @@ class Ticket extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'status' => TicketStatus::class,
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -90,15 +92,5 @@ class Ticket extends Model
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class);
-    }
-
-    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Scope a query to only include tickets with the specified status.
-     */
-    public function scopeOfStatus(Builder $query, TicketStatus $status): void
-    {
-        $query->where('status', $status->value);
     }
 }

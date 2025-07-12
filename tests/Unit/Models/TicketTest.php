@@ -22,14 +22,6 @@ it('creates a ticket with valid attributes', function () {
     expect($ticket->due_date)->not->toBeNull();
 });
 
-it('can create a ticket of status', function () {
-    // Arrange
-    $ticket = Ticket::factory()->ofStatus(TicketStatus::InProgress)->create();
-
-    // Assert
-    expect($ticket->status)->toBe(TicketStatus::InProgress);
-});
-
 it('can update a ticket', function () {
     // Arrange
     $ticket = Ticket::factory()->create();
@@ -90,15 +82,3 @@ it('can have many orders', function () {
 
     expect($ticket->orders)->toHaveCount(2);
 });
-
-it('can filter tickets by status scope', function (TicketStatus $status) {
-    // Arrange
-    Ticket::factory()->ofStatus($status)->create();
-
-    // Act
-    $tickets = Ticket::ofStatus($status)->get();
-
-    // Assert
-    expect($tickets->count())->toBe(1);
-    expect($tickets->first()->status)->toBe($status);
-})->with(TicketStatus::cases());
