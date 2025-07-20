@@ -7,9 +7,12 @@ use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
 use App\Models\Concerns\HasStatus;
+use App\Observers\OrderObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy([OrderObserver::class])]
 class Order extends Model
 {
     /**

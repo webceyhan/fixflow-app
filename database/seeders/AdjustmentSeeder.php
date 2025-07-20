@@ -14,8 +14,8 @@ class AdjustmentSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create adjustments for all invoices
-        Invoice::all()->each(function (Invoice $invoice) {
+        // Create adjustments for pending invoices
+        Invoice::pending()->each(function (Invoice $invoice) {
 
             // Create an adjustment factory for the invoice
             $adjustmentFactory = Adjustment::factory()->forInvoice($invoice);

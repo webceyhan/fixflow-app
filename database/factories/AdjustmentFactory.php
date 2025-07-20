@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use App\Enums\AdjustmentReason;
-use App\Enums\AdjustmentType;
 use App\Models\Invoice;
+use Database\Factories\States\HasNoteStates;
+use Database\Factories\States\HasTypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AdjustmentFactory extends Factory
 {
+    use HasNoteStates, HasTypeStates;
+
     /**
      * Define the model's default state.
      *
@@ -45,26 +48,6 @@ class AdjustmentFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Indicate that the adjustment has no note.
-     */
-    public function withoutNote(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'note' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the adjustment is of a specified type.
-     */
-    public function ofType(AdjustmentType $type): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'type' => $type,
-        ]);
-    }
 
     /**
      * Indicate that the adjustment is of a specific reason.

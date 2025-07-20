@@ -2,8 +2,10 @@
 
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
+use App\Enums\TicketStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Ticket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -94,3 +96,36 @@ it('can get the customer that owns the device', function () {
     // Assert
     expect($device->customer->id)->toBe($customer->id);
 });
+
+// TICKET COUNTS ///////////////////////////////////////////////////////////////////////////////
+
+it('fills ticket-counts correctly with no tickets', function () {
+    // Arrange
+    $device = Device::factory()->create();
+
+    // Assert
+    expect($device->fillTicketCounts())
+        ->pending_tickets_count->toBe(0)
+        ->complete_tickets_count->toBe(0)
+        ->total_tickets_count->toBe(0);
+});
+
+it('fills ticket-counts correctly', function (TicketStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
+    // Arrange
+    $device = Device::factory()->create();
+    Ticket::factory()->forDevice($device)->pending()->create();
+    Ticket::factory()->forDevice($device)->complete()->create();
+    Ticket::factory()->forDevice($device)->ofStatus($status)->create();
+
+    // Assert
+    expect($device->fillTicketCounts())
+        ->pending_tickets_count->toBe($pendingCount)
+        ->complete_tickets_count->toBe($completeCount)
+        ->total_tickets_count->toBe($totalCount);
+})->with([
+    'new' => [TicketStatus::New, 2, 1, 3],
+    'in_progress' => [TicketStatus::InProgress, 2, 1, 3],
+    'on_hold' => [TicketStatus::OnHold, 2, 1, 3],
+    'resolved' => [TicketStatus::Resolved, 1, 2, 3],
+    'closed' => [TicketStatus::Closed, 1, 2, 3],
+]);

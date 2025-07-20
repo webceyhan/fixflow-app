@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DeviceStatus;
 use App\Models\Customer;
 use App\Models\Device;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -78,3 +79,36 @@ it('can have many tickets via devices', function () {
 
     expect($customer->tickets)->toHaveCount(4);
 });
+
+// DEVICE COUNTS ///////////////////////////////////////////////////////////////////////////////////
+
+it('fills device-counts correctly with no devices', function () {
+    // Arrange
+    $customer = Customer::factory()->create();
+
+    // Assert
+    expect($customer->fillDeviceCounts())
+        ->pending_devices_count->toBe(0)
+        ->complete_devices_count->toBe(0)
+        ->total_devices_count->toBe(0);
+});
+
+it('fills device-counts correctly', function (DeviceStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
+    // Arrange
+    $customer = Customer::factory()->create();
+    Device::factory()->forCustomer($customer)->pending()->create();
+    Device::factory()->forCustomer($customer)->complete()->create();
+    Device::factory()->forCustomer($customer)->ofStatus($status)->create();
+
+    // Assert
+    expect($customer->fillDeviceCounts())
+        ->pending_devices_count->toBe($pendingCount)
+        ->complete_devices_count->toBe($completeCount)
+        ->total_devices_count->toBe($totalCount);
+})->with([
+    'received' => [DeviceStatus::Received, 2, 1, 3],
+    'on_hold' => [DeviceStatus::OnHold, 2, 1, 3],
+    'under_repair' => [DeviceStatus::UnderRepair, 2, 1, 3],
+    'ready' => [DeviceStatus::Ready, 1, 2, 3],
+    'delivered' => [DeviceStatus::Delivered, 1, 2, 3],
+]);

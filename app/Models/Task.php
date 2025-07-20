@@ -9,9 +9,12 @@ use App\Models\Concerns\HasApproval;
 use App\Models\Concerns\HasProgress;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
+use App\Observers\TaskObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy([TaskObserver::class])]
 class Task extends Model
 {
     /**

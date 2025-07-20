@@ -21,6 +21,11 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
+
+            // computed device counters
+            $table->integer('pending_devices_count')->default(0);
+            $table->integer('complete_devices_count')->default(0);
+            $table->integer('total_devices_count')->default(0);
         });
     }
 

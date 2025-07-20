@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Enums\AdjustmentReason;
 use App\Enums\AdjustmentType;
+use App\Observers\AdjustmentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy([AdjustmentObserver::class])]
 class Adjustment extends Model
 {
     /**

@@ -1,9 +1,13 @@
 <?php
 
+use App\Enums\OrderStatus;
 use App\Enums\Priority;
+use App\Enums\TaskStatus;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Order;
+use App\Models\Task;
 use App\Models\Ticket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -82,3 +86,66 @@ it('can have many orders', function () {
 
     expect($ticket->orders)->toHaveCount(2);
 });
+
+// TASK COUNTS /////////////////////////////////////////////////////////////////////////////////////
+
+it('fills task-counts correctly with no tasks', function () {
+    // Arrange
+    $ticket = Ticket::factory()->create();
+
+    // Assert
+    expect($ticket->fillTaskCounts())
+        ->pending_tasks_count->toBe(0)
+        ->complete_tasks_count->toBe(0)
+        ->total_tasks_count->toBe(0);
+});
+
+it('fills task-counts correctly', function (TaskStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
+    // Arrange
+    $ticket = Ticket::factory()->create();
+    Task::factory()->forTicket($ticket)->pending()->create();
+    Task::factory()->forTicket($ticket)->complete()->create();
+    Task::factory()->forTicket($ticket)->ofStatus($status)->create();
+
+    // Assert
+    expect($ticket->fillTaskCounts())
+        ->pending_tasks_count->toBe($pendingCount)
+        ->complete_tasks_count->toBe($completeCount)
+        ->total_tasks_count->toBe($totalCount);
+})->with([
+    'new' => [TaskStatus::New, 2, 1, 3],
+    'completed' => [TaskStatus::Completed, 1, 2, 3],
+    'cancelled' => [TaskStatus::Cancelled, 1, 1, 3],
+]);
+
+// ORDER COUNTS ////////////////////////////////////////////////////////////////////////////////
+
+it('fills order-counts correctly with no orders', function () {
+    // Arrange
+    $ticket = Ticket::factory()->create();
+
+    // Assert
+    expect($ticket->fillOrderCounts())
+        ->pending_orders_count->toBe(0)
+        ->complete_orders_count->toBe(0)
+        ->total_orders_count->toBe(0);
+});
+
+it('fills order-counts correctly', function (OrderStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
+    // Arrange
+    $ticket = Ticket::factory()->create();
+    Order::factory()->forTicket($ticket)->pending()->create();
+    Order::factory()->forTicket($ticket)->complete()->create();
+    Order::factory()->forTicket($ticket)->ofStatus($status)->create();
+
+    // Assert
+    expect($ticket->fillOrderCounts())
+        ->pending_orders_count->toBe($pendingCount)
+        ->complete_orders_count->toBe($completeCount)
+        ->total_orders_count->toBe($totalCount);
+})->with([
+    'new' => [OrderStatus::New, 2, 1, 3],
+    'shipped' => [OrderStatus::Shipped, 2, 1, 3],
+    'received' => [OrderStatus::Received, 1, 2, 3],
+    'cancelled' => [OrderStatus::Cancelled, 1, 1, 3],
+]);
