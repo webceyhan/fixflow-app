@@ -1,8 +1,10 @@
 <?php
 
+use App\Enums\AdjustmentType;
 use App\Enums\DeviceType;
 use App\Enums\TaskType;
 use App\Enums\TransactionType;
+use App\Models\Adjustment;
 use App\Models\Device;
 use App\Models\Task;
 use App\Models\Transaction;
@@ -13,6 +15,7 @@ uses(RefreshDatabase::class);
 dataset('models', [
     'Device' => [Device::class, DeviceType::Phone, DeviceType::Laptop],
     'Task' => [Task::class, TaskType::Repair, TaskType::Diagnostic],
+    'Adjustment' => [Adjustment::class, AdjustmentType::Discount, AdjustmentType::Fee],
     'Transaction' => [Transaction::class, TransactionType::Payment, TransactionType::Refund],
 ]);
 

@@ -24,6 +24,11 @@ return new class extends Migration
             $table->enum('type', DeviceType::values())->default(DeviceType::Other);
             $table->enum('status', DeviceStatus::values())->default(DeviceStatus::Received);
             $table->timestamps();
+
+            // computed ticket counters
+            $table->integer('pending_tickets_count')->default(0);
+            $table->integer('complete_tickets_count')->default(0);
+            $table->integer('total_tickets_count')->default(0);
         });
     }
 

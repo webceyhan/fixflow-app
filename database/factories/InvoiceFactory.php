@@ -31,18 +31,13 @@ class InvoiceFactory extends Factory
         $discountAmount = fake()->randomFloat(2, 0, 20);
 
         // Calculate subtotal as the sum of task total and order total minus discount amount
-        $subtotal = $taskCostTotal + $orderCostTotal - $discountAmount;
-
-        // Ensure subtotal is not negative
-        $subtotal = max($subtotal, 0);
-
-        // Ensure total is at least equal to subtotal
-        $total = max($subtotal, $discountAmount);
+        $total = $taskCostTotal + $orderCostTotal - $discountAmount;
 
         return [
             'ticket_id' => Ticket::factory(),
             'total' => $total,
-            'subtotal' => $subtotal,
+            'task_total' => $taskCostTotal,
+            'order_total' => $orderCostTotal,
             'discount_amount' => $discountAmount,
             'paid_amount' => 0,
             'refunded_amount' => 0,
@@ -66,6 +61,22 @@ class InvoiceFactory extends Factory
     }
 
     // STATES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Indicate that the invoice has been drafted.
+     */
+    public function draft(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'total' => 0,
+            'task_total' => 0,
+            'order_total' => 0,
+            'discount_amount' => 0,
+            'paid_amount' => 0,
+            'refunded_amount' => 0,
+            'status' => InvoiceStatus::Draft,
+        ]);
+    }
 
     /**
      * Indicate that the invoice has been paid.

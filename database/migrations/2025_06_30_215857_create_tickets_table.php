@@ -23,6 +23,16 @@ return new class extends Migration
             $table->enum('status', TicketStatus::values())->default(TicketStatus::New);
             $table->date('due_date')->nullable();
             $table->timestamps();
+
+            // computed task counters
+            $table->integer('pending_tasks_count')->default(0);
+            $table->integer('complete_tasks_count')->default(0);
+            $table->integer('total_tasks_count')->default(0);
+
+            // computed order counters
+            $table->integer('pending_orders_count')->default(0);
+            $table->integer('complete_orders_count')->default(0);
+            $table->integer('total_orders_count')->default(0);
         });
     }
 

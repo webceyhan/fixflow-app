@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
 use App\Models\Invoice;
+use Database\Factories\States\HasNoteStates;
 use Database\Factories\States\HasTypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TransactionFactory extends Factory
 {
-    use HasTypeStates;
+    use HasNoteStates, HasTypeStates;
 
     /**
      * Define the model's default state.
@@ -47,16 +48,6 @@ class TransactionFactory extends Factory
     // STATES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Indicate that the transaction has no note.
-     */
-    public function withoutNote(): self
-    {
-        return $this->state(fn (array $attributes) => [
-            'note' => null,
-        ]);
-    }
-
-    /**
      * Indicate that the transaction is of a specified method.
      */
     public function ofMethod(TransactionMethod $method): self
@@ -77,10 +68,22 @@ class TransactionFactory extends Factory
     }
 
     /**
-     * Indicate that the transaction is a refund.
+     * Indicate that the transaction is a payment with a specified amount.
      */
-    public function refund(): self
+    public function payment(?float $amount = null): self
     {
-        return $this->ofType(TransactionType::Refund);
+        return $this->ofType(TransactionType::Payment)->state(fn (array $attributes) => [
+            'amount' => $amount ?? fake()->randomFloat(2, 10, 100),
+        ]);
+    }
+
+    /**
+     * Indicate that the transaction is a refund with a specified amount.
+     */
+    public function refund(?float $amount = null): self
+    {
+        return $this->ofType(TransactionType::Refund)->state(fn (array $attributes) => [
+            'amount' => $amount ?? fake()->randomFloat(2, 10, 100),
+        ]);
     }
 }
