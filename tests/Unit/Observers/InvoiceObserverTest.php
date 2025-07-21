@@ -8,20 +8,38 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->observer = new InvoiceObserver;
+
+    // Helpers
+
+    $this->mockInvoice = function (bool $sync = false) {
+        $invoice = mock(Invoice::class);
+
+        $invoice->shouldReceive('load')->with('adjustments')->andReturnSelf();
+        $invoice->shouldReceive('hasPercentageAdjustments')->andReturn($sync);
+
+        if ($sync) {
+            $invoice->shouldReceive('fillAdjustmentAmounts')->once()->andReturnSelf();
+            $invoice->shouldReceive('saveQuietly')->once()->andReturn(true);
+        }
+
+        return $invoice;
+    };
+
+    $this->mockInvoiceWithUpdates = function (bool $subTotalChanged = false, bool $hasPercentageAdjustments = false) {
+        $invoice = $this->mockInvoice(sync: $subTotalChanged && $hasPercentageAdjustments);
+
+        $invoice->shouldReceive('wasChanged')
+            ->once()
+            ->with(['task_total', 'order_total'])
+            ->andReturn($subTotalChanged);
+
+        return $invoice;
+    };
 });
 
 it('does nothing when subtotal components were not changed', function () {
     // Arrange
-    $invoice = mock(Invoice::class);
-
-    $invoice->shouldReceive('wasChanged')
-        ->once()
-        ->with(['task_total', 'order_total'])
-        ->andReturn(false);
-
-    // invoice should not be loaded or modified when no relevant changes
-    $invoice->shouldNotReceive('load');
-    $invoice->shouldNotReceive('hasPercentageAdjustments');
+    $invoice = $this->mockInvoiceWithUpdates();
 
     // Act
     $this->observer->updated($invoice);
@@ -29,24 +47,7 @@ it('does nothing when subtotal components were not changed', function () {
 
 it('does nothing when subtotal changed but no percentage adjustments exist', function () {
     // Arrange
-    $invoice = mock(Invoice::class);
-
-    $invoice->shouldReceive('wasChanged')
-        ->once()
-        ->with(['task_total', 'order_total'])
-        ->andReturn(true);
-
-    $invoice->shouldReceive('load')
-        ->once()
-        ->with('adjustments')
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('hasPercentageAdjustments')
-        ->once()
-        ->andReturn(false);
-
-    // should not recalculate when no percentage adjustments
-    $invoice->shouldNotReceive('fillAdjustmentAmounts');
+    $invoice = $this->mockInvoiceWithUpdates(subTotalChanged: true);
 
     // Act
     $this->observer->updated($invoice);
@@ -54,29 +55,7 @@ it('does nothing when subtotal changed but no percentage adjustments exist', fun
 
 it('updates adjustment amounts when subtotal changed and percentage adjustments exist', function () {
     // Arrange
-    $invoice = mock(Invoice::class);
-
-    $invoice->shouldReceive('wasChanged')
-        ->once()
-        ->with(['task_total', 'order_total'])
-        ->andReturn(true);
-
-    $invoice->shouldReceive('load')
-        ->once()
-        ->with('adjustments')
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('hasPercentageAdjustments')
-        ->once()
-        ->andReturn(true);
-
-    $invoice->shouldReceive('fillAdjustmentAmounts')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('saveQuietly')
-        ->once()
-        ->andReturn(true);
+    $invoice = $this->mockInvoiceWithUpdates(subTotalChanged: true, hasPercentageAdjustments: true);
 
     // Act
     $this->observer->updated($invoice);

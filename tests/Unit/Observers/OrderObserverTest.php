@@ -7,46 +7,53 @@ use App\Observers\OrderObserver;
 
 beforeEach(function () {
     $this->observer = new OrderObserver;
+
+    // Helpers
+
+    $this->mockOrder = function (bool $syncTicket = false, bool $syncInvoice = false) {
+        $order = mock(Order::class);
+        $ticket = mock(Ticket::class);
+
+        if ($syncTicket) {
+            $ticket->shouldReceive('fillOrderCounts')->once()->andReturnSelf();
+            $ticket->shouldReceive('save')->once()->andReturn(true);
+        }
+
+        if ($syncInvoice) {
+            $invoice = mock(Invoice::class);
+            $invoice->shouldReceive('fillOrderTotal')->once()->andReturnSelf();
+            $invoice->shouldReceive('save')->once()->andReturn(true);
+
+            $ticket->shouldReceive('getAttribute')->with('invoice')->andReturn($invoice);
+        }
+
+        $order->shouldReceive('load')->with('ticket')->andReturnSelf();
+        $order->shouldReceive('load')->with('ticket.invoice')->andReturnSelf();
+        $order->shouldReceive('getAttribute')->with('ticket')->andReturn($ticket);
+
+        return $order;
+    };
+
+    $this->mockOrderWithUpdates = function (bool $statusChanged = false, bool $costOrBillableChanged = false) {
+        $order = $this->mockOrder(syncTicket: $statusChanged, syncInvoice: $costOrBillableChanged);
+
+        $order->shouldReceive('wasChanged')
+            ->once()
+            ->with(['status'])
+            ->andReturn($statusChanged);
+
+        $order->shouldReceive('wasChanged')
+            ->once()
+            ->with(['cost', 'is_billable'])
+            ->andReturn($costOrBillableChanged);
+
+        return $order;
+    };
 });
 
-it('updates ticket order-counts and invoice order total on creation', function () {
+it('updates ticket order-counts and invoice order-total on creation', function () {
     // Arrange
-    $order = mock(Order::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
-
-    $order->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    // The observer accesses $order->ticket twice
-    $order->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->twice()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillOrderCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
-    // Mock invoice relationship access
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillOrderTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $order = $this->mockOrder(syncTicket: true, syncInvoice: true);
 
     // Act
     $this->observer->created($order);
@@ -54,20 +61,7 @@ it('updates ticket order-counts and invoice order total on creation', function (
 
 it('does nothing when no relevant fields were changed', function () {
     // Arrange
-    $order = mock(Order::class);
-
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(false);
-
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(false);
-
-    // ticket should not be loaded or modified when no relevant changes
-    $order->shouldNotReceive('load');
+    $order = $this->mockOrderWithUpdates();
 
     // Act
     $this->observer->updated($order);
@@ -75,177 +69,31 @@ it('does nothing when no relevant fields were changed', function () {
 
 it('updates ticket order-counts when status was changed', function () {
     // Arrange
-    $order = mock(Order::class);
-    $ticket = mock(Ticket::class);
+    $order = $this->mockOrderWithUpdates(statusChanged: true);
 
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(true);
-
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(false);
-
-    $order->shouldReceive('load')
-        ->once()
-        ->with('ticket')
-        ->andReturnSelf();
-
-    $order->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->once()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillOrderCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
+    // Act
     $this->observer->updated($order);
 });
 
-it('updates invoice order total when cost or billable status changed', function () {
+it('updates invoice order-total when cost or billable was changed', function () {
     // Arrange
-    $order = mock(Order::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
+    $order = $this->mockOrderWithUpdates(costOrBillableChanged: true);
 
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(false);
-
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(true);
-
-    $order->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    $order->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->once()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillOrderTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
+    // Act
     $this->observer->updated($order);
 });
 
-it('updates both ticket counts and invoice total when both status and cost changed', function () {
+it('updates both ticket order-counts and invoice order-total when status and cost or billable changed', function () {
     // Arrange
-    $order = mock(Order::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
+    $order = $this->mockOrderWithUpdates(statusChanged: true, costOrBillableChanged: true);
 
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(true);
-
-    $order->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(true);
-
-    // First load for status change
-    $order->shouldReceive('load')
-        ->once()
-        ->with('ticket')
-        ->andReturnSelf();
-
-    // Second load for cost/billable change
-    $order->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    $order->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->twice()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillOrderCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillOrderTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
+    // Act
     $this->observer->updated($order);
 });
 
-it('updates ticket order-counts and invoice order total on deletion', function () {
+it('updates ticket order-counts and invoice order-total on deletion', function () {
     // Arrange
-    $order = mock(Order::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
-
-    $order->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    // The observer accesses $order->ticket twice
-    $order->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->twice()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillOrderCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
-    // Mock invoice relationship access
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillOrderTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $order = $this->mockOrder(syncTicket: true, syncInvoice: true);
 
     // Act
     $this->observer->deleted($order);

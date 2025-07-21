@@ -6,30 +6,39 @@ use App\Observers\TicketObserver;
 
 beforeEach(function () {
     $this->observer = new TicketObserver;
+
+    // Helpers
+
+    $this->mockTicket = function (bool $syncDevice = false) {
+        $ticket = mock(Ticket::class);
+
+        if ($syncDevice) {
+            $device = mock(Device::class);
+            $device->shouldReceive('fillTicketCounts')->once()->andReturnSelf();
+            $device->shouldReceive('save')->once()->andReturn(true);
+
+            $ticket->shouldReceive('load')->once()->with('device')->andReturnSelf();
+            $ticket->shouldReceive('getAttribute')->once()->with('device')->andReturn($device);
+        }
+
+        return $ticket;
+    };
+
+    $this->mockTicketWithUpdates = function (bool $statusChanged = false) {
+        $ticket = $this->mockTicket(syncDevice: $statusChanged);
+
+        $ticket->shouldReceive('wasChanged')
+            ->once()
+            ->with(['status'])
+            ->andReturn($statusChanged);
+
+        return $ticket;
+    };
 });
 
 it('updates device ticket-counts on creation', function () {
     // Arrange
-    $ticket = mock(Ticket::class);
-    $device = mock(Device::class);
-
-    $ticket->shouldReceive('load')
-        ->once()
-        ->with('device')
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('device')
-        ->once()
-        ->andReturn($device);
-
-    $device->shouldReceive('fillTicketCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $device->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $ticket = $this->mockTicket(syncDevice: true);
 
     // Act
     $this->observer->created($ticket);
@@ -37,15 +46,7 @@ it('updates device ticket-counts on creation', function () {
 
 it('does nothing when status was not changed', function () {
     // Arrange
-    $ticket = mock(Ticket::class);
-
-    $ticket->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(false);
-
-    // device should not be loaded or modified when no relevant changes
-    $ticket->shouldNotReceive('load');
+    $ticket = $this->mockTicketWithUpdates();
 
     // Act
     $this->observer->updated($ticket);
@@ -53,57 +54,15 @@ it('does nothing when status was not changed', function () {
 
 it('updates device ticket-counts when status was changed', function () {
     // Arrange
-    $ticket = mock(Ticket::class);
-    $device = mock(Device::class);
+    $ticket = $this->mockTicketWithUpdates(statusChanged: true);
 
-    $ticket->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(true);
-
-    $ticket->shouldReceive('load')
-        ->once()
-        ->with('device')
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('device')
-        ->once()
-        ->andReturn($device);
-
-    $device->shouldReceive('fillTicketCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $device->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
+    // Act
     $this->observer->updated($ticket);
 });
 
 it('updates device ticket-counts on deletion', function () {
     // Arrange
-    $ticket = mock(Ticket::class);
-    $device = mock(Device::class);
-
-    $ticket->shouldReceive('load')
-        ->once()
-        ->with('device')
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('device')
-        ->once()
-        ->andReturn($device);
-
-    $device->shouldReceive('fillTicketCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $device->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $ticket = $this->mockTicket(syncDevice: true);
 
     // Act
     $this->observer->deleted($ticket);

@@ -13,21 +13,29 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 dataset('models', [
-    'Device' => [Device::class, DeviceType::Phone, DeviceType::Laptop],
-    'Task' => [Task::class, TaskType::Repair, TaskType::Diagnostic],
-    'Adjustment' => [Adjustment::class, AdjustmentType::Discount, AdjustmentType::Fee],
-    'Transaction' => [Transaction::class, TransactionType::Payment, TransactionType::Refund],
+    'Device' => [Device::class, DeviceType::Phone],
+    'Task' => [Task::class, TaskType::Repair],
+    'Adjustment' => [Adjustment::class, AdjustmentType::Discount],
+    'Transaction' => [Transaction::class, TransactionType::Payment],
 ]);
 
-it('can filter records by type scope', function (string $modelClass, BackedEnum $type, BackedEnum $otherType) {
+it('initializes model properties correctly', function (string $modelClass, BackedEnum $type) {
+    // Assert
+    expect($modelClass)->toCastAttributes([
+        'type' => $type::class,
+    ]);
+})->with('models');
+
+it('can filter by type scope', function (string $modelClass, BackedEnum $type) {
     // Arrange
-    $modelClass::factory(2)->ofType($type)->create();
-    $modelClass::factory(1)->ofType($otherType)->create();
+    $modelClass::factory()->ofType($type)->create();
+    /** @disregard next() comes with HasNext trait */
+    $modelClass::factory()->ofType($type->next())->create();
 
     // Act
     $results = $modelClass::query()->ofType($type)->get();
 
     // Assert
-    expect($results)->toHaveCount(2);
+    expect($results)->toHaveCount(1);
     expect($results->first()->type)->toBe($type);
 })->with('models');

@@ -4,66 +4,73 @@ use App\Enums\AdjustmentReason;
 use App\Enums\AdjustmentType;
 use App\Models\Adjustment;
 use App\Models\Invoice;
+use App\Observers\AdjustmentObserver;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates an adjustment with valid attributes', function () {
-    // Arrange & Act
-    $adjustment = Adjustment::factory()->create();
+// STRUCTURE TESTS /////////////////////////////////////////////////////////////////////////////////
 
-    // Assert
-    expect($adjustment->invoice_id)->not->toBeNull();
-    expect($adjustment->amount)->toBeGreaterThan(0);
-    expect($adjustment->type)->toBeInstanceOf(AdjustmentType::class);
-    expect($adjustment->reason)->toBeInstanceOf(AdjustmentReason::class);
-});
+testModelStructure(
+    modelClass: Adjustment::class,
+    observers: [
+        AdjustmentObserver::class,
+    ],
+    defaults: [
+        'type' => AdjustmentType::Bonus,
+        'reason' => AdjustmentReason::Welcome,
+    ],
+    fillables: [
+        'amount',
+        'percentage',
+        'note',
+        'type',
+        'reason',
+    ],
+    casts: [
+        'amount' => 'float',
+        'percentage' => 'float',
+        'type' => AdjustmentType::class,
+        'reason' => AdjustmentReason::class,
+    ],
+    relations: [
+        'invoice' => BelongsTo::class,
+    ]
+);
 
-it('can update an adjustment', function () {
+// RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to invoice relationship', function () {
     // Arrange
-    $adjustment = Adjustment::factory()->create();
-
-    // Act
-    $adjustment->update([
-        'amount' => 200.0,
-        'percentage' => 10.0,
-        'note' => 'Updated note',
-        'type' => AdjustmentType::Discount,
-        'reason' => AdjustmentReason::Promotion,
-    ]);
-
-    // Assert
-    expect($adjustment->amount)->toBe(200.0);
-    expect($adjustment->percentage)->toBe(10.0);
-    expect($adjustment->note)->toBe('Updated note');
-    expect($adjustment->type)->toBe(AdjustmentType::Discount);
-    expect($adjustment->reason)->toBe(AdjustmentReason::Promotion);
-});
-
-it('can delete an adjustment', function () {
-    // Arrange
-    $adjustment = Adjustment::factory()->create();
-
-    // Act
-    $adjustment->delete();
-
-    // Assert
-    expect(Adjustment::find($adjustment->id))->toBeNull();
-});
-
-it('belongs to an invoice', function () {
-    // Arrange & Act
     $invoice = Invoice::factory()->create();
     $adjustment = Adjustment::factory()->forInvoice($invoice)->create();
 
     // Assert
-    expect($adjustment->invoice_id)->toBe($invoice->id);
+    expect($adjustment->invoice)->toBeInstanceOf(Invoice::class);
     expect($adjustment->invoice->id)->toBe($invoice->id);
 });
 
-it('can filter adjustments by reason scope', function (AdjustmentReason $reason) {
+// SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter by type scope', function (AdjustmentType $type) {
     // Arrange
-    Adjustment::factory()->ofReason($reason)->create();
+    $adjustment1 = Adjustment::factory()->ofType($type)->create();
+    $adjustment2 = Adjustment::factory()->ofType($type->next())->create();
+
+    // Act
+    $adjustments = Adjustment::ofType($type)->get();
+
+    // Assert
+    expect($adjustments)->toHaveCount(1);
+    expect($adjustments->first()->type)->toBe($type);
+    expect($adjustments->first()->id)->toBe($adjustment1->id);
+})->with(AdjustmentType::cases());
+
+it('can filter by reason scope', function (AdjustmentReason $reason) {
+    // Arrange
+    $adjustment1 = Adjustment::factory()->ofReason($reason)->create();
+    $adjustment2 = Adjustment::factory()->ofReason($reason->next())->create();
 
     // Act
     $adjustments = Adjustment::ofReason($reason)->get();
@@ -71,9 +78,12 @@ it('can filter adjustments by reason scope', function (AdjustmentReason $reason)
     // Assert
     expect($adjustments)->toHaveCount(1);
     expect($adjustments->first()->reason)->toBe($reason);
+    expect($adjustments->first()->id)->toBe($adjustment1->id);
 })->with(AdjustmentReason::cases());
 
-it('correctly identifies fixed amount adjustments', function () {
+// METHOD TESTS ////////////////////////////////////////////////////////////////////////////////////
+
+it('can determine if adjustment is fixed amount', function () {
     // Arrange
     $fixedAdjustment = Adjustment::factory()->withAmount(100.0)->create();
     $percentageAdjustment = Adjustment::factory()->withPercentage(10.0)->create();
@@ -83,7 +93,7 @@ it('correctly identifies fixed amount adjustments', function () {
     expect($percentageAdjustment->isFixed())->toBeFalse();
 });
 
-it('correctly identifies additive adjustments', function () {
+it('can determine if adjustment is additive', function () {
     // Arrange
     $feeAdjustment = Adjustment::factory()->ofReason(AdjustmentReason::Service)->create();
     $discountAdjustment = Adjustment::factory()->ofReason(AdjustmentReason::Promotion)->create();
@@ -93,42 +103,21 @@ it('correctly identifies additive adjustments', function () {
     expect($discountAdjustment->isAddition())->toBeFalse();
 });
 
-it('calculates effective amount for fixed adjustments', function () {
+it('can calculate effective amount', function (AdjustmentReason $reason, ?float $amount, ?float $percentage, float $result) {
     // Arrange
     $subtotal = 1000.0;
-    $feeAdjustment = Adjustment::factory()->ofReason(AdjustmentReason::Service)->withAmount(50.0)->create();
-    $discountAdjustment = Adjustment::factory()->ofReason(AdjustmentReason::Promotion)->withAmount(25.0)->create();
+    $adjustment = Adjustment::factory()->ofReason($reason)->create([
+        'amount' => $amount ?? 0,
+        'percentage' => $percentage,
+    ]);
 
     // Act & Assert
-    expect($feeAdjustment->getEffectiveAmount($subtotal))->toBe(50.0);
-    expect($discountAdjustment->getEffectiveAmount($subtotal))->toBe(25.0);
-});
-
-it('calculates effective amount for percentage adjustments', function () {
-    // Arrange
-    $subtotal = 1000.0;
-    $feeAdjustment = Adjustment::factory()->ofReason(AdjustmentReason::RushService)->withPercentage(10.0)->create();
-    $discountAdjustment = Adjustment::factory()->ofReason(AdjustmentReason::Promotion)->withPercentage(15.0)->create();
-
-    // Act & Assert
-    expect($feeAdjustment->getEffectiveAmount($subtotal))->toBe(100.0); // 10% of 1000, additive
-    expect($discountAdjustment->getEffectiveAmount($subtotal))->toBe(-150.0); // 15% of 1000, subtractive
-});
-
-it('handles zero percentage correctly', function () {
-    // Arrange
-    $subtotal = 1000.0;
-    $adjustment = Adjustment::factory()->ofReason(AdjustmentReason::Promotion)->withPercentage(0.0)->create();
-
-    // Act & Assert
-    expect($adjustment->getEffectiveAmount($subtotal))->toBe(0.0);
-});
-
-it('handles zero subtotal for percentage adjustments', function () {
-    // Arrange
-    $subtotal = 0.0;
-    $adjustment = Adjustment::factory()->ofReason(AdjustmentReason::Promotion)->withPercentage(10.0)->create();
-
-    // Act & Assert
-    expect($adjustment->getEffectiveAmount($subtotal))->toBe(0.0);
-});
+    expect($adjustment->getEffectiveAmount($subtotal))->toBe($result);
+})->with([
+    'fixed fee' => [AdjustmentReason::Service, 50.0, null, 50.0], // additive
+    'fixed bonus' => [AdjustmentReason::Welcome, 10.0, null, -10.0], // reductive
+    'fixed discount' => [AdjustmentReason::Promotion, 25.0, null, -25.0], // reductive
+    'relative fee' => [AdjustmentReason::RushService, null, 10.0, 100.0], // additive 10% of 1000
+    'relative compensation' => [AdjustmentReason::ServiceDelay, null, 15.0, -150.0], // reductive 15% of 1000
+    'zero relative' => [AdjustmentReason::Promotion, 0.0, 0.0, 0.0], // 0.0
+]);

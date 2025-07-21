@@ -12,11 +12,10 @@ dataset('models', [
 ]);
 
 it('initializes model properties correctly', function (string $modelClass) {
-    // Arrange
-    $model = new $modelClass;
-
     // Assert
-    expect($model->getCasts())->toHaveKey('due_date', 'date');
+    expect($modelClass)->toCastAttributes([
+        'due_date' => 'date',
+    ]);
 })->with('models');
 
 it('can determine if model is overdue', function (string $modelClass) {
@@ -31,7 +30,7 @@ it('can determine if model is overdue', function (string $modelClass) {
     expect($completedModel->due_date->isPast())->toBeTrue();
 })->with('models');
 
-it('can filter records by overdue scope', function (string $modelClass) {
+it('can filter by overdue scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->overdue()->create();
     $modelClass::factory(1)->dueInDays()->create();
@@ -44,7 +43,7 @@ it('can filter records by overdue scope', function (string $modelClass) {
     expect($overdueModels->first()->isOverdue())->toBeTrue();
 })->with('models');
 
-it('can filter records by not overdue scope', function (string $modelClass) {
+it('can filter by not overdue scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->dueInDays()->create();
     $modelClass::factory(1)->overdue()->create();

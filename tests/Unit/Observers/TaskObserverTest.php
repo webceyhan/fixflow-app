@@ -7,46 +7,53 @@ use App\Observers\TaskObserver;
 
 beforeEach(function () {
     $this->observer = new TaskObserver;
+
+    // Helpers
+
+    $this->mockTask = function (bool $syncTicket = false, bool $syncInvoice = false) {
+        $task = mock(Task::class);
+        $ticket = mock(Ticket::class);
+
+        if ($syncTicket) {
+            $ticket->shouldReceive('fillTaskCounts')->once()->andReturnSelf();
+            $ticket->shouldReceive('save')->once()->andReturn(true);
+        }
+
+        if ($syncInvoice) {
+            $invoice = mock(Invoice::class);
+            $invoice->shouldReceive('fillTaskTotal')->once()->andReturnSelf();
+            $invoice->shouldReceive('save')->once()->andReturn(true);
+
+            $ticket->shouldReceive('getAttribute')->with('invoice')->andReturn($invoice);
+        }
+
+        $task->shouldReceive('load')->with('ticket')->andReturnSelf();
+        $task->shouldReceive('load')->with('ticket.invoice')->andReturnSelf();
+        $task->shouldReceive('getAttribute')->with('ticket')->andReturn($ticket);
+
+        return $task;
+    };
+
+    $this->mockTaskWithUpdates = function (bool $statusChanged = false, bool $costOrBillableChanged = false) {
+        $task = $this->mockTask(syncTicket: $statusChanged, syncInvoice: $costOrBillableChanged);
+
+        $task->shouldReceive('wasChanged')
+            ->once()
+            ->with(['status'])
+            ->andReturn($statusChanged);
+
+        $task->shouldReceive('wasChanged')
+            ->once()
+            ->with(['cost', 'is_billable'])
+            ->andReturn($costOrBillableChanged);
+
+        return $task;
+    };
 });
 
-it('updates ticket task-counts and invoice task total on creation', function () {
+it('updates ticket task-counts and invoice task-total on creation', function () {
     // Arrange
-    $task = mock(Task::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
-
-    $task->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    // The observer accesses $task->ticket twice
-    $task->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->twice()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillTaskCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
-    // Mock invoice relationship access
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillTaskTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $task = $this->mockTask(syncTicket: true, syncInvoice: true);
 
     // Act
     $this->observer->created($task);
@@ -54,20 +61,7 @@ it('updates ticket task-counts and invoice task total on creation', function () 
 
 it('does nothing when no relevant fields were changed', function () {
     // Arrange
-    $task = mock(Task::class);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(false);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(false);
-
-    // ticket should not be loaded or modified when no relevant changes
-    $task->shouldNotReceive('load');
+    $task = $this->mockTaskWithUpdates();
 
     // Act
     $this->observer->updated($task);
@@ -75,177 +69,28 @@ it('does nothing when no relevant fields were changed', function () {
 
 it('updates ticket task-counts when status was changed', function () {
     // Arrange
-    $task = mock(Task::class);
-    $ticket = mock(Ticket::class);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(true);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(false);
-
-    $task->shouldReceive('load')
-        ->once()
-        ->with('ticket')
-        ->andReturnSelf();
-
-    $task->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->once()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillTaskCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $task = $this->mockTaskWithUpdates(statusChanged: true);
 
     $this->observer->updated($task);
 });
 
-it('updates invoice task total when cost or billable status changed', function () {
+it('updates invoice task-total when cost or billable was changed', function () {
     // Arrange
-    $task = mock(Task::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(false);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(true);
-
-    $task->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    $task->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->once()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillTaskTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $task = $this->mockTaskWithUpdates(costOrBillableChanged: true);
 
     $this->observer->updated($task);
 });
 
-it('updates both ticket counts and invoice total when both status and cost changed', function () {
+it('updates ticket task-counts and invoice task-total when both status and cost or billable was changed', function () {
     // Arrange
-    $task = mock(Task::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['status'])
-        ->andReturn(true);
-
-    $task->shouldReceive('wasChanged')
-        ->once()
-        ->with(['cost', 'is_billable'])
-        ->andReturn(true);
-
-    // First load for status change
-    $task->shouldReceive('load')
-        ->once()
-        ->with('ticket')
-        ->andReturnSelf();
-
-    // Second load for cost/billable change
-    $task->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    $task->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->twice()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillTaskCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillTaskTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $task = $this->mockTaskWithUpdates(statusChanged: true, costOrBillableChanged: true);
 
     $this->observer->updated($task);
 });
 
-it('updates ticket task-counts and invoice task total on deletion', function () {
+it('updates ticket task-counts and invoice task-total on deletion', function () {
     // Arrange
-    $task = mock(Task::class);
-    $ticket = mock(Ticket::class);
-    $invoice = mock(Invoice::class);
-
-    $task->shouldReceive('load')
-        ->once()
-        ->with('ticket.invoice')
-        ->andReturnSelf();
-
-    // The observer accesses $task->ticket twice
-    $task->shouldReceive('getAttribute')
-        ->with('ticket')
-        ->twice()
-        ->andReturn($ticket);
-
-    $ticket->shouldReceive('fillTaskCounts')
-        ->once()
-        ->andReturnSelf();
-
-    $ticket->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
-
-    // Mock invoice relationship access
-    $ticket->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillTaskTotal')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('save')
-        ->once()
-        ->andReturn(true);
+    $task = $this->mockTask(syncTicket: true, syncInvoice: true);
 
     // Act
     $this->observer->deleted($task);

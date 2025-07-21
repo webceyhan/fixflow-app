@@ -51,7 +51,7 @@ it('can determine if model is contactable', function (string $modelClass) {
     expect($notContactableModel->isContactable())->toBeFalse();
 })->with('optional_models');
 
-it('can filter records by mailable scope', function (string $modelClass) {
+it('can filter by mailable scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->mailable()->create();
     $modelClass::factory(1)->notMailable()->create();
@@ -64,7 +64,7 @@ it('can filter records by mailable scope', function (string $modelClass) {
     expect($mailableModels->first()->isMailable())->toBeTrue();
 })->with('optional_models');
 
-it('can filter records by callable scope', function (string $modelClass) {
+it('can filter by callable scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->callable()->create();
     $modelClass::factory(1)->notCallable()->create();
@@ -77,7 +77,7 @@ it('can filter records by callable scope', function (string $modelClass) {
     expect($callableModels->first()->isCallable())->toBeTrue();
 })->with('models');
 
-it('can filter records by contactable scope', function (string $modelClass) {
+it('can filter by contactable scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->contactable()->create();
     $modelClass::factory(1)->notContactable()->create();

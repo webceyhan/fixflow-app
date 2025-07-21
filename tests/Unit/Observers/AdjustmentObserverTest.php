@@ -9,30 +9,39 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->observer = new AdjustmentObserver;
+
+    // Helpers
+
+    $this->mockAdjustment = function (bool $syncInvoice = false) {
+        $adjustment = mock(Adjustment::class);
+
+        if ($syncInvoice) {
+            $invoice = mock(Invoice::class);
+            $invoice->shouldReceive('fillAdjustmentAmounts')->once()->andReturnSelf();
+            $invoice->shouldReceive('saveQuietly')->once()->andReturn(true);
+
+            $adjustment->shouldReceive('load')->once()->with('invoice')->andReturnSelf();
+            $adjustment->shouldReceive('getAttribute')->once()->with('invoice')->andReturn($invoice);
+        }
+
+        return $adjustment;
+    };
+
+    $this->mockAdjustmentWithUpdates = function (bool $amountOrPercentageChanged = false) {
+        $adjustment = $this->mockAdjustment(syncInvoice: $amountOrPercentageChanged);
+
+        $adjustment->shouldReceive('wasChanged')
+            ->once()
+            ->with(['amount', 'percentage'])
+            ->andReturn($amountOrPercentageChanged);
+
+        return $adjustment;
+    };
 });
 
-it('updates invoice adjustment amounts on creation', function () {
+it('updates invoice adjustment-amounts on creation', function () {
     // Arrange
-    $invoice = mock(Invoice::class);
-    $adjustment = mock(Adjustment::class);
-
-    $adjustment->shouldReceive('load')
-        ->once()
-        ->with('invoice')
-        ->andReturnSelf();
-
-    $adjustment->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillAdjustmentAmounts')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('saveQuietly')
-        ->once()
-        ->andReturn(true);
+    $adjustment = $this->mockAdjustment(syncInvoice: true);
 
     // Act
     $this->observer->created($adjustment);
@@ -40,74 +49,23 @@ it('updates invoice adjustment amounts on creation', function () {
 
 it('does nothing when amount or percentage was not changed', function () {
     // Arrange
-    $adjustment = mock(Adjustment::class);
-
-    $adjustment->shouldReceive('wasChanged')
-        ->once()
-        ->with(['amount', 'percentage'])
-        ->andReturn(false);
-
-    // adjustment should not be loaded or modified when no relevant changes
-    $adjustment->shouldNotReceive('load');
+    $adjustment = $this->mockAdjustmentWithUpdates();
 
     // Act
     $this->observer->updated($adjustment);
 });
 
-it('updates invoice adjustment amounts when amount or percentage was changed', function () {
+it('updates invoice adjustment-amounts when amount or percentage was changed', function () {
     // Arrange
-    $invoice = mock(Invoice::class);
-    $adjustment = mock(Adjustment::class);
-
-    $adjustment->shouldReceive('wasChanged')
-        ->once()
-        ->with(['amount', 'percentage'])
-        ->andReturn(true);
-
-    $adjustment->shouldReceive('load')
-        ->once()
-        ->with('invoice')
-        ->andReturnSelf();
-
-    $adjustment->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillAdjustmentAmounts')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('saveQuietly')
-        ->once()
-        ->andReturn(true);
+    $adjustment = $this->mockAdjustmentWithUpdates(amountOrPercentageChanged: true);
 
     // Act
     $this->observer->updated($adjustment);
 });
 
-it('updates invoice adjustment amounts on deletion', function () {
+it('updates invoice adjustment-amounts on deletion', function () {
     // Arrange
-    $invoice = mock(Invoice::class);
-    $adjustment = mock(Adjustment::class);
-
-    $adjustment->shouldReceive('load')
-        ->once()
-        ->with('invoice')
-        ->andReturnSelf();
-
-    $adjustment->shouldReceive('getAttribute')
-        ->with('invoice')
-        ->once()
-        ->andReturn($invoice);
-
-    $invoice->shouldReceive('fillAdjustmentAmounts')
-        ->once()
-        ->andReturnSelf();
-
-    $invoice->shouldReceive('saveQuietly')
-        ->once()
-        ->andReturn(true);
+    $adjustment = $this->mockAdjustment(syncInvoice: true);
 
     // Act
     $this->observer->deleted($adjustment);

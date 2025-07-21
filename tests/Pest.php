@@ -32,6 +32,18 @@ expect()->extend('toBeOne', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Model Testing Helpers
+|--------------------------------------------------------------------------
+|
+| Load model-specific expectations and helper functions for testing
+| Eloquent models consistently across the test suite.
+|
+*/
+
+require_once __DIR__.'/Helpers/ModelHelpers.php';
+
+/*
+|--------------------------------------------------------------------------
 | Functions
 |--------------------------------------------------------------------------
 |

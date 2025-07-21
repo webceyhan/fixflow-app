@@ -11,12 +11,14 @@ dataset('models', [
 ]);
 
 it('initializes model properties correctly', function (string $modelClass) {
-    // Arrange
-    $model = new $modelClass;
-
     // Assert
-    expect($model->getCasts())->toHaveKey('priority', Priority::class);
-    expect($model->getAttributes())->toHaveKey('priority', Priority::Medium);
+    expect($modelClass)->toHaveDefaultAttributes([
+        'priority' => Priority::Medium,
+    ]);
+
+    expect($modelClass)->toCastAttributes([
+        'priority' => Priority::class,
+    ]);
 })->with('models');
 
 it('can determine if model is urgent', function (string $modelClass) {
@@ -31,7 +33,7 @@ it('can determine if model is urgent', function (string $modelClass) {
     expect($nonUrgentModel->priority)->toBe(Priority::Low);
 })->with('models');
 
-it('can filter records by priority scope', function (string $modelClass, Priority $priority) {
+it('can filter by priority scope', function (string $modelClass, Priority $priority) {
     // Arrange
     $modelClass::factory()->ofPriority($priority)->create();
 
@@ -43,7 +45,7 @@ it('can filter records by priority scope', function (string $modelClass, Priorit
     expect($models->first()->priority)->toBe($priority);
 })->with('models')->with(Priority::cases());
 
-it('can filter records by urgent scope', function (string $modelClass) {
+it('can filter by urgent scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->urgent()->create();
     $modelClass::factory(1)->mediumPriority()->create();

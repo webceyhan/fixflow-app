@@ -1,114 +1,124 @@
 <?php
 
 use App\Enums\OrderStatus;
-use App\Enums\Priority;
 use App\Enums\TaskStatus;
 use App\Enums\TicketStatus;
+use App\Models\Concerns\Assignable;
+use App\Models\Concerns\HasDueDate;
+use App\Models\Concerns\HasPriority;
+use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasStatus;
 use App\Models\Customer;
 use App\Models\Device;
 use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
+use App\Observers\TicketObserver;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates a ticket with valid attributes', function () {
+// STRUCTURE TESTS /////////////////////////////////////////////////////////////////////////////////
+
+testModelStructure(
+    modelClass: Ticket::class,
+    concerns: [
+        Assignable::class,
+        HasDueDate::class,
+        HasPriority::class,
+        HasProgress::class,
+        HasStatus::class,
+    ],
+    observers: [
+        TicketObserver::class,
+    ],
+    defaults: [
+        'status' => TicketStatus::New,
+        'pending_tasks_count' => 0,
+        'complete_tasks_count' => 0,
+        'total_tasks_count' => 0,
+        'pending_orders_count' => 0,
+        'complete_orders_count' => 0,
+        'total_orders_count' => 0,
+    ],
+    fillables: [
+        'title',
+        'description',
+        'priority',
+        'status',
+        'due_date',
+    ],
+    relations: [
+        'device' => BelongsTo::class,
+        'customer' => BelongsTo::class,
+        'tasks' => HasMany::class,
+        'orders' => HasMany::class,
+        'invoice' => HasOne::class,
+    ]
+);
+
+// RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to device relationship', function () {
     // Arrange
-    $ticket = Ticket::factory()->create();
-
-    // Assert
-    expect($ticket->device_id)->not->toBeNull();
-    expect($ticket->title)->not->toBeEmpty();
-    expect($ticket->description)->not->toBeEmpty();
-    expect($ticket->priority)->toBeInstanceOf(Priority::class);
-    expect($ticket->status)->toBeInstanceOf(TicketStatus::class);
-    expect($ticket->due_date)->not->toBeNull();
-});
-
-it('can update a ticket', function () {
-    // Arrange
-    $ticket = Ticket::factory()->create();
-
-    // Act
-    $ticket->update([
-        'title' => 'Updated Ticket Title',
-        'description' => 'Updated ticket description',
-        'priority' => Priority::High,
-        'status' => TicketStatus::InProgress,
-        'due_date' => now()->addMonth(),
-    ]);
-
-    // Assert
-    expect($ticket->title)->toBe('Updated Ticket Title');
-    expect($ticket->description)->toBe('Updated ticket description');
-    expect($ticket->priority)->toBe(Priority::High);
-    expect($ticket->status)->toBe(TicketStatus::InProgress);
-    expect($ticket->due_date->isFuture())->toBeTrue();
-});
-
-it('can delete a ticket', function () {
-    // Arrange
-    $ticket = Ticket::factory()->create();
-
-    // Act
-    $ticket->delete();
-
-    // Assert
-    expect(Ticket::find($ticket->id))->toBeNull();
-});
-
-it('belongs to a device', function () {
     $device = Device::factory()->create();
     $ticket = Ticket::factory()->forDevice($device)->create();
 
+    // Assert
     expect($ticket->device)->toBeInstanceOf(Device::class);
     expect($ticket->device->id)->toBe($device->id);
 });
 
-it('belongs to a customer via device', function () {
+it('belongs to customer via device relationship', function () {
+    // Arrange
     $customer = Customer::factory()->create();
     $device = Device::factory()->forCustomer($customer)->create();
     $ticket = Ticket::factory()->forDevice($device)->create();
 
+    // Assert
     expect($ticket->customer)->toBeInstanceOf(Customer::class);
     expect($ticket->customer->id)->toBe($customer->id);
 });
 
-it('can have many tasks', function () {
-    $ticket = Ticket::factory()->hasTasks(2)->create();
-
-    expect($ticket->tasks)->toHaveCount(2);
-});
-
-it('can have many orders', function () {
-    $ticket = Ticket::factory()->hasOrders(2)->create();
-
-    expect($ticket->orders)->toHaveCount(2);
-});
-
-// TASK COUNTS /////////////////////////////////////////////////////////////////////////////////////
-
-it('fills task-counts correctly with no tasks', function () {
+it('has many tasks relationship', function () {
     // Arrange
     $ticket = Ticket::factory()->create();
+    Task::factory()->count(2)->forTicket($ticket)->create();
 
     // Assert
-    expect($ticket->fillTaskCounts())
-        ->pending_tasks_count->toBe(0)
-        ->complete_tasks_count->toBe(0)
-        ->total_tasks_count->toBe(0);
+    expect($ticket->tasks)->toHaveCount(2);
+    expect($ticket->tasks->first())->toBeInstanceOf(Task::class);
+    expect($ticket->tasks->first()->ticket_id)->toBe($ticket->id);
 });
 
-it('fills task-counts correctly', function (TaskStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
+it('has many orders relationship', function () {
+    // Arrange
+    $ticket = Ticket::factory()->create();
+    Order::factory()->count(2)->forTicket($ticket)->create();
+
+    // Assert
+    expect($ticket->orders)->toHaveCount(2);
+    expect($ticket->orders->first())->toBeInstanceOf(Order::class);
+    expect($ticket->orders->first()->ticket_id)->toBe($ticket->id);
+});
+
+// METHOD TESTS ////////////////////////////////////////////////////////////////////////////////////
+
+it('can fill task counts', function (TaskStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
     // Arrange
     $ticket = Ticket::factory()->create();
     Task::factory()->forTicket($ticket)->pending()->create();
     Task::factory()->forTicket($ticket)->complete()->create();
     Task::factory()->forTicket($ticket)->ofStatus($status)->create();
 
-    // Assert
-    expect($ticket->fillTaskCounts())
+    // Act
+    $ticket->fillTaskCounts();
+
+    // Act & Assert
+    expect($ticket)
         ->pending_tasks_count->toBe($pendingCount)
         ->complete_tasks_count->toBe($completeCount)
         ->total_tasks_count->toBe($totalCount);
@@ -118,28 +128,18 @@ it('fills task-counts correctly', function (TaskStatus $status, int $pendingCoun
     'cancelled' => [TaskStatus::Cancelled, 1, 1, 3],
 ]);
 
-// ORDER COUNTS ////////////////////////////////////////////////////////////////////////////////
-
-it('fills order-counts correctly with no orders', function () {
-    // Arrange
-    $ticket = Ticket::factory()->create();
-
-    // Assert
-    expect($ticket->fillOrderCounts())
-        ->pending_orders_count->toBe(0)
-        ->complete_orders_count->toBe(0)
-        ->total_orders_count->toBe(0);
-});
-
-it('fills order-counts correctly', function (OrderStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
+it('can fill order counts', function (OrderStatus $status, int $pendingCount, int $completeCount, int $totalCount) {
     // Arrange
     $ticket = Ticket::factory()->create();
     Order::factory()->forTicket($ticket)->pending()->create();
     Order::factory()->forTicket($ticket)->complete()->create();
     Order::factory()->forTicket($ticket)->ofStatus($status)->create();
 
-    // Assert
-    expect($ticket->fillOrderCounts())
+    // Act
+    $ticket->fillOrderCounts();
+
+    // Act & Assert
+    expect($ticket)
         ->pending_orders_count->toBe($pendingCount)
         ->complete_orders_count->toBe($completeCount)
         ->total_orders_count->toBe($totalCount);

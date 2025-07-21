@@ -12,11 +12,10 @@ dataset('models', [
 ]);
 
 it('initializes model properties correctly', function (string $modelClass) {
-    // Arrange
-    $model = new $modelClass;
-
     // Assert
-    expect($model->getCasts())->toHaveKey('approved_at', 'datetime');
+    expect($modelClass)->toCastAttributes([
+        'approved_at' => 'datetime',
+    ]);
 })->with('models');
 
 it('can determine if model is approved', function (string $modelClass) {
@@ -28,7 +27,7 @@ it('can determine if model is approved', function (string $modelClass) {
     expect($model->approved_at)->not->toBeNull();
 })->with('models');
 
-it('can filter records by approved scope', function (string $modelClass) {
+it('can filter by approved scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->approved()->create();
     $modelClass::factory(1)->unapproved()->create();
@@ -41,7 +40,7 @@ it('can filter records by approved scope', function (string $modelClass) {
     expect($approvedModels->first()->isApproved())->toBeTrue();
 })->with('models');
 
-it('can filter records by unapproved scope', function (string $modelClass) {
+it('can filter by unapproved scope', function (string $modelClass) {
     // Arrange
     $modelClass::factory(2)->unapproved()->create();
     $modelClass::factory(1)->approved()->create();

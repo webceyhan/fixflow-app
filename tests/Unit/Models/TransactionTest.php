@@ -2,93 +2,62 @@
 
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
+use App\Models\Concerns\HasType;
 use App\Models\Invoice;
 use App\Models\Transaction;
+use App\Observers\TransactionObserver;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates a transaction with valid attributes', function () {
-    // Arrange & Act
-    $transaction = Transaction::factory()->create();
+// STRUCTURE TESTS /////////////////////////////////////////////////////////////////////////////////
 
-    // Assert
-    expect($transaction->invoice_id)->not->toBeNull();
-    expect($transaction->amount)->toBeGreaterThan(0);
-    expect($transaction->method)->toBeInstanceOf(TransactionMethod::class);
-    expect($transaction->type)->toBeInstanceOf(TransactionType::class);
-});
+testModelStructure(
+    modelClass: Transaction::class,
+    concerns: [
+        HasType::class,
+    ],
+    observers: [
+        TransactionObserver::class,
+    ],
+    defaults: [
+        'method' => TransactionMethod::Cash,
+        'type' => TransactionType::Payment,
+    ],
+    fillables: [
+        'amount',
+        'note',
+        'method',
+        'type',
+    ],
+    casts: [
+        'amount' => 'float',
+        'method' => TransactionMethod::class,
+    ],
+    relations: [
+        'invoice' => BelongsTo::class,
+    ]
+);
 
-it('can create a transaction for an invoice', function () {
+// RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
+
+it('belongs to invoice relationship', function () {
     // Arrange
-    $invoice = Invoice::factory()->create();
-
-    // Act
-    $transaction = Transaction::factory()->forInvoice($invoice)->create();
-
-    // Assert
-    expect($transaction->invoice->id)->toBe($invoice->id);
-});
-
-it('can create transaction without note', function () {
-    // Arrange & Act
-    $transaction = Transaction::factory()->withoutNote()->create();
-
-    // Assert
-    expect($transaction->note)->toBeNull();
-});
-
-it('can create a transaction of method', function (TransactionMethod $method) {
-    // Arrange & Act
-    $transaction = Transaction::factory()->ofMethod($method)->create();
-
-    // Assert
-    expect($transaction->method)->toBe($method);
-})->with(TransactionMethod::cases());
-
-it('can update a transaction', function () {
-    // Arrange
-    $transaction = Transaction::factory()->create();
-
-    // Act
-    $transaction->update([
-        'amount' => 200.0,
-        'note' => 'Updated note',
-        'method' => TransactionMethod::Card,
-        'type' => TransactionType::Refund,
-    ]);
-
-    // Assert
-    expect($transaction->amount)->toBe(200.0);
-    expect($transaction->note)->toBe('Updated note');
-    expect($transaction->method)->toBe(TransactionMethod::Card);
-    expect($transaction->type)->toBe(TransactionType::Refund);
-});
-
-it('can delete a transaction', function () {
-    // Arrange
-    $transaction = Transaction::factory()->create();
-
-    // Act
-    $transaction->delete();
-
-    // Assert
-    expect(Transaction::find($transaction->id))->toBeNull();
-});
-
-it('belongs to an invoice', function () {
-    // Arrange & Act
     $invoice = Invoice::factory()->create();
     $transaction = Transaction::factory()->forInvoice($invoice)->create();
 
     // Assert
-    expect($transaction->invoice_id)->toBe($invoice->id);
+    expect($transaction->invoice)->toBeInstanceOf(Invoice::class);
     expect($transaction->invoice->id)->toBe($invoice->id);
 });
 
-it('can filter transactions by method scope', function (TransactionMethod $method) {
-    // Arrange
-    Transaction::factory()->ofMethod($method)->create();
+// SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter by method scope', function (TransactionMethod $method) {
+    // Arrange - Create transactions with different methods
+    $transaction1 = Transaction::factory()->ofMethod($method)->create();
+    $transaction2 = Transaction::factory()->ofMethod($method->next())->create();
 
     // Act
     $transactions = Transaction::ofMethod($method)->get();
@@ -96,4 +65,5 @@ it('can filter transactions by method scope', function (TransactionMethod $metho
     // Assert
     expect($transactions)->toHaveCount(1);
     expect($transactions->first()->method)->toBe($method);
+    expect($transactions->first()->id)->toBe($transaction1->id);
 })->with(TransactionMethod::cases());
