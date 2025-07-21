@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum AdjustmentType: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * Discount adjustments that reduce invoice total.

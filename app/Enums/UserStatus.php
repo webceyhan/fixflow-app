@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum UserStatus: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * Represents that the user account is currently active and accessible.

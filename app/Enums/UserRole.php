@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum UserRole: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * Represents the administrator with full access to the application.

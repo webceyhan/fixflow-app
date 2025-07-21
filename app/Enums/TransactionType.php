@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum TransactionType: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * Represents a payment transaction.
