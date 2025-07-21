@@ -2,99 +2,99 @@
 
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
+use App\Models\Concerns\Contactable;
+use App\Models\Concerns\HasStatus;
+use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('creates a user with valid attributes', function () {
-    // Arrange & Act
+// STRUCTURE TESTS /////////////////////////////////////////////////////////////////////////////////
+
+testModelStructure(
+    modelClass: User::class,
+    concerns: [
+        Contactable::class,
+        HasStatus::class,
+    ],
+    defaults: [
+        'role' => UserRole::Technician,
+        'status' => UserStatus::Active,
+    ],
+    fillables: [
+        'name',
+        'email',
+        'phone',
+        'password',
+        'role',
+        'status',
+    ],
+    hiddens: [
+        'password',
+        'remember_token',
+    ],
+    casts: [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'role' => UserRole::class,
+    ],
+    relations: [
+        'assignedTickets' => HasMany::class,
+    ]
+);
+
+// RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
+
+it('has many assigned tickets relationship', function () {
+    // Arrange
     $user = User::factory()->create();
+    Ticket::factory()->count(2)->forAssignee($user)->create();
 
     // Assert
-    expect($user->name)->not->toBeEmpty();
-    expect($user->email)->not->toBeEmpty();
-    expect($user->phone)->not->toBeEmpty();
-    expect($user->role)->toBeInstanceOf(UserRole::class);
-    expect($user->status)->toBeInstanceOf(UserStatus::class);
+    expect($user->assignedTickets)->toHaveCount(2);
+    expect($user->assignedTickets->first())->toBeInstanceOf(Ticket::class);
+    expect($user->assignedTickets->first()->assignee_id)->toBe($user->id);
 });
 
-it('can create user of role', function (UserRole $role) {
+// SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////
+
+it('can filter by role scope', function (UserRole $role) {
+    // Arrange
+    $user1 = User::factory()->ofRole($role)->create();
+    $user2 = User::factory()->ofRole($role->next())->create();
+
     // Act
-    $user = User::factory()->ofRole($role)->create();
+    $users = User::ofRole($role)->get();
 
     // Assert
-    expect($user->role)->toBe($role);
+    expect($users)->toHaveCount(1);
+    expect($users->first()->id)->toBe($user1->id);
 })->with(UserRole::cases());
 
-it('can create user unverified', function () {
-    // Act
-    $user = User::factory()->unverified()->create();
-
-    // Assert
-    expect($user->email_verified_at)->toBeNull();
-});
-
-it('can update user', function () {
-    // Arrange
-    $user = User::factory()->create();
-
-    // Act
-    $user->update([
-        'name' => 'Bill Gates',
-        'email' => 'bill.gates@mail.com',
-        'phone' => '+1234567890',
-        'role' => UserRole::Manager,
-        'status' => UserStatus::Terminated,
-    ]);
-
-    // Assert
-    expect($user->name)->toBe('Bill Gates');
-    expect($user->email)->toBe('bill.gates@mail.com');
-    expect($user->phone)->toBe('+1234567890');
-    expect($user->role)->toBe(UserRole::Manager);
-    expect($user->status)->toBe(UserStatus::Terminated);
-});
-
-it('can delete user', function () {
-    // Arrange
-    $user = User::factory()->create();
-
-    // Act
-    $user->delete();
-
-    // Assert
-    expect(User::find($user->id))->toBeNull();
-});
+// METHOD TESTS ////////////////////////////////////////////////////////////////////////////////////
 
 it('can determine if user is admin', function () {
-    // Act
+    // Arrange
     $admin = User::factory()->admin()->create();
-    $technician = User::factory()->create();
+    $manager = User::factory()->manager()->create();
+    $technician = User::factory()->create(); // Default role is Technician
 
     // Assert
     expect($admin->isAdmin())->toBeTrue();
+    expect($manager->isAdmin())->toBeFalse();
     expect($technician->isAdmin())->toBeFalse();
 });
 
-it('can filter users by role scope', function (UserRole $role) {
-    // Arrange
-    User::factory()->ofRole($role)->create();
-
-    // Act
-    $users = User::ofRole($role);
-
-    // Assert
-    expect($users->count())->toBe(1);
-    expect($users->first()->role)->toBe($role);
-})->with(UserRole::cases());
-
 it('can determine if user is active', function () {
-    // Act
+    // Arrange
     $activeUser = User::factory()->ofStatus(UserStatus::Active)->create();
     $suspendedUser = User::factory()->ofStatus(UserStatus::Suspended)->create();
+    $terminatedUser = User::factory()->ofStatus(UserStatus::Terminated)->create();
 
     // Assert
     expect($activeUser->isActive())->toBeTrue();
     expect($suspendedUser->isActive())->toBeFalse();
+    expect($terminatedUser->isActive())->toBeFalse();
 });

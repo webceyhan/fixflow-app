@@ -1,77 +1,53 @@
 <?php
 
 use App\Enums\OrderStatus;
+use App\Models\Concerns\Billable;
+use App\Models\Concerns\HasApproval;
+use App\Models\Concerns\HasProgress;
+use App\Models\Concerns\HasStatus;
 use App\Models\Order;
 use App\Models\Ticket;
+use App\Observers\OrderObserver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
 
-it('creates a order with valid attributes', function () {
-    // Arrange & Act
-    $order = Order::factory()->create();
+// STRUCTURE TESTS /////////////////////////////////////////////////////////////////////////////////
 
-    // Assert
-    expect($order->ticket_id)->not->toBeNull();
-    expect($order->name)->not->toBeEmpty();
-    expect($order->quantity)->toBeGreaterThan(0);
-    expect($order->cost)->toBeGreaterThan(0);
-    expect($order->is_billable)->toBeTrue();
-    expect($order->status)->toBeInstanceOf(OrderStatus::class);
-    expect($order->approved_at)->toBeInstanceOf(Carbon::class);
-});
+testModelStructure(
+    modelClass: Order::class,
+    concerns: [
+        Billable::class,
+        HasApproval::class,
+        HasProgress::class,
+        HasStatus::class,
+    ],
+    observers: [
+        OrderObserver::class,
+    ],
+    defaults: [
+        'quantity' => 1,
+        'status' => OrderStatus::New,
+    ],
+    fillables: [
+        'name',
+        'url',
+        'supplier',
+        'quantity',
+        'cost',
+        'is_billable',
+        'status',
+        'approved_at',
+    ],
+    casts: [
+        'quantity' => 'integer',
+        'cost' => 'float',
+    ]
+);
 
-it('can create an order for a ticket', function () {
-    // Arrange
-    $ticket = Ticket::factory()->create();
+// RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
 
-    // Act
-    $order = Order::factory()->forTicket($ticket)->create();
-
-    // Assert
-    expect($order->ticket->id)->toBe($ticket->id);
-});
-
-it('can update an order', function () {
-    // Arrange
-    $order = Order::factory()->create();
-
-    // Act
-    $order->update([
-        'name' => 'Updated order name',
-        'url' => 'https://example.com/updated-order',
-        'supplier' => 'Updated order supplier',
-        'quantity' => 2,
-        'cost' => 200,
-        'is_billable' => false,
-        'status' => OrderStatus::Shipped,
-        'approved_at' => now(),
-    ]);
-
-    // Assert
-    expect($order->name)->toBe('Updated order name');
-    expect($order->url)->toBe('https://example.com/updated-order');
-    expect($order->supplier)->toBe('Updated order supplier');
-    expect($order->quantity)->toEqual(2);
-    expect($order->cost)->toEqual(200);
-    expect($order->is_billable)->toBeFalse();
-    expect($order->status)->toBe(OrderStatus::Shipped);
-    expect($order->approved_at)->toBeInstanceOf(Carbon::class);
-});
-
-it('can delete an order', function () {
-    // Arrange
-    $order = Order::factory()->create();
-
-    // Act
-    $order->delete();
-
-    // Assert
-    expect(Order::find($order->id))->toBeNull();
-});
-
-it('belongs to a ticket', function () {
+it('belongs to ticket relationship', function () {
     // Arrange
     $ticket = Ticket::factory()->create();
     $order = Order::factory()->forTicket($ticket)->create();

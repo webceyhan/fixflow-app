@@ -17,23 +17,31 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 dataset('models', [
-    'User' => [User::class, UserStatus::Active, UserStatus::Terminated],
-    'Device' => [Device::class, DeviceStatus::Received, DeviceStatus::OnHold],
-    'Ticket' => [Ticket::class, TicketStatus::New, TicketStatus::InProgress],
-    'Task' => [Task::class, TaskStatus::New, TaskStatus::Cancelled],
-    'Order' => [Order::class, OrderStatus::New, OrderStatus::Cancelled],
-    'Invoice' => [Invoice::class, InvoiceStatus::Draft, InvoiceStatus::Sent],
+    'User' => [User::class, UserStatus::Active],
+    'Device' => [Device::class, DeviceStatus::Received],
+    'Ticket' => [Ticket::class, TicketStatus::New],
+    'Task' => [Task::class, TaskStatus::New],
+    'Order' => [Order::class, OrderStatus::New],
+    'Invoice' => [Invoice::class, InvoiceStatus::Draft],
 ]);
 
-it('can filter records by status scope', function (string $modelClass, BackedEnum $status, BackedEnum $otherStatus) {
+it('initializes model properties correctly', function (string $modelClass, BackedEnum $status) {
+    // Assert
+    expect($modelClass)->toCastAttributes([
+        'status' => $status::class,
+    ]);
+})->with('models');
+
+it('can filter by status scope', function (string $modelClass, BackedEnum $status) {
     // Arrange
-    $modelClass::factory(2)->ofStatus($status)->create();
-    $modelClass::factory(1)->ofStatus($otherStatus)->create();
+    $modelClass::factory()->ofStatus($status)->create();
+    /** @disregard next() comes with HasNext trait */
+    $modelClass::factory()->ofStatus($status->next())->create();
 
     // Act
     $results = $modelClass::query()->ofStatus($status)->get();
 
     // Assert
-    expect($results)->toHaveCount(2);
+    expect($results)->toHaveCount(1);
     expect($results->first()->status)->toBe($status);
 })->with('models');

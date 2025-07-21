@@ -33,28 +33,28 @@ it('can determine if model is complete', function (string $modelClass) {
     expect($model->isComplete())->toBeTrue();
 })->with('models');
 
-it('can filter records by pending scope', function (string $modelClass) {
+it('can filter by pending scope', function (string $modelClass) {
     // Arrange
-    $modelClass::factory(2)->pending()->create();
-    $modelClass::factory(1)->complete()->create();
+    $modelClass::factory()->pending()->create();
+    $modelClass::factory()->complete()->create();
 
     // Act
     $pendingModels = $modelClass::query()->pending()->get();
 
     // Assert
-    expect($pendingModels)->toHaveCount(2);
+    expect($pendingModels)->toHaveCount(1);
     expect($pendingModels->first()->isPending())->toBeTrue();
 })->with('models');
 
-it('can filter records by complete scope', function (string $modelClass) {
+it('can filter by complete scope', function (string $modelClass) {
     // Arrange
-    $modelClass::factory(2)->complete()->create();
-    $modelClass::factory(1)->pending()->create();
+    $modelClass::factory()->complete()->create();
+    $modelClass::factory()->pending()->create();
 
     // Act
     $completeModels = $modelClass::query()->complete()->get();
 
     // Assert
-    expect($completeModels)->toHaveCount(2);
+    expect($completeModels)->toHaveCount(1);
     expect($completeModels->first()->isComplete())->toBeTrue();
 })->with('models');
