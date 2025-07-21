@@ -2,7 +2,9 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-arch()->preset()->laravel();
+// Execute architecture tests for the Laravel application
+// Ignore App\Enums\Attributes namespace to avoid conflicts with the Enums
+arch()->preset()->laravel()->ignoring('App\Enums\Attributes');
 
 uses(RefreshDatabase::class);
 

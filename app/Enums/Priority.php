@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum Priority: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * The ticket has a low priority and can be addressed within 2 weeks.

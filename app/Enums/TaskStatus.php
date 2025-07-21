@@ -2,23 +2,28 @@
 
 namespace App\Enums;
 
+use App\Enums\Attributes\Complete;
+use App\Enums\Attributes\Pending;
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasProgress;
 use App\Enums\Concerns\HasValues;
 
 enum TaskStatus: string
 {
-    use HasProgress, HasValues;
+    use HasNext, HasProgress, HasValues;
 
     /**
      * Represents an task that has been created and is pending approval.
      *
      * @default
      */
+    #[Pending]
     case New = 'new';
 
     /**
      * Represents an task that has been completed.
      */
+    #[Complete]
     case Completed = 'completed';
 
     /**
@@ -26,19 +31,4 @@ enum TaskStatus: string
      */
     case Cancelled = 'cancelled';
 
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    public static function pendingCases(): array
-    {
-        return [
-            self::New,
-        ];
-    }
-
-    public static function completeCases(): array
-    {
-        return [
-            self::Completed,
-        ];
-    }
 }

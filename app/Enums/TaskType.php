@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum TaskType: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * Represents a task involving the repair of a device.

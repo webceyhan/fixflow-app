@@ -2,11 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasNext;
 use App\Enums\Concerns\HasValues;
 
 enum TransactionMethod: string
 {
-    use HasValues;
+    use HasNext, HasValues;
 
     /**
      * Represents transactions via cash.

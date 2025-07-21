@@ -2,28 +2,39 @@
 
 namespace App\Enums\Concerns;
 
+use App\Enums\Attributes\Complete;
+use App\Enums\Attributes\Pending;
+
 trait HasProgress
 {
+    use HasAttributes;
+
     /**
      * Get list of pending enum cases.
      *
      * @return list<self>
      */
-    abstract public static function pendingCases(): array;
+    public static function pendingCases(): array
+    {
+        return static::casesByAttribute(Pending::class);
+    }
 
     /**
      * Get list of complete enum cases.
      *
      * @return list<self>
      */
-    abstract public static function completeCases(): array;
+    public static function completeCases(): array
+    {
+        return static::casesByAttribute(Complete::class);
+    }
 
     /**
      * Determine if the enum case is pending.
      */
     public function isPending(): bool
     {
-        return in_array($this, static::pendingCases());
+        return $this->hasAttribute(Pending::class);
     }
 
     /**
@@ -39,6 +50,6 @@ trait HasProgress
      */
     public function isComplete(): bool
     {
-        return in_array($this, static::completeCases());
+        return $this->hasAttribute(Complete::class);
     }
 }
