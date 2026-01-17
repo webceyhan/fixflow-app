@@ -17,6 +17,7 @@
         "laravel/wayfinder": "^0.1.9"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.6",
         "fakerphp/faker": "^1.23",
         "laravel/boost": "^1.8",
         "laravel/pail": "^1.2.2",
@@ -70,7 +71,9 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models --nowrite"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
