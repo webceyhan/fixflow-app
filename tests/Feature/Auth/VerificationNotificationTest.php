@@ -4,26 +4,34 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
 
-test('sends verification notification', function () {
+use function Pest\Laravel\actingAs;
+
+it('sends verification notification', function () {
+    // Arrange
     Notification::fake();
 
     $user = User::factory()->unverified()->create();
 
-    $this->actingAs($user)
+    // Act
+    actingAs($user)
         ->post(route('verification.send'))
         ->assertRedirect(route('home'));
 
+    // Assert
     Notification::assertSentTo($user, VerifyEmail::class);
 });
 
-test('does not send verification notification if email is verified', function () {
+it('does not send verification notification if email is verified', function () {
+    // Arrange
     Notification::fake();
 
     $user = User::factory()->create();
 
-    $this->actingAs($user)
+    // Act
+    actingAs($user)
         ->post(route('verification.send'))
         ->assertRedirect(route('dashboard', absolute: false));
 
+    // Assert
     Notification::assertNothingSent();
 });

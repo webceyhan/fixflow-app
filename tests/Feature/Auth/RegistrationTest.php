@@ -1,19 +1,27 @@
 <?php
 
-test('registration screen can be rendered', function () {
-    $response = $this->get(route('register'));
+use function Pest\Laravel\assertAuthenticated;
+use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 
+it('renders registration screen', function () {
+    // Act
+    $response = get(route('register'));
+
+    // Assert
     $response->assertOk();
 });
 
-test('new users can register', function () {
-    $response = $this->post(route('register.store'), [
+it('registers new users', function () {
+    // Act
+    $response = post(route('register.store'), [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
 
-    $this->assertAuthenticated();
+    // Assert
+    assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
 });

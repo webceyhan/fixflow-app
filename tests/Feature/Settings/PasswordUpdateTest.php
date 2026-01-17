@@ -3,21 +3,26 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-test('password update page is displayed', function () {
+use function Pest\Laravel\actingAs;
+
+it('displays password update page', function () {
+    // Arrange
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
+    // Act
+    $response = actingAs($user)
         ->get(route('user-password.edit'));
 
+    // Assert
     $response->assertOk();
 });
 
-test('password can be updated', function () {
+it('updates password', function () {
+    // Arrange
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
+    // Act
+    $response = actingAs($user)
         ->from(route('user-password.edit'))
         ->put(route('user-password.update'), [
             'current_password' => 'password',
@@ -25,6 +30,7 @@ test('password can be updated', function () {
             'password_confirmation' => 'new-password',
         ]);
 
+    // Assert
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect(route('user-password.edit'));
@@ -32,11 +38,12 @@ test('password can be updated', function () {
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
 
-test('correct password must be provided to update password', function () {
+it('requires correct password to update password', function () {
+    // Arrange
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
+    // Act
+    $response = actingAs($user)
         ->from(route('user-password.edit'))
         ->put(route('user-password.update'), [
             'current_password' => 'wrong-password',
@@ -44,6 +51,7 @@ test('correct password must be provided to update password', function () {
             'password_confirmation' => 'new-password',
         ]);
 
+    // Assert
     $response
         ->assertSessionHasErrors('current_password')
         ->assertRedirect(route('user-password.edit'));
