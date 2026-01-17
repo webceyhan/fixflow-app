@@ -12,7 +12,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import { type BreadcrumbItem } from '@/types';
+import type { NavItem } from '@/types';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -21,10 +21,10 @@ interface Props {
 
 defineProps<Props>();
 
-const breadcrumbItems: BreadcrumbItem[] = [
+const breadcrumbs: NavItem[] = [
     {
         title: 'Profile settings',
-        href: edit().url,
+        href: edit(),
     },
 ];
 
@@ -33,7 +33,7 @@ const user = page.props.auth.user;
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbItems">
+    <AppLayout :breadcrumbs>
         <Head title="Profile settings" />
 
         <h1 class="sr-only">Profile Settings</h1>

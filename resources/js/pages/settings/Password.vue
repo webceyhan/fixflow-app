@@ -10,18 +10,18 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { edit } from '@/routes/user-password';
-import { type BreadcrumbItem } from '@/types';
+import type { NavItem } from '@/types';
 
-const breadcrumbItems: BreadcrumbItem[] = [
+const breadcrumbs: NavItem[] = [
     {
         title: 'Password settings',
-        href: edit().url,
+        href: edit(),
     },
 ];
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbItems">
+    <AppLayout :breadcrumbs>
         <Head title="Password settings" />
 
         <h1 class="sr-only">Password Settings</h1>

@@ -6,18 +6,18 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { edit } from '@/routes/appearance';
-import { type BreadcrumbItem } from '@/types';
+import type { NavItem } from '@/types';
 
-const breadcrumbItems: BreadcrumbItem[] = [
+const breadcrumbs: NavItem[] = [
     {
         title: 'Appearance settings',
-        href: edit().url,
+        href: edit(),
     },
 ];
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbItems">
+    <AppLayout :breadcrumbs>
         <Head title="Appearance settings" />
 
         <h1 class="sr-only">Appearance Settings</h1>

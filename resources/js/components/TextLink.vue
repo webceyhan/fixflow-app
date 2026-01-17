@@ -1,25 +1,27 @@
 <script setup lang="ts">
-import { LinkComponentBaseProps, Method } from '@inertiajs/core';
+import type { InertiaLinkProps } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 
-interface Props {
-    href: LinkComponentBaseProps['href'];
+interface Props extends Omit<InertiaLinkProps, 'href'> {
+    href?: InertiaLinkProps['href'] | null;
     tabindex?: number;
-    method?: Method;
-    as?: string;
+    native?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 </script>
 
 <template>
-    <Link
-        :href="href"
-        :tabindex="tabindex"
-        :method="method"
-        :as="as"
-        class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+    <span v-if="!href">
+        <slot />
+    </span>
+
+    <component
+        v-else
+        class="underline decoration-current/25 underline-offset-4 transition-colors duration-200 ease-out hover:decoration-current"
+        :is="native ? 'a' : Link"
+        v-bind="props"
     >
         <slot />
-    </Link>
+    </component>
 </template>

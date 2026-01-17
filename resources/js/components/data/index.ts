@@ -1,0 +1,9 @@
+export { default as Address } from './Address.vue';
+export { default as Currency } from './Currency.vue';
+export { default as DateTime } from './DateTime.vue';
+export { default as Email } from './Email.vue';
+export { default as Fallback } from './Fallback.vue';
+export { default as Percent } from './Percent.vue';
+export { default as Phone } from './Phone.vue';
+export { default as Priority } from './Priority.vue';
+export { default as Tick } from './Tick.vue';
