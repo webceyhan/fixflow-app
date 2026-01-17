@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -8,25 +6,21 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { useActiveUrl } from '@/composables/useActiveUrl';
-import { type NavItem } from '@/types';
+import { useNavigation } from '@/composables/useNavigation';
+import { Link } from '@inertiajs/vue3';
 
-defineProps<{
-    items: NavItem[];
-}>();
-
-const { urlIsActive } = useActiveUrl();
+const { mainNavItems } = useNavigation();
 </script>
 
 <template>
     <SidebarGroup class="px-2 py-0">
         <SidebarGroupLabel>Platform</SidebarGroupLabel>
         <SidebarMenu>
-            <SidebarMenuItem v-for="item in items" :key="item.title">
+            <SidebarMenuItem v-for="item in mainNavItems" :key="item.title">
                 <SidebarMenuButton
-                    as-child
-                    :is-active="urlIsActive(item.href)"
+                    :is-active="item.isActive"
                     :tooltip="item.title"
+                    as-child
                 >
                     <Link :href="item.href">
                         <component :is="item.icon" />

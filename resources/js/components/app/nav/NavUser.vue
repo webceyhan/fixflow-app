@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { usePage } from '@inertiajs/vue3';
-import { ChevronsUpDown } from 'lucide-vue-next';
-
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,12 +10,12 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
-import UserInfo from '@/components/UserInfo.vue';
+import { usePage } from '@inertiajs/vue3';
+import { ChevronsUpDown } from 'lucide-vue-next';
+import UserInfo from './user/UserInfo.vue';
+import UserMenuContent from './user/UserMenuContent.vue';
 
-import UserMenuContent from './UserMenuContent.vue';
-
-const page = usePage();
-const user = page.props.auth.user;
+const { user } = usePage().props.auth;
 const { isMobile, state } = useSidebar();
 </script>
 
@@ -32,7 +29,7 @@ const { isMobile, state } = useSidebar();
                         class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         data-test="sidebar-menu-button"
                     >
-                        <UserInfo :user="user" />
+                        <UserInfo :user />
                         <ChevronsUpDown class="ml-auto size-4" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
@@ -48,7 +45,7 @@ const { isMobile, state } = useSidebar();
                     align="end"
                     :side-offset="4"
                 >
-                    <UserMenuContent :user="user" />
+                    <UserMenuContent :user />
                 </DropdownMenuContent>
             </DropdownMenu>
         </SidebarMenuItem>

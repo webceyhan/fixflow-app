@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import { Link, router } from '@inertiajs/vue3';
-import { LogOut, Settings } from 'lucide-vue-next';
-
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import UserInfo from '@/components/UserInfo.vue';
+import { LogOutIcon, SettingsIcon } from '@/icons';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
+import { Link, router } from '@inertiajs/vue3';
+import UserInfo from './UserInfo.vue';
 
 interface Props {
     user: User;
 }
 
+defineProps<Props>();
+
 const handleLogout = () => {
     router.flushAll();
 };
-
-defineProps<Props>();
 </script>
 
 <template>
@@ -34,7 +33,7 @@ defineProps<Props>();
     <DropdownMenuGroup>
         <DropdownMenuItem :as-child="true">
             <Link class="block w-full cursor-pointer" :href="edit()" prefetch>
-                <Settings class="mr-2 h-4 w-4" />
+                <SettingsIcon class="mr-2 size-4" />
                 Settings
             </Link>
         </DropdownMenuItem>
@@ -48,7 +47,7 @@ defineProps<Props>();
             as="button"
             data-test="logout-button"
         >
-            <LogOut class="mr-2 h-4 w-4" />
+            <LogOutIcon class="mr-2 size-4" />
             Log out
         </Link>
     </DropdownMenuItem>
