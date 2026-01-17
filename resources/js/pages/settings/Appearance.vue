@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-
-import AppearanceTabs from '@/components/AppearanceTabs.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
+import AppearanceSelector from '@/components/settings/AppearanceSelector.vue';
+import {
+    Field,
+    FieldDescription,
+    FieldLegend,
+    FieldSet,
+} from '@/components/ui/field';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { edit } from '@/routes/appearance';
@@ -18,18 +21,17 @@ const breadcrumbs: NavItem[] = [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Head title="Appearance settings" />
-
-        <h1 class="sr-only">Appearance Settings</h1>
-
         <SettingsLayout>
-            <div class="space-y-6">
-                <HeadingSmall
-                    title="Appearance settings"
-                    description="Update your account's appearance settings"
-                />
-                <AppearanceTabs />
-            </div>
+            <FieldSet>
+                <FieldLegend> Appearance Settings </FieldLegend>
+                <FieldDescription>
+                    Update your account's appearance settings
+                </FieldDescription>
+
+                <Field>
+                    <AppearanceSelector />
+                </Field>
+            </FieldSet>
         </SettingsLayout>
     </AppLayout>
 </template>

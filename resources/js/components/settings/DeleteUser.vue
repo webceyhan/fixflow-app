@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import { Form } from '@inertiajs/vue3';
-import { useTemplateRef } from 'vue';
-
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import HeadingSmall from '@/components/HeadingSmall.vue';
-import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -16,18 +10,29 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+    Field,
+    FieldDescription,
+    FieldError,
+    FieldLabel,
+    FieldLegend,
+    FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { destroy } from '@/routes/profile';
+import { Form } from '@inertiajs/vue3';
+import { useTemplateRef } from 'vue';
 
 const passwordInput = useTemplateRef('passwordInput');
 </script>
 
 <template>
-    <div class="space-y-6">
-        <HeadingSmall
-            title="Delete account"
-            description="Delete your account and all of its resources"
-        />
+    <FieldSet>
+        <FieldLegend>Delete account</FieldLegend>
+        <FieldDescription>
+            Delete your account and all of its resources
+        </FieldDescription>
+
         <div
             class="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10"
         >
@@ -39,26 +44,27 @@ const passwordInput = useTemplateRef('passwordInput');
             </div>
             <Dialog>
                 <DialogTrigger as-child>
-                    <Button variant="destructive" data-test="delete-user-button"
-                        >Delete account</Button
+                    <Button
+                        variant="destructive"
+                        data-test="delete-user-button"
                     >
+                        Delete account
+                    </Button>
                 </DialogTrigger>
+
                 <DialogContent>
                     <Form
-                        v-bind="ProfileController.destroy.form()"
+                        class="space-y-4"
+                        v-bind="destroy.form()"
+                        v-slot="{ errors, processing, reset, clearErrors }"
+                        :options="{ preserveScroll: true }"
                         reset-on-success
                         @error="() => passwordInput?.$el?.focus()"
-                        :options="{
-                            preserveScroll: true,
-                        }"
-                        class="space-y-6"
-                        v-slot="{ errors, processing, reset, clearErrors }"
                     >
-                        <DialogHeader class="space-y-3">
-                            <DialogTitle
-                                >Are you sure you want to delete your
-                                account?</DialogTitle
-                            >
+                        <DialogHeader>
+                            <DialogTitle>
+                                Are you sure you want to delete your account?
+                            </DialogTitle>
                             <DialogDescription>
                                 Once your account is deleted, all of its
                                 resources and data will also be permanently
@@ -68,19 +74,21 @@ const passwordInput = useTemplateRef('passwordInput');
                             </DialogDescription>
                         </DialogHeader>
 
-                        <div class="grid gap-2">
-                            <Label for="password" class="sr-only"
-                                >Password</Label
-                            >
-                            <Input
-                                id="password"
-                                type="password"
-                                name="password"
-                                ref="passwordInput"
-                                placeholder="Password"
-                            />
-                            <InputError :message="errors.password" />
-                        </div>
+                        <FieldSet>
+                            <Field>
+                                <FieldLabel for="password" class="sr-only">
+                                    Password
+                                </FieldLabel>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    ref="passwordInput"
+                                    placeholder="Password"
+                                />
+                                <FieldError :message="errors.password" />
+                            </Field>
+                        </FieldSet>
 
                         <DialogFooter class="gap-2">
                             <DialogClose as-child>
@@ -110,5 +118,5 @@ const passwordInput = useTemplateRef('passwordInput');
                 </DialogContent>
             </Dialog>
         </div>
-    </div>
+    </FieldSet>
 </template>

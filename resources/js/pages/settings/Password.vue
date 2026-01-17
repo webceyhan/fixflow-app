@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
-
-import PasswordController from '@/actions/App/Http/Controllers/Settings/PasswordController';
-import HeadingSmall from '@/components/HeadingSmall.vue';
-import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
+import {
+    Field,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
-import { edit } from '@/routes/user-password';
+import { edit, update } from '@/routes/user-password';
 import type { NavItem } from '@/types';
+import { Form } from '@inertiajs/vue3';
+
+const toast = useToast();
 
 const breadcrumbs: NavItem[] = [
     {
@@ -22,95 +29,82 @@ const breadcrumbs: NavItem[] = [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Head title="Password settings" />
-
-        <h1 class="sr-only">Password Settings</h1>
-
         <SettingsLayout>
-            <div class="space-y-6">
-                <HeadingSmall
-                    title="Update password"
-                    description="Ensure your account is using a long, random password to stay secure"
-                />
+            <Form
+                v-bind="update.form()"
+                v-slot="{ errors, processing }"
+                :options="{ preserveScroll: true }"
+                @success="toast.success('Password updated successfully!')"
+                reset-on-success
+                :reset-on-error="[
+                    'password',
+                    'password_confirmation',
+                    'current_password',
+                ]"
+            >
+                <FieldSet>
+                    <FieldLegend>Update password</FieldLegend>
+                    <FieldDescription>
+                        Ensure your account is using a long, random password to
+                        stay secure
+                    </FieldDescription>
 
-                <Form
-                    v-bind="PasswordController.update.form()"
-                    :options="{
-                        preserveScroll: true,
-                    }"
-                    reset-on-success
-                    :reset-on-error="[
-                        'password',
-                        'password_confirmation',
-                        'current_password',
-                    ]"
-                    class="space-y-6"
-                    v-slot="{ errors, processing, recentlySuccessful }"
-                >
-                    <div class="grid gap-2">
-                        <Label for="current_password">Current password</Label>
-                        <Input
-                            id="current_password"
-                            name="current_password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="current-password"
-                            placeholder="Current password"
-                        />
-                        <InputError :message="errors.current_password" />
-                    </div>
+                    <FieldGroup>
+                        <Field>
+                            <FieldLabel for="current_password">
+                                Current password
+                            </FieldLabel>
+                            <Input
+                                id="current_password"
+                                name="current_password"
+                                type="password"
+                                autocomplete="current-password"
+                                placeholder="Current password"
+                            />
+                            <FieldError :message="errors.current_password" />
+                        </Field>
 
-                    <div class="grid gap-2">
-                        <Label for="password">New password</Label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="new-password"
-                            placeholder="New password"
-                        />
-                        <InputError :message="errors.password" />
-                    </div>
+                        <Field>
+                            <FieldLabel for="password">
+                                New password
+                            </FieldLabel>
+                            <Input
+                                id="password"
+                                name="password"
+                                type="password"
+                                autocomplete="new-password"
+                                placeholder="New password"
+                            />
+                            <FieldError :message="errors.password" />
+                        </Field>
 
-                    <div class="grid gap-2">
-                        <Label for="password_confirmation"
-                            >Confirm password</Label
-                        >
-                        <Input
-                            id="password_confirmation"
-                            name="password_confirmation"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="new-password"
-                            placeholder="Confirm password"
-                        />
-                        <InputError :message="errors.password_confirmation" />
-                    </div>
+                        <Field>
+                            <FieldLabel for="password_confirmation">
+                                Confirm password
+                            </FieldLabel>
+                            <Input
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                type="password"
+                                autocomplete="new-password"
+                                placeholder="Confirm password"
+                            />
+                            <FieldError
+                                :message="errors.password_confirmation"
+                            />
+                        </Field>
 
-                    <div class="flex items-center gap-4">
-                        <Button
-                            :disabled="processing"
-                            data-test="update-password-button"
-                            >Save password</Button
-                        >
-
-                        <Transition
-                            enter-active-class="transition ease-in-out"
-                            enter-from-class="opacity-0"
-                            leave-active-class="transition ease-in-out"
-                            leave-to-class="opacity-0"
-                        >
-                            <p
-                                v-show="recentlySuccessful"
-                                class="text-sm text-neutral-600"
+                        <Field orientation="horizontal">
+                            <Button
+                                :disabled="processing"
+                                data-test="update-password-button"
                             >
-                                Saved.
-                            </p>
-                        </Transition>
-                    </div>
-                </Form>
-            </div>
+                                Save password
+                            </Button>
+                        </Field>
+                    </FieldGroup>
+                </FieldSet>
+            </Form>
         </SettingsLayout>
     </AppLayout>
 </template>
