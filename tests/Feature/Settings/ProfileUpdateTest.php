@@ -26,6 +26,7 @@ it('updates profile information', function () {
         ->patch(route('profile.update'), [
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'phone' => '+1234567890',
         ]);
 
     // Assert
@@ -49,6 +50,7 @@ it('keeps email verification status unchanged when the email address is unchange
         ->patch(route('profile.update'), [
             'name' => 'Test User',
             'email' => $user->email,
+            'phone' => $user->phone,
         ]);
 
     // Assert

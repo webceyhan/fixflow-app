@@ -59,6 +59,19 @@ import { Form } from '@inertiajs/vue3';
                 </Field>
 
                 <Field>
+                    <FieldLabel for="phone">Phone number</FieldLabel>
+                    <Input
+                        id="phone"
+                        type="tel"
+                        :tabindex="3"
+                        autocomplete="tel"
+                        name="phone"
+                        placeholder="Phone number"
+                    />
+                    <FieldError :message="errors.phone" />
+                </Field>
+
+                <Field>
                     <FieldLabel for="password">Password</FieldLabel>
                     <Input
                         id="password"

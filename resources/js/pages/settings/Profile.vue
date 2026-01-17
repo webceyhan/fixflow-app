@@ -75,6 +75,19 @@ const { user } = usePage().props.auth;
                             <FieldError :message="errors.email" />
                         </Field>
 
+                        <Field>
+                            <FieldLabel for="phone">Phone number</FieldLabel>
+                            <Input
+                                id="phone"
+                                type="tel"
+                                name="phone"
+                                :default-value="user.phone"
+                                autocomplete="tel"
+                                placeholder="Phone number"
+                            />
+                            <FieldError :message="errors.phone" />
+                        </Field>
+
                         <Field
                             v-if="mustVerifyEmail && !user.email_verified_at"
                         >

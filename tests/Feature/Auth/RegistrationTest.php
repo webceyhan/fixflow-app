@@ -17,6 +17,7 @@ it('registers new users', function () {
     $response = post(route('register.store'), [
         'name' => 'Test User',
         'email' => 'test@example.com',
+        'phone' => '+1234567890',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);

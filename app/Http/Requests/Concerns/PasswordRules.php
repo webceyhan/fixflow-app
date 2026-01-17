@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Http\Requests\Concerns;
 
 use Illuminate\Validation\Rules\Password;
 
-trait PasswordValidationRules
+trait PasswordRules
 {
     /**
      * Get the validation rules used to validate passwords.

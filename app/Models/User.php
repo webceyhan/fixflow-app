@@ -2,16 +2,31 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
+use App\Enums\UserStatus;
+use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasStatus;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasActiveStatus, HasFactory, HasStatus, Notifiable, TwoFactorAuthenticatable;
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'role' => UserRole::Technician,
+        'status' => UserStatus::Active,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +36,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
+        'note',
+        'role',
+        'status',
+        'email_verified_at',
     ];
 
     /**
@@ -31,9 +51,9 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'remember_token',
         'two_factor_secret',
         'two_factor_recovery_codes',
-        'remember_token',
     ];
 
     /**
@@ -44,9 +64,42 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
+            'email_verified_at' => 'datetime',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    // ATTRIBUTES //////////////////////////////////////////////////////////////////////////////////
+
+    // RELATIONSHIPS ///////////////////////////////////////////////////////////////////////////////
+
+    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include users with the specified role.
+     */
+    public function scopeOfRole(Builder $query, UserRole $role): void
+    {
+        $query->where('role', $role->value);
+    }
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Determine if the user is an administrator.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::Admin;
+    }
+
+    /**
+     * Determine if the user is a manager.
+     */
+    public function isManager(): bool
+    {
+        return $this->role === UserRole::Manager;
     }
 }
