@@ -1,109 +1,108 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
-
-import InputError from '@/components/InputError.vue';
+import Heading from '@/components/Heading.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
+import {
+    Field,
+    FieldDescription,
+    FieldError,
+    FieldLabel,
+    FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import AuthBase from '@/layouts/AuthLayout.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import { Form } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <AuthBase
-        title="Create an account"
-        description="Enter your details below to create your account"
-    >
-        <Head title="Register" />
+    <AuthLayout>
+        <Heading
+            head="Register"
+            title="Create an account"
+            description="Enter your details below to create your account"
+        />
 
         <Form
             v-bind="store.form()"
             :reset-on-success="['password', 'password_confirmation']"
             v-slot="{ errors, processing }"
-            class="flex flex-col gap-6"
         >
-            <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="name">Name</Label>
+            <FieldSet>
+                <Field>
+                    <FieldLabel for="name">Name</FieldLabel>
                     <Input
                         id="name"
                         type="text"
-                        required
                         autofocus
                         :tabindex="1"
                         autocomplete="name"
                         name="name"
                         placeholder="Full name"
                     />
-                    <InputError :message="errors.name" />
-                </div>
+                    <FieldError :message="errors.name" />
+                </Field>
 
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
+                <Field>
+                    <FieldLabel for="email">Email address</FieldLabel>
                     <Input
                         id="email"
                         type="email"
-                        required
                         :tabindex="2"
                         autocomplete="email"
                         name="email"
                         placeholder="email@example.com"
                     />
-                    <InputError :message="errors.email" />
-                </div>
+                    <FieldError :message="errors.email" />
+                </Field>
 
-                <div class="grid gap-2">
-                    <Label for="password">Password</Label>
+                <Field>
+                    <FieldLabel for="password">Password</FieldLabel>
                     <Input
                         id="password"
                         type="password"
-                        required
-                        :tabindex="3"
+                        :tabindex="4"
                         autocomplete="new-password"
                         name="password"
                         placeholder="Password"
                     />
-                    <InputError :message="errors.password" />
-                </div>
+                    <FieldError :message="errors.password" />
+                </Field>
 
-                <div class="grid gap-2">
-                    <Label for="password_confirmation">Confirm password</Label>
+                <Field>
+                    <FieldLabel for="password_confirmation">
+                        Confirm password
+                    </FieldLabel>
                     <Input
                         id="password_confirmation"
                         type="password"
-                        required
-                        :tabindex="4"
+                        :tabindex="5"
                         autocomplete="new-password"
                         name="password_confirmation"
                         placeholder="Confirm password"
                     />
-                    <InputError :message="errors.password_confirmation" />
-                </div>
+                    <FieldError :message="errors.password_confirmation" />
+                </Field>
 
-                <Button
-                    type="submit"
-                    class="mt-2 w-full"
-                    tabindex="5"
-                    :disabled="processing"
-                    data-test="register-user-button"
-                >
-                    <Spinner v-if="processing" />
-                    Create account
-                </Button>
-            </div>
+                <Field>
+                    <Button
+                        type="submit"
+                        tabindex="6"
+                        :disabled="processing"
+                        data-test="register-user-button"
+                    >
+                        <Spinner v-if="processing" />
+                        Create account
+                    </Button>
+                </Field>
 
-            <div class="text-center text-sm text-muted-foreground">
-                Already have an account?
-                <TextLink
-                    :href="login()"
-                    class="underline underline-offset-4"
-                    :tabindex="6"
-                    >Log in</TextLink
-                >
-            </div>
+                <FieldDescription class="text-center">
+                    Already have an account?
+                    <TextLink :href="login()" :tabindex="6">Log in</TextLink>
+                </FieldDescription>
+            </FieldSet>
         </Form>
-    </AuthBase>
+    </AuthLayout>
 </template>

@@ -1,39 +1,33 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
-
-import InputError from '@/components/InputError.vue';
+import Heading from '@/components/Heading.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
+import {
+    Field,
+    FieldDescription,
+    FieldError,
+    FieldLabel,
+    FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
-
-defineProps<{
-    status?: string;
-}>();
+import { Form } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <AuthLayout
-        title="Forgot password"
-        description="Enter your email to receive a password reset link"
-    >
-        <Head title="Forgot password" />
+    <AuthLayout>
+        <Heading
+            title="Forgot password"
+            description="Enter your email to receive a password reset link"
+        />
 
-        <div
-            v-if="status"
-            class="mb-4 text-center text-sm font-medium text-green-600"
-        >
-            {{ status }}
-        </div>
-
-        <div class="space-y-6">
-            <Form v-bind="email.form()" v-slot="{ errors, processing }">
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
+        <Form v-bind="email.form()" v-slot="{ errors, processing }">
+            <FieldSet>
+                <Field>
+                    <FieldLabel for="email">Email address</FieldLabel>
                     <Input
                         id="email"
                         type="email"
@@ -42,25 +36,24 @@ defineProps<{
                         autofocus
                         placeholder="email@example.com"
                     />
-                    <InputError :message="errors.email" />
-                </div>
+                    <FieldError :message="errors.email" />
+                </Field>
 
-                <div class="my-6 flex items-center justify-start">
+                <Field>
                     <Button
-                        class="w-full"
                         :disabled="processing"
                         data-test="email-password-reset-link-button"
                     >
                         <Spinner v-if="processing" />
                         Email password reset link
                     </Button>
-                </div>
-            </Form>
+                </Field>
 
-            <div class="space-x-1 text-center text-sm text-muted-foreground">
-                <span>Or, return to</span>
-                <TextLink :href="login()">log in</TextLink>
-            </div>
-        </div>
+                <FieldDescription class="text-center">
+                    Or, return to
+                    <TextLink :href="login()">log in</TextLink>
+                </FieldDescription>
+            </FieldSet>
+        </Form>
     </AuthLayout>
 </template>

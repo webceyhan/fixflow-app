@@ -1,111 +1,105 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
-
-import InputError from '@/components/InputError.vue';
+import Heading from '@/components/Heading.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+    Field,
+    FieldDescription,
+    FieldError,
+    FieldLabel,
+    FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import AuthBase from '@/layouts/AuthLayout.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
+import { Form } from '@inertiajs/vue3';
 
 defineProps<{
-    status?: string;
     canResetPassword: boolean;
     canRegister: boolean;
 }>();
 </script>
 
 <template>
-    <AuthBase
-        title="Log in to your account"
-        description="Enter your email and password below to log in"
-    >
-        <Head title="Log in" />
-
-        <div
-            v-if="status"
-            class="mb-4 text-center text-sm font-medium text-green-600"
-        >
-            {{ status }}
-        </div>
+    <AuthLayout>
+        <Heading
+            head="Log in"
+            title="Log in to your account"
+            description="Enter your email and password below to log in"
+        />
 
         <Form
             v-bind="store.form()"
             :reset-on-success="['password']"
             v-slot="{ errors, processing }"
-            class="flex flex-col gap-6"
         >
-            <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
+            <FieldSet>
+                <Field>
+                    <FieldLabel for="email">Email address</FieldLabel>
                     <Input
                         id="email"
                         type="email"
                         name="email"
-                        required
                         autofocus
                         :tabindex="1"
                         autocomplete="email"
                         placeholder="email@example.com"
                     />
-                    <InputError :message="errors.email" />
-                </div>
+                    <FieldError :message="errors.email" />
+                </Field>
 
-                <div class="grid gap-2">
+                <Field>
                     <div class="flex items-center justify-between">
-                        <Label for="password">Password</Label>
-                        <TextLink
-                            v-if="canResetPassword"
-                            :href="request()"
-                            class="text-sm"
-                            :tabindex="5"
-                        >
-                            Forgot password?
-                        </TextLink>
+                        <FieldLabel for="password">Password</FieldLabel>
+                        <FieldDescription>
+                            <TextLink
+                                v-if="canResetPassword"
+                                :href="request()"
+                                :tabindex="5"
+                            >
+                                Forgot password?
+                            </TextLink>
+                        </FieldDescription>
                     </div>
                     <Input
                         id="password"
                         type="password"
                         name="password"
-                        required
                         :tabindex="2"
                         autocomplete="current-password"
                         placeholder="Password"
                     />
-                    <InputError :message="errors.password" />
-                </div>
+                    <FieldError :message="errors.password" />
+                </Field>
 
-                <div class="flex items-center justify-between">
-                    <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox id="remember" name="remember" :tabindex="3" />
-                        <span>Remember me</span>
-                    </Label>
-                </div>
+                <Field orientation="horizontal">
+                    <Checkbox id="remember" name="remember" :tabindex="3" />
+                    <FieldLabel for="remember"> Remember me </FieldLabel>
+                </Field>
 
-                <Button
-                    type="submit"
-                    class="mt-4 w-full"
-                    :tabindex="4"
-                    :disabled="processing"
-                    data-test="login-button"
-                >
-                    <Spinner v-if="processing" />
-                    Log in
-                </Button>
-            </div>
+                <Field>
+                    <Button
+                        type="submit"
+                        :tabindex="4"
+                        :disabled="processing"
+                        data-test="login-button"
+                    >
+                        <Spinner v-if="processing" />
+                        Log in
+                    </Button>
+                </Field>
 
-            <div
-                class="text-center text-sm text-muted-foreground"
-                v-if="canRegister"
-            >
-                Don't have an account?
-                <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
-            </div>
+                <FieldDescription v-if="canRegister" class="text-center">
+                    Don't have an account?
+                    <TextLink :href="register()" :tabindex="5">
+                        Sign up
+                    </TextLink>
+                </FieldDescription>
+            </FieldSet>
         </Form>
-    </AuthBase>
+    </AuthLayout>
 </template>
