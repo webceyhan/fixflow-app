@@ -1,8 +1,7 @@
+import { toUrl } from '@/lib/utils';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import { computed, readonly } from 'vue';
-
-import { toUrl } from '@/lib/utils';
 
 const page = usePage();
 const currentUrlReactive = computed(

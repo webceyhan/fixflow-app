@@ -1,7 +1,7 @@
+import type { Appearance } from '@/types';
 import { computed, onMounted, ref } from 'vue';
 
-export type ResolvedAppearance = 'light' | 'dark';
-type Appearance = ResolvedAppearance | 'system';
+type ResolvedAppearance = Exclude<Appearance, 'system'>;
 
 export function updateTheme(value: Appearance) {
     if (typeof window === 'undefined') {

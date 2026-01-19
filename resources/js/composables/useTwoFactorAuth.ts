@@ -1,6 +1,6 @@
-import { computed, ref } from 'vue';
-
 import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
+import { computed, ref } from 'vue';
+import { useToast } from './useToast';
 
 const fetchJson = async <T>(url: string): Promise<T> => {
     const response = await fetch(url, {
@@ -14,7 +14,7 @@ const fetchJson = async <T>(url: string): Promise<T> => {
     return response.json();
 };
 
-const errors = ref<string[]>([]);
+const toast = useToast();
 const manualSetupKey = ref<string | null>(null);
 const qrCodeSvg = ref<string | null>(null);
 const recoveryCodesList = ref<string[]>([]);
@@ -32,7 +32,7 @@ export const useTwoFactorAuth = () => {
 
             qrCodeSvg.value = svg;
         } catch {
-            errors.value.push('Failed to fetch QR code');
+            toast.error('Failed to fetch QR code');
             qrCodeSvg.value = null;
         }
     };
@@ -45,7 +45,7 @@ export const useTwoFactorAuth = () => {
 
             manualSetupKey.value = key;
         } catch {
-            errors.value.push('Failed to fetch a setup key');
+            toast.error('Failed to fetch setup key');
             manualSetupKey.value = null;
         }
     };
@@ -53,34 +53,26 @@ export const useTwoFactorAuth = () => {
     const clearSetupData = (): void => {
         manualSetupKey.value = null;
         qrCodeSvg.value = null;
-        clearErrors();
-    };
-
-    const clearErrors = (): void => {
-        errors.value = [];
     };
 
     const clearTwoFactorAuthData = (): void => {
         clearSetupData();
-        clearErrors();
         recoveryCodesList.value = [];
     };
 
     const fetchRecoveryCodes = async (): Promise<void> => {
         try {
-            clearErrors();
             recoveryCodesList.value = await fetchJson<string[]>(
                 recoveryCodes.url(),
             );
         } catch {
-            errors.value.push('Failed to fetch recovery codes');
+            toast.error('Failed to fetch recovery codes');
             recoveryCodesList.value = [];
         }
     };
 
     const fetchSetupData = async (): Promise<void> => {
         try {
-            clearErrors();
             await Promise.all([fetchQrCode(), fetchSetupKey()]);
         } catch {
             qrCodeSvg.value = null;
@@ -92,10 +84,8 @@ export const useTwoFactorAuth = () => {
         qrCodeSvg,
         manualSetupKey,
         recoveryCodesList,
-        errors,
         hasSetupData,
         clearSetupData,
-        clearErrors,
         clearTwoFactorAuthData,
         fetchQrCode,
         fetchSetupKey,
