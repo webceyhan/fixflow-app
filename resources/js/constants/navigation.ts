@@ -1,10 +1,12 @@
 import {
+    CustomerIcon,
     DashboardIcon,
     DocumentationIcon,
     RepositoryIcon,
     UserIcon,
 } from '@/icons';
 import { dashboard } from '@/routes';
+import { index as customers } from '@/routes/customers';
 import { index as users } from '@/routes/users';
 import type { NavItem } from '@/types';
 
@@ -18,6 +20,11 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
         title: 'Users',
         href: users(),
         icon: UserIcon,
+    },
+    {
+        title: 'Customers',
+        href: customers(),
+        icon: CustomerIcon,
     },
 ] as const;
 

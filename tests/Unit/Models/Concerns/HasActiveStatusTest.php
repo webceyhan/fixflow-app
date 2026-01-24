@@ -1,6 +1,8 @@
 <?php
 
+use App\Enums\CustomerStatus;
 use App\Enums\UserStatus;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -8,6 +10,7 @@ uses(RefreshDatabase::class);
 
 dataset('hasActiveStatusModels', [
     'User' => [User::class, UserStatus::class],
+    'Customer' => [Customer::class, CustomerStatus::class],
 ]);
 
 it('can determine if model is active', function (string $modelClass, string $enumClass) {

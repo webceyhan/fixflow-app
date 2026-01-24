@@ -1,6 +1,8 @@
 <?php
 
+use App\Enums\CustomerStatus;
 use App\Enums\UserStatus;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -8,6 +10,7 @@ uses(RefreshDatabase::class);
 
 dataset('models', [
     'User' => [User::class, UserStatus::Active],
+    'Customer' => [Customer::class, CustomerStatus::Active],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass, BackedEnum $status) {

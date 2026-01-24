@@ -15,3 +15,14 @@ export const USER_STATUS = {
     Suspended: 'suspended',
     Terminated: 'terminated',
 } as const;
+
+export const CUSTOMER_TYPE = {
+    Individual: 'individual',
+    Business: 'business',
+} as const;
+
+export const CUSTOMER_STATUS = {
+    Active: 'active',
+    Suspended: 'suspended',
+    Archived: 'archived',
+} as const;
