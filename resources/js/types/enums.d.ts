@@ -7,3 +7,13 @@ export type UserStatus = 'active' | 'suspended' | 'terminated';
 export type CustomerType = 'individual' | 'business';
 
 export type CustomerStatus = 'active' | 'suspended' | 'archived';
+
+export type DeviceType =
+    | 'phone'
+    | 'tablet'
+    | 'laptop'
+    | 'desktop'
+    | 'wearable'
+    | 'other';
+
+export type DeviceStatus = 'received' | 'in_service' | 'ready' | 'delivered';

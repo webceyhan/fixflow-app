@@ -1,6 +1,8 @@
 import type {
     CustomerStatus,
     CustomerType,
+    DeviceStatus,
+    DeviceType,
     UserRole,
     UserStatus,
 } from './enums';
@@ -33,4 +35,21 @@ export interface Customer extends Model {
     note?: string;
     type: CustomerType;
     status: CustomerStatus;
+    devices?: Device[];
+}
+
+export interface Device extends Model {
+    customer_id: number;
+    model: string;
+    brand: string;
+    color?: string;
+    imei?: string;
+    serial_number?: string;
+    passcode?: string;
+    purchase_date?: string;
+    warranty_expire_date?: string;
+    note?: string;
+    type: DeviceType;
+    status: DeviceStatus;
+    customer?: Customer;
 }

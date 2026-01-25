@@ -1,6 +1,7 @@
 import type {
     CustomerStatus,
     CustomerType,
+    DeviceStatus,
     Priority,
     StateColor,
     UserStatus,
@@ -27,4 +28,11 @@ export const CUSTOMER_STATUS_COLOR_MAP: Record<CustomerStatus, StateColor> = {
 export const CUSTOMER_TYPE_COLOR_MAP: Record<CustomerType, StateColor> = {
     individual: 'neutral',
     business: 'info',
+};
+
+export const DEVICE_STATUS_COLOR_MAP: Record<DeviceStatus, StateColor> = {
+    received: 'neutral',
+    in_service: 'info',
+    ready: 'success',
+    delivered: 'neutral',
 };

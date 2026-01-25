@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { CreateAction } from '@/components/action';
 import CustomerCard from '@/components/customers/CustomerCard.vue';
 import CustomerToolbar from '@/components/customers/CustomerToolbar.vue';
+import DeviceList from '@/components/devices/DeviceList.vue';
 import Heading from '@/components/Heading.vue';
 import NoteCard from '@/components/NoteCard.vue';
-import Placeholder from '@/components/Placeholder.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
 import { toUUID } from '@/lib/utils';
 import { index, update } from '@/routes/customers';
+import { create as createDevice } from '@/routes/devices';
 import type { Customer, NavItem } from '@/types';
 
 const props = defineProps<{
@@ -38,9 +40,20 @@ const breadcrumbs: NavItem[] = [
 
             <NoteCard :data="customer" :href="update(customer)" />
 
-            <Placeholder
-                class="col-start-2 row-span-2 row-start-1 max-lg:hidden"
-            />
+            <section class="row-span-2 space-y-2 lg:col-start-2 lg:row-start-1">
+                <h3>Devices</h3>
+
+                <DeviceList :devices="customer.devices" />
+
+                <CreateAction
+                    class="w-full"
+                    variant="ghost"
+                    size="lg"
+                    :href="createDevice(customer)"
+                >
+                    Add new device
+                </CreateAction>
+            </section>
         </ShowLayout>
     </AppLayout>
 </template>

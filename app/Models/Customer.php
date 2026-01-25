@@ -9,6 +9,7 @@ use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
@@ -55,6 +56,14 @@ class Customer extends Model
     // ATTRIBUTES //////////////////////////////////////////////////////////////////////////////////
 
     // RELATIONSHIPS ///////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Get the devices for the customer.
+     */
+    public function devices(): HasMany
+    {
+        return $this->hasMany(Device::class);
+    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

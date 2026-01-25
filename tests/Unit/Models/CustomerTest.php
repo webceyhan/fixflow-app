@@ -6,6 +6,8 @@ use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use App\Models\Customer;
+use App\Models\Device;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -42,11 +44,22 @@ testModelStructure(
         'status' => CustomerStatus::class,
     ],
     relations: [
-        // TODO
+        'devices' => HasMany::class,
     ]
 );
 
 // RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
+
+it('has many devices relationship', function () {
+    // Arrange
+    $customer = Customer::factory()->create();
+    Device::factory()->count(2)->forCustomer($customer)->create();
+
+    // Assert
+    expect($customer->devices)->toHaveCount(2);
+    expect($customer->devices->first())->toBeInstanceOf(Device::class);
+    expect($customer->devices->first()->customer_id)->toBe($customer->id);
+});
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////
 

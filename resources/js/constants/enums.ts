@@ -26,3 +26,19 @@ export const CUSTOMER_STATUS = {
     Suspended: 'suspended',
     Archived: 'archived',
 } as const;
+
+export const DEVICE_TYPE = {
+    Phone: 'phone',
+    Tablet: 'tablet',
+    Laptop: 'laptop',
+    Desktop: 'desktop',
+    Wearable: 'wearable',
+    Other: 'other',
+} as const;
+
+export const DEVICE_STATUS = {
+    Received: 'received',
+    InService: 'in_service',
+    Ready: 'ready',
+    Delivered: 'delivered',
+} as const;

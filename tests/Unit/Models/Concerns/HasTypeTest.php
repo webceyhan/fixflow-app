@@ -1,13 +1,16 @@
 <?php
 
 use App\Enums\CustomerType;
+use App\Enums\DeviceType;
 use App\Models\Customer;
+use App\Models\Device;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 dataset('models', [
     'Customer' => [Customer::class, CustomerType::Individual],
+    'Device' => [Device::class, DeviceType::Other],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass, BackedEnum $type) {
