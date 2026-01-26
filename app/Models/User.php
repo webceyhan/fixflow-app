@@ -9,6 +9,7 @@ use App\Models\Concerns\HasStatus;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -74,6 +75,14 @@ class User extends Authenticatable implements MustVerifyEmail
     // ATTRIBUTES //////////////////////////////////////////////////////////////////////////////////
 
     // RELATIONSHIPS ///////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Get the tickets assigned to the user.
+     */
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assignee_id');
+    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

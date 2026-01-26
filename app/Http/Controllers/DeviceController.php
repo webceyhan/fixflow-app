@@ -61,7 +61,7 @@ class DeviceController extends Controller
      */
     public function show(Device $device): Response
     {
-        $device->load('customer');
+        $device->load(['customer', 'tickets']);
 
         return Inertia::render('devices/Show', [
             'device' => $device,

@@ -42,3 +42,12 @@ export const DEVICE_STATUS = {
     Ready: 'ready',
     Delivered: 'delivered',
 } as const;
+
+export const TICKET_STATUS = {
+    Created: 'created',
+    InProgress: 'in_progress',
+    OnHold: 'on_hold',
+    Resolved: 'resolved',
+    Closed: 'closed',
+    Cancelled: 'cancelled',
+} as const;

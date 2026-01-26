@@ -4,7 +4,9 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasStatus;
+use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -49,11 +51,25 @@ testModelStructure(
         'two_factor_confirmed_at' => 'datetime',
     ],
     relations: [
-        // TODO
+        'assignedTickets' => HasMany::class,
     ]
 );
 
 // RELATION TESTS //////////////////////////////////////////////////////////////////////////////////
+
+it('has many assigned tickets relationship', function () {
+    // Arrange
+    $user = User::factory()->create();
+    Ticket::factory()->count(2)->create(['assignee_id' => $user->id]);
+
+    $otherUser = User::factory()->create();
+    Ticket::factory()->create(['assignee_id' => $otherUser->id]); // Not this user's ticket
+
+    // Assert
+    expect($user->assignedTickets)->toHaveCount(2);
+    expect($user->assignedTickets->first())->toBeInstanceOf(Ticket::class);
+    expect($user->assignedTickets->first()->assignee_id)->toBe($user->id);
+});
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////
 

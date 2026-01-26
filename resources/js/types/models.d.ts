@@ -3,6 +3,8 @@ import type {
     CustomerType,
     DeviceStatus,
     DeviceType,
+    Priority,
+    TicketStatus,
     UserRole,
     UserStatus,
 } from './enums';
@@ -23,6 +25,7 @@ export interface User extends Model {
     email_verified_at?: string;
     two_factor_confirmed_at?: string;
     notifications?: DatabaseNotification[];
+    assigned_tickets?: Ticket[];
 }
 
 export interface Customer extends Model {
@@ -36,6 +39,7 @@ export interface Customer extends Model {
     type: CustomerType;
     status: CustomerStatus;
     devices?: Device[];
+    tickets?: Ticket[];
 }
 
 export interface Device extends Model {
@@ -52,4 +56,18 @@ export interface Device extends Model {
     type: DeviceType;
     status: DeviceStatus;
     customer?: Customer;
+    tickets?: Ticket[];
+}
+
+export interface Ticket extends Model {
+    device_id: number;
+    assignee_id?: number;
+    title: string;
+    note?: string;
+    priority: Priority;
+    status: TicketStatus;
+    due_date?: string;
+    device?: Device;
+    customer?: Customer;
+    assignee?: User;
 }

@@ -8,7 +8,9 @@ use App\Models\Concerns\HasType;
 use App\Models\Concerns\HasWarranty;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -52,6 +54,7 @@ testModelStructure(
     ],
     relations: [
         'customer' => BelongsTo::class,
+        'tickets' => HasMany::class,
     ]
 );
 
@@ -65,6 +68,21 @@ it('belongs to customer relationship', function () {
     // Assert
     expect($device->customer)->toBeInstanceOf(Customer::class);
     expect($device->customer->id)->toBe($customer->id);
+});
+
+it('has many tickets relationship', function () {
+    // Arrange
+    $customer = Customer::factory()->create();
+    $device = Device::factory()->forCustomer($customer)->create();
+    Ticket::factory()->count(3)->forDevice($device)->create();
+
+    $otherDevice = Device::factory()->forCustomer($customer)->create();
+    Ticket::factory()->forDevice($otherDevice)->create(); // Not this device's ticket
+
+    // Assert
+    expect($device->tickets)->toHaveCount(3);
+    expect($device->tickets->first())->toBeInstanceOf(Ticket::class);
+    expect($device->tickets->first()->device_id)->toBe($device->id);
 });
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////

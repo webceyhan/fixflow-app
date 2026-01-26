@@ -1,3 +1,4 @@
+export { default as AssigneeFilter } from './AssigneeFilter.vue';
 export { default as DateRangeFilter } from './DateRangeFilter.vue';
 export { default as FilterGroup } from './FilterGroup.vue';
 export { default as MultiSelectFilter } from './MultiSelectFilter.vue';

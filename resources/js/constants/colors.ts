@@ -4,6 +4,7 @@ import type {
     DeviceStatus,
     Priority,
     StateColor,
+    TicketStatus,
     UserStatus,
 } from '@/types';
 
@@ -35,4 +36,13 @@ export const DEVICE_STATUS_COLOR_MAP: Record<DeviceStatus, StateColor> = {
     in_service: 'info',
     ready: 'success',
     delivered: 'neutral',
+};
+
+export const TICKET_STATUS_COLOR_MAP: Record<TicketStatus, StateColor> = {
+    created: 'neutral',
+    in_progress: 'info',
+    on_hold: 'warning',
+    resolved: 'success',
+    closed: 'neutral',
+    cancelled: 'error',
 };

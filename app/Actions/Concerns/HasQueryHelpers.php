@@ -3,6 +3,7 @@
 namespace App\Actions\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;
 
@@ -36,6 +37,20 @@ trait HasQueryHelpers
     {
         return AllowedFilter::callback('search', function ($query, $value) use ($columns): void {
             $query->whereAny($columns, 'like', "%{$value}%");
+        });
+    }
+
+    /**
+     * Create an assignee filter for models with an assignee.
+     */
+    protected function assigneeFilter(): AllowedFilter
+    {
+        return AllowedFilter::callback('assignee', function ($query, $value) {
+            match ($value) {
+                'me' => $query->where('assignee_id', Auth::id()),
+                'others' => $query->assigned()->where('assignee_id', '!=', Auth::id()),
+                'none' => $query->unassigned(),
+            };
         });
     }
 

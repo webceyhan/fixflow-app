@@ -15,6 +15,7 @@ export {
     LogOut as LogOutIcon,
     Folder as RepositoryIcon,
     Settings as SettingsIcon,
+    Ticket as TicketIcon,
     Users as UserIcon,
 } from 'lucide-vue-next';
 

@@ -17,3 +17,11 @@ export type DeviceType =
     | 'other';
 
 export type DeviceStatus = 'received' | 'in_service' | 'ready' | 'delivered';
+
+export type TicketStatus =
+    | 'created'
+    | 'in_progress'
+    | 'on_hold'
+    | 'resolved'
+    | 'closed'
+    | 'cancelled';
