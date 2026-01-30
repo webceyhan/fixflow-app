@@ -2,6 +2,7 @@ import type {
     CustomerStatus,
     CustomerType,
     DeviceStatus,
+    OrderStatus,
     Priority,
     StateColor,
     TaskStatus,
@@ -51,5 +52,12 @@ export const TICKET_STATUS_COLOR_MAP: Record<TicketStatus, StateColor> = {
 export const TASK_STATUS_COLOR_MAP: Record<TaskStatus, StateColor> = {
     created: 'neutral',
     completed: 'success',
+    cancelled: 'error',
+};
+
+export const ORDER_STATUS_COLOR_MAP: Record<OrderStatus, StateColor> = {
+    created: 'neutral',
+    shipped: 'info',
+    received: 'success',
     cancelled: 'error',
 };

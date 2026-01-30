@@ -9,6 +9,7 @@ use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -92,6 +93,20 @@ it('has many tasks relationship', function () {
     expect($ticket->tasks)->toHaveCount(3);
     expect($ticket->tasks->first())->toBeInstanceOf(Task::class);
     expect($ticket->tasks->first()->ticket_id)->toBe($ticket->id);
+});
+
+it('has many orders relationship', function () {
+    // Arrange
+    $ticket = Ticket::factory()->create();
+    Order::factory()->count(3)->forTicket($ticket)->create();
+
+    $otherTicket = Ticket::factory()->create();
+    Order::factory()->forTicket($otherTicket)->create(); // Not this ticket's order
+
+    // Assert
+    expect($ticket->orders)->toHaveCount(3);
+    expect($ticket->orders->first())->toBeInstanceOf(Order::class);
+    expect($ticket->orders->first()->ticket_id)->toBe($ticket->id);
 });
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////

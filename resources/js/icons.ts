@@ -20,6 +20,7 @@ export {
     HardDrive as DeviceIcon,
     BookOpen as DocumentationIcon,
     LogOut as LogOutIcon,
+    Package as OrderIcon,
     Folder as RepositoryIcon,
     Settings as SettingsIcon,
     ClipboardList as TaskIcon,

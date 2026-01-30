@@ -3,6 +3,7 @@ import {
     DashboardIcon,
     DeviceIcon,
     DocumentationIcon,
+    OrderIcon,
     RepositoryIcon,
     TaskIcon,
     TicketIcon,
@@ -11,6 +12,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as customers } from '@/routes/customers';
 import { index as devices } from '@/routes/devices';
+import { index as orders } from '@/routes/orders';
 import { index as tasks } from '@/routes/tasks';
 import { index as tickets } from '@/routes/tickets';
 import { index as users } from '@/routes/users';
@@ -46,6 +48,11 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
         title: 'Tasks',
         href: tasks(),
         icon: TaskIcon,
+    },
+    {
+        title: 'Orders',
+        href: orders(),
+        icon: OrderIcon,
     },
 ] as const;
 

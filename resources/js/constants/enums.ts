@@ -69,3 +69,10 @@ export const TASK_TYPE = {
     Cleaning: 'cleaning',
     Other: 'other',
 } as const;
+
+export const ORDER_STATUS = {
+    Created: 'created',
+    Shipped: 'shipped',
+    Received: 'received',
+    Cancelled: 'cancelled',
+} as const;

@@ -92,6 +92,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Task::class, 'assignee_id');
     }
 
+    /**
+     * Get the orders assigned to the user.
+     */
+    public function assignedOrders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'assignee_id');
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**

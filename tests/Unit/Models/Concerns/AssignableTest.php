@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
@@ -10,6 +11,7 @@ uses(RefreshDatabase::class);
 dataset('assignableModels', [
     'Ticket' => [Ticket::class],
     'Task' => [Task::class],
+    'Order' => [Order::class],
 ]);
 
 it('can determine if model is assigned', function (string $modelClass) {

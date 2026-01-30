@@ -2,11 +2,13 @@
 
 use App\Enums\CustomerStatus;
 use App\Enums\DeviceStatus;
+use App\Enums\OrderStatus;
 use App\Enums\TaskStatus;
 use App\Enums\TicketStatus;
 use App\Enums\UserStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
@@ -20,6 +22,7 @@ dataset('models', [
     'Device' => [Device::class, DeviceStatus::Received],
     'Ticket' => [Ticket::class, TicketStatus::Created],
     'Task' => [Task::class, TaskStatus::Created],
+    'Order' => [Order::class, OrderStatus::Created],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass, BackedEnum $status) {

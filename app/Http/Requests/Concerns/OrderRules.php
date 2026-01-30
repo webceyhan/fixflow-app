@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Requests\Concerns;
+
+use App\Models\Order;
+
+trait OrderRules
+{
+    use AssigneeRules, DueDateRules, NoteRules, StatusRules;
+
+    /**
+     * Get the model class to use for validation.
+     *
+     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     */
+    protected function getModelClass(): string
+    {
+        return Order::class;
+    }
+
+    /**
+     * Get all validation rules for order management.
+     *
+     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     */
+    protected function orderRules(?int $orderId = null): array
+    {
+        return [
+            'assignee_id' => $this->assigneeIdRules(),
+            'name' => $this->nameRules(),
+            'url' => $this->urlRules(),
+            'supplier' => $this->supplierRules(),
+            'quantity' => $this->quantityRules(),
+            'cost' => $this->costRules(),
+            'is_billable' => $this->isBillableRules(),
+            'due_date' => $this->dueDateRules(),
+            'note' => $this->noteRules(),
+            'status' => $this->statusRules($orderId !== null),
+            'approved_at' => $this->approvedAtRules(),
+        ];
+    }
+
+    /**
+     * Get the validation rules used to validate order name.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function nameRules(): array
+    {
+        return ['required', 'string', 'max:255'];
+    }
+
+    /**
+     * Get the validation rules used to validate order url.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function urlRules(): array
+    {
+        return ['nullable', 'url', 'max:255'];
+    }
+
+    /**
+     * Get the validation rules used to validate order supplier.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function supplierRules(): array
+    {
+        return ['nullable', 'string', 'max:255'];
+    }
+
+    /**
+     * Get the validation rules used to validate order quantity.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function quantityRules(): array
+    {
+        return ['required', 'integer', 'min:1'];
+    }
+
+    /**
+     * Get the validation rules used to validate order cost.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function costRules(): array
+    {
+        return ['required', 'numeric', 'min:0'];
+    }
+
+    /**
+     * Get the validation rules used to validate order billable flag.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function isBillableRules(): array
+    {
+        return ['required', 'boolean'];
+    }
+
+    /**
+     * Get the validation rules used to validate order approval date.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function approvedAtRules(): array
+    {
+        return ['nullable', 'date'];
+    }
+}

@@ -4,6 +4,7 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasStatus;
+use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
@@ -85,6 +86,20 @@ it('has many assigned tasks relationship', function () {
     expect($user->assignedTasks)->toHaveCount(3);
     expect($user->assignedTasks->first())->toBeInstanceOf(Task::class);
     expect($user->assignedTasks->first()->assignee_id)->toBe($user->id);
+});
+
+it('has many assigned orders relationship', function () {
+    // Arrange
+    $user = User::factory()->create();
+    Order::factory()->count(3)->create(['assignee_id' => $user->id]);
+
+    $otherUser = User::factory()->create();
+    Order::factory()->create(['assignee_id' => $otherUser->id]); // Not this user's order
+
+    // Assert
+    expect($user->assignedOrders)->toHaveCount(3);
+    expect($user->assignedOrders->first())->toBeInstanceOf(Order::class);
+    expect($user->assignedOrders->first()->assignee_id)->toBe($user->id);
 });
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////

@@ -38,3 +38,5 @@ export type TaskType =
     | 'maintenance'
     | 'cleaning'
     | 'other';
+
+export type OrderStatus = 'created' | 'shipped' | 'received' | 'cancelled';

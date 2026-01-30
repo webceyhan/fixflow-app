@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -7,6 +8,7 @@ uses(RefreshDatabase::class);
 
 dataset('approvableModels', [
     'Task' => [Task::class],
+    'Order' => [Order::class],
 ]);
 
 it('can determine if model is approved', function (string $modelClass) {

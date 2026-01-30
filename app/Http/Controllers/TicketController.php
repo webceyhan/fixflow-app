@@ -63,7 +63,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket): Response
     {
-        $ticket->load(['device', 'customer', 'assignee', 'tasks']);
+        $ticket->load(['device', 'customer', 'assignee', 'tasks', 'orders']);
 
         return Inertia::render('tickets/Show', [
             'ticket' => $ticket,

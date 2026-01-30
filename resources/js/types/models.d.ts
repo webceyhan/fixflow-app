@@ -3,6 +3,7 @@ import type {
     CustomerType,
     DeviceStatus,
     DeviceType,
+    OrderStatus,
     Priority,
     TaskStatus,
     TaskType,
@@ -29,6 +30,7 @@ export interface User extends Model {
     notifications?: DatabaseNotification[];
     assigned_tickets?: Ticket[];
     assigned_tasks?: Task[];
+    assigned_orders?: Order[];
 }
 
 export interface Customer extends Model {
@@ -74,6 +76,7 @@ export interface Ticket extends Model {
     customer?: Customer;
     assignee?: User;
     tasks?: Task[];
+    orders?: Order[];
 }
 
 export interface Task extends Model {
@@ -85,6 +88,23 @@ export interface Task extends Model {
     priority: Priority;
     type: TaskType;
     status: TaskStatus;
+    approved_at?: string;
+    ticket?: Ticket;
+    assignee?: User;
+}
+
+export interface Order extends Model {
+    ticket_id: number;
+    assignee_id?: number;
+    name: string;
+    url?: string;
+    supplier?: string;
+    quantity: number;
+    cost: number;
+    is_billable: boolean;
+    note?: string;
+    due_date?: string;
+    status: OrderStatus;
     approved_at?: string;
     ticket?: Ticket;
     assignee?: User;
