@@ -84,6 +84,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Ticket::class, 'assignee_id');
     }
 
+    /**
+     * Get the tasks assigned to the user.
+     */
+    public function assignedTasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'assignee_id');
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**

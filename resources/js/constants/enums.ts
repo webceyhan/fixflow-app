@@ -51,3 +51,21 @@ export const TICKET_STATUS = {
     Closed: 'closed',
     Cancelled: 'cancelled',
 } as const;
+
+export const TASK_STATUS = {
+    Created: 'created',
+    Completed: 'completed',
+    Cancelled: 'cancelled',
+} as const;
+
+export const TASK_TYPE = {
+    Repair: 'repair',
+    Diagnosis: 'diagnosis',
+    Testing: 'testing',
+    Calibration: 'calibration',
+    Installation: 'installation',
+    Upgrade: 'upgrade',
+    Maintenance: 'maintenance',
+    Cleaning: 'cleaning',
+    Other: 'other',
+} as const;

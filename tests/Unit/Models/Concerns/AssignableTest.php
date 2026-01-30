@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,6 +9,7 @@ uses(RefreshDatabase::class);
 
 dataset('assignableModels', [
     'Ticket' => [Ticket::class],
+    'Task' => [Task::class],
 ]);
 
 it('can determine if model is assigned', function (string $modelClass) {

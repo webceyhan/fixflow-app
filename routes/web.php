@@ -19,3 +19,4 @@ require __DIR__.'/users.php';
 require __DIR__.'/customers.php';
 require __DIR__.'/devices.php';
 require __DIR__.'/tickets.php';
+require __DIR__.'/tasks.php';

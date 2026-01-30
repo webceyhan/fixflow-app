@@ -25,3 +25,16 @@ export type TicketStatus =
     | 'resolved'
     | 'closed'
     | 'cancelled';
+
+export type TaskStatus = 'created' | 'completed' | 'cancelled';
+
+export type TaskType =
+    | 'repair'
+    | 'diagnosis'
+    | 'testing'
+    | 'calibration'
+    | 'installation'
+    | 'upgrade'
+    | 'maintenance'
+    | 'cleaning'
+    | 'other';

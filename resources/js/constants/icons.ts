@@ -3,23 +3,33 @@ import type {
     DeviceType,
     Icon,
     Priority,
+    TaskType,
     UserRole,
 } from '@/types';
 import {
+    Activity,
+    BrushCleaning,
     Building2,
     ChevronsDown,
     ChevronsRight,
     ChevronsUp,
+    CircleGauge,
+    ClipboardList,
     Computer,
+    FlaskConical,
     HardDrive,
+    HardDriveDownload,
+    HardDriveUpload,
     IdCard,
     Laptop,
+    ShieldCheck,
     ShieldUser,
     Smartphone,
     Tablet,
     UserCog,
     UserPen,
     Watch,
+    Wrench,
 } from 'lucide-vue-next';
 
 export const PRIORITY_ICON_MAP: Record<Priority, Icon> = {
@@ -46,4 +56,16 @@ export const DEVICE_TYPE_ICON_MAP: Record<DeviceType, Icon> = {
     desktop: Computer,
     wearable: Watch,
     other: HardDrive,
+};
+
+export const TASK_TYPE_ICON_MAP: Record<TaskType, Icon> = {
+    repair: Wrench,
+    diagnosis: Activity,
+    testing: FlaskConical,
+    cleaning: BrushCleaning,
+    maintenance: ShieldCheck,
+    upgrade: HardDriveUpload,
+    calibration: CircleGauge,
+    installation: HardDriveDownload,
+    other: ClipboardList,
 };

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Priority;
+use App\Models\Task;
 use App\Models\Ticket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -8,6 +9,7 @@ uses(RefreshDatabase::class);
 
 dataset('models', [
     'Ticket' => [Ticket::class, Priority::Medium],
+    'Task' => [Task::class, Priority::Medium],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass, BackedEnum $priority) {

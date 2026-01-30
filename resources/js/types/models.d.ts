@@ -4,6 +4,8 @@ import type {
     DeviceStatus,
     DeviceType,
     Priority,
+    TaskStatus,
+    TaskType,
     TicketStatus,
     UserRole,
     UserStatus,
@@ -26,6 +28,7 @@ export interface User extends Model {
     two_factor_confirmed_at?: string;
     notifications?: DatabaseNotification[];
     assigned_tickets?: Ticket[];
+    assigned_tasks?: Task[];
 }
 
 export interface Customer extends Model {
@@ -69,5 +72,20 @@ export interface Ticket extends Model {
     due_date?: string;
     device?: Device;
     customer?: Customer;
+    assignee?: User;
+    tasks?: Task[];
+}
+
+export interface Task extends Model {
+    ticket_id: number;
+    assignee_id?: number;
+    cost: number;
+    is_billable: boolean;
+    note?: string;
+    priority: Priority;
+    type: TaskType;
+    status: TaskStatus;
+    approved_at?: string;
+    ticket?: Ticket;
     assignee?: User;
 }

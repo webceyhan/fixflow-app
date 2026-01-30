@@ -12,6 +12,7 @@ use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Ticket extends Model
@@ -70,6 +71,14 @@ class Ticket extends Model
     public function customer(): HasOneThrough
     {
         return $this->hasOneThrough(Customer::class, Device::class, 'id', 'id', 'device_id', 'customer_id');
+    }
+
+    /**
+     * Get the tasks for the ticket.
+     */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////

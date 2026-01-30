@@ -2,10 +2,12 @@
 
 use App\Enums\CustomerStatus;
 use App\Enums\DeviceStatus;
+use App\Enums\TaskStatus;
 use App\Enums\TicketStatus;
 use App\Enums\UserStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,6 +19,7 @@ dataset('hasActiveStatusModels', [
     'Customer' => [Customer::class, CustomerStatus::class],
     'Device' => [Device::class, DeviceStatus::class],
     'Ticket' => [Ticket::class, TicketStatus::class],
+    'Task' => [Task::class, TaskStatus::class],
 ]);
 
 it('can determine if model is active', function (string $modelClass, string $enumClass) {

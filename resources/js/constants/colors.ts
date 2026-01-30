@@ -4,6 +4,7 @@ import type {
     DeviceStatus,
     Priority,
     StateColor,
+    TaskStatus,
     TicketStatus,
     UserStatus,
 } from '@/types';
@@ -44,5 +45,11 @@ export const TICKET_STATUS_COLOR_MAP: Record<TicketStatus, StateColor> = {
     on_hold: 'warning',
     resolved: 'success',
     closed: 'neutral',
+    cancelled: 'error',
+};
+
+export const TASK_STATUS_COLOR_MAP: Record<TaskStatus, StateColor> = {
+    created: 'neutral',
+    completed: 'success',
     cancelled: 'error',
 };

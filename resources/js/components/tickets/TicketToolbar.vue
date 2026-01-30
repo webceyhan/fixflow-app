@@ -2,12 +2,14 @@
 import {
     AssignAction,
     ChangeAction,
+    CreateAction,
     DeleteAction,
     EditAction,
 } from '@/components/action';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { TICKET_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
+import { create as createTask } from '@/routes/tasks';
 import { destroy, edit, update } from '@/routes/tickets';
 import type { Ticket } from '@/types';
 
@@ -36,6 +38,10 @@ defineProps<Props>();
                 :href="update(ticket)"
                 :options="toOptions(TICKET_STATUS)"
             />
+        </ButtonGroup>
+
+        <ButtonGroup>
+            <CreateAction :href="createTask(ticket)"> New Task </CreateAction>
         </ButtonGroup>
     </ButtonGroup>
 </template>

@@ -4,6 +4,7 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasStatus;
+use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -52,6 +53,7 @@ testModelStructure(
     ],
     relations: [
         'assignedTickets' => HasMany::class,
+        'assignedTasks' => HasMany::class,
     ]
 );
 
@@ -69,6 +71,20 @@ it('has many assigned tickets relationship', function () {
     expect($user->assignedTickets)->toHaveCount(2);
     expect($user->assignedTickets->first())->toBeInstanceOf(Ticket::class);
     expect($user->assignedTickets->first()->assignee_id)->toBe($user->id);
+});
+
+it('has many assigned tasks relationship', function () {
+    // Arrange
+    $user = User::factory()->create();
+    Task::factory()->count(3)->create(['assignee_id' => $user->id]);
+
+    $otherUser = User::factory()->create();
+    Task::factory()->create(['assignee_id' => $otherUser->id]); // Not this user's task
+
+    // Assert
+    expect($user->assignedTasks)->toHaveCount(3);
+    expect($user->assignedTasks->first())->toBeInstanceOf(Task::class);
+    expect($user->assignedTasks->first()->assignee_id)->toBe($user->id);
 });
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////

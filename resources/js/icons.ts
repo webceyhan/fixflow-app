@@ -2,9 +2,16 @@ import {
     CUSTOMER_TYPE_ICON_MAP,
     DEVICE_TYPE_ICON_MAP,
     PRIORITY_ICON_MAP,
+    TASK_TYPE_ICON_MAP,
     USER_ROLE_ICON_MAP,
 } from '@/constants';
-import type { CustomerType, DeviceType, Priority, UserRole } from '@/types';
+import type {
+    CustomerType,
+    DeviceType,
+    Priority,
+    TaskType,
+    UserRole,
+} from '@/types';
 import { h } from 'vue';
 
 export {
@@ -15,6 +22,7 @@ export {
     LogOut as LogOutIcon,
     Folder as RepositoryIcon,
     Settings as SettingsIcon,
+    ClipboardList as TaskIcon,
     Ticket as TicketIcon,
     Users as UserIcon,
 } from 'lucide-vue-next';
@@ -30,3 +38,6 @@ export const CustomerTypeIcon = ({ value }: { value: CustomerType }) =>
 
 export const DeviceTypeIcon = ({ value }: { value: DeviceType }) =>
     h(DEVICE_TYPE_ICON_MAP[value]);
+
+export const TaskTypeIcon = ({ value }: { value: TaskType }) =>
+    h(TASK_TYPE_ICON_MAP[value]);

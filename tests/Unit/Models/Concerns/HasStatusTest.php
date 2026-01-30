@@ -2,10 +2,12 @@
 
 use App\Enums\CustomerStatus;
 use App\Enums\DeviceStatus;
+use App\Enums\TaskStatus;
 use App\Enums\TicketStatus;
 use App\Enums\UserStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,6 +19,7 @@ dataset('models', [
     'Customer' => [Customer::class, CustomerStatus::Active],
     'Device' => [Device::class, DeviceStatus::Received],
     'Ticket' => [Ticket::class, TicketStatus::Created],
+    'Task' => [Task::class, TaskStatus::Created],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass, BackedEnum $status) {
