@@ -3,9 +3,11 @@
 use App\Enums\CustomerType;
 use App\Enums\DeviceType;
 use App\Enums\TaskType;
+use App\Enums\TransactionType;
 use App\Models\Customer;
 use App\Models\Device;
 use App\Models\Task;
+use App\Models\Transaction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -14,6 +16,7 @@ dataset('models', [
     'Customer' => [Customer::class, CustomerType::Individual],
     'Device' => [Device::class, DeviceType::Other],
     'Task' => [Task::class, TaskType::Repair],
+    'Transaction' => [Transaction::class, TransactionType::Payment],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass, BackedEnum $type) {

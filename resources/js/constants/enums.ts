@@ -85,3 +85,15 @@ export const INVOICE_STATUS = {
     Refunded: 'refunded',
     Cancelled: 'cancelled',
 } as const;
+
+export const TRANSACTION_METHOD = {
+    Cash: 'cash',
+    Card: 'card',
+    Online: 'online',
+} as const;
+
+export const TRANSACTION_TYPE = {
+    Deposit: 'deposit',
+    Payment: 'payment',
+    Refund: 'refund',
+} as const;

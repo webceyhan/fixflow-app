@@ -32,7 +32,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice): Response
     {
-        $invoice->load(['ticket', 'ticket.device', 'ticket.customer']);
+        $invoice->load(['ticket', 'ticket.device', 'ticket.customer', 'transactions']);
 
         return Inertia::render('invoices/Show', [
             'invoice' => $invoice,

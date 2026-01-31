@@ -4,10 +4,14 @@ import type {
     Icon,
     Priority,
     TaskType,
+    TransactionMethod,
+    TransactionType,
     UserRole,
 } from '@/types';
 import {
     Activity,
+    ArrowRightLeft,
+    Banknote,
     BrushCleaning,
     Building2,
     ChevronsDown,
@@ -16,11 +20,15 @@ import {
     CircleGauge,
     ClipboardList,
     Computer,
+    CreditCard,
     FlaskConical,
+    Globe,
+    HandCoins,
     HardDrive,
     HardDriveDownload,
     HardDriveUpload,
     IdCard,
+    IterationCw,
     Laptop,
     ShieldCheck,
     ShieldUser,
@@ -68,4 +76,16 @@ export const TASK_TYPE_ICON_MAP: Record<TaskType, Icon> = {
     calibration: CircleGauge,
     installation: HardDriveDownload,
     other: ClipboardList,
+};
+
+export const TRANSACTION_TYPE_ICON_MAP: Record<TransactionType, Icon> = {
+    deposit: HandCoins,
+    payment: ArrowRightLeft,
+    refund: IterationCw,
+};
+
+export const TRANSACTION_METHOD_ICON_MAP: Record<TransactionMethod, Icon> = {
+    cash: Banknote,
+    card: CreditCard,
+    online: Globe,
 };

@@ -9,6 +9,8 @@ import type {
     TaskStatus,
     TaskType,
     TicketStatus,
+    TransactionMethod,
+    TransactionType,
     UserRole,
     UserStatus,
 } from './enums';
@@ -125,4 +127,14 @@ export interface Invoice extends Model {
     note?: string;
     status: InvoiceStatus;
     ticket?: Ticket;
+    transactions?: Transaction[];
+}
+
+export interface Transaction extends Model {
+    invoice_id: number;
+    amount: number;
+    note?: string;
+    method: TransactionMethod;
+    type: TransactionType;
+    invoice?: Invoice;
 }

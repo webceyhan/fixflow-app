@@ -48,3 +48,7 @@ export type InvoiceStatus =
     | 'paid'
     | 'refunded'
     | 'cancelled';
+
+export type TransactionMethod = 'cash' | 'card' | 'online';
+
+export type TransactionType = 'deposit' | 'payment' | 'refund';

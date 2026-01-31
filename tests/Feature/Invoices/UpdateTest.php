@@ -36,7 +36,7 @@ it('validates required fields on update', function () {
     ]);
 
     // Assert
-    $response->assertSessionHasErrors(['total', 'discount_amount', 'fee_amount', 'paid_amount', 'refunded_amount', 'status']);
+    $response->assertSessionHasErrors(['total', 'discount_amount', 'fee_amount', 'status']);
 });
 
 it('validates amount fields are numeric and non-negative', function () {
@@ -49,8 +49,6 @@ it('validates amount fields are numeric and non-negative', function () {
         'total' => -100,
         'discount_amount' => 'invalid',
         'fee_amount' => 0,
-        'paid_amount' => 0,
-        'refunded_amount' => 0,
         'due_date' => now()->toDateString(),
         'status' => InvoiceStatus::Draft->value,
     ]);
@@ -70,8 +68,6 @@ it('does not allow changing ticket_id', function () {
         'total' => 500,
         'discount_amount' => 0,
         'fee_amount' => 0,
-        'paid_amount' => 0,
-        'refunded_amount' => 0,
         'due_date' => now()->addDays(30)->toDateString(),
         'status' => InvoiceStatus::Issued->value,
     ]);
@@ -94,8 +90,6 @@ it('does not allow changing task_total or order_total', function () {
         'total' => 500,
         'discount_amount' => 0,
         'fee_amount' => 0,
-        'paid_amount' => 0,
-        'refunded_amount' => 0,
         'due_date' => now()->addDays(30)->toDateString(),
         'status' => InvoiceStatus::Issued->value,
         'task_total' => 999, // Attempt to change
@@ -116,8 +110,6 @@ it('updates an invoice successfully with all editable fields', function () {
         'total' => 100,
         'discount_amount' => 0,
         'fee_amount' => 0,
-        'paid_amount' => 0,
-        'refunded_amount' => 0,
         'status' => InvoiceStatus::Draft,
         'note' => 'Original note',
     ]);
@@ -127,8 +119,6 @@ it('updates an invoice successfully with all editable fields', function () {
         'total' => 500.50,
         'discount_amount' => 25.00,
         'fee_amount' => 10.00,
-        'paid_amount' => 300.00,
-        'refunded_amount' => 50.00,
         'due_date' => now()->addDays(15)->toDateString(),
         'status' => InvoiceStatus::Paid->value,
         'note' => 'Updated payment note',
@@ -140,8 +130,6 @@ it('updates an invoice successfully with all editable fields', function () {
         ->total->toBe(500.50)
         ->discount_amount->toBe(25.00)
         ->fee_amount->toBe(10.00)
-        ->paid_amount->toBe(300.00)
-        ->refunded_amount->toBe(50.00)
         ->status->toBe(InvoiceStatus::Paid)
         ->note->toBe('Updated payment note');
 });
@@ -157,8 +145,6 @@ it('allows updating status to all valid statuses', function () {
             'total' => $invoice->total,
             'discount_amount' => $invoice->discount_amount,
             'fee_amount' => $invoice->fee_amount,
-            'paid_amount' => $invoice->paid_amount,
-            'refunded_amount' => $invoice->refunded_amount,
             'due_date' => $invoice->due_date,
             'status' => $status->value,
         ]);
@@ -178,8 +164,6 @@ it('allows nullable note field', function () {
         'total' => $invoice->total,
         'discount_amount' => $invoice->discount_amount,
         'fee_amount' => $invoice->fee_amount,
-        'paid_amount' => $invoice->paid_amount,
-        'refunded_amount' => $invoice->refunded_amount,
         'due_date' => $invoice->due_date,
         'status' => $invoice->status->value,
         'note' => null,

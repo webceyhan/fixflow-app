@@ -40,8 +40,6 @@ const { errors, form, processing } = useSaveForm({
         total: invoice.total ?? 0,
         discount_amount: invoice.discount_amount ?? 0,
         fee_amount: invoice.fee_amount ?? 0,
-        paid_amount: invoice.paid_amount ?? 0,
-        refunded_amount: invoice.refunded_amount ?? 0,
         due_date: toIsoDate(invoice.due_date) ?? '',
         status: invoice.status,
         note: invoice.note ?? '',
@@ -96,32 +94,6 @@ const { errors, form, processing } = useSaveForm({
                             v-model="form.fee_amount"
                         />
                         <FieldError :message="errors.fee_amount" />
-                    </Field>
-
-                    <Field>
-                        <FieldLabel for="paid_amount">Paid</FieldLabel>
-                        <Input
-                            id="paid_amount"
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            placeholder="0.00"
-                            v-model="form.paid_amount"
-                        />
-                        <FieldError :message="errors.paid_amount" />
-                    </Field>
-
-                    <Field>
-                        <FieldLabel for="refunded_amount">Refunded</FieldLabel>
-                        <Input
-                            id="refunded_amount"
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            placeholder="0.00"
-                            v-model="form.refunded_amount"
-                        />
-                        <FieldError :message="errors.refunded_amount" />
                     </Field>
                 </FieldGroup>
             </FieldSet>

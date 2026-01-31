@@ -6,7 +6,9 @@ use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasStatus;
 use App\Models\Invoice;
 use App\Models\Ticket;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -59,6 +61,7 @@ testModelStructure(
     ],
     relations: [
         'ticket' => BelongsTo::class,
+        'transactions' => HasMany::class,
     ]
 );
 
@@ -72,6 +75,16 @@ it('belongs to ticket relationship', function () {
     // Assert
     expect($invoice->ticket)->toBeInstanceOf(Ticket::class);
     expect($invoice->ticket->id)->toBe($ticket->id);
+});
+
+it('has many transactions relationship', function () {
+    // Arrange
+    $invoice = Invoice::factory()->create();
+    Transaction::factory()->count(3)->forInvoice($invoice)->create();
+
+    // Assert
+    expect($invoice->transactions)->toHaveCount(3);
+    expect($invoice->transactions->first())->toBeInstanceOf(Transaction::class);
 });
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////

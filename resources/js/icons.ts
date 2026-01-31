@@ -3,6 +3,8 @@ import {
     DEVICE_TYPE_ICON_MAP,
     PRIORITY_ICON_MAP,
     TASK_TYPE_ICON_MAP,
+    TRANSACTION_METHOD_ICON_MAP,
+    TRANSACTION_TYPE_ICON_MAP,
     USER_ROLE_ICON_MAP,
 } from '@/constants';
 import type {
@@ -10,6 +12,8 @@ import type {
     DeviceType,
     Priority,
     TaskType,
+    TransactionMethod,
+    TransactionType,
     UserRole,
 } from '@/types';
 import { h } from 'vue';
@@ -26,6 +30,7 @@ export {
     Settings as SettingsIcon,
     ClipboardList as TaskIcon,
     Ticket as TicketIcon,
+    ArrowRightLeft as TransactionIcon,
     Users as UserIcon,
 } from 'lucide-vue-next';
 
@@ -43,3 +48,12 @@ export const DeviceTypeIcon = ({ value }: { value: DeviceType }) =>
 
 export const TaskTypeIcon = ({ value }: { value: TaskType }) =>
     h(TASK_TYPE_ICON_MAP[value]);
+
+export const TransactionTypeIcon = ({ value }: { value: TransactionType }) =>
+    h(TRANSACTION_TYPE_ICON_MAP[value]);
+
+export const TransactionMethodIcon = ({
+    value,
+}: {
+    value: TransactionMethod;
+}) => h(TRANSACTION_METHOD_ICON_MAP[value]);
