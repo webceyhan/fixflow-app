@@ -40,3 +40,11 @@ export type TaskType =
     | 'other';
 
 export type OrderStatus = 'created' | 'shipped' | 'received' | 'cancelled';
+
+export type InvoiceStatus =
+    | 'draft'
+    | 'issued'
+    | 'sent'
+    | 'paid'
+    | 'refunded'
+    | 'cancelled';

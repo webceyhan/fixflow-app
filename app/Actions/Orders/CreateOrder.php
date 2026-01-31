@@ -2,13 +2,18 @@
 
 namespace App\Actions\Orders;
 
+use App\Actions\Invoices\SyncInvoiceOrders;
 use App\Models\Order;
 
 class CreateOrder
 {
+    public function __construct(
+        protected SyncInvoiceOrders $syncInvoiceOrders,
+    ) {}
+
     public function handle(array $data): Order
     {
-        return Order::create([
+        $order = Order::create([
             'ticket_id' => $data['ticket_id'],
             'assignee_id' => $data['assignee_id'] ?? null,
             'name' => $data['name'],
@@ -22,5 +27,10 @@ class CreateOrder
             'status' => $data['status'] ?? null,
             'approved_at' => $data['approved_at'] ?? null,
         ]);
+
+        // Sync order total to invoice
+        $this->syncInvoiceOrders->handle($order->ticket->invoice);
+
+        return $order;
     }
 }

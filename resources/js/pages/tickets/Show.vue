@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CreateAction } from '@/components/action';
 import Heading from '@/components/Heading.vue';
+import InvoiceCard from '@/components/invoices/InvoiceCard.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import OrderList from '@/components/orders/OrderList.vue';
 import TaskList from '@/components/tasks/TaskList.vue';
@@ -70,6 +71,12 @@ const breadcrumbs: NavItem[] = [
                     >
                         Add new order
                     </CreateAction>
+                </section>
+
+                <section class="space-y-2">
+                    <h3>Invoice</h3>
+
+                    <InvoiceCard :invoice="ticket.invoice!" embedded />
                 </section>
             </div>
         </ShowLayout>

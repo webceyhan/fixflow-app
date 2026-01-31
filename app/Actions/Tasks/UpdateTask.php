@@ -2,10 +2,15 @@
 
 namespace App\Actions\Tasks;
 
+use App\Actions\Invoices\SyncInvoiceTasks;
 use App\Models\Task;
 
 class UpdateTask
 {
+    public function __construct(
+        protected SyncInvoiceTasks $syncInvoiceTasks,
+    ) {}
+
     public function handle(Task $task, array $data): Task
     {
         $task->update([
@@ -18,6 +23,9 @@ class UpdateTask
             'status' => $data['status'],
             'approved_at' => $data['approved_at'] ?? null,
         ]);
+
+        // Sync task total to invoice
+        $this->syncInvoiceTasks->handle($task->ticket->invoice);
 
         return $task;
     }

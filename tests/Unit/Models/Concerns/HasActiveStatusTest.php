@@ -2,12 +2,14 @@
 
 use App\Enums\CustomerStatus;
 use App\Enums\DeviceStatus;
+use App\Enums\InvoiceStatus;
 use App\Enums\OrderStatus;
 use App\Enums\TaskStatus;
 use App\Enums\TicketStatus;
 use App\Enums\UserStatus;
 use App\Models\Customer;
 use App\Models\Device;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Task;
 use App\Models\Ticket;
@@ -23,6 +25,7 @@ dataset('hasActiveStatusModels', [
     'Ticket' => [Ticket::class, TicketStatus::class],
     'Task' => [Task::class, TaskStatus::class],
     'Order' => [Order::class, OrderStatus::class],
+    'Invoice' => [Invoice::class, InvoiceStatus::class],
 ]);
 
 it('can determine if model is active', function (string $modelClass, string $enumClass) {

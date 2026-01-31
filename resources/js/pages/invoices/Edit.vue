@@ -1,0 +1,38 @@
+<script setup lang="ts">
+import Heading from '@/components/Heading.vue';
+import InvoiceForm from '@/components/invoices/InvoiceForm.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import EditLayout from '@/layouts/EditLayout.vue';
+import { index, show } from '@/routes/invoices';
+import type { Invoice, NavItem } from '@/types';
+import { computed } from 'vue';
+
+const props = defineProps<{
+    invoice: Invoice;
+}>();
+
+const breadcrumbs = computed<NavItem[]>(() => [
+    {
+        title: 'Invoices',
+        href: index(),
+    },
+    {
+        title: `Invoice #${props.invoice.id}`,
+        href: show(props.invoice),
+    },
+    {
+        title: 'Edit',
+        href: '',
+    },
+]);
+</script>
+
+<template>
+    <AppLayout :breadcrumbs>
+        <Heading :title="`Edit Invoice #${invoice.id}`" />
+
+        <EditLayout>
+            <InvoiceForm :invoice />
+        </EditLayout>
+    </AppLayout>
+</template>

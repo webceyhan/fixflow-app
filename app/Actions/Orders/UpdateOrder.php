@@ -2,10 +2,15 @@
 
 namespace App\Actions\Orders;
 
+use App\Actions\Invoices\SyncInvoiceOrders;
 use App\Models\Order;
 
 class UpdateOrder
 {
+    public function __construct(
+        protected SyncInvoiceOrders $syncInvoiceOrders,
+    ) {}
+
     public function handle(Order $order, array $data): Order
     {
         $order->update([
@@ -21,6 +26,9 @@ class UpdateOrder
             'status' => $data['status'],
             'approved_at' => $data['approved_at'] ?? null,
         ]);
+
+        // Sync order total to invoice
+        $this->syncInvoiceOrders->handle($order->ticket->invoice);
 
         return $order;
     }

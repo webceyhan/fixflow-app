@@ -19,6 +19,7 @@ export {
     LayoutGrid as DashboardIcon,
     HardDrive as DeviceIcon,
     BookOpen as DocumentationIcon,
+    ReceiptText as InvoiceIcon,
     LogOut as LogOutIcon,
     Package as OrderIcon,
     Folder as RepositoryIcon,

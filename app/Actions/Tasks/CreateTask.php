@@ -2,13 +2,18 @@
 
 namespace App\Actions\Tasks;
 
+use App\Actions\Invoices\SyncInvoiceTasks;
 use App\Models\Task;
 
 class CreateTask
 {
+    public function __construct(
+        protected SyncInvoiceTasks $syncInvoiceTasks,
+    ) {}
+
     public function handle(array $data): Task
     {
-        return Task::create([
+        $task = Task::create([
             'ticket_id' => $data['ticket_id'],
             'assignee_id' => $data['assignee_id'] ?? null,
             'cost' => $data['cost'] ?? 0,
@@ -19,5 +24,10 @@ class CreateTask
             'status' => $data['status'] ?? null,
             'approved_at' => $data['approved_at'] ?? null,
         ]);
+
+        // Sync task total to invoice
+        $this->syncInvoiceTasks->handle($task->ticket->invoice);
+
+        return $task;
     }
 }

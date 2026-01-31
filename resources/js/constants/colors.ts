@@ -2,6 +2,7 @@ import type {
     CustomerStatus,
     CustomerType,
     DeviceStatus,
+    InvoiceStatus,
     OrderStatus,
     Priority,
     StateColor,
@@ -59,5 +60,14 @@ export const ORDER_STATUS_COLOR_MAP: Record<OrderStatus, StateColor> = {
     created: 'neutral',
     shipped: 'info',
     received: 'success',
+    cancelled: 'error',
+};
+
+export const INVOICE_STATUS_COLOR_MAP: Record<InvoiceStatus, StateColor> = {
+    draft: 'neutral',
+    issued: 'info',
+    sent: 'warning',
+    paid: 'success',
+    refunded: 'neutral',
     cancelled: 'error',
 };

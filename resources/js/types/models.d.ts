@@ -3,6 +3,7 @@ import type {
     CustomerType,
     DeviceStatus,
     DeviceType,
+    InvoiceStatus,
     OrderStatus,
     Priority,
     TaskStatus,
@@ -77,6 +78,7 @@ export interface Ticket extends Model {
     assignee?: User;
     tasks?: Task[];
     orders?: Order[];
+    invoice?: Invoice;
 }
 
 export interface Task extends Model {
@@ -108,4 +110,19 @@ export interface Order extends Model {
     approved_at?: string;
     ticket?: Ticket;
     assignee?: User;
+}
+
+export interface Invoice extends Model {
+    ticket_id: number;
+    total: number;
+    task_total: number;
+    order_total: number;
+    discount_amount: number;
+    fee_amount: number;
+    paid_amount: number;
+    refunded_amount: number;
+    due_date: string;
+    note?: string;
+    status: InvoiceStatus;
+    ticket?: Ticket;
 }

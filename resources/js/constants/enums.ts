@@ -76,3 +76,12 @@ export const ORDER_STATUS = {
     Received: 'received',
     Cancelled: 'cancelled',
 } as const;
+
+export const INVOICE_STATUS = {
+    Draft: 'draft',
+    Issued: 'issued',
+    Sent: 'sent',
+    Paid: 'paid',
+    Refunded: 'refunded',
+    Cancelled: 'cancelled',
+} as const;

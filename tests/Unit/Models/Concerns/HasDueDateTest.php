@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Ticket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,6 +10,7 @@ uses(RefreshDatabase::class);
 dataset('hasDueDateModels', [
     'Ticket' => [Ticket::class],
     'Order' => [Order::class],
+    'Invoice' => [Invoice::class],
 ]);
 
 it('initializes model properties correctly', function (string $modelClass) {
