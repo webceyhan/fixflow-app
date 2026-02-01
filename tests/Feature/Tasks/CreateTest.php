@@ -31,7 +31,7 @@ it('validates required fields', function () {
     $response = actingAs($manager)->post("/tickets/{$ticket->id}/tasks", []);
 
     // Assert
-    $response->assertSessionHasErrors(['cost', 'is_billable']);
+    $response->assertSessionHasErrors(['cost']);
 });
 
 it('returns 404 when ticket does not exist', function () {

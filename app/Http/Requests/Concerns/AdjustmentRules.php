@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 
 trait AdjustmentRules
 {
-    use AmountRules, NoteRules;
+    use AmountRules, BooleanRules, NoteRules;
 
     /**
      * Get the model class to use for validation.
@@ -29,20 +29,10 @@ trait AdjustmentRules
     {
         return [
             'amount' => $this->amountRules(),
-            'is_percent' => $this->isPercentRules(),
+            'is_percent' => $this->booleanRules(),
             'note' => $this->noteRules(),
             'reason' => $this->reasonRules(required: true),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate is_percent field.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function isPercentRules(): array
-    {
-        return ['sometimes', 'boolean'];
     }
 
     /**

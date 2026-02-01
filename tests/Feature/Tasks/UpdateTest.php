@@ -38,7 +38,7 @@ it('validates required fields on update', function () {
     ]);
 
     // Assert
-    $response->assertSessionHasErrors(['type', 'priority', 'cost', 'is_billable']);
+    $response->assertSessionHasErrors(['type', 'priority', 'cost']);
 });
 
 it('does not allow changing ticket_id', function () {

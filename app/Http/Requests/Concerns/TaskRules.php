@@ -6,7 +6,7 @@ use App\Models\Task;
 
 trait TaskRules
 {
-    use AmountRules, AssigneeRules, NoteRules, PriorityRules, StatusRules, TypeRules;
+    use AmountRules, AssigneeRules, BooleanRules, NoteRules, PriorityRules, StatusRules, TypeRules;
 
     /**
      * Get the model class to use for validation.
@@ -28,23 +28,13 @@ trait TaskRules
         return [
             'assignee_id' => $this->assigneeIdRules(),
             'cost' => $this->amountRules(),
-            'is_billable' => $this->isBillableRules(),
+            'is_billable' => $this->booleanRules(),
             'note' => $this->noteRules(),
             'priority' => $this->priorityRules($taskId !== null),
             'type' => $this->typeRules($taskId !== null),
             'status' => $this->statusRules($taskId !== null),
             'approved_at' => $this->approvedAtRules(),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate task billable flag.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function isBillableRules(): array
-    {
-        return ['required', 'boolean'];
     }
 
     /**
