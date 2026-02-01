@@ -3,6 +3,7 @@
 use App\Enums\InvoiceStatus;
 use App\Models\Adjustment;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasStatus;
 use App\Models\Invoice;
@@ -20,6 +21,7 @@ testModelStructure(
     modelClass: Invoice::class,
     concerns: [
         HasActiveStatus::class,
+        HasCancelledStatus::class,
         HasDueDate::class,
         HasStatus::class,
     ],

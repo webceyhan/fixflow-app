@@ -4,6 +4,7 @@ use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Concerns\Assignable;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasStatus;
@@ -25,10 +26,11 @@ testModelStructure(
     modelClass: Ticket::class,
     concerns: [
         Assignable::class,
+        HasActiveStatus::class,
+        HasCancelledStatus::class,
         HasDueDate::class,
         HasPriority::class,
         HasStatus::class,
-        HasActiveStatus::class,
     ],
     defaults: [
         'priority' => Priority::Medium,

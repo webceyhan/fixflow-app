@@ -7,6 +7,7 @@ use App\Models\Concerns\Approvable;
 use App\Models\Concerns\Assignable;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class Order extends Model
         Assignable,
         Billable,
         HasActiveStatus,
+        HasCancelledStatus,
         HasDueDate,
         HasFactory,
         HasStatus;

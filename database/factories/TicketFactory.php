@@ -7,6 +7,7 @@ use App\Enums\TicketStatus;
 use App\Models\Device;
 use Database\Factories\States\ActiveStatusStates;
 use Database\Factories\States\AssignmentStates;
+use Database\Factories\States\CancelledStatusStates;
 use Database\Factories\States\DueDateStates;
 use Database\Factories\States\NoteStates;
 use Database\Factories\States\PriorityStates;
@@ -20,6 +21,7 @@ class TicketFactory extends Factory
 {
     use ActiveStatusStates,
         AssignmentStates,
+        CancelledStatusStates,
         DueDateStates,
         NoteStates,
         PriorityStates,
