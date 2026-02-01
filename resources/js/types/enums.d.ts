@@ -1,12 +1,23 @@
-export type Priority = 'low' | 'medium' | 'high';
+// Auto-generated from PHP enums - DO NOT EDIT MANUALLY
 
-export type UserRole = 'admin' | 'manager' | 'technician';
+export type AdjustmentReason =
+    | 'bulk_service'
+    | 'promotion'
+    | 'loyalty'
+    | 'welcome'
+    | 'compensation'
+    | 'rush_service'
+    | 'delivery'
+    | 'late_payment'
+    | 'cancellation';
 
-export type UserStatus = 'active' | 'suspended' | 'terminated';
+export type AdjustmentType = 'discount' | 'fee';
+
+export type CustomerStatus = 'active' | 'suspended' | 'archived';
 
 export type CustomerType = 'individual' | 'business';
 
-export type CustomerStatus = 'active' | 'suspended' | 'archived';
+export type DeviceStatus = 'received' | 'in_service' | 'ready' | 'delivered';
 
 export type DeviceType =
     | 'phone'
@@ -16,15 +27,17 @@ export type DeviceType =
     | 'wearable'
     | 'other';
 
-export type DeviceStatus = 'received' | 'in_service' | 'ready' | 'delivered';
-
-export type TicketStatus =
-    | 'created'
-    | 'in_progress'
-    | 'on_hold'
-    | 'resolved'
-    | 'closed'
+export type InvoiceStatus =
+    | 'draft'
+    | 'issued'
+    | 'sent'
+    | 'paid'
+    | 'refunded'
     | 'cancelled';
+
+export type OrderStatus = 'created' | 'shipped' | 'received' | 'cancelled';
+
+export type Priority = 'low' | 'medium' | 'high';
 
 export type TaskStatus = 'created' | 'completed' | 'cancelled';
 
@@ -39,29 +52,18 @@ export type TaskType =
     | 'cleaning'
     | 'other';
 
-export type OrderStatus = 'created' | 'shipped' | 'received' | 'cancelled';
-
-export type InvoiceStatus =
-    | 'draft'
-    | 'issued'
-    | 'sent'
-    | 'paid'
-    | 'refunded'
+export type TicketStatus =
+    | 'created'
+    | 'in_progress'
+    | 'on_hold'
+    | 'resolved'
+    | 'closed'
     | 'cancelled';
 
 export type TransactionMethod = 'cash' | 'card' | 'online';
 
 export type TransactionType = 'deposit' | 'payment' | 'refund';
 
-export type AdjustmentReason =
-    | 'bulk_service'
-    | 'promotion'
-    | 'loyalty'
-    | 'welcome'
-    | 'compensation'
-    | 'rush_service'
-    | 'delivery'
-    | 'late_payment'
-    | 'cancellation';
+export type UserRole = 'admin' | 'manager' | 'technician';
 
-export type AdjustmentType = 'discount' | 'fee';
+export type UserStatus = 'active' | 'suspended' | 'terminated';

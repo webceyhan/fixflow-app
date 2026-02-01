@@ -1,4 +1,8 @@
+// Auto-generated from PHP models - DO NOT EDIT MANUALLY
+
 import type {
+    AdjustmentReason,
+    AdjustmentType,
     CustomerStatus,
     CustomerType,
     DeviceStatus,
@@ -21,19 +25,14 @@ export interface Model {
     updated_at: string;
 }
 
-export interface User extends Model {
-    name: string;
-    email: string;
-    phone: string;
+export interface Adjustment extends Model {
+    invoice_id: number;
+    amount: number;
+    is_percent: boolean;
     note?: string;
-    role: UserRole;
-    status: UserStatus;
-    email_verified_at?: string;
-    two_factor_confirmed_at?: string;
-    notifications?: DatabaseNotification[];
-    assigned_tickets?: Ticket[];
-    assigned_tasks?: Task[];
-    assigned_orders?: Order[];
+    type: AdjustmentType;
+    reason: AdjustmentReason;
+    invoice?: Invoice;
 }
 
 export interface Customer extends Model {
@@ -67,53 +66,6 @@ export interface Device extends Model {
     tickets?: Ticket[];
 }
 
-export interface Ticket extends Model {
-    device_id: number;
-    assignee_id?: number;
-    title: string;
-    note?: string;
-    priority: Priority;
-    status: TicketStatus;
-    due_date?: string;
-    device?: Device;
-    customer?: Customer;
-    assignee?: User;
-    tasks?: Task[];
-    orders?: Order[];
-    invoice?: Invoice;
-}
-
-export interface Task extends Model {
-    ticket_id: number;
-    assignee_id?: number;
-    cost: number;
-    is_billable: boolean;
-    note?: string;
-    priority: Priority;
-    type: TaskType;
-    status: TaskStatus;
-    approved_at?: string;
-    ticket?: Ticket;
-    assignee?: User;
-}
-
-export interface Order extends Model {
-    ticket_id: number;
-    assignee_id?: number;
-    name: string;
-    url?: string;
-    supplier?: string;
-    quantity: number;
-    cost: number;
-    is_billable: boolean;
-    note?: string;
-    due_date?: string;
-    status: OrderStatus;
-    approved_at?: string;
-    ticket?: Ticket;
-    assignee?: User;
-}
-
 export interface Invoice extends Model {
     ticket_id: number;
     total: number;
@@ -131,6 +83,53 @@ export interface Invoice extends Model {
     adjustments?: Adjustment[];
 }
 
+export interface Order extends Model {
+    ticket_id: number;
+    assignee_id?: number;
+    name: string;
+    url?: string;
+    supplier?: string;
+    quantity: number;
+    cost: number;
+    is_billable: boolean;
+    due_date?: string;
+    note?: string;
+    status: OrderStatus;
+    approved_at?: string;
+    ticket?: Ticket;
+    assignee?: User;
+}
+
+export interface Task extends Model {
+    ticket_id: number;
+    assignee_id?: number;
+    cost: number;
+    is_billable: boolean;
+    note?: string;
+    priority: Priority;
+    type: TaskType;
+    status: TaskStatus;
+    approved_at?: string;
+    ticket?: Ticket;
+    assignee?: User;
+}
+
+export interface Ticket extends Model {
+    device_id: number;
+    assignee_id?: number;
+    title: string;
+    note?: string;
+    priority: Priority;
+    status: TicketStatus;
+    due_date?: string;
+    device?: Device;
+    customer?: Customer;
+    tasks?: Task[];
+    orders?: Order[];
+    invoice?: Invoice;
+    assignee?: User;
+}
+
 export interface Transaction extends Model {
     invoice_id: number;
     amount: number;
@@ -140,12 +139,17 @@ export interface Transaction extends Model {
     invoice?: Invoice;
 }
 
-export interface Adjustment extends Model {
-    invoice_id: number;
-    amount: number;
-    is_percent: boolean;
+export interface User extends Model {
+    name: string;
+    email: string;
+    phone: string;
     note?: string;
-    type: AdjustmentType;
-    reason: AdjustmentReason;
-    invoice?: Invoice;
+    role: UserRole;
+    status: UserStatus;
+    email_verified_at?: string;
+    two_factor_confirmed_at?: string;
+    assigned_tickets?: Ticket[];
+    assigned_tasks?: Task[];
+    assigned_orders?: Order[];
+    notifications?: DatabaseNotification[];
 }
