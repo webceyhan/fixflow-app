@@ -6,7 +6,7 @@ use App\Models\Invoice;
 
 trait InvoiceRules
 {
-    use DueDateRules, NoteRules, StatusRules;
+    use AmountRules, DueDateRules, NoteRules, StatusRules;
 
     /**
      * Get the model class to use for validation.
@@ -31,15 +31,5 @@ trait InvoiceRules
             'note' => $this->noteRules(),
             'status' => $this->statusRules($invoiceId !== null),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate invoice amounts.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function amountRules(): array
-    {
-        return ['required', 'numeric', 'min:0'];
     }
 }

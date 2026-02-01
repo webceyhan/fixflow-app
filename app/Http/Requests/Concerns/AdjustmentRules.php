@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 
 trait AdjustmentRules
 {
-    use NoteRules;
+    use AmountRules, NoteRules;
 
     /**
      * Get the model class to use for validation.
@@ -33,16 +33,6 @@ trait AdjustmentRules
             'note' => $this->noteRules(),
             'reason' => $this->reasonRules(required: true),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate adjustment amounts.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function amountRules(): array
-    {
-        return ['required', 'numeric', 'min:0'];
     }
 
     /**

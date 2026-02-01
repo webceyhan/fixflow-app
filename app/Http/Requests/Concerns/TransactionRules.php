@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 
 trait TransactionRules
 {
-    use NoteRules, TypeRules;
+    use AmountRules, NoteRules, TypeRules;
 
     /**
      * Get the model class to use for validation.
@@ -33,16 +33,6 @@ trait TransactionRules
             'method' => $this->methodRules(),
             'type' => $this->typeRules(required: true),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate transaction amounts.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function amountRules(): array
-    {
-        return ['required', 'numeric', 'min:0'];
     }
 
     /**
