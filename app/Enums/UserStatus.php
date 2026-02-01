@@ -2,19 +2,23 @@
 
 namespace App\Enums;
 
+use App\Enums\Attributes\Active;
 use App\Enums\Concerns\Collectible;
 use App\Enums\Concerns\HasActiveCase;
 use App\Enums\Concerns\HasNextCase;
 
 enum UserStatus: string
 {
-    use Collectible, HasActiveCase, HasNextCase;
+    use Collectible,
+        HasActiveCase,
+        HasNextCase;
 
     /**
      * Represents that the user account is currently active and accessible.
      *
      * @default
      */
+    #[Active]
     case Active = 'active';
 
     /**
@@ -28,13 +32,4 @@ enum UserStatus: string
      * typically due to employment termination or other reasons.
      */
     case Terminated = 'terminated';
-
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    public static function activeCases(): array
-    {
-        return [
-            self::Active,
-        ];
-    }
 }

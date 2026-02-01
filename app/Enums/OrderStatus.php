@@ -2,6 +2,7 @@
 
 namespace App\Enums;
 
+use App\Enums\Attributes\Active;
 use App\Enums\Concerns\Collectible;
 use App\Enums\Concerns\HasActiveCase;
 use App\Enums\Concerns\HasCancelledCase;
@@ -9,18 +10,23 @@ use App\Enums\Concerns\HasNextCase;
 
 enum OrderStatus: string
 {
-    use Collectible, HasActiveCase, HasCancelledCase, HasNextCase;
+    use Collectible,
+        HasActiveCase,
+        HasCancelledCase,
+        HasNextCase;
 
     /**
      * Represents an order that has been created and is awaiting processing.
      *
      * @default
      */
+    #[Active]
     case Created = 'created';
 
     /**
      * Represents an order that has been shipped to the customer.
      */
+    #[Active]
     case Shipped = 'shipped';
 
     /**
@@ -32,17 +38,4 @@ enum OrderStatus: string
      * Represents an order that has been cancelled by the customer or by the system.
      */
     case Cancelled = 'cancelled';
-
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Get the list of active order statuses.
-     */
-    public static function activeCases(): array
-    {
-        return [
-            self::Created,
-            self::Shipped,
-        ];
-    }
 }

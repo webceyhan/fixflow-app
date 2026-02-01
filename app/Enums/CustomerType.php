@@ -7,7 +7,8 @@ use App\Enums\Concerns\HasNextCase;
 
 enum CustomerType: string
 {
-    use Collectible, HasNextCase;
+    use Collectible,
+        HasNextCase;
 
     /**
      * Represents an individual customer without a company.

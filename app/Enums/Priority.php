@@ -7,7 +7,8 @@ use App\Enums\Concerns\HasNextCase;
 
 enum Priority: string
 {
-    use Collectible, HasNextCase;
+    use Collectible,
+        HasNextCase;
 
     /**
      * Low priority for items that can be addressed within a longer timeframe.

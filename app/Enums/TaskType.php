@@ -7,7 +7,8 @@ use App\Enums\Concerns\HasNextCase;
 
 enum TaskType: string
 {
-    use Collectible, HasNextCase;
+    use Collectible,
+        HasNextCase;
 
     /**
      * Repair work on the device.

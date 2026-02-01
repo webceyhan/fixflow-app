@@ -2,6 +2,7 @@
 
 namespace App\Enums;
 
+use App\Enums\Attributes\Active;
 use App\Enums\Concerns\Collectible;
 use App\Enums\Concerns\HasActiveCase;
 use App\Enums\Concerns\HasCancelledCase;
@@ -9,23 +10,29 @@ use App\Enums\Concerns\HasNextCase;
 
 enum TicketStatus: string
 {
-    use Collectible, HasActiveCase, HasCancelledCase, HasNextCase;
+    use Collectible,
+        HasActiveCase,
+        HasCancelledCase,
+        HasNextCase;
 
     /**
      * The ticket has been created and has not been assigned to anyone.
      *
      * @default
      */
+    #[Active]
     case Created = 'created';
 
     /**
      * The ticket has been assigned to a technician and is in progress.
      */
+    #[Active]
     case InProgress = 'in_progress';
 
     /**
      * The ticket is on hold and is not being worked on.
      */
+    #[Active]
     case OnHold = 'on_hold';
 
     /**
@@ -42,18 +49,4 @@ enum TicketStatus: string
      * The ticket has been cancelled.
      */
     case Cancelled = 'cancelled';
-
-    // METHODS /////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Get the list of active ticket statuses.
-     */
-    public static function activeCases(): array
-    {
-        return [
-            self::Created,
-            self::InProgress,
-            self::OnHold,
-        ];
-    }
 }

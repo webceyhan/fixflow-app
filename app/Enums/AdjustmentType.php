@@ -7,7 +7,8 @@ use App\Enums\Concerns\HasNextCase;
 
 enum AdjustmentType: string
 {
-    use Collectible, HasNextCase;
+    use Collectible,
+        HasNextCase;
 
     /**
      * Discount adjustments that reduce invoice total.
