@@ -6,7 +6,7 @@ use App\Models\Task;
 
 trait TaskRules
 {
-    use AmountRules, AssigneeRules, BooleanRules, NoteRules, PriorityRules, StatusRules, TypeRules;
+    use AmountRules, ApprovalDateRules, AssigneeRules, BooleanRules, NoteRules, PriorityRules, StatusRules, TypeRules;
 
     /**
      * Get the model class to use for validation.
@@ -33,17 +33,7 @@ trait TaskRules
             'priority' => $this->priorityRules($taskId !== null),
             'type' => $this->typeRules($taskId !== null),
             'status' => $this->statusRules($taskId !== null),
-            'approved_at' => $this->approvedAtRules(),
+            'approved_at' => $this->approvalDateRules(),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate task approval date.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function approvedAtRules(): array
-    {
-        return ['nullable', 'date'];
     }
 }
