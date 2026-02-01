@@ -4,11 +4,12 @@ namespace App\Enums;
 
 use App\Enums\Concerns\Collectible;
 use App\Enums\Concerns\HasActiveCase;
+use App\Enums\Concerns\HasCancelledCase;
 use App\Enums\Concerns\HasNextCase;
 
 enum OrderStatus: string
 {
-    use Collectible, HasActiveCase, HasNextCase;
+    use Collectible, HasActiveCase, HasCancelledCase, HasNextCase;
 
     /**
      * Represents an order that has been created and is awaiting processing.
