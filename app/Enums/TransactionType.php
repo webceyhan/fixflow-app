@@ -7,7 +7,8 @@ use App\Enums\Concerns\HasNextCase;
 
 enum TransactionType: string
 {
-    use Collectible, HasNextCase;
+    use Collectible,
+        HasNextCase;
 
     /**
      * Represents a deposit/advance payment.
