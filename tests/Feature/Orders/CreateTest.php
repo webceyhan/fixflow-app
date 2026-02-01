@@ -29,7 +29,7 @@ it('validates required fields', function () {
     $response = actingAs($manager)->post("/tickets/{$ticket->id}/orders", []);
 
     // Assert
-    $response->assertSessionHasErrors(['name', 'quantity', 'cost', 'is_billable']);
+    $response->assertSessionHasErrors(['name', 'quantity', 'cost']);
 });
 
 it('returns 404 when ticket does not exist', function () {
