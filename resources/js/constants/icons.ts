@@ -1,4 +1,5 @@
 import type {
+    AdjustmentType,
     CustomerType,
     DeviceType,
     Icon,
@@ -12,6 +13,8 @@ import {
     Activity,
     ArrowRightLeft,
     Banknote,
+    BanknoteArrowDown,
+    BanknoteArrowUp,
     BrushCleaning,
     Building2,
     ChevronsDown,
@@ -88,4 +91,9 @@ export const TRANSACTION_METHOD_ICON_MAP: Record<TransactionMethod, Icon> = {
     cash: Banknote,
     card: CreditCard,
     online: Globe,
+};
+
+export const ADJUSTMENT_TYPE_ICON_MAP: Record<AdjustmentType, Icon> = {
+    discount: BanknoteArrowDown,
+    fee: BanknoteArrowUp,
 };

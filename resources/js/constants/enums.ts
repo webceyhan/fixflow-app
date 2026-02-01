@@ -97,3 +97,17 @@ export const TRANSACTION_TYPE = {
     Payment: 'payment',
     Refund: 'refund',
 } as const;
+
+export const ADJUSTMENT_REASON = {
+    BulkService: 'bulk_service',
+    Promotion: 'promotion',
+    Loyalty: 'loyalty',
+    Welcome: 'welcome',
+    Compensation: 'compensation',
+    RushService: 'rush_service',
+    Delivery: 'delivery',
+    LatePayment: 'late_payment',
+    Cancellation: 'cancellation',
+} as const;
+
+export const ADJUSTMENT_TYPE = { Discount: 'discount', Fee: 'fee' } as const;

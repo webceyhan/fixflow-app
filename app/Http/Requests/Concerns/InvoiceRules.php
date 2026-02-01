@@ -27,8 +27,6 @@ trait InvoiceRules
     {
         return [
             'total' => $this->amountRules(),
-            'discount_amount' => $this->amountRules(),
-            'fee_amount' => $this->amountRules(),
             'due_date' => $this->dueDateRules(),
             'note' => $this->noteRules(),
             'status' => $this->statusRules($invoiceId !== null),

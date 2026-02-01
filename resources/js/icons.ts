@@ -1,4 +1,5 @@
 import {
+    ADJUSTMENT_TYPE_ICON_MAP,
     CUSTOMER_TYPE_ICON_MAP,
     DEVICE_TYPE_ICON_MAP,
     PRIORITY_ICON_MAP,
@@ -8,6 +9,7 @@ import {
     USER_ROLE_ICON_MAP,
 } from '@/constants';
 import type {
+    AdjustmentType,
     CustomerType,
     DeviceType,
     Priority,
@@ -19,6 +21,7 @@ import type {
 import { h } from 'vue';
 
 export {
+    Calculator as AdjustmentIcon,
     IdCard as CustomerIcon,
     LayoutGrid as DashboardIcon,
     HardDrive as DeviceIcon,
@@ -57,3 +60,6 @@ export const TransactionMethodIcon = ({
 }: {
     value: TransactionMethod;
 }) => h(TRANSACTION_METHOD_ICON_MAP[value]);
+
+export const AdjustmentTypeIcon = ({ value }: { value: AdjustmentType }) =>
+    h(ADJUSTMENT_TYPE_ICON_MAP[value]);

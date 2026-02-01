@@ -52,3 +52,16 @@ export type InvoiceStatus =
 export type TransactionMethod = 'cash' | 'card' | 'online';
 
 export type TransactionType = 'deposit' | 'payment' | 'refund';
+
+export type AdjustmentReason =
+    | 'bulk_service'
+    | 'promotion'
+    | 'loyalty'
+    | 'welcome'
+    | 'compensation'
+    | 'rush_service'
+    | 'delivery'
+    | 'late_payment'
+    | 'cancellation';
+
+export type AdjustmentType = 'discount' | 'fee';

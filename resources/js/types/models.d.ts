@@ -128,6 +128,7 @@ export interface Invoice extends Model {
     status: InvoiceStatus;
     ticket?: Ticket;
     transactions?: Transaction[];
+    adjustments?: Adjustment[];
 }
 
 export interface Transaction extends Model {
@@ -136,5 +137,15 @@ export interface Transaction extends Model {
     note?: string;
     method: TransactionMethod;
     type: TransactionType;
+    invoice?: Invoice;
+}
+
+export interface Adjustment extends Model {
+    invoice_id: number;
+    amount: number;
+    is_percent: boolean;
+    note?: string;
+    type: AdjustmentType;
+    reason: AdjustmentReason;
     invoice?: Invoice;
 }

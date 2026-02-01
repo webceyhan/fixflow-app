@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Requests\Concerns;
+
+use App\Enums\AdjustmentReason;
+use App\Models\Adjustment;
+use Illuminate\Validation\Rule;
+
+trait AdjustmentRules
+{
+    use NoteRules;
+
+    /**
+     * Get the model class to use for validation.
+     *
+     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     */
+    protected function getModelClass(): string
+    {
+        return Adjustment::class;
+    }
+
+    /**
+     * Get all validation rules for adjustment management.
+     *
+     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     */
+    protected function adjustmentRules(?int $adjustmentId = null): array
+    {
+        return [
+            'amount' => $this->amountRules(),
+            'is_percent' => $this->isPercentRules(),
+            'note' => $this->noteRules(),
+            'reason' => $this->reasonRules(required: true),
+        ];
+    }
+
+    /**
+     * Get the validation rules used to validate adjustment amounts.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function amountRules(): array
+    {
+        return ['required', 'numeric', 'min:0'];
+    }
+
+    /**
+     * Get the validation rules used to validate is_percent field.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function isPercentRules(): array
+    {
+        return ['sometimes', 'boolean'];
+    }
+
+    /**
+     * Get the validation rules used to validate adjustment reasons.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     */
+    protected function reasonRules(bool $required = false): array
+    {
+        return [
+            ...($required ? ['required'] : ['sometimes']),
+            Rule::enum(AdjustmentReason::class),
+        ];
+    }
+}

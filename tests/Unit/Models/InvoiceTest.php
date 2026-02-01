@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\InvoiceStatus;
+use App\Models\Adjustment;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasStatus;
@@ -62,6 +63,7 @@ testModelStructure(
     relations: [
         'ticket' => BelongsTo::class,
         'transactions' => HasMany::class,
+        'adjustments' => HasMany::class,
     ]
 );
 
@@ -85,6 +87,16 @@ it('has many transactions relationship', function () {
     // Assert
     expect($invoice->transactions)->toHaveCount(3);
     expect($invoice->transactions->first())->toBeInstanceOf(Transaction::class);
+});
+
+it('has many adjustments relationship', function () {
+    // Arrange
+    $invoice = Invoice::factory()->create();
+    Adjustment::factory()->count(2)->forInvoice($invoice)->create();
+
+    // Assert
+    expect($invoice->adjustments)->toHaveCount(2);
+    expect($invoice->adjustments->first())->toBeInstanceOf(Adjustment::class);
 });
 
 // SCOPE TESTS /////////////////////////////////////////////////////////////////////////////////////

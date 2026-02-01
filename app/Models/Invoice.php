@@ -89,4 +89,12 @@ class Invoice extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    /**
+     * Get the adjustments for the invoice.
+     */
+    public function adjustments(): HasMany
+    {
+        return $this->hasMany(Adjustment::class);
+    }
 }

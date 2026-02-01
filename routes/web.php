@@ -23,3 +23,4 @@ require __DIR__.'/tasks.php';
 require __DIR__.'/orders.php';
 require __DIR__.'/invoices.php';
 require __DIR__.'/transactions.php';
+require __DIR__.'/adjustments.php';

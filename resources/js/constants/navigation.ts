@@ -1,4 +1,5 @@
 import {
+    AdjustmentIcon,
     CustomerIcon,
     DashboardIcon,
     DeviceIcon,
@@ -12,6 +13,7 @@ import {
     UserIcon,
 } from '@/icons';
 import { dashboard } from '@/routes';
+import { index as adjustments } from '@/routes/adjustments';
 import { index as customers } from '@/routes/customers';
 import { index as devices } from '@/routes/devices';
 import { index as invoices } from '@/routes/invoices';
@@ -67,6 +69,11 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
         title: 'Transactions',
         href: transactions(),
         icon: TransactionIcon,
+    },
+    {
+        title: 'Adjustments',
+        href: adjustments(),
+        icon: AdjustmentIcon,
     },
 ] as const;
 

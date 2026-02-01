@@ -38,8 +38,6 @@ const { errors, form, processing } = useSaveForm({
     action: update(invoice),
     data: {
         total: invoice.total ?? 0,
-        discount_amount: invoice.discount_amount ?? 0,
-        fee_amount: invoice.fee_amount ?? 0,
         due_date: toIsoDate(invoice.due_date) ?? '',
         status: invoice.status,
         note: invoice.note ?? '',
@@ -68,32 +66,6 @@ const { errors, form, processing } = useSaveForm({
                             v-model="form.total"
                         />
                         <FieldError :message="errors.total" />
-                    </Field>
-
-                    <Field>
-                        <FieldLabel for="discount_amount">Discount</FieldLabel>
-                        <Input
-                            id="discount_amount"
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            placeholder="0.00"
-                            v-model="form.discount_amount"
-                        />
-                        <FieldError :message="errors.discount_amount" />
-                    </Field>
-
-                    <Field>
-                        <FieldLabel for="fee_amount">Fee</FieldLabel>
-                        <Input
-                            id="fee_amount"
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            placeholder="0.00"
-                            v-model="form.fee_amount"
-                        />
-                        <FieldError :message="errors.fee_amount" />
                     </Field>
                 </FieldGroup>
             </FieldSet>
