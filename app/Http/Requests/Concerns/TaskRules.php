@@ -6,7 +6,7 @@ use App\Models\Task;
 
 trait TaskRules
 {
-    use AssigneeRules, NoteRules, PriorityRules, StatusRules, TypeRules;
+    use AmountRules, AssigneeRules, NoteRules, PriorityRules, StatusRules, TypeRules;
 
     /**
      * Get the model class to use for validation.
@@ -27,7 +27,7 @@ trait TaskRules
     {
         return [
             'assignee_id' => $this->assigneeIdRules(),
-            'cost' => $this->costRules(),
+            'cost' => $this->amountRules(),
             'is_billable' => $this->isBillableRules(),
             'note' => $this->noteRules(),
             'priority' => $this->priorityRules($taskId !== null),
@@ -35,16 +35,6 @@ trait TaskRules
             'status' => $this->statusRules($taskId !== null),
             'approved_at' => $this->approvedAtRules(),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate task cost.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function costRules(): array
-    {
-        return ['required', 'numeric', 'min:0'];
     }
 
     /**

@@ -6,7 +6,7 @@ use App\Models\Order;
 
 trait OrderRules
 {
-    use AssigneeRules, DueDateRules, NoteRules, StatusRules;
+    use AmountRules, AssigneeRules, DueDateRules, NoteRules, StatusRules;
 
     /**
      * Get the model class to use for validation.
@@ -31,7 +31,7 @@ trait OrderRules
             'url' => $this->urlRules(),
             'supplier' => $this->supplierRules(),
             'quantity' => $this->quantityRules(),
-            'cost' => $this->costRules(),
+            'cost' => $this->amountRules(),
             'is_billable' => $this->isBillableRules(),
             'due_date' => $this->dueDateRules(),
             'note' => $this->noteRules(),
@@ -78,16 +78,6 @@ trait OrderRules
     protected function quantityRules(): array
     {
         return ['required', 'integer', 'min:1'];
-    }
-
-    /**
-     * Get the validation rules used to validate order cost.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function costRules(): array
-    {
-        return ['required', 'numeric', 'min:0'];
     }
 
     /**
