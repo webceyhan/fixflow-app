@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\InvoiceStatus;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
     use HasActiveStatus,
+        HasCancelledStatus,
         HasDueDate,
         HasFactory,
         HasStatus;

@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\InvoiceStatus;
 use App\Models\Ticket;
 use Database\Factories\States\ActiveStatusStates;
+use Database\Factories\States\CancelledStatusStates;
 use Database\Factories\States\DueDateStates;
 use Database\Factories\States\NoteStates;
 use Database\Factories\States\StatusStates;
@@ -15,7 +16,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InvoiceFactory extends Factory
 {
-    use ActiveStatusStates, DueDateStates, NoteStates, StatusStates;
+    use ActiveStatusStates,
+        CancelledStatusStates,
+        DueDateStates,
+        NoteStates,
+        StatusStates;
 
     /**
      * Define the model's default state.
@@ -104,13 +109,5 @@ class InvoiceFactory extends Factory
             'paid_amount' => $attributes['total'],
             'refunded_amount' => $attributes['total'],
         ]);
-    }
-
-    /**
-     * Indicate that the invoice has been cancelled.
-     */
-    public function cancelled(): static
-    {
-        return $this->ofStatus(InvoiceStatus::Cancelled);
     }
 }

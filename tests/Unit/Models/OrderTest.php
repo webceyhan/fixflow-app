@@ -5,6 +5,7 @@ use App\Models\Concerns\Approvable;
 use App\Models\Concerns\Assignable;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasStatus;
 use App\Models\Order;
@@ -23,6 +24,7 @@ testModelStructure(
         Assignable::class,
         Billable::class,
         HasActiveStatus::class,
+        HasCancelledStatus::class,
         HasDueDate::class,
         HasStatus::class,
     ],

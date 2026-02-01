@@ -10,6 +10,7 @@ use Database\Factories\States\ActiveStatusStates;
 use Database\Factories\States\ApprovalStates;
 use Database\Factories\States\AssignmentStates;
 use Database\Factories\States\BillingStates;
+use Database\Factories\States\CancelledStatusStates;
 use Database\Factories\States\NoteStates;
 use Database\Factories\States\PriorityStates;
 use Database\Factories\States\StatusStates;
@@ -25,6 +26,7 @@ class TaskFactory extends Factory
         ApprovalStates,
         AssignmentStates,
         BillingStates,
+        CancelledStatusStates,
         NoteStates,
         PriorityStates,
         StatusStates,
@@ -132,13 +134,5 @@ class TaskFactory extends Factory
     public function completed(): self
     {
         return $this->ofStatus(TaskStatus::Completed)->approved();
-    }
-
-    /**
-     * Indicate that the task is cancelled.
-     */
-    public function cancelled(): self
-    {
-        return $this->ofStatus(TaskStatus::Cancelled);
     }
 }

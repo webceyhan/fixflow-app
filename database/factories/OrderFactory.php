@@ -8,6 +8,7 @@ use Database\Factories\States\ActiveStatusStates;
 use Database\Factories\States\ApprovalStates;
 use Database\Factories\States\AssignmentStates;
 use Database\Factories\States\BillingStates;
+use Database\Factories\States\CancelledStatusStates;
 use Database\Factories\States\DueDateStates;
 use Database\Factories\States\NoteStates;
 use Database\Factories\States\StatusStates;
@@ -22,6 +23,7 @@ class OrderFactory extends Factory
         ApprovalStates,
         AssignmentStates,
         BillingStates,
+        CancelledStatusStates,
         DueDateStates,
         NoteStates,
         StatusStates;
@@ -116,13 +118,5 @@ class OrderFactory extends Factory
     public function received(): static
     {
         return $this->ofStatus(OrderStatus::Received)->approved();
-    }
-
-    /**
-     * Indicate that the order has been cancelled.
-     */
-    public function cancelled(): static
-    {
-        return $this->ofStatus(OrderStatus::Cancelled);
     }
 }

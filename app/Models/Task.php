@@ -9,6 +9,7 @@ use App\Models\Concerns\Approvable;
 use App\Models\Concerns\Assignable;
 use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
@@ -23,6 +24,7 @@ class Task extends Model
         Assignable,
         Billable,
         HasActiveStatus,
+        HasCancelledStatus,
         HasFactory,
         HasPriority,
         HasStatus,

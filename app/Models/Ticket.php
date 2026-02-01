@@ -6,6 +6,7 @@ use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Concerns\Assignable;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasStatus;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class Ticket extends Model
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use Assignable, HasActiveStatus, HasDueDate, HasFactory, HasPriority, HasStatus;
+    use Assignable, HasActiveStatus, HasCancelledStatus, HasDueDate, HasFactory, HasPriority, HasStatus;
 
     /**
      * The model's default values for attributes.
