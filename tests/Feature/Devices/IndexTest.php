@@ -147,7 +147,7 @@ it('paginates devices correctly', function () {
     $response->assertSuccessful();
     $response->assertInertia(fn ($page) => $page
         ->component('devices/Index')
-        ->has('devices.data', 15)
+        ->has('devices.data', 10)
         ->has('devices.links')
     );
 });

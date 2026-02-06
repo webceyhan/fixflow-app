@@ -126,7 +126,7 @@ it('paginates customers correctly', function () {
     $response->assertSuccessful();
     $response->assertInertia(fn ($page) => $page
         ->component('customers/Index')
-        ->has('customers.data', 15)
+        ->has('customers.data', 10)
         ->has('customers.links')
     );
 });
