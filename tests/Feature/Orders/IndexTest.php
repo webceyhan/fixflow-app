@@ -128,20 +128,3 @@ it('allows filtering orders by created date', function () {
         ->has('orders.data', 2)
     );
 });
-
-it('allows filtering orders by due date', function () {
-    // Arrange
-    $viewer = User::factory()->create();
-    Order::factory()->count(2)->create(['due_date' => now()]);
-    Order::factory()->count(3)->create(['due_date' => now()->addDays(10)]);
-
-    // Act
-    $response = actingAs($viewer)->get(route('orders.index', ['filter' => ['due_date' => 'today']]));
-
-    // Assert
-    $response->assertSuccessful();
-    $response->assertInertia(fn ($page) => $page
-        ->component('orders/Index')
-        ->has('orders.data', 2)
-    );
-});

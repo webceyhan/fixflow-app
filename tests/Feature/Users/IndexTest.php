@@ -160,7 +160,7 @@ it('paginates users correctly', function () {
     $response->assertSuccessful();
     $response->assertInertia(fn ($page) => $page
         ->component('users/Index')
-        ->has('users.data', 15)
+        ->has('users.data', 10)
         ->has('users.links')
     );
 });

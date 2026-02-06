@@ -117,6 +117,23 @@ it('can filter models by role scope', function (UserRole $role) {
     expect($users->first()->id)->toBe($user1->id);
 })->with(UserRole::cases());
 
+it('can filter assignable users scope', function () {
+    // Arrange
+    $activeUser1 = User::factory()->create(['status' => UserStatus::Active]);
+    $activeUser2 = User::factory()->create(['status' => UserStatus::Active]);
+    $suspendedUser = User::factory()->create(['status' => UserStatus::Suspended]);
+
+    // Act
+    $users = User::assignable()->get();
+
+    // Assert
+    expect($users)->toHaveCount(2);
+    expect($users->pluck('id'))->toContain($activeUser1->id, $activeUser2->id);
+    expect($users->pluck('id'))->not->toContain($suspendedUser->id);
+    // Should be ordered by name
+    expect($users->first()->name)->toBeLessThanOrEqual($users->last()->name);
+});
+
 // METHOD TESTS ////////////////////////////////////////////////////////////////////////////////////
 
 it('can determine if user is admin', function () {

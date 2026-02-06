@@ -2,26 +2,21 @@
 
 namespace App\Actions\Orders;
 
-use App\Actions\Concerns\HasQueryHelpers;
 use App\Models\Order;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Support\QueryBuilder;
+use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryOrders
 {
-    use HasQueryHelpers;
-
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Order::class)
             ->allowedFilters([
-                $this->searchFilter(['name', 'supplier', 'note']),
-                $this->assigneeFilter(),
+                AllowedFilter::search(['name', 'supplier', 'note']),
+                AllowedFilter::assignee(),
                 AllowedFilter::exact('status'),
-                $this->relativeDateFilter('created_at'),
-                $this->relativeDateFilter('due_date'),
+                AllowedFilter::date(),
             ])
-            ->allowedSorts(['name', 'cost', 'due_date', 'approved_at', 'created_at'])
-            ->defaultSort('-created_at');
+            ->allowedSorts(['name', 'cost', 'due_date', 'approved_at', 'created_at']);
     }
 }

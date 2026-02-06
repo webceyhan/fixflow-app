@@ -6,7 +6,9 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasStatus;
+use App\Observers\UserObserver;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
+#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -108,6 +111,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeOfRole(Builder $query, UserRole $role): void
     {
         $query->where('role', $role->value);
+    }
+
+    /**
+     * Scope a query to only include assignable users (active users).
+     */
+    public function scopeAssignable(Builder $query): void
+    {
+        $query->active()->orderBy('name');
     }
 
     // METHODS /////////////////////////////////////////////////////////////////////////////////////

@@ -2,25 +2,21 @@
 
 namespace App\Actions\Transactions;
 
-use App\Actions\Concerns\HasQueryHelpers;
 use App\Models\Transaction;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Support\QueryBuilder;
+use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryTransactions
 {
-    use HasQueryHelpers;
-
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Transaction::class)
             ->allowedFilters([
-                $this->searchFilter(['note']),
+                AllowedFilter::search(['note']),
                 AllowedFilter::exact('method'),
                 AllowedFilter::exact('type'),
-                $this->relativeDateFilter('created_at'),
+                AllowedFilter::date(),
             ])
-            ->allowedSorts(['id', 'amount', 'created_at'])
-            ->defaultSort('-created_at');
+            ->allowedSorts(['method', 'amount', 'created_at']);
     }
 }
