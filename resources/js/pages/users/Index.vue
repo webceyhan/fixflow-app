@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { CreateAction } from '@/components/action';
-import {
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import UserTable from '@/components/users/UserTable.vue';
@@ -14,15 +12,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { create, index } from '@/routes/users';
-import type { NavItem, Paginated, User, UserRole, UserStatus } from '@/types';
+import type { NavItem, Paginated, User } from '@/types';
 
 defineProps<{
     users: Paginated<User>;
-    filter?: {
-        search?: string;
-        role?: UserRole;
-        status?: UserStatus;
-    };
     isAdmin?: boolean;
 }>();
 
@@ -41,11 +34,8 @@ const breadcrumbs: NavItem[] = [
         </Heading>
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search users ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search users..." />
 
                 <MultiSelectFilter
                     name="role"
@@ -59,8 +49,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(USER_STATUS)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <UserTable :users="users.data" />
 

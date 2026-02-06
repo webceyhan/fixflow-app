@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import {
-    AssigneeFilter,
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import AssigneeFilter from '@/components/filters/AssigneeFilter.vue';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import TicketTable from '@/components/tickets/TicketTable.vue';
@@ -14,23 +12,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/tickets';
-import type {
-    NavItem,
-    Paginated,
-    Priority,
-    Ticket,
-    TicketStatus,
-} from '@/types';
+import type { NavItem, Paginated, Ticket } from '@/types';
 
 defineProps<{
     tickets: Paginated<Ticket>;
-    filter?: {
-        search?: string;
-        assignee?: string;
-        priority?: Priority;
-        status?: TicketStatus;
-        created_at?: string;
-    };
 }>();
 
 const breadcrumbs: NavItem[] = [
@@ -46,11 +31,8 @@ const breadcrumbs: NavItem[] = [
         <Heading title="Tickets" />
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search tickets ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search tickets..." />
 
                 <AssigneeFilter />
 
@@ -66,8 +48,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(TICKET_STATUS)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <TicketTable :tickets="tickets.data" />
 

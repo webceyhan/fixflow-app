@@ -2,33 +2,19 @@
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import DeviceTable from '@/components/devices/DeviceTable.vue';
-import {
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import { DEVICE_STATUS, DEVICE_TYPE } from '@/constants';
 import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/devices';
-import type {
-    Device,
-    DeviceStatus,
-    DeviceType,
-    NavItem,
-    Paginated,
-} from '@/types';
+import type { Device, NavItem, Paginated } from '@/types';
 
 defineProps<{
     devices: Paginated<Device>;
-    filter?: {
-        search?: string;
-        type?: DeviceType;
-        status?: DeviceStatus;
-        created_at?: string;
-    };
 }>();
 
 const breadcrumbs: NavItem[] = [
@@ -44,11 +30,8 @@ const breadcrumbs: NavItem[] = [
         <Heading title="Devices" />
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search devices ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search devices..." />
 
                 <MultiSelectFilter
                     name="type"
@@ -62,8 +45,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(DEVICE_STATUS)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <DeviceTable :devices="devices.data" />
 

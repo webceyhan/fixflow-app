@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import {
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import InvoiceTable from '@/components/invoices/InvoiceTable.vue';
 import Pagination from '@/components/Pagination.vue';
@@ -13,15 +11,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/invoices';
-import type { Invoice, InvoiceStatus, NavItem, Paginated } from '@/types';
+import type { Invoice, NavItem, Paginated } from '@/types';
 
 defineProps<{
     invoices: Paginated<Invoice>;
-    filter?: {
-        search?: string;
-        status?: InvoiceStatus;
-        created_at?: string;
-    };
 }>();
 
 const breadcrumbs: NavItem[] = [
@@ -37,25 +30,17 @@ const breadcrumbs: NavItem[] = [
         <Heading title="Invoices" />
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search invoices ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search invoices..." />
 
                 <MultiSelectFilter
                     name="status"
                     title="Status"
                     :options="toOptions(INVOICE_STATUS)"
-                    :value="filter?.status"
                 />
 
-                <RelativeDateFilter
-                    name="created_at"
-                    title="Created"
-                    :value="filter?.created_at"
-                />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <InvoiceTable :invoices="invoices.data" />
 

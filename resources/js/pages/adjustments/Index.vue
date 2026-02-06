@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import AdjustmentTable from '@/components/adjustments/AdjustmentTable.vue';
-import {
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import { ADJUSTMENT_REASON, ADJUSTMENT_TYPE } from '@/constants';
@@ -13,22 +11,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/adjustments';
-import type {
-    Adjustment,
-    AdjustmentReason,
-    AdjustmentType,
-    NavItem,
-    Paginated,
-} from '@/types';
+import type { Adjustment, NavItem, Paginated } from '@/types';
 
 defineProps<{
     adjustments: Paginated<Adjustment>;
-    filter?: {
-        search?: string;
-        reason?: AdjustmentReason;
-        type?: AdjustmentType;
-        created_at?: string;
-    };
 }>();
 
 const breadcrumbs: NavItem[] = [
@@ -44,11 +30,8 @@ const breadcrumbs: NavItem[] = [
         <Heading title="Adjustments" />
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search adjustments ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search adjustments..." />
 
                 <MultiSelectFilter
                     name="reason"
@@ -62,8 +45,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(ADJUSTMENT_TYPE)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <AdjustmentTable :adjustments="adjustments.data" />
 

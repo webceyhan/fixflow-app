@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import {
-    AssigneeFilter,
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import AssigneeFilter from '@/components/filters/AssigneeFilter.vue';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import TaskTable from '@/components/tasks/TaskTable.vue';
@@ -14,25 +12,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/tasks';
-import type {
-    NavItem,
-    Paginated,
-    Priority,
-    Task,
-    TaskStatus,
-    TaskType,
-} from '@/types';
+import type { NavItem, Paginated, Task } from '@/types';
 
 defineProps<{
     tasks: Paginated<Task>;
-    filter?: {
-        search?: string;
-        assignee?: string;
-        type?: TaskType;
-        priority?: Priority;
-        status?: TaskStatus;
-        created_at?: string;
-    };
 }>();
 
 const breadcrumbs: NavItem[] = [
@@ -48,11 +31,8 @@ const breadcrumbs: NavItem[] = [
         <Heading title="Tasks" />
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search tasks ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search tasks..." />
 
                 <AssigneeFilter />
 
@@ -74,8 +54,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(TASK_STATUS)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <TaskTable :tasks="tasks.data" />
 
