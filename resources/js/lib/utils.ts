@@ -16,7 +16,7 @@ export function toOptions<T extends string>(
     iconRecord?: Record<T, Icon>,
 ): Option<T>[] {
     return Object.entries(record).map(([label, value]) => ({
-        label,
+        label: label.replace(/([a-z])([A-Z])/g, '$1 $2'),
         value,
         icon: iconRecord?.[value],
     }));

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import {
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import TransactionTable from '@/components/transactions/TransactionTable.vue';
@@ -13,22 +11,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/transactions';
-import type {
-    NavItem,
-    Paginated,
-    Transaction,
-    TransactionMethod,
-    TransactionType,
-} from '@/types';
+import type { NavItem, Paginated, Transaction } from '@/types';
 
 defineProps<{
     transactions: Paginated<Transaction>;
-    filter?: {
-        search?: string;
-        method?: TransactionMethod;
-        type?: TransactionType;
-        created_at?: string;
-    };
 }>();
 
 const breadcrumbs: NavItem[] = [
@@ -44,11 +30,8 @@ const breadcrumbs: NavItem[] = [
         <Heading title="Transactions" />
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search transactions ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search transactions..." />
 
                 <MultiSelectFilter
                     name="method"
@@ -62,8 +45,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(TRANSACTION_TYPE)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <TransactionTable :transactions="transactions.data" />
 

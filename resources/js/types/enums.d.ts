@@ -17,6 +17,13 @@ export type CustomerStatus = 'active' | 'suspended' | 'archived';
 
 export type CustomerType = 'individual' | 'business';
 
+export type DatePreset =
+    | 'today'
+    | 'yesterday'
+    | 'last_week'
+    | 'last_month'
+    | 'last_year';
+
 export type DeviceStatus = 'received' | 'in_service' | 'ready' | 'delivered';
 
 export type DeviceType =

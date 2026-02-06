@@ -25,6 +25,14 @@ export const CUSTOMER_TYPE = {
     Business: 'business',
 } as const;
 
+export const DATE_PRESET = {
+    Today: 'today',
+    Yesterday: 'yesterday',
+    LastWeek: 'last_week',
+    LastMonth: 'last_month',
+    LastYear: 'last_year',
+} as const;
+
 export const DEVICE_STATUS = {
     Received: 'received',
     InService: 'in_service',

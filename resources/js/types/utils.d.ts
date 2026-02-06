@@ -9,6 +9,10 @@ export interface Option<T = any> {
     value: T;
     label: string;
     icon?: Icon;
+    class?: string;
+    checked?: boolean;
+    pinned?: boolean;
+    [key: string]: any;
 }
 
 export interface NavItem {

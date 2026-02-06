@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { CreateAction } from '@/components/action';
 import CustomerTable from '@/components/customers/CustomerTable.vue';
-import {
-    FilterGroup,
-    MultiSelectFilter,
-    RelativeDateFilter,
-    SearchFilter,
-} from '@/components/filter';
+import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
+import FilterContainer from '@/components/filters/FilterContainer.vue';
+import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import { CUSTOMER_STATUS, CUSTOMER_TYPE } from '@/constants';
@@ -14,21 +12,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { create, index } from '@/routes/customers';
-import type {
-    Customer,
-    CustomerStatus,
-    CustomerType,
-    NavItem,
-    Paginated,
-} from '@/types';
+import type { Customer, NavItem, Paginated } from '@/types';
 
 defineProps<{
     customers: Paginated<Customer>;
-    filter?: {
-        search?: string;
-        type?: CustomerType;
-        status?: CustomerStatus;
-    };
     isAdmin?: boolean;
 }>();
 
@@ -47,11 +34,8 @@ const breadcrumbs: NavItem[] = [
         </Heading>
 
         <IndexLayout>
-            <FilterGroup>
-                <SearchFilter
-                    placeholder="Search customers ..."
-                    :value="filter?.search"
-                />
+            <FilterContainer>
+                <SearchFilter placeholder="Search customers..." />
 
                 <MultiSelectFilter
                     name="type"
@@ -65,8 +49,8 @@ const breadcrumbs: NavItem[] = [
                     :options="toOptions(CUSTOMER_STATUS)"
                 />
 
-                <RelativeDateFilter name="created_at" />
-            </FilterGroup>
+                <DatePresetFilter name="created_at" />
+            </FilterContainer>
 
             <CustomerTable :customers="customers.data" />
 
