@@ -20,7 +20,13 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class Ticket extends Model
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use Assignable, HasActiveStatus, HasCancelledStatus, HasDueDate, HasFactory, HasPriority, HasStatus;
+    use Assignable,
+        HasActiveStatus,
+        HasCancelledStatus,
+        HasDueDate,
+        HasFactory,
+        HasPriority,
+        HasStatus;
 
     /**
      * The model's default values for attributes.

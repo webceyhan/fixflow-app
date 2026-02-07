@@ -6,7 +6,10 @@ use App\Models\Invoice;
 
 trait InvoiceRules
 {
-    use AmountRules, DueDateRules, NoteRules, StatusRules;
+    use AmountRules,
+        DueDateRules,
+        NoteRules,
+        StatusRules;
 
     /**
      * Get the model class to use for validation.

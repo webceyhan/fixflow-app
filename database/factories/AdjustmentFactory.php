@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AdjustmentFactory extends Factory
 {
-    use NoteStates, TypeStates;
+    use NoteStates,
+        TypeStates;
 
     private const FEE_REASONS = [
         AdjustmentReason::RushService,

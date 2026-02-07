@@ -8,7 +8,9 @@ use Illuminate\Validation\Rule;
 
 trait AdjustmentRules
 {
-    use AmountRules, BooleanRules, NoteRules;
+    use AmountRules,
+        BooleanRules,
+        NoteRules;
 
     /**
      * Get the model class to use for validation.

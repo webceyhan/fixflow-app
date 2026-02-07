@@ -8,7 +8,10 @@ use Illuminate\Validation\Rule;
 
 trait CustomerRules
 {
-    use ContactRules, NoteRules, StatusRules, TypeRules;
+    use ContactRules,
+        NoteRules,
+        StatusRules,
+        TypeRules;
 
     /**
      * Get the model class to use for validation.

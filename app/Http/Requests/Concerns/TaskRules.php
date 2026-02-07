@@ -6,7 +6,14 @@ use App\Models\Task;
 
 trait TaskRules
 {
-    use AmountRules, ApprovalDateRules, AssigneeRules, BooleanRules, NoteRules, PriorityRules, StatusRules, TypeRules;
+    use AmountRules,
+        ApprovalDateRules,
+        AssigneeRules,
+        BooleanRules,
+        NoteRules,
+        PriorityRules,
+        StatusRules,
+        TypeRules;
 
     /**
      * Get the model class to use for validation.

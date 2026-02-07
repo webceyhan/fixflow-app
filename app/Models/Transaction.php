@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaction extends Model
 {
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
-    use HasFactory, HasType;
+    use HasFactory,
+        HasType;
 
     /**
      * The model's default values for attributes.
