@@ -1,0 +1,152 @@
+{
+  "issues": {
+    "phone": [
+      {
+        "title": "Screen cracked",
+        "note": "Customer reported dropping the phone. Screen is shattered and unresponsive."
+      },
+      {
+        "title": "Battery not holding charge",
+        "note": "Customer reported that the phone battery drains quickly and does not hold a charge."
+      },
+      {
+        "title": "Water damage",
+        "note": "Phone was exposed to water. Internal components may be damaged."
+      },
+      {
+        "title": "Speaker not working",
+        "note": "Customer reported no sound from the phone speaker."
+      },
+      {
+        "title": "Microphone not working",
+        "note": "Customer reported that the microphone is not picking up sound during calls."
+      },
+      {
+        "title": "Charging port damaged",
+        "note": "Customer reported that the phone does not charge when plugged in."
+      },
+      {
+        "title": "Overheating",
+        "note": "Customer reported that the phone gets excessively hot during use."
+      },
+      {
+        "title": "Software issues",
+        "note": "Customer reported frequent crashes and unresponsiveness. May require software update or reset."
+      },
+      {
+        "title": "Camera malfunctioning",
+        "note": "Customer reported that the camera is not functioning properly. Images are blurry or not capturing."
+      }
+    ],
+    "tablet": [
+      {
+        "title": "Screen unresponsive",
+        "note": "Customer reported that the touchscreen is not responding to touch inputs."
+      },
+      {
+        "title": "Battery swelling",
+        "note": "Customer noticed that the tablet battery is swelling. Device needs immediate attention for safety."
+      },
+      {
+        "title": "Charging port damaged",
+        "note": "Customer reported that the tablet does not charge when plugged in. Port may be damaged."
+      },
+      {
+        "title": "Overheating",
+        "note": "Customer reported that the tablet gets excessively hot during use or charging."
+      },
+      {
+        "title": "Software issues",
+        "note": "Customer reported frequent crashes or unresponsiveness. May require software update or factory reset."
+      }
+    ],
+    "laptop": [
+      {
+        "title": "Won't turn on",
+        "note": "Customer reported that the laptop does not power on. May be power supply or motherboard issue."
+      },
+      {
+        "title": "Blue screen error",
+        "note": "Customer reported frequent blue screen crashes. May indicate hardware or driver issues."
+      },
+      {
+        "title": "Keyboard not working",
+        "note": "Customer reported that some or all keyboard keys are not responding."
+      },
+      {
+        "title": "Overheating",
+        "note": "Customer reported excessive heat during operation. May require cleaning or fan replacement."
+      },
+      {
+        "title": "Virus infection",
+        "note": "Customer reported suspicious behavior and pop-ups. System may be infected with malware."
+      }
+    ],
+    "desktop": [
+      {
+        "title": "Power supply failure",
+        "note": "Customer reported that the desktop does not power on. Power supply unit may need replacement."
+      },
+      {
+        "title": "Hard drive crash",
+        "note": "Customer reported clicking sounds and data loss. Hard drive appears to have failed."
+      },
+      {
+        "title": "RAM issues",
+        "note": "Customer reported system crashes and memory errors. RAM modules may be faulty."
+      },
+      {
+        "title": "Graphics card failure",
+        "note": "Customer reported display artifacts or no video output. Graphics card may need replacement."
+      },
+      {
+        "title": "Software corruption",
+        "note": "Customer reported that the operating system fails to boot properly. May require reinstallation."
+      }
+    ],
+    "wearable": [
+      {
+        "title": "Won't sync with phone",
+        "note": "Customer reported that the device is not syncing with their smartphone. Connection issues detected."
+      },
+      {
+        "title": "Battery draining fast",
+        "note": "Customer reported that the battery drains quickly and does not last through the day."
+      },
+      {
+        "title": "Screen flickering",
+        "note": "Customer reported that the display flickers intermittently during use."
+      },
+      {
+        "title": "Heart rate sensor not working",
+        "note": "Customer reported that the heart rate monitor is not detecting pulse or readings are inaccurate."
+      },
+      {
+        "title": "Strap broken",
+        "note": "Customer reported that the device strap is damaged or broken and needs replacement."
+      }
+    ],
+    "other": [
+      {
+        "title": "Not powering on",
+        "note": "Customer reported that the device does not turn on or respond to power button."
+      },
+      {
+        "title": "Physical damage",
+        "note": "Customer reported visible physical damage to the device. Assessment needed."
+      },
+      {
+        "title": "Connectivity issues",
+        "note": "Customer reported problems connecting to network or other devices."
+      },
+      {
+        "title": "Software malfunctioning",
+        "note": "Customer reported that the device software is not functioning properly. May require update or reset."
+      },
+      {
+        "title": "Unusual noises",
+        "note": "Customer reported strange sounds coming from the device during operation."
+      }
+    ]
+  }
+}

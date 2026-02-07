@@ -18,29 +18,6 @@ class TransactionFactory extends Factory
     use NoteStates,
         TypeStates;
 
-    private const TRANSACTION_NOTES = [
-        TransactionType::Payment->value => [
-            'Partial payment received',
-            'Final payment for services',
-            'Balance payment',
-            'Full payment received',
-            'Installment payment 1 of 2',
-            'Installment payment 2 of 2',
-        ],
-        TransactionType::Refund->value => [
-            'Refund for cancelled service',
-            'Partial refund for warranty claim',
-            'Full refund issued',
-            'Refund for duplicate payment',
-        ],
-        TransactionType::Deposit->value => [
-            'Initial deposit for repair',
-            'Advance payment received',
-            'Down payment',
-            'Security deposit',
-        ],
-    ];
-
     /**
      * Define the model's default state.
      *
@@ -55,19 +32,6 @@ class TransactionFactory extends Factory
             'method' => fake()->randomElement(TransactionMethod::cases()),
             'type' => TransactionType::Payment,
         ];
-    }
-
-    /**
-     * Configure the model factory.
-     */
-    public function configure(): static
-    {
-        return $this->afterMaking(function (Transaction $transaction) {
-            if (! $transaction->note) {
-                $notesByType = self::TRANSACTION_NOTES[$transaction->type->value];
-                $transaction->note = fake()->optional(0.6)->randomElement($notesByType);
-            }
-        });
     }
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////

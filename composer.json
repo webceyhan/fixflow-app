@@ -35,6 +35,7 @@
             "App\\": "app/",
             "Database\\Factories\\States\\": "database/factories/states/",
             "Database\\Factories\\": "database/factories/",
+            "Database\\Fixtures\\": "database/fixtures/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },

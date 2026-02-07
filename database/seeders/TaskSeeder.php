@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\TaskType;
 use App\Models\Task;
 use App\Models\Ticket;
 use App\Models\User;
+use Database\Fixtures\TaskFixture;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
@@ -17,36 +19,46 @@ class TaskSeeder extends Seeder
         // Get all active users
         $users = User::active()->get();
 
-        // Create 1-3 tasks for each ticket
-        Ticket::all()->each(function (Ticket $ticket) {
-            Task::factory()
-                ->count(fake()->numberBetween(1, 3))
-                ->forTicket($ticket)
-                ->create();
+        // Get all tickets
+        $tickets = Ticket::all();
+
+        // Create tasks with specific notes from fixtures
+        $tickets->each(function (Ticket $ticket) {
+            TaskType::all()
+                ->random(rand(1, 3))
+                ->each(function (TaskType $type) use ($ticket) {
+                    Task::factory()
+                        ->forTicket($ticket)
+                        ->ofType($type)
+                        ->state(TaskFixture::noteByType())
+                        ->create();
+                });
         });
 
         // Create some completed tasks
-        Ticket::all()->random(15)->each(function (Ticket $ticket) use ($users) {
+        $tickets->random(15)->each(function (Ticket $ticket) use ($users) {
             Task::factory()
                 ->forTicket($ticket)
                 ->forAssignee($users->random())
                 ->completed()
-                ->create();
-        });
-
-        // Create some cancelled tasks
-        Ticket::all()->random(5)->each(function (Ticket $ticket) {
-            Task::factory()
-                ->forTicket($ticket)
-                ->cancelled()
+                ->state(TaskFixture::noteByType())
                 ->create();
         });
 
         // Create some pre-approved tasks
-        Ticket::all()->random(10)->each(function (Ticket $ticket) {
+        $tickets->random(10)->each(function (Ticket $ticket) {
             Task::factory()
                 ->forTicket($ticket)
                 ->approved()
+                ->state(TaskFixture::noteByType())
+                ->create();
+        });
+
+        // Create some cancelled tasks
+        $tickets->random(5)->each(function (Ticket $ticket) {
+            Task::factory()
+                ->forTicket($ticket)
+                ->cancelled()
                 ->create();
         });
     }

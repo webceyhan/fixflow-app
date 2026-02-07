@@ -1,0 +1,46 @@
+{
+  "notes": {
+    "draft": [
+      "Invoice created, pending review before sending to customer.",
+      "Draft prepared after completing initial repair assessment.",
+      "Awaiting approval before issuing to customer.",
+      "Invoice drafted; final parts cost to be confirmed.",
+      "Prepared for review, pending technician sign-off."
+    ],
+    "issued": [
+      "Invoice issued and ready for customer review.",
+      "All services completed, invoice handed to front desk.",
+      "Issued after final quality check passed.",
+      "Invoice generated upon repair completion.",
+      "Ready for pickup and payment collection."
+    ],
+    "sent": [
+      "Invoice sent to customer via email.",
+      "Emailed invoice to customer, awaiting payment.",
+      "Sent to customer following repair completion.",
+      "Invoice dispatched, customer notified by email.",
+      "Sent digitally, awaiting customer confirmation."
+    ],
+    "paid": [
+      "Full payment received, thank you.",
+      "Payment collected in full at counter.",
+      "Invoice settled by customer.",
+      "Complete payment received, invoice closed.",
+      "Customer paid in full, device released."
+    ],
+    "refunded": [
+      "Refund issued at customer request.",
+      "Partial refund applied after warranty claim.",
+      "Full refund processed, service not completed.",
+      "Refund issued following unresolved repair.",
+      "Customer refunded as per agreement."
+    ],
+    "cancelled": [
+      "Invoice cancelled at customer request.",
+      "Cancelled prior to service commencement.",
+      "Service cancelled, no charges applied.",
+      "Customer cancelled appointment before repair started.",
+      "Cancelled due to unavailability of required parts."
+    ]
+  }
+}

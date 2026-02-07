@@ -28,42 +28,6 @@ class OrderFactory extends Factory
         NoteStates,
         StatusStates;
 
-    private const ORDER_NAMES = [
-        'iPhone 13 Screen Assembly',
-        'Samsung Galaxy Battery',
-        'MacBook Pro Logic Board',
-        'iPad Air Digitizer',
-        'USB-C Charging Cable',
-        'Phone Case - Clear',
-        'Screen Protector Tempered Glass',
-        'Replacement Camera Module',
-        'Laptop RAM 8GB DDR4',
-        'SSD 256GB NVMe',
-        'Thermal Paste',
-        'Flex Cable Ribbon',
-        'Power Button Assembly',
-        'Speaker Replacement',
-        'Microphone Component',
-        'Headphone Jack',
-        'Home Button Flex Cable',
-        'Back Cover Glass',
-        'Front Camera Assembly',
-        'Vibration Motor',
-    ];
-
-    private const SUPPLIERS = [
-        'iFixit',
-        'Injured Gadgets',
-        'Mobile Defenders',
-        'Repairs Universe',
-        'Wholesale Gadget Parts',
-        'Tech Parts Depot',
-        'Global Direct Parts',
-        'Mobile Sentrix',
-        'Fixez',
-        'Gadget Fix',
-    ];
-
     /**
      * Define the model's default state.
      *
@@ -71,14 +35,13 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
             'ticket_id' => Ticket::factory(),
             'assignee_id' => null,
-            'name' => fake()->randomElement(self::ORDER_NAMES),
-            'url' => fake()->optional(0.5)->url(),
-            'supplier' => fake()->optional(0.7)->randomElement(self::SUPPLIERS),
-            'quantity' => fake()->numberBetween(1, 10),
+            'name' => fake()->words(3, true),
+            'url' => fake()->optional()->url(),
+            'supplier' => fake()->optional()->company(),
+            'quantity' => fake()->numberBetween(1, 5),
             'cost' => fake()->randomFloat(2, 10, 500),
             'is_billable' => fake()->boolean(80),
             'note' => null,

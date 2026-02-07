@@ -27,17 +27,15 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
-        $hasCompany = fake()->boolean(30); // 30% chance of having a company
-
         return [
             'name' => fake()->name(),
-            'company' => $hasCompany ? fake()->unique()->company() : null,
-            'tax_number' => $hasCompany ? fake()->unique()->ean13() : null,
+            'company' => null,
+            'tax_number' => null,
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->unique()->phoneNumber(),
             'address' => fake()->optional()->address(),
             'note' => null,
-            'type' => $hasCompany ? CustomerType::Business : CustomerType::Individual,
+            'type' => CustomerType::Individual,
             'status' => CustomerStatus::Active,
         ];
     }

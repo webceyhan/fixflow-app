@@ -1,0 +1,224 @@
+{
+  "models": {
+    "phone": [
+      {
+        "name": "iPhone",
+        "brand": "Apple",
+        "versions": [
+          "SE",
+          "X",
+          "Pro",
+          "Max",
+          "Pro Max"
+        ],
+        "colors": [
+          "Ultramarine",
+          "Teal",
+          "Pink",
+          "White",
+          "Black"
+        ]
+      },
+      {
+        "name": "Galaxy",
+        "brand": "Samsung",
+        "versions": [
+          "S10",
+          "S20",
+          "S21"
+        ],
+        "colors": [
+          "Phantom Black",
+          "Phantom White",
+          "Phantom Blue",
+          "Phantom Pink"
+        ]
+      }
+    ],
+    "tablet": [
+      {
+        "name": "iPad",
+        "brand": "Apple",
+        "versions": [
+          "Mini",
+          "Air",
+          "Pro"
+        ],
+        "colors": [
+          "Space Gray",
+          "Silver",
+          "Blue",
+          "Purple",
+          "Starlight"
+        ]
+      },
+      {
+        "name": "Galaxy Tab",
+        "brand": "Samsung",
+        "versions": [
+          "A",
+          "S",
+          "E"
+        ],
+        "colors": [
+          "Graphite",
+          "Silver",
+          "Pink Gold"
+        ]
+      }
+    ],
+    "laptop": [
+      {
+        "name": "MacBook",
+        "brand": "Apple",
+        "versions": [
+          "Air",
+          "Pro"
+        ],
+        "colors": [
+          "Space Black",
+          "Silver",
+          "Sky Blue",
+          "Starlight",
+          "Midnight"
+        ]
+      },
+      {
+        "name": "Thinkpad",
+        "brand": "Lenovo",
+        "versions": [
+          "X1",
+          "T"
+        ],
+        "colors": [
+          "Black"
+        ]
+      },
+      {
+        "name": "Vaio",
+        "brand": "Sony",
+        "versions": [
+          "Pro",
+          "Slim"
+        ],
+        "colors": [
+          "Silver",
+          "Black"
+        ]
+      }
+    ],
+    "desktop": [
+      {
+        "name": "iMac",
+        "brand": "Apple",
+        "versions": [
+          "21\"",
+          "27\""
+        ],
+        "colors": [
+          "Blue",
+          "Purple",
+          "Pink",
+          "Orange",
+          "Yellow",
+          "Green",
+          "Silver"
+        ]
+      },
+      {
+        "name": "Mac",
+        "brand": "Apple",
+        "versions": [
+          "Mini",
+          "Pro",
+          "Studio"
+        ],
+        "colors": [
+          "Silver",
+          "Space Gray"
+        ]
+      },
+      {
+        "name": "Pavilion",
+        "brand": "HP",
+        "versions": [
+          "Gaming",
+          "Business"
+        ],
+        "colors": [
+          "Black",
+          "Silver"
+        ]
+      }
+    ],
+    "wearable": [
+      {
+        "name": "Apple Watch",
+        "brand": "Apple",
+        "versions": [
+          "Series 6",
+          "Series 7",
+          "SE"
+        ],
+        "colors": [
+          "Space Gray",
+          "Silver",
+          "Gold",
+          "Rose Gold",
+          "Midnight",
+          "Starlight"
+        ]
+      },
+      {
+        "name": "Galaxy Watch",
+        "brand": "Samsung",
+        "versions": [
+          "Active",
+          "Classic"
+        ],
+        "colors": [
+          "Black",
+          "Silver",
+          "Pink Gold"
+        ]
+      }
+    ],
+    "other": [
+      {
+        "name": "PlayStation",
+        "brand": "Sony",
+        "versions": [
+          "4",
+          "5"
+        ],
+        "colors": [
+          "White",
+          "Black"
+        ]
+      },
+      {
+        "name": "Deskjet",
+        "brand": "HP",
+        "versions": [
+          "1000",
+          "2000"
+        ],
+        "colors": [
+          "Black",
+          "White"
+        ]
+      },
+      {
+        "name": "Go Comfort",
+        "brand": "TomTom",
+        "versions": [
+          "5\"",
+          "6\""
+        ],
+        "colors": [
+          "Black"
+        ]
+      }
+    ]
+  }
+}

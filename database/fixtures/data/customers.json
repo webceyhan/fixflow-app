@@ -1,0 +1,25 @@
+{
+  "notes": {
+    "active": [
+      "Regular customer with good payment history",
+      "VIP customer - priority service",
+      "New customer onboarding complete",
+      "Referred by existing customer",
+      "Long-term customer since 2020"
+    ],
+    "suspended": [
+      "Payment overdue - service suspended",
+      "Pending verification of account details",
+      "Multiple failed payment attempts",
+      "Requested temporary service suspension",
+      "Under review for policy violation"
+    ],
+    "archived": [
+      "Account closed at customer request",
+      "Moved to different service provider",
+      "Business permanently closed",
+      "Duplicate account - merged with primary",
+      "Inactive for over 12 months - archived"
+    ]
+  }
+}

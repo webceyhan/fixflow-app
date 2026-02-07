@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\TicketStatus;
 use App\Models\Device;
 use App\Models\Ticket;
 use App\Models\User;
+use Database\Fixtures\TicketFixture;
 use Illuminate\Database\Seeder;
 
 class TicketSeeder extends Seeder
@@ -19,17 +21,22 @@ class TicketSeeder extends Seeder
 
         // Create tickets for all devices
         $devices->each(function (Device $device) {
-            Ticket::factory()->forDevice($device)->create();
+            Ticket::factory()
+                ->forDevice($device)
+                ->state(TicketFixture::issueByDevice($device))
+                ->create();
         });
 
-        // Create tickets for random devices assigned to every active user.
-        // This ensures that each device has tickets assigned to different users
+        // Create 5-10 assigned tickets per active user across random devices
         User::active()->each(function (User $user) use ($devices) {
-            // Ensure users have at least one ticket assigned
-            $devices->random(5)->each(fn (Device $device) => Ticket::factory()
-                ->forDevice($device)
-                ->forAssignee($user)
-                ->create());
+            $devices->random(rand(5, 10))->each(function (Device $device) use ($user) {
+                Ticket::factory()
+                    ->forDevice($device)
+                    ->forAssignee($user)
+                    ->ofStatus(TicketStatus::all()->random())
+                    ->state(TicketFixture::issueByDevice($device))
+                    ->create();
+            });
         });
     }
 }

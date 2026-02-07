@@ -1,0 +1,12 @@
+{
+  "emails": {
+    "admin": "admin@demo.com",
+    "manager": "manager@demo.com",
+    "technician": "technician@demo.com"
+  },
+  "notes": {
+    "unverified": "Pending email verification",
+    "suspended": "Suspended pending investigation",
+    "terminated": "Terminated - Do not contact"
+  }
+}
