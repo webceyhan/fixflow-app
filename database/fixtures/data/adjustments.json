@@ -1,0 +1,51 @@
+{
+  "notes": {
+    "bulk_service": [
+      "Multiple device repair discount",
+      "Bundle service discount applied",
+      "Volume discount - 3+ services"
+    ],
+    "promotion": [
+      "New Year promotion - 15% off",
+      "Black Friday special discount",
+      "Summer sale discount",
+      "Grand opening special"
+    ],
+    "loyalty": [
+      "Returning customer discount",
+      "VIP customer loyalty reward",
+      "Valued customer appreciation"
+    ],
+    "welcome": [
+      "First-time customer welcome bonus",
+      "New customer special offer",
+      "Welcome to our service"
+    ],
+    "compensation": [
+      "Delay compensation - service took 2 extra days",
+      "Quality issue compensation",
+      "Service recovery discount",
+      "Manager discretion - customer satisfaction"
+    ],
+    "rush_service": [
+      "Same-day service rush fee",
+      "Priority repair surcharge",
+      "Express service fee"
+    ],
+    "delivery": [
+      "Delivery and pickup fee",
+      "Parts shipping charge",
+      "Transportation surcharge"
+    ],
+    "late_payment": [
+      "Late payment penalty",
+      "Overdue invoice fee",
+      "Payment delay charge"
+    ],
+    "cancellation": [
+      "Cancellation fee - parts ordered",
+      "Service cancellation charge",
+      "Restocking fee"
+    ]
+  }
+}

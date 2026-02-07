@@ -33,8 +33,9 @@ class InvoiceFactory extends Factory
         $orderTotal = fake()->randomFloat(2, 0, 300);
         $subtotal = $taskTotal + $orderTotal;
 
-        $discountAmount = fake()->optional(0.3)->randomFloat(2, 0, $subtotal * 0.2) ?? 0;
-        $feeAmount = fake()->optional(0.2)->randomFloat(2, 0, 50) ?? 0;
+        // Apply a discount of 0%-20% and/or a fee of $0-$50, with some randomness
+        $discountAmount = fake()->optional(0.3, 0)->randomFloat(2, 0, $subtotal * 0.2);
+        $feeAmount = fake()->optional(0.2, 0)->randomFloat(2, 0, 50);
 
         $total = $subtotal - $discountAmount + $feeAmount;
 
@@ -95,9 +96,11 @@ class InvoiceFactory extends Factory
      */
     public function paid(): static
     {
-        return $this->ofStatus(InvoiceStatus::Paid)->state(fn (array $attributes) => [
-            'paid_amount' => $attributes['total'],
-        ]);
+        return $this
+            ->ofStatus(InvoiceStatus::Paid)
+            ->state(fn (array $attributes) => [
+                'paid_amount' => $attributes['total'],
+            ]);
     }
 
     /**
@@ -105,9 +108,11 @@ class InvoiceFactory extends Factory
      */
     public function refunded(): static
     {
-        return $this->ofStatus(InvoiceStatus::Refunded)->state(fn (array $attributes) => [
-            'paid_amount' => $attributes['total'],
-            'refunded_amount' => $attributes['total'],
-        ]);
+        return $this
+            ->ofStatus(InvoiceStatus::Refunded)
+            ->state(fn (array $attributes) => [
+                'paid_amount' => $attributes['total'],
+                'refunded_amount' => $attributes['total'],
+            ]);
     }
 }

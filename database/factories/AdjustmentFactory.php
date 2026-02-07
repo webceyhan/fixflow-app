@@ -18,71 +18,6 @@ class AdjustmentFactory extends Factory
     use NoteStates,
         TypeStates;
 
-    private const FEE_REASONS = [
-        AdjustmentReason::RushService,
-        AdjustmentReason::Delivery,
-        AdjustmentReason::LatePayment,
-        AdjustmentReason::Cancellation,
-    ];
-
-    private const DISCOUNT_REASONS = [
-        AdjustmentReason::BulkService,
-        AdjustmentReason::Promotion,
-        AdjustmentReason::Loyalty,
-        AdjustmentReason::Welcome,
-        AdjustmentReason::Compensation,
-    ];
-
-    private const ADJUSTMENT_NOTES = [
-        AdjustmentReason::BulkService->value => [
-            'Multiple device repair discount',
-            'Bundle service discount applied',
-            'Volume discount - 3+ services',
-        ],
-        AdjustmentReason::Promotion->value => [
-            'New Year promotion - 15% off',
-            'Black Friday special discount',
-            'Summer sale discount',
-            'Grand opening special',
-        ],
-        AdjustmentReason::Loyalty->value => [
-            'Returning customer discount',
-            'VIP customer loyalty reward',
-            'Valued customer appreciation',
-        ],
-        AdjustmentReason::Welcome->value => [
-            'First-time customer welcome bonus',
-            'New customer special offer',
-            'Welcome to our service',
-        ],
-        AdjustmentReason::Compensation->value => [
-            'Delay compensation - service took 2 extra days',
-            'Quality issue compensation',
-            'Service recovery discount',
-            'Manager discretion - customer satisfaction',
-        ],
-        AdjustmentReason::RushService->value => [
-            'Same-day service rush fee',
-            'Priority repair surcharge',
-            'Express service fee',
-        ],
-        AdjustmentReason::Delivery->value => [
-            'Delivery and pickup fee',
-            'Parts shipping charge',
-            'Transportation surcharge',
-        ],
-        AdjustmentReason::LatePayment->value => [
-            'Late payment penalty',
-            'Overdue invoice fee',
-            'Payment delay charge',
-        ],
-        AdjustmentReason::Cancellation->value => [
-            'Cancellation fee - parts ordered',
-            'Service cancellation charge',
-            'Restocking fee',
-        ],
-    ];
-
     /**
      * Define the model's default state.
      *
@@ -108,11 +43,6 @@ class AdjustmentFactory extends Factory
         return $this->afterMaking(function (Adjustment $adjustment) {
             // Ensure consistency between reason and type
             $adjustment->type = $adjustment->reason->type();
-
-            if (! $adjustment->note) {
-                $notesByType = self::ADJUSTMENT_NOTES[$adjustment->reason->value];
-                $adjustment->note = fake()->optional(0.6)->randomElement($notesByType);
-            }
         });
     }
 
@@ -136,9 +66,11 @@ class AdjustmentFactory extends Factory
      */
     public function discount(): static
     {
+        $discountReasons = AdjustmentReason::casesByType(AdjustmentType::Discount);
+
         return $this->state(fn (array $attributes) => [
             'type' => AdjustmentType::Discount,
-            'reason' => fake()->randomElement(self::DISCOUNT_REASONS),
+            'reason' => fake()->randomElement($discountReasons),
         ]);
     }
 
@@ -147,9 +79,11 @@ class AdjustmentFactory extends Factory
      */
     public function fee(): static
     {
+        $feeReasons = AdjustmentReason::casesByType(AdjustmentType::Fee);
+
         return $this->state(fn (array $attributes) => [
             'type' => AdjustmentType::Fee,
-            'reason' => fake()->randomElement(self::FEE_REASONS),
+            'reason' => fake()->randomElement($feeReasons),
         ]);
     }
 

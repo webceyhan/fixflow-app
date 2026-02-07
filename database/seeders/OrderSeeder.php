@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\Ticket;
+use Database\Fixtures\OrderFixture;
 use Illuminate\Database\Seeder;
 
 class OrderSeeder extends Seeder
@@ -13,28 +15,35 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 0-2 orders for each ticket
-        Ticket::all()->each(function (Ticket $ticket) {
-            Order::factory()
-                ->count(fake()->numberBetween(0, 2))
-                ->forTicket($ticket)
-                ->create();
-        });
+        // Create 1-2 orders for 40% of tickets with specific parts/suppliers
+        Ticket::all()
+            ->random((int) Ticket::count() * 0.4)
+            ->each(function (Ticket $ticket) {
+                Order::factory(rand(1, 2))
+                    ->forTicket($ticket)
+                    ->state(OrderFixture::partsAndSupplier())
+                    ->create();
+            });
 
-        // Create some received orders
-        Ticket::all()->random(10)->each(function (Ticket $ticket) {
-            Order::factory()
-                ->forTicket($ticket)
-                ->received()
-                ->create();
-        });
+        // Mark 30% of orders as shipped
+        Order::all()
+            ->random((int) Order::count() * 0.3)
+            ->each(fn (Order $order) => $order->update([
+                'status' => OrderStatus::Shipped,
+            ]));
 
-        // Create some cancelled orders
-        Ticket::all()->random(3)->each(function (Ticket $ticket) {
-            Order::factory()
-                ->forTicket($ticket)
-                ->cancelled()
-                ->create();
-        });
+        // Mark 50% of orders as received
+        Order::all()
+            ->random((int) Order::count() * 0.5)
+            ->each(fn (Order $order) => $order->update([
+                'status' => OrderStatus::Received,
+            ]));
+
+        // Mark 10% of orders as cancelled
+        Order::all()
+            ->random((int) Order::count() * 0.1)
+            ->each(fn (Order $order) => $order->update([
+                'status' => OrderStatus::Cancelled,
+            ]));
     }
 }

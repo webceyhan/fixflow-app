@@ -27,17 +27,6 @@ class TicketFactory extends Factory
         PriorityStates,
         StatusStates;
 
-    private const ISSUES = [
-        'Screen Repair',
-        'Battery Replacement',
-        'Water Damage',
-        'Software Issue',
-        'Hardware Issue',
-        'Data Recovery',
-        'Performance Issue',
-        'Connectivity Problem',
-    ];
-
     /**
      * Define the model's default state.
      *
@@ -48,7 +37,7 @@ class TicketFactory extends Factory
         return [
             'device_id' => Device::factory(),
             'assignee_id' => null,
-            'title' => fake()->randomElement(self::ISSUES),
+            'title' => fake()->sentence(3),
             'note' => null,
             'priority' => fake()->randomElement(Priority::cases()),
             'status' => TicketStatus::Created,

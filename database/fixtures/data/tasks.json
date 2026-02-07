@@ -1,0 +1,58 @@
+{
+  "notes": {
+    "repair": [
+      "Replaced cracked screen with OEM part",
+      "Fixed broken charging port",
+      "Repaired camera module connection",
+      "Replaced faulty speaker"
+    ],
+    "diagnosis": [
+      "Performed full hardware diagnostic",
+      "Tested all components for functionality",
+      "Identified water damage on motherboard",
+      "Found battery capacity degraded to 60%"
+    ],
+    "testing": [
+      "Verified all functions after repair",
+      "Tested device for 24 hours",
+      "Quality check completed successfully",
+      "Stress tested all components"
+    ],
+    "calibration": [
+      "Calibrated touchscreen sensitivity",
+      "Adjusted display color profile",
+      "Recalibrated battery meter",
+      "Aligned camera sensors"
+    ],
+    "installation": [
+      "Installed latest firmware update",
+      "Set up device with customer preferences",
+      "Installed security patches",
+      "Configured backup settings"
+    ],
+    "upgrade": [
+      "Upgraded RAM from 4GB to 8GB",
+      "Replaced HDD with SSD",
+      "Updated to latest OS version",
+      "Increased storage capacity"
+    ],
+    "maintenance": [
+      "Cleaned internal components",
+      "Applied thermal paste",
+      "Removed dust and debris",
+      "Checked and tightened all connections"
+    ],
+    "cleaning": [
+      "Deep cleaned device exterior",
+      "Sanitized all surfaces",
+      "Cleaned charging port",
+      "Removed adhesive residue"
+    ],
+    "other": [
+      "Customer consultation completed",
+      "Parts ordered for future repair",
+      "Provided technical support",
+      "Documentation updated"
+    ]
+  }
+}
