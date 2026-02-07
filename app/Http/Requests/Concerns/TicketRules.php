@@ -6,7 +6,11 @@ use App\Models\Ticket;
 
 trait TicketRules
 {
-    use AssigneeRules, DueDateRules, NoteRules, PriorityRules, StatusRules;
+    use AssigneeRules,
+        DueDateRules,
+        NoteRules,
+        PriorityRules,
+        StatusRules;
 
     /**
      * Get the model class to use for validation.

@@ -7,7 +7,9 @@ use Illuminate\Validation\Rule;
 
 trait DeviceRules
 {
-    use NoteRules, StatusRules, TypeRules;
+    use NoteRules,
+        StatusRules,
+        TypeRules;
 
     /**
      * Get the model class to use for validation.

@@ -6,7 +6,13 @@ use App\Models\Order;
 
 trait OrderRules
 {
-    use AmountRules, ApprovalDateRules, AssigneeRules, BooleanRules, DueDateRules, NoteRules, StatusRules;
+    use AmountRules,
+        ApprovalDateRules,
+        AssigneeRules,
+        BooleanRules,
+        DueDateRules,
+        NoteRules,
+        StatusRules;
 
     /**
      * Get the model class to use for validation.

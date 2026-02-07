@@ -8,7 +8,9 @@ use Illuminate\Validation\Rule;
 
 trait UserRules
 {
-    use ContactRules, NoteRules, StatusRules;
+    use ContactRules,
+        NoteRules,
+        StatusRules;
 
     /**
      * Get the model class to use for validation.

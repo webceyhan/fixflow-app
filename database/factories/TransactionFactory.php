@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TransactionFactory extends Factory
 {
-    use NoteStates, TypeStates;
+    use NoteStates,
+        TypeStates;
 
     private const TRANSACTION_NOTES = [
         TransactionType::Payment->value => [

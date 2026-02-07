@@ -16,7 +16,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Device extends Model
 {
     /** @use HasFactory<\Database\Factories\DeviceFactory> */
-    use HasActiveStatus, HasFactory, HasStatus, HasType, HasWarranty;
+    use HasActiveStatus,
+        HasFactory,
+        HasStatus,
+        HasType,
+        HasWarranty;
 
     /**
      * The model's default values for attributes.

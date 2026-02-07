@@ -8,7 +8,9 @@ use Illuminate\Validation\Rule;
 
 trait TransactionRules
 {
-    use AmountRules, NoteRules, TypeRules;
+    use AmountRules,
+        NoteRules,
+        TypeRules;
 
     /**
      * Get the model class to use for validation.

@@ -15,7 +15,10 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class Customer extends Model
 {
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
-    use HasActiveStatus, HasFactory, HasStatus, HasType;
+    use HasActiveStatus,
+        HasFactory,
+        HasStatus,
+        HasType;
 
     /**
      * The model's default values for attributes.
