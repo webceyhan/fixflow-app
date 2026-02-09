@@ -17,7 +17,7 @@ trait HasAttributes
      */
     public function attribute(string $name): ?object
     {
-        return $this->attributes($name)[0]?->newInstance();
+        return ($this->attributes($name)[0] ?? null)?->newInstance();
     }
 
     /**

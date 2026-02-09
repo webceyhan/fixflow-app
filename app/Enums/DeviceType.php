@@ -2,22 +2,27 @@
 
 namespace App\Enums;
 
+use App\Enums\Attributes\Cellular;
 use App\Enums\Concerns\Collectible;
+use App\Enums\Concerns\HasAttributes;
 use App\Enums\Concerns\HasNextCase;
 
 enum DeviceType: string
 {
     use Collectible,
+        HasAttributes,
         HasNextCase;
 
     /**
      * Represents a mobile phone device.
      */
+    #[Cellular]
     case Phone = 'phone';
 
     /**
      * Represents a tablet device.
      */
+    #[Cellular]
     case Tablet = 'tablet';
 
     /**
@@ -33,6 +38,7 @@ enum DeviceType: string
     /**
      * Represents a device that is worn on the body.
      */
+    #[Cellular]
     case Wearable = 'wearable';
 
     /**
@@ -42,4 +48,16 @@ enum DeviceType: string
      * @default
      */
     case Other = 'other';
+
+    // METHODS /////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Check if the device type has cellular connectivity.
+     *
+     * Devices with cellular support can have IMEI numbers and connect to mobile networks.
+     */
+    public function hasCellular(): bool
+    {
+        return $this->hasAttribute(Cellular::class);
+    }
 }
