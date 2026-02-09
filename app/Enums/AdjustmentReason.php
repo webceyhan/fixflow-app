@@ -82,4 +82,14 @@ enum AdjustmentReason: string
     {
         return $this->attribute(Tag::class)->value;
     }
+
+    /**
+     * Get all adjustment reasons for a given adjustment type.
+     *
+     * @return self[]
+     */
+    public static function casesByType(AdjustmentType $type): array
+    {
+        return array_filter(self::cases(), fn (self $reason) => $reason->type() === $type);
+    }
 }
