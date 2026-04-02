@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use App\Models\Concerns\HasWarranty;
@@ -18,9 +19,12 @@ class Device extends Model
     /** @use HasFactory<\Database\Factories\DeviceFactory> */
     use HasActiveStatus,
         HasFactory,
+        HasRef,
         HasStatus,
         HasType,
         HasWarranty;
+
+    protected string $refPrefix = 'DVC';
 
     /**
      * The model's default values for attributes.

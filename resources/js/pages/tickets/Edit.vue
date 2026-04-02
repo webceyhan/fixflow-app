@@ -17,7 +17,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
         href: index(),
     },
     {
-        title: props.ticket.title,
+        title: props.ticket.ref,
         href: show(props.ticket),
     },
     {
@@ -29,7 +29,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading :title="`Edit ${ticket.title}`" />
+        <Heading title="Edit Ticket" />
 
         <EditLayout>
             <TicketForm :ticket />

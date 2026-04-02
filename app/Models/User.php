@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Observers\UserObserver;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,9 +23,12 @@ class User extends Authenticatable implements MustVerifyEmail
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasActiveStatus,
         HasFactory,
+        HasRef,
         HasStatus,
         Notifiable,
         TwoFactorAuthenticatable;
+
+    protected string $refPrefix = 'USR';
 
     /**
      * The model's default values for attributes.

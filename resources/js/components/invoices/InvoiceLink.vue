@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import TextLink from '@/components/TextLink.vue';
-import { toUUID } from '@/lib/utils';
 import { show } from '@/routes/invoices';
 import type { Invoice } from '@/types';
 
@@ -13,6 +12,6 @@ const props = defineProps<Props>();
 
 <template>
     <TextLink :href="show(invoice)">
-        {{ toUUID(invoice.id, 'INV') }}
+        {{ invoice.ref }}
     </TextLink>
 </template>

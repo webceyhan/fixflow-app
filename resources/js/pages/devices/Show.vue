@@ -7,7 +7,6 @@ import NoteCard from '@/components/NoteCard.vue';
 import TicketList from '@/components/tickets/TicketList.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { index, update } from '@/routes/devices';
 import { create as createTicket } from '@/routes/tickets';
 import type { Device, NavItem } from '@/types';
@@ -22,7 +21,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.device.id, 'DVC'),
+        title: props.device.ref,
         href: '',
     },
 ];

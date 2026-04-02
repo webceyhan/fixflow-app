@@ -17,7 +17,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
         href: index(),
     },
     {
-        title: `Order #${props.order.id}`,
+        title: props.order.ref,
         href: show(props.order),
     },
     {
@@ -29,7 +29,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading :title="`Edit Order #${order.id}`" />
+        <Heading title="Edit Order" />
 
         <EditLayout>
             <OrderForm :order />

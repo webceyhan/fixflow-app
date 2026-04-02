@@ -17,7 +17,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
         href: index(),
     },
     {
-        title: `Task #${props.task.id}`,
+        title: props.task.ref,
         href: show(props.task),
     },
     {
@@ -29,7 +29,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading :title="`Edit Task #${task.id}`" />
+        <Heading title="Edit Task" />
 
         <EditLayout>
             <TaskForm :task />

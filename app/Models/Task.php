@@ -11,6 +11,7 @@ use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasPriority;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,8 +28,11 @@ class Task extends Model
         HasCancelledStatus,
         HasFactory,
         HasPriority,
+        HasRef,
         HasStatus,
         HasType;
+
+    protected string $refPrefix = 'TSK';
 
     /**
      * The model's default values for attributes.

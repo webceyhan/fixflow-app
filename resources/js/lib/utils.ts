@@ -22,10 +22,6 @@ export function toOptions<T extends string>(
     }));
 }
 
-export function toUUID(id: number | string, prefix: string = 'ID'): string {
-    return `#${prefix}-${id.toString().padStart(6, '0')}`;
-}
-
 /**
  * Converts MySQL date format to a user-friendly format.
  * Also compatible with native input of date type.

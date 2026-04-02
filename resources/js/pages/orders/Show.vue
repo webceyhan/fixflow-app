@@ -6,7 +6,6 @@ import OrderToolbar from '@/components/orders/OrderToolbar.vue';
 import Placeholder from '@/components/Placeholder.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { index, update } from '@/routes/orders';
 import type { NavItem, Order } from '@/types';
 
@@ -20,7 +19,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.order.id, 'ORD'),
+        title: props.order.ref,
         href: '',
     },
 ];

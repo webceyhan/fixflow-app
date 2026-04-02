@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AdjustmentReason;
 use App\Enums\AdjustmentType;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,10 @@ class Adjustment extends Model
 {
     /** @use HasFactory<\Database\Factories\AdjustmentFactory> */
     use HasFactory,
+        HasRef,
         HasType;
+
+    protected string $refPrefix = 'ADJ';
 
     /**
      * The model's default values for attributes.

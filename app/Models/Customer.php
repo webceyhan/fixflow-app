@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\CustomerStatus;
 use App\Enums\CustomerType;
 use App\Models\Concerns\HasActiveStatus;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,8 +18,11 @@ class Customer extends Model
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasActiveStatus,
         HasFactory,
+        HasRef,
         HasStatus,
         HasType;
+
+    protected string $refPrefix = 'CUS';
 
     /**
      * The model's default values for attributes.

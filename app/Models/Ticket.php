@@ -9,6 +9,7 @@ use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasPriority;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +27,10 @@ class Ticket extends Model
         HasDueDate,
         HasFactory,
         HasPriority,
+        HasRef,
         HasStatus;
+
+    protected string $refPrefix = 'TKT';
 
     /**
      * The model's default values for attributes.

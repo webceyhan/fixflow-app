@@ -3,8 +3,7 @@ import Heading from '@/components/Heading.vue';
 import TaskForm from '@/components/tasks/TaskForm.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
-import { index } from '@/routes/tasks';
-import { show as ticketShow } from '@/routes/tickets';
+import { index, show } from '@/routes/tickets';
 import type { NavItem, Task, Ticket } from '@/types';
 
 const props = defineProps<{
@@ -12,17 +11,19 @@ const props = defineProps<{
     ticket: Ticket;
 }>();
 
+const title = 'Create Task';
+
 const breadcrumbs: NavItem[] = [
     {
-        title: 'Tasks',
+        title: 'Tickets',
         href: index(),
     },
     {
-        title: props.ticket.title,
-        href: ticketShow(props.ticket),
+        title: props.ticket.ref,
+        href: show(props.ticket),
     },
     {
-        title: 'Create',
+        title,
         href: '',
     },
 ];
@@ -30,7 +31,7 @@ const breadcrumbs: NavItem[] = [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading title="Create Task" />
+        <Heading :title />
 
         <EditLayout>
             <TaskForm :task />

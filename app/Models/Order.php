@@ -9,6 +9,7 @@ use App\Models\Concerns\Billable;
 use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,10 @@ class Order extends Model
         HasCancelledStatus,
         HasDueDate,
         HasFactory,
+        HasRef,
         HasStatus;
+
+    protected string $refPrefix = 'ORD';
 
     /**
      * The model's default values for attributes.

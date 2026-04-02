@@ -3,7 +3,6 @@ import Heading from '@/components/Heading.vue';
 import AdjustmentForm from '@/components/adjustments/AdjustmentForm.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { index, show } from '@/routes/invoices';
 import type { Adjustment, Invoice, NavItem } from '@/types';
 
@@ -20,7 +19,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.invoice.id, 'INV'),
+        title: props.invoice.ref,
         href: show(props.invoice),
     },
     {
