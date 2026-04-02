@@ -7,7 +7,6 @@ import Heading from '@/components/Heading.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { index, update } from '@/routes/customers';
 import { create as createDevice } from '@/routes/devices';
 import type { Customer, NavItem } from '@/types';
@@ -23,7 +22,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.customer.id, 'CST'),
+        title: props.customer.name,
         href: '',
     },
 ];

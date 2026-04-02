@@ -17,7 +17,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
         href: index(),
     },
     {
-        title: props.device.model,
+        title: props.device.ref,
         href: show(props.device),
     },
     {
@@ -29,7 +29,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading :title="`Edit ${device.model}`" />
+        <Heading title="Edit Device" />
 
         <EditLayout>
             <DeviceForm :device />

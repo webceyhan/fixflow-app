@@ -9,7 +9,6 @@ import TicketCard from '@/components/tickets/TicketCard.vue';
 import TicketToolbar from '@/components/tickets/TicketToolbar.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { create as createOrder } from '@/routes/orders';
 import { create as createTask } from '@/routes/tasks';
 import { index, update } from '@/routes/tickets';
@@ -25,7 +24,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.ticket.id, 'TCK'),
+        title: props.ticket.ref,
         href: '',
     },
 ];

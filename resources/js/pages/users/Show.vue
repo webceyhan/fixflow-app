@@ -6,7 +6,6 @@ import UserCard from '@/components/users/UserCard.vue';
 import UserToolbar from '@/components/users/UserToolbar.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { index, update } from '@/routes/users';
 import type { NavItem, User } from '@/types';
 
@@ -21,7 +20,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.user.id, 'USR'),
+        title: props.user.name,
         href: '',
     },
 ];

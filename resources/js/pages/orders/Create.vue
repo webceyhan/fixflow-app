@@ -3,8 +3,7 @@ import Heading from '@/components/Heading.vue';
 import OrderForm from '@/components/orders/OrderForm.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
-import { index } from '@/routes/orders';
-import { show as ticketShow } from '@/routes/tickets';
+import { index, show } from '@/routes/tickets';
 import type { NavItem, Order, Ticket } from '@/types';
 
 const props = defineProps<{
@@ -12,17 +11,19 @@ const props = defineProps<{
     ticket: Ticket;
 }>();
 
+const title = 'Create Order';
+
 const breadcrumbs: NavItem[] = [
     {
-        title: 'Orders',
+        title: 'Tickets',
         href: index(),
     },
     {
-        title: props.ticket.title,
-        href: ticketShow(props.ticket),
+        title: props.ticket.ref,
+        href: show(props.ticket),
     },
     {
-        title: 'Create',
+        title,
         href: '',
     },
 ];
@@ -30,7 +31,7 @@ const breadcrumbs: NavItem[] = [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading title="Create Order" />
+        <Heading :title />
 
         <EditLayout>
             <OrderForm :order />

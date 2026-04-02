@@ -6,7 +6,6 @@ import TaskCard from '@/components/tasks/TaskCard.vue';
 import TaskToolbar from '@/components/tasks/TaskToolbar.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { index, update } from '@/routes/tasks';
 import type { NavItem, Task } from '@/types';
 
@@ -20,7 +19,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.task.id, 'TSK'),
+        title: props.task.ref,
         href: '',
     },
 ];

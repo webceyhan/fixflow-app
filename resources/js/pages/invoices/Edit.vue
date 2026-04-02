@@ -17,7 +17,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
         href: index(),
     },
     {
-        title: `Invoice #${props.invoice.id}`,
+        title: props.invoice.ref,
         href: show(props.invoice),
     },
     {
@@ -29,7 +29,7 @@ const breadcrumbs = computed<NavItem[]>(() => [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading :title="`Edit Invoice #${invoice.id}`" />
+        <Heading title="Edit Invoice" />
 
         <EditLayout>
             <InvoiceForm :invoice />

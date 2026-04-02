@@ -8,7 +8,6 @@ import NoteCard from '@/components/NoteCard.vue';
 import TransactionList from '@/components/transactions/TransactionList.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
-import { toUUID } from '@/lib/utils';
 import { create as createAdjustment } from '@/routes/adjustments';
 import { index, update } from '@/routes/invoices';
 import { create as createTransaction } from '@/routes/transactions';
@@ -24,7 +23,7 @@ const breadcrumbs: NavItem[] = [
         href: index(),
     },
     {
-        title: toUUID(props.invoice.id, 'INV'),
+        title: props.invoice.ref,
         href: '',
     },
 ];

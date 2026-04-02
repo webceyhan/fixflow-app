@@ -3,8 +3,7 @@ import DeviceForm from '@/components/devices/DeviceForm.vue';
 import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
-import { show as customerShow } from '@/routes/customers';
-import { index } from '@/routes/devices';
+import { index, show } from '@/routes/customers';
 import type { Customer, Device, NavItem } from '@/types';
 
 const props = defineProps<{
@@ -12,17 +11,19 @@ const props = defineProps<{
     customer: Customer;
 }>();
 
+const title = 'Create Device';
+
 const breadcrumbs: NavItem[] = [
     {
-        title: 'Devices',
+        title: 'Customers',
         href: index(),
     },
     {
         title: props.customer.name,
-        href: customerShow(props.customer),
+        href: show(props.customer),
     },
     {
-        title: 'Create',
+        title,
         href: '',
     },
 ];
@@ -30,7 +31,7 @@ const breadcrumbs: NavItem[] = [
 
 <template>
     <AppLayout :breadcrumbs>
-        <Heading title="Create Device" />
+        <Heading :title />
 
         <EditLayout>
             <DeviceForm :device />

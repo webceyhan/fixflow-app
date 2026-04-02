@@ -32,6 +32,7 @@ export interface Adjustment extends Model {
     note?: string;
     type: AdjustmentType;
     reason: AdjustmentReason;
+    ref: string;
     invoice?: Invoice;
 }
 
@@ -45,6 +46,7 @@ export interface Customer extends Model {
     note?: string;
     type: CustomerType;
     status: CustomerStatus;
+    ref: string;
     devices?: Device[];
     tickets?: Ticket[];
 }
@@ -62,6 +64,7 @@ export interface Device extends Model {
     note?: string;
     type: DeviceType;
     status: DeviceStatus;
+    ref: string;
     customer?: Customer;
     tickets?: Ticket[];
 }
@@ -78,6 +81,7 @@ export interface Invoice extends Model {
     due_date: string;
     note?: string;
     status: InvoiceStatus;
+    ref: string;
     ticket?: Ticket;
     transactions?: Transaction[];
     adjustments?: Adjustment[];
@@ -96,6 +100,7 @@ export interface Order extends Model {
     note?: string;
     status: OrderStatus;
     approved_at?: string;
+    ref: string;
     ticket?: Ticket;
     assignee?: User;
 }
@@ -110,6 +115,7 @@ export interface Task extends Model {
     type: TaskType;
     status: TaskStatus;
     approved_at?: string;
+    ref: string;
     ticket?: Ticket;
     assignee?: User;
 }
@@ -122,6 +128,7 @@ export interface Ticket extends Model {
     priority: Priority;
     status: TicketStatus;
     due_date?: string;
+    ref: string;
     device?: Device;
     customer?: Customer;
     tasks?: Task[];
@@ -136,6 +143,7 @@ export interface Transaction extends Model {
     note?: string;
     method: TransactionMethod;
     type: TransactionType;
+    ref: string;
     invoice?: Invoice;
 }
 
@@ -146,6 +154,7 @@ export interface User extends Model {
     note?: string;
     role: UserRole;
     status: UserStatus;
+    ref: string;
     email_verified_at?: string;
     two_factor_confirmed_at?: string;
     assigned_tickets?: Ticket[];

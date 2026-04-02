@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import TextLink from '@/components/TextLink.vue';
-import { toUUID } from '@/lib/utils';
 import { show } from '@/routes/adjustments';
 import type { Adjustment } from '@/types';
 
@@ -13,6 +12,6 @@ defineProps<Props>();
 
 <template>
     <TextLink :href="show(adjustment)">
-        {{ toUUID(adjustment.id, 'ADJ') }}
+        {{ adjustment.ref }}
     </TextLink>
 </template>

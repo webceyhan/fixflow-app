@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
+use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,10 @@ class Transaction extends Model
 {
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
     use HasFactory,
+        HasRef,
         HasType;
+
+    protected string $refPrefix = 'TXN';
 
     /**
      * The model's default values for attributes.
