@@ -15,9 +15,9 @@ defineProps<Props>();
 </script>
 
 <template>
-    <Button class="border-dashed" variant="outline">
+    <Button class="border-dashed text-muted-foreground" variant="outline">
         <!-- icon -->
-        <component class="opacity-50" :is="icon ?? FilterIcon" />
+        <component :is="icon ?? FilterIcon" />
 
         <!-- title -->
         {{ title }}
