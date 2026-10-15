@@ -27,6 +27,10 @@ return new class extends Migration
             $table->enum('status', OrderStatus::cases())->default(OrderStatus::Created);
             $table->timestamps();
             $table->timestamp('approved_at')->nullable();
+
+            $table->index(['assignee_id', 'status', 'created_at']);
+            $table->index(['status', 'due_date', 'created_at']);
+            $table->index('approved_at');
         });
     }
 

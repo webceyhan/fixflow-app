@@ -46,6 +46,30 @@ it('allows overriding per_page from request', function () {
     expect($result->perPage())->toBe(20);
 });
 
+it('caps per_page to prevent oversized pagination queries', function () {
+    // Arrange
+    User::factory()->count(120)->create();
+    request()->merge(['per_page' => 500]);
+
+    // Act
+    $result = QueryBuilder::for(User::class)->paginate();
+
+    // Assert
+    expect($result->perPage())->toBe(100);
+});
+
+it('falls back to default per_page when request value is invalid', function () {
+    // Arrange
+    User::factory()->count(25)->create();
+    request()->merge(['per_page' => 0]);
+
+    // Act
+    $result = QueryBuilder::for(User::class)->paginate();
+
+    // Assert
+    expect($result->perPage())->toBe(10);
+});
+
 it('uses default per_page when not provided in request', function () {
     // Arrange
     User::factory()->count(15)->create();

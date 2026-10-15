@@ -26,6 +26,10 @@ return new class extends Migration
             $table->enum('status', TaskStatus::cases())->default(TaskStatus::Created);
             $table->timestamps();
             $table->timestamp('approved_at')->nullable();
+
+            $table->index(['assignee_id', 'status', 'created_at']);
+            $table->index(['type', 'priority', 'status', 'created_at']);
+            $table->index('approved_at');
         });
     }
 

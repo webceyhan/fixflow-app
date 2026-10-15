@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('method', TransactionMethod::cases())->default(TransactionMethod::Cash);
             $table->enum('type', TransactionType::cases())->default(TransactionType::Payment);
             $table->timestamps();
+
+            $table->index(['method', 'type', 'created_at']);
         });
     }
 
