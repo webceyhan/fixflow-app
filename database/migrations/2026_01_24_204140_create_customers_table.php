@@ -25,6 +25,8 @@ return new class extends Migration
             $table->enum('type', CustomerType::cases())->default(CustomerType::Individual);
             $table->enum('status', CustomerStatus::cases())->default(CustomerStatus::Active);
             $table->timestamps();
+
+            $table->index(['type', 'status', 'created_at']);
         });
     }
 
