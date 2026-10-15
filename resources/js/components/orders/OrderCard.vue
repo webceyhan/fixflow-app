@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/description-list';
 import UserLink from '@/components/users/UserLink.vue';
 import type { Order } from '@/types';
+
 import OrderStatusBadge from './OrderStatusBadge.vue';
 
 interface Props {

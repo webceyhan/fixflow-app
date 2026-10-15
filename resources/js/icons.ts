@@ -1,3 +1,5 @@
+import { h } from 'vue';
+
 import {
     ADJUSTMENT_TYPE_ICON_MAP,
     CUSTOMER_TYPE_ICON_MAP,
@@ -18,7 +20,6 @@ import type {
     TransactionType,
     UserRole,
 } from '@/types';
-import { h } from 'vue';
 
 export {
     Calculator as AdjustmentIcon,

@@ -14,7 +14,9 @@ import {
 import UserLink from '@/components/users/UserLink.vue';
 import { TaskTypeIcon } from '@/icons';
 import type { Task } from '@/types';
+
 import DeviceLink from '../devices/DeviceLink.vue';
+
 import TaskLink from './TaskLink.vue';
 import TaskStatusBadge from './TaskStatusBadge.vue';
 

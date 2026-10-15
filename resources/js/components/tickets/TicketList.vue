@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
+
 import { DateTime, Priority } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -22,8 +25,7 @@ import UserLink from '@/components/users/UserLink.vue';
 import { TicketIcon } from '@/icons';
 import { show } from '@/routes/tickets';
 import type { Ticket } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+
 import TicketStatusBadge from './TicketStatusBadge.vue';
 
 interface Props {

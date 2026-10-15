@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+
 import Heading from '@/components/Heading.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -14,7 +16,6 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
-import { Form } from '@inertiajs/vue3';
 </script>
 
 <template>

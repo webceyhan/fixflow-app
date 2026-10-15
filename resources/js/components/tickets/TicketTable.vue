@@ -15,6 +15,7 @@ import {
 import UserLink from '@/components/users/UserLink.vue';
 import { TicketIcon } from '@/icons';
 import type { Ticket } from '@/types';
+
 import TicketLink from './TicketLink.vue';
 import TicketStatusBadge from './TicketStatusBadge.vue';
 

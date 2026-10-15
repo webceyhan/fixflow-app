@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -8,7 +10,6 @@ import {
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import type { NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
 
 interface Props {
     breadcrumbs: NavItem[];

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import {
     Filter,
     FilterClear,
@@ -14,7 +16,6 @@ import {
 import { useFilter } from '@/composables/useFilter';
 import { useOptions } from '@/composables/useOptions';
 import type { Icon, Option } from '@/types';
-import { ref } from 'vue';
 
 interface Props {
     name: string;
@@ -59,6 +60,7 @@ const unpinnedOptions = filteredBy(({ pinned }) => !pinned);
                 <FilterGroup v-if="pinnedOptions?.length" sticky-top>
                     <FilterItem
                         v-for="option in pinnedOptions"
+                        :key="option.value"
                         @select="update(option.value)"
                         v-bind="option"
                     />
@@ -68,6 +70,7 @@ const unpinnedOptions = filteredBy(({ pinned }) => !pinned);
                 <FilterGroup>
                     <FilterItem
                         v-for="option in unpinnedOptions"
+                        :key="option.value"
                         @select="update(option.value)"
                         v-bind="option"
                     />

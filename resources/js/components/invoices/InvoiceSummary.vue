@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import { Currency } from '@/components/data';
 import {
     DescriptionList,
@@ -6,7 +8,6 @@ import {
 } from '@/components/ui/description-list';
 import { Separator } from '@/components/ui/separator';
 import type { Invoice } from '@/types';
-import { computed } from 'vue';
 
 interface Props {
     invoice: Invoice;

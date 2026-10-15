@@ -7,7 +7,7 @@ interface Props {
     task: Task;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
 <template>

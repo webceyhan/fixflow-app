@@ -62,6 +62,8 @@ it('extracts enums with TypeScript flag', function () {
 
 it('handles empty enum discovery gracefully', function () {
     // Arrange
+    File::ensureDirectoryExists(base_path('tests/Fixtures/EmptyDir'));
+
     $mock = File::partialMock();
     $mock->expects('ensureDirectoryExists')->once();
     $mock->expects('put')->once()->withArgs(function (string $path, string $contents) {

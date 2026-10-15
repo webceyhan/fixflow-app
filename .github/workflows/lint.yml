@@ -11,7 +11,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   quality:
@@ -27,19 +27,13 @@ jobs:
       - name: Install Dependencies
         run: |
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          npm install
+          npm ci
 
       - name: Run Pint
         run: composer lint
 
-      - name: Format Frontend
-        run: npm run format
+      - name: Check Frontend Formatting
+        run: npm run format:check
 
       - name: Lint Frontend
         run: npm run lint
-
-      # - name: Commit Changes
-      #   uses: stefanzweifel/git-auto-commit-action@v5
-      #   with:
-      #     commit_message: fix code style
-      #     commit_options: '--no-verify'

@@ -1,14 +1,3 @@
-import type {
-    AdjustmentType,
-    CustomerType,
-    DeviceType,
-    Icon,
-    Priority,
-    TaskType,
-    TransactionMethod,
-    TransactionType,
-    UserRole,
-} from '@/types';
 import {
     Activity,
     ArrowRightLeft,
@@ -42,6 +31,18 @@ import {
     Watch,
     Wrench,
 } from 'lucide-vue-next';
+
+import type {
+    AdjustmentType,
+    CustomerType,
+    DeviceType,
+    Icon,
+    Priority,
+    TaskType,
+    TransactionMethod,
+    TransactionType,
+    UserRole,
+} from '@/types';
 
 export const PRIORITY_ICON_MAP: Record<Priority, Icon> = {
     low: ChevronsDown,

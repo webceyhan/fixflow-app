@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/description-list';
 import UserLink from '@/components/users/UserLink.vue';
 import type { Ticket } from '@/types';
+
 import TicketStatusBadge from './TicketStatusBadge.vue';
 
 interface Props {

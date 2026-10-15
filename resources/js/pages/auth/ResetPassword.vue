@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldLabel, FieldSet } from '@/components/ui/field';
@@ -6,8 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { update } from '@/routes/password';
-import { Form } from '@inertiajs/vue3';
-import { ref } from 'vue';
 
 const props = defineProps<{
     token: string;

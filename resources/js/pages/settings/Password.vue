@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -15,7 +17,6 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { edit, update } from '@/routes/user-password';
 import type { NavItem } from '@/types';
-import { Form } from '@inertiajs/vue3';
 
 const toast = useToast();
 

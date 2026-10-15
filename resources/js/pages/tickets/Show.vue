@@ -47,7 +47,10 @@ const breadcrumbs: NavItem[] = [
                 <section class="space-y-2">
                     <h3>Tasks</h3>
 
-                    <TicketTaskStats v-if="ticket.tasks?.length" :tasks="ticket.tasks" />
+                    <TicketTaskStats
+                        v-if="ticket.tasks?.length"
+                        :tasks="ticket.tasks"
+                    />
 
                     <TaskList :tasks="ticket.tasks" />
 

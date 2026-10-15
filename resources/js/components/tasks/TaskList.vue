@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
+
 import { Currency, DateTime, Priority, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -21,8 +24,7 @@ import {
 import { TaskIcon, TaskTypeIcon } from '@/icons';
 import { show } from '@/routes/tasks';
 import type { Task } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+
 import TaskStatusBadge from './TaskStatusBadge.vue';
 
 interface Props {

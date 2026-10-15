@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import Heading from '@/components/Heading.vue';
+import { computed } from 'vue';
+
 import AdjustmentForm from '@/components/adjustments/AdjustmentForm.vue';
 import AdjustmentToolbar from '@/components/adjustments/AdjustmentToolbar.vue';
+import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/invoices';
 import type { Adjustment, NavItem } from '@/types';
-import { computed } from 'vue';
 
 const props = defineProps<{
     adjustment: Adjustment;

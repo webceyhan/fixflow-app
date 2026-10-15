@@ -1,6 +1,7 @@
 import type { UrlMethodPair } from '@inertiajs/core';
 import { useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
+
 import { useToast } from './useToast';
 
 type Data = Record<string, any>;

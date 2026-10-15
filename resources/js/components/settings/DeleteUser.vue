@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+import { useTemplateRef } from 'vue';
+
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -20,8 +23,6 @@ import {
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { destroy } from '@/routes/profile';
-import { Form } from '@inertiajs/vue3';
-import { useTemplateRef } from 'vue';
 
 const passwordInput = useTemplateRef('passwordInput');
 </script>

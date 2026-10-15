@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table';
 import { UserRoleIcon } from '@/icons';
 import type { User } from '@/types';
+
 import UserLink from './UserLink.vue';
 import UserRoleBadge from './UserRoleBadge.vue';
 import UserStatusBadge from './UserStatusBadge.vue';

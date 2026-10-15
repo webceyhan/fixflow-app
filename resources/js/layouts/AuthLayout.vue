@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+
 import AppLogo from '@/components/app/AppLogo.vue';
 import { Toaster } from '@/components/ui/sonner';
 import { useToast } from '@/composables/useToast';
 import { home } from '@/routes';
-import { Link } from '@inertiajs/vue3';
 
 useToast().watchStatus();
 </script>

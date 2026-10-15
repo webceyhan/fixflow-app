@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Monitor, Moon, Sun } from 'lucide-vue-next';
+import { computed } from 'vue';
+
 import { FormSelector } from '@/components/form';
 import { useAppearance } from '@/composables/useAppearance';
 import type { Appearance, Option } from '@/types';
-import { Monitor, Moon, Sun } from 'lucide-vue-next';
-import { computed } from 'vue';
 
 const options: Option<Appearance>[] = [
     { value: 'light', label: 'Light', icon: Sun },

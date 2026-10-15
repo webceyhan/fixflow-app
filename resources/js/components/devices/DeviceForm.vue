@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+
 import { DateTime } from '@/components/data';
 import { FormActions } from '@/components/form';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -26,7 +28,7 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { DEVICE_STATUS, DEVICE_TYPE } from '@/constants';
 import { store, update } from '@/routes/devices';
 import type { Device } from '@/types';
-import { computed, ref, watch } from 'vue';
+
 import DeviceTypeSelector from './DeviceTypeSelector.vue';
 
 const WARRANTY_DURATIONS = [

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { router } from '@inertiajs/vue3';
+import { TrashIcon } from 'lucide-vue-next';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -12,8 +15,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
-import { router } from '@inertiajs/vue3';
-import { TrashIcon } from 'lucide-vue-next';
 
 interface Props {
     href: Href;

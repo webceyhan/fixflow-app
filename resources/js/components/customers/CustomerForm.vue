@@ -24,6 +24,7 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { CUSTOMER_STATUS } from '@/constants';
 import { store, update } from '@/routes/customers';
 import type { Customer } from '@/types';
+
 import CustomerTypeSelector from './CustomerTypeSelector.vue';
 
 interface Props {

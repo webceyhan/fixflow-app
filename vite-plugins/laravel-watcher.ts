@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+
 import type { Plugin } from 'vite';
 import { normalizePath } from 'vite';
 

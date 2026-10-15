@@ -7,7 +7,7 @@ interface Props {
     invoice: Invoice;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
 <template>

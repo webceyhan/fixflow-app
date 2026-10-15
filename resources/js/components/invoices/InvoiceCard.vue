@@ -15,6 +15,7 @@ import {
     DescriptionListItem,
 } from '@/components/ui/description-list';
 import type { Invoice } from '@/types';
+
 import InvoiceLink from './InvoiceLink.vue';
 import InvoiceStatusBadge from './InvoiceStatusBadge.vue';
 import InvoiceSummary from './InvoiceSummary.vue';
