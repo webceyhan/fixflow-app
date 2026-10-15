@@ -26,6 +26,7 @@ const form = useForm({
 <template>
     <InputGroup>
         <InputGroupTextarea
+        class="font-mono"
             placeholder="Add some notes..."
             v-model="form.note"
         />
