@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->enum('status', InvoiceStatus::cases())->default(InvoiceStatus::Draft);
             $table->timestamps();
+
+            $table->index(['status', 'due_date', 'created_at']);
         });
     }
 

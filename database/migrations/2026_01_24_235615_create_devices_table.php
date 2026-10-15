@@ -28,6 +28,10 @@ return new class extends Migration
             $table->enum('type', DeviceType::cases())->default(DeviceType::Other);
             $table->enum('status', DeviceStatus::cases())->default(DeviceStatus::Received);
             $table->timestamps();
+
+            $table->index(['type', 'status', 'created_at']);
+            $table->index('purchase_date');
+            $table->index('warranty_expire_date');
         });
     }
 

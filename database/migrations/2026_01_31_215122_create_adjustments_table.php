@@ -22,6 +22,8 @@ return new class extends Migration
             $table->enum('type', AdjustmentType::cases())->default(AdjustmentType::Discount);
             $table->enum('reason', AdjustmentReason::cases())->default(AdjustmentReason::Welcome);
             $table->timestamps();
+
+            $table->index(['type', 'reason', 'created_at']);
         });
     }
 

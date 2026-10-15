@@ -28,6 +28,8 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('two_factor_confirmed_at')->nullable();
+
+            $table->index(['role', 'status', 'created_at']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

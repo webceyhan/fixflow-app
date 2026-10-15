@@ -23,6 +23,10 @@ return new class extends Migration
             $table->enum('status', TicketStatus::cases())->default(TicketStatus::Created);
             $table->date('due_date')->nullable();
             $table->timestamps();
+
+            $table->index(['assignee_id', 'status', 'created_at']);
+            $table->index(['priority', 'status', 'created_at']);
+            $table->index('due_date');
         });
     }
 
