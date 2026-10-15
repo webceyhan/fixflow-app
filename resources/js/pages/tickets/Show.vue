@@ -6,6 +6,8 @@ import NoteCard from '@/components/NoteCard.vue';
 import OrderList from '@/components/orders/OrderList.vue';
 import TaskList from '@/components/tasks/TaskList.vue';
 import TicketCard from '@/components/tickets/TicketCard.vue';
+import TicketOrderStats from '@/components/tickets/TicketOrderStats.vue';
+import TicketTaskStats from '@/components/tickets/TicketTaskStats.vue';
 import TicketToolbar from '@/components/tickets/TicketToolbar.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
@@ -45,6 +47,8 @@ const breadcrumbs: NavItem[] = [
                 <section class="space-y-2">
                     <h3>Tasks</h3>
 
+                    <TicketTaskStats v-if="ticket.tasks?.length" :tasks="ticket.tasks" />
+
                     <TaskList :tasks="ticket.tasks" />
 
                     <CreateAction
@@ -59,6 +63,11 @@ const breadcrumbs: NavItem[] = [
 
                 <section class="space-y-2">
                     <h3>Orders</h3>
+
+                    <TicketOrderStats
+                        v-if="ticket.orders?.length"
+                        :orders="ticket.orders"
+                    />
 
                     <OrderList :orders="ticket.orders" />
 
