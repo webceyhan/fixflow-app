@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DateTime, Priority } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
     Empty,
     EmptyDescription,
@@ -65,6 +66,9 @@ defineProps<Props>();
             <ItemContent>
                 <ItemTitle>
                     {{ ticket.title }}
+                    <Badge variant="secondary" class="py-0">
+                        {{ ticket.ref }}
+                    </Badge>
                 </ItemTitle>
 
                 <ItemDescription class="flex items-center gap-4">

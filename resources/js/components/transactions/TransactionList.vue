@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Currency, DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
     Empty,
     EmptyDescription,
@@ -63,6 +64,9 @@ defineProps<Props>();
             <ItemContent>
                 <ItemTitle class="capitalize">
                     {{ transaction.type }}
+                    <Badge variant="secondary" class="py-0">
+                        {{ transaction.ref }}
+                    </Badge>
                 </ItemTitle>
 
                 <ItemDescription v-if="transaction.note">
