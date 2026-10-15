@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CreateAction } from '@/components/action';
 import DeviceCard from '@/components/devices/DeviceCard.vue';
+import DeviceTicketStats from '@/components/devices/DeviceTicketStats.vue';
 import DeviceToolbar from '@/components/devices/DeviceToolbar.vue';
 import Heading from '@/components/Heading.vue';
 import NoteCard from '@/components/NoteCard.vue';
@@ -40,6 +41,11 @@ const breadcrumbs: NavItem[] = [
 
             <section class="row-span-2 space-y-2 lg:col-start-2 lg:row-start-1">
                 <h3>Tickets</h3>
+
+                <DeviceTicketStats
+                    v-if="device.tickets?.length"
+                    :tickets="device.tickets"
+                />
 
                 <TicketList :tickets="device.tickets" />
 
