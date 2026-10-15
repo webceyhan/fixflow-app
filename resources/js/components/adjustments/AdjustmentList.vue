@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Currency, DateTime, Percent } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
     Empty,
     EmptyDescription,
@@ -63,6 +64,9 @@ defineProps<Props>();
             <ItemContent>
                 <ItemTitle class="capitalize">
                     {{ adjustment.type }}
+                    <Badge variant="secondary" class="py-0">
+                        {{ adjustment.ref }}
+                    </Badge>
                 </ItemTitle>
 
                 <ItemDescription v-if="adjustment.note">

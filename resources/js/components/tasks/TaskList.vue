@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Currency, DateTime, Priority, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
     Empty,
     EmptyDescription,
@@ -64,6 +65,9 @@ defineProps<Props>();
             <ItemContent>
                 <ItemTitle class="capitalize">
                     {{ task.type }}
+                    <Badge variant="secondary" class="py-0">
+                        {{ task.ref }}
+                    </Badge>
                 </ItemTitle>
 
                 <ItemDescription v-if="task.note">

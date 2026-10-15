@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Currency, DateTime, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
     Empty,
     EmptyDescription,
@@ -64,10 +65,14 @@ defineProps<Props>();
             <ItemContent>
                 <ItemTitle>
                     {{ order.name }}
-                    <small v-if="order.status" class="text-muted-foreground">
-                        {{ order.supplier }}
-                    </small>
+                    <Badge variant="secondary" class="py-0">
+                        {{ order.ref }}
+                    </Badge>
                 </ItemTitle>
+
+                <ItemDescription>
+                    Supplied by {{ order.supplier }}
+                </ItemDescription>
 
                 <ItemDescription v-if="order.note">
                     {{ order.note }}
