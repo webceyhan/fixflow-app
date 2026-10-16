@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Attachment;
 use App\Models\Customer;
 use App\Models\Device;
 use App\Models\Ticket;
@@ -62,5 +63,23 @@ it('loads ticket with assignee relationship', function () {
     $response->assertInertia(fn ($page) => $page
         ->has('ticket.assignee')
         ->where('ticket.assignee.id', $assignee->id)
+    );
+});
+
+it('loads ticket attachments', function () {
+    // Arrange
+    $viewer = User::factory()->create();
+    $ticket = Ticket::factory()->create();
+    $attachment = Attachment::factory()->forTicket($ticket)->create();
+
+    // Act
+    $response = actingAs($viewer)->get(route('tickets.show', $ticket));
+
+    // Assert
+    $response->assertSuccessful();
+    $response->assertInertia(fn ($page) => $page
+        ->has('ticket.attachments', 1)
+        ->where('ticket.attachments.0.id', $attachment->id)
+        ->where('ticket.attachments.0.name', $attachment->name)
     );
 });

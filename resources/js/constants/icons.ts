@@ -13,6 +13,7 @@ import {
     ClipboardList,
     Computer,
     CreditCard,
+    FileText,
     FlaskConical,
     Globe,
     HandCoins,
@@ -20,6 +21,7 @@ import {
     HardDriveDownload,
     HardDriveUpload,
     IdCard,
+    Image,
     IterationCw,
     Laptop,
     ShieldCheck,
@@ -34,6 +36,7 @@ import {
 
 import type {
     AdjustmentType,
+    AttachmentCategory,
     CustomerType,
     DeviceType,
     Icon,
@@ -97,4 +100,9 @@ export const TRANSACTION_METHOD_ICON_MAP: Record<TransactionMethod, Icon> = {
 export const ADJUSTMENT_TYPE_ICON_MAP: Record<AdjustmentType, Icon> = {
     discount: BanknoteArrowDown,
     fee: BanknoteArrowUp,
+};
+
+export const ATTACHMENT_CATEGORY_ICON_MAP: Record<AttachmentCategory, Icon> = {
+    photo: Image,
+    other: FileText,
 };

@@ -2,6 +2,7 @@ import { h } from 'vue';
 
 import {
     ADJUSTMENT_TYPE_ICON_MAP,
+    ATTACHMENT_CATEGORY_ICON_MAP,
     CUSTOMER_TYPE_ICON_MAP,
     DEVICE_TYPE_ICON_MAP,
     PRIORITY_ICON_MAP,
@@ -12,6 +13,7 @@ import {
 } from '@/constants';
 import type {
     AdjustmentType,
+    AttachmentCategory,
     CustomerType,
     DeviceType,
     Priority,
@@ -64,3 +66,9 @@ export const TransactionMethodIcon = ({
 
 export const AdjustmentTypeIcon = ({ value }: { value: AdjustmentType }) =>
     h(ADJUSTMENT_TYPE_ICON_MAP[value]);
+
+export const AttachmentCategoryIcon = ({
+    value,
+}: {
+    value: AttachmentCategory;
+}) => h(ATTACHMENT_CATEGORY_ICON_MAP[value]);

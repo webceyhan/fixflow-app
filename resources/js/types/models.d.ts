@@ -3,6 +3,7 @@
 import type {
     AdjustmentReason,
     AdjustmentType,
+    AttachmentCategory,
     CustomerStatus,
     CustomerType,
     DeviceStatus,
@@ -34,6 +35,17 @@ export interface Adjustment extends Model {
     reason: AdjustmentReason;
     ref: string;
     invoice?: Invoice;
+}
+
+export interface Attachment extends Model {
+    attachable_type: string;
+    attachable_id: number;
+    name: string;
+    path: string;
+    mime_type: string;
+    size: number;
+    category: AttachmentCategory;
+    attachable?: Attachment;
 }
 
 export interface Customer extends Model {
@@ -133,6 +145,7 @@ export interface Ticket extends Model {
     customer?: Customer;
     tasks?: Task[];
     orders?: Order[];
+    attachments?: Attachment[];
     invoice?: Invoice;
     assignee?: User;
 }
@@ -154,9 +167,9 @@ export interface User extends Model {
     note?: string;
     role: UserRole;
     status: UserStatus;
-    ref: string;
     email_verified_at?: string;
     two_factor_confirmed_at?: string;
+    ref: string;
     assigned_tickets?: Ticket[];
     assigned_tasks?: Task[];
     assigned_orders?: Order[];
