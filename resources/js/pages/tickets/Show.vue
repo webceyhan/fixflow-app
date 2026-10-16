@@ -5,6 +5,7 @@ import InvoiceCard from '@/components/invoices/InvoiceCard.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import OrderList from '@/components/orders/OrderList.vue';
 import TaskList from '@/components/tasks/TaskList.vue';
+import TicketAttachmentCard from '@/components/tickets/TicketAttachmentCard.vue';
 import TicketCard from '@/components/tickets/TicketCard.vue';
 import TicketOrderStats from '@/components/tickets/TicketOrderStats.vue';
 import TicketTaskStats from '@/components/tickets/TicketTaskStats.vue';
@@ -42,6 +43,11 @@ const breadcrumbs: NavItem[] = [
             <TicketCard :ticket />
 
             <NoteCard :data="ticket" :href="update(ticket)" />
+
+            <TicketAttachmentCard
+                :ticket-id="ticket.id"
+                :attachments="ticket.attachments"
+            />
 
             <div class="row-span-2 space-y-4 lg:col-start-2 lg:row-start-1">
                 <section class="space-y-2">

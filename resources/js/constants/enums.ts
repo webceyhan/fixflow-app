@@ -14,6 +14,8 @@ export const ADJUSTMENT_REASON = {
 
 export const ADJUSTMENT_TYPE = { Discount: 'discount', Fee: 'fee' } as const;
 
+export const ATTACHMENT_CATEGORY = { Photo: 'photo', Other: 'other' } as const;
+
 export const CUSTOMER_STATUS = {
     Active: 'active',
     Suspended: 'suspended',

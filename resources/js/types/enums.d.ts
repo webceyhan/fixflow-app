@@ -13,6 +13,8 @@ export type AdjustmentReason =
 
 export type AdjustmentType = 'discount' | 'fee';
 
+export type AttachmentCategory = 'photo' | 'other';
+
 export type CustomerStatus = 'active' | 'suspended' | 'archived';
 
 export type CustomerType = 'individual' | 'business';
