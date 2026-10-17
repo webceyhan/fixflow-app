@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Head } from '@inertiajs/vue3';
+
 import Placeholder from '@/components/Placeholder.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
 
 const breadcrumbs: NavItem[] = [
     {

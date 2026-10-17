@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+
 import Heading from '@/components/Heading.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -16,7 +18,6 @@ import AuthLayout from '@/layouts/AuthLayout.vue';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import { Form } from '@inertiajs/vue3';
 
 defineProps<{
     canResetPassword: boolean;

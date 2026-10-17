@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Heading from '@/components/Heading.vue';
-import Pagination from '@/components/Pagination.vue';
 import DeviceTable from '@/components/devices/DeviceTable.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
 import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
 import SearchFilter from '@/components/filters/SearchFilter.vue';
+import Heading from '@/components/Heading.vue';
+import Pagination from '@/components/Pagination.vue';
 import { DEVICE_STATUS, DEVICE_TYPE } from '@/constants';
 import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';

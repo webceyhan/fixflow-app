@@ -1,5 +1,7 @@
-import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 import { computed, ref } from 'vue';
+
+import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
+
 import { useToast } from './useToast';
 
 const fetchJson = async <T>(url: string): Promise<T> => {

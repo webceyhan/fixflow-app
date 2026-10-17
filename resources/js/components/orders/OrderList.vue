@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
+
 import { Currency, DateTime, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -21,8 +24,7 @@ import {
 import { OrderIcon } from '@/icons';
 import { show } from '@/routes/orders';
 import type { Order } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+
 import OrderStatusBadge from './OrderStatusBadge.vue';
 
 interface Props {

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { CalendarIcon } from 'lucide-vue-next';
+
 import { DATE_PRESET } from '@/constants/enums';
 import { toOptions } from '@/lib/utils';
-import { CalendarIcon } from 'lucide-vue-next';
+
 import SelectFilter from './SelectFilter.vue';
 
 interface Props {

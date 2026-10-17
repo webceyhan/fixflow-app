@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
+import { onUnmounted, ref, watch } from 'vue';
+
 import TwoFactorRecoveryCodes from '@/components/settings/TwoFactorRecoveryCodes.vue';
 import TwoFactorSetupModal from '@/components/settings/TwoFactorSetupModal.vue';
 import { Badge } from '@/components/ui/badge';
@@ -17,14 +21,17 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { disable, enable, show } from '@/routes/two-factor';
 import type { NavItem } from '@/types';
-import { Form } from '@inertiajs/vue3';
-import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
-import { onUnmounted, ref, watch } from 'vue';
 
-const props = defineProps<{
-    requiresConfirmation?: boolean;
-    twoFactorEnabled?: boolean;
-}>();
+const props = withDefaults(
+    defineProps<{
+        requiresConfirmation?: boolean;
+        twoFactorEnabled?: boolean;
+    }>(),
+    {
+        requiresConfirmation: false,
+        twoFactorEnabled: false,
+    },
+);
 
 const breadcrumbs: NavItem[] = [
     {

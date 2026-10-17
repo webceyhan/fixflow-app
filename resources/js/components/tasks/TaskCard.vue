@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/description-list';
 import UserLink from '@/components/users/UserLink.vue';
 import type { Task } from '@/types';
+
 import TaskStatusBadge from './TaskStatusBadge.vue';
 
 interface Props {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+
 import {
     Sidebar,
     SidebarContent,
@@ -9,7 +11,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { Link } from '@inertiajs/vue3';
+
 import AppLogo from './AppLogo.vue';
 import NavFooter from './nav/NavFooter.vue';
 import NavMain from './nav/NavMain.vue';

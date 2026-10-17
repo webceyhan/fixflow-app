@@ -1,5 +1,6 @@
-import type { Option } from '@/types';
 import { computed, Ref } from 'vue';
+
+import type { Option } from '@/types';
 
 type UseOptionsConfig<T> = {
     state: Ref<T>;

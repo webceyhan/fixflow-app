@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import DeviceForm from '@/components/devices/DeviceForm.vue';
 import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/devices';
 import type { Device, NavItem } from '@/types';
-import { computed } from 'vue';
 
 const props = defineProps<{
     device: Device;

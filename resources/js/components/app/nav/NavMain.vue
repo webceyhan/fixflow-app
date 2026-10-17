@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -7,7 +9,6 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { useNavigation } from '@/composables/useNavigation';
-import { Link } from '@inertiajs/vue3';
 
 const { mainNavItems } = useNavigation();
 </script>

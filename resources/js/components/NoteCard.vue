@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useForm } from '@inertiajs/vue3';
+import { ArrowUpIcon } from 'lucide-vue-next';
+
 import {
     InputGroup,
     InputGroupAddon,
@@ -7,8 +10,6 @@ import {
 } from '@/components/ui/input-group';
 import { toUrl } from '@/lib/utils';
 import type { Href } from '@/types';
-import { useForm } from '@inertiajs/vue3';
-import { ArrowUpIcon } from 'lucide-vue-next';
 
 interface Props {
     href: Href;
@@ -26,7 +27,7 @@ const form = useForm({
 <template>
     <InputGroup>
         <InputGroupTextarea
-        class="font-mono"
+            class="font-mono"
             placeholder="Add some notes..."
             v-model="form.note"
         />

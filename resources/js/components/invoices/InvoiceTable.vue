@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/table';
 import { InvoiceIcon } from '@/icons';
 import type { Invoice } from '@/types';
+
 import InvoiceLink from './InvoiceLink.vue';
 import InvoiceStatusBadge from './InvoiceStatusBadge.vue';
 

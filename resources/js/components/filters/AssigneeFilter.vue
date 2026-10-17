@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { USER_ROLE_ICON_MAP } from '@/constants';
-import type { Option, User } from '@/types';
 import { usePage } from '@inertiajs/vue3';
 import { UserRoundMinusIcon, UsersIcon } from 'lucide-vue-next';
 import { computed } from 'vue';
+
+import { USER_ROLE_ICON_MAP } from '@/constants';
+import type { Option, User } from '@/types';
+
 import SelectFilter from './SelectFilter.vue';
 
 const page = usePage();

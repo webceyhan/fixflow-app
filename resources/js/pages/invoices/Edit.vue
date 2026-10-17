@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import Heading from '@/components/Heading.vue';
 import InvoiceForm from '@/components/invoices/InvoiceForm.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/invoices';
 import type { Invoice, NavItem } from '@/types';
-import { computed } from 'vue';
 
 const props = defineProps<{
     invoice: Invoice;

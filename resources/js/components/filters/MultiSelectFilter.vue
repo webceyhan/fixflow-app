@@ -55,6 +55,7 @@ const unpinnedOptions = filteredBy(({ pinned }) => !pinned);
                 <FilterGroup v-if="pinnedOptions?.length" sticky-top>
                     <FilterItem
                         v-for="option in pinnedOptions"
+                        :key="option.value"
                         @select="toggle(option.value)"
                         v-bind="option"
                         with-checkbox
@@ -65,6 +66,7 @@ const unpinnedOptions = filteredBy(({ pinned }) => !pinned);
                 <FilterGroup>
                     <FilterItem
                         v-for="option in unpinnedOptions"
+                        :key="option.value"
                         @select="toggle(option.value)"
                         v-bind="option"
                         with-checkbox

@@ -2,12 +2,7 @@
 import { computed } from 'vue';
 
 import { Percent } from '@/components/data';
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Ticket } from '@/types';
 
 interface Props {
@@ -49,9 +44,9 @@ const progress = computed(() => {
                 <Percent :value="progress" />
             </div>
 
-            <div class="bg-muted h-2 overflow-hidden rounded-full">
+            <div class="h-2 overflow-hidden rounded-full bg-muted">
                 <div
-                    class="bg-primary h-full transition-all"
+                    class="h-full bg-primary transition-all"
                     :style="{ width: `${progress}%` }"
                 />
             </div>

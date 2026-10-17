@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
+
 import { Currency, DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -21,8 +24,7 @@ import {
 import { TransactionIcon, TransactionTypeIcon } from '@/icons';
 import { show } from '@/routes/transactions';
 import type { Transaction } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+
 import TransactionMethodBadge from './TransactionMethodBadge.vue';
 
 interface Props {

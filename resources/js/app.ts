@@ -1,8 +1,9 @@
-import { initializeTheme } from '@/composables/useAppearance';
-import { APP_NAME } from '@/constants';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { type DefineComponent, createApp, h } from 'vue';
+
+import { initializeTheme } from '@/composables/useAppearance';
+import { APP_NAME } from '@/constants';
 import '../css/app.css';
 
 createInertiaApp({

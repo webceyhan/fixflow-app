@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Head, Link } from '@inertiajs/vue3';
+
 import AppLogo from '@/components/app/AppLogo.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { dashboard, login, register } from '@/routes';
-import { Head, Link } from '@inertiajs/vue3';
 
 defineProps<{
     canRegister: boolean;

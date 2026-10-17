@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { SidebarProvider } from '@/components/ui/sidebar';
 import { usePage } from '@inertiajs/vue3';
+
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 const isOpen = usePage().props.sidebarOpen;
 </script>
