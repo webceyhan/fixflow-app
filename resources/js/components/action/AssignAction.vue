@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
-import type { Href } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BriefcaseIcon } from 'lucide-vue-next';
+
+import { Button } from '@/components/ui/button';
+import type { Href } from '@/types';
 
 interface Props {
     href: Href;

@@ -1,9 +1,10 @@
-import { APP_NAME } from '@/constants';
 import { createInertiaApp } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { type DefineComponent, createSSRApp, h } from 'vue';
 import { renderToString } from 'vue/server-renderer';
+
+import { APP_NAME } from '@/constants';
 
 createServer(
     (page) =>

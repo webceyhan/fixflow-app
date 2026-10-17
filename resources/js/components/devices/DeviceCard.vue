@@ -13,6 +13,7 @@ import {
     DescriptionListItem,
 } from '@/components/ui/description-list';
 import type { Device } from '@/types';
+
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 import DeviceTypeBadge from './DeviceTypeBadge.vue';
 

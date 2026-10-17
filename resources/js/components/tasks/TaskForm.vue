@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+
 import { FormActions } from '@/components/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -34,8 +37,7 @@ import { PRIORITY, TASK_STATUS } from '@/constants';
 import { toIsoDate } from '@/lib/utils';
 import { store, update } from '@/routes/tasks';
 import type { Task } from '@/types';
-import { usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+
 import TaskTypeSelector from './TaskTypeSelector.vue';
 
 interface Props {

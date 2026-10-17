@@ -1,5 +1,6 @@
-import type { Appearance } from '@/types';
 import { computed, onMounted, ref } from 'vue';
+
+import type { Appearance } from '@/types';
 
 type ResolvedAppearance = Exclude<Appearance, 'system'>;
 

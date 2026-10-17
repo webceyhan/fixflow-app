@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link, router } from '@inertiajs/vue3';
+
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -9,7 +11,7 @@ import { LogOutIcon, SettingsIcon } from '@/icons';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
-import { Link, router } from '@inertiajs/vue3';
+
 import UserInfo from './UserInfo.vue';
 
 interface Props {

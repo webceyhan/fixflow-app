@@ -12,6 +12,7 @@ import {
     DescriptionListItem,
 } from '@/components/ui/description-list';
 import type { Customer } from '@/types';
+
 import CustomerStatusBadge from './CustomerStatusBadge.vue';
 import CustomerTypeBadge from './CustomerTypeBadge.vue';
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TextLink from '@/components/TextLink.vue';
+
 import Fallback from './Fallback.vue';
 
 interface Props {

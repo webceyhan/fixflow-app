@@ -1,6 +1,8 @@
+import { computed } from 'vue';
+
 import { FOOTER_NAV_ITEMS, MAIN_NAV_ITEMS } from '@/constants';
 import { toUrl } from '@/lib/utils';
-import { computed } from 'vue';
+
 import { useActiveUrl } from './useActiveUrl';
 
 const { urlIsActive } = useActiveUrl();

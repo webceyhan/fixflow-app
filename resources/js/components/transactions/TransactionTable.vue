@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { TransactionTypeIcon } from '@/icons';
 import type { Transaction } from '@/types';
+
 import TransactionLink from './TransactionLink.vue';
 import TransactionMethodBadge from './TransactionMethodBadge.vue';
 

@@ -1,7 +1,8 @@
-import type { Icon, Option } from '@/types';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
+import type { Icon, Option } from '@/types';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));

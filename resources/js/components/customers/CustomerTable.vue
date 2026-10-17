@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table';
 import { CustomerTypeIcon } from '@/icons';
 import type { Customer } from '@/types';
+
 import CustomerLink from './CustomerLink.vue';
 import CustomerStatusBadge from './CustomerStatusBadge.vue';
 

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
 import { DateTime } from '@/components/data';
 import { FormActions } from '@/components/form';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -32,8 +35,6 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { PRIORITY, TICKET_STATUS } from '@/constants';
 import { store, update } from '@/routes/tickets';
 import type { Ticket } from '@/types';
-import { usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
 
 interface Props {
     ticket: Ticket;

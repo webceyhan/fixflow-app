@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
+import { Eye, EyeOffIcon, LockKeyhole, RefreshCw } from 'lucide-vue-next';
+import { nextTick, onMounted, ref, useTemplateRef } from 'vue';
+
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -11,9 +15,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/composables/useToast';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
-import { Form } from '@inertiajs/vue3';
-import { Eye, EyeOffIcon, LockKeyhole, RefreshCw } from 'lucide-vue-next';
-import { nextTick, onMounted, ref, useTemplateRef } from 'vue';
 
 const toast = useToast();
 const { recoveryCodesList, fetchRecoveryCodes } = useTwoFactorAuth();
@@ -90,10 +91,10 @@ onMounted(async () => {
                     class="grid gap-2 rounded-lg bg-muted/50 p-4 font-mono text-sm"
                 >
                     <template v-if="!recoveryCodesList.length">
-                        <Skeleton v-for="n in 8" class="h-5 w-1/2" />
+                        <Skeleton v-for="n in 8" :key="n" class="h-5 w-1/2" />
                     </template>
                     <template v-else>
-                        <p v-for="code in recoveryCodesList">
+                        <p v-for="code in recoveryCodesList" :key="code">
                             {{ code }}
                         </p>
                     </template>

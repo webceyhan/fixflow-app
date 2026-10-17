@@ -15,6 +15,7 @@ import {
 import UserLink from '@/components/users/UserLink.vue';
 import { OrderIcon } from '@/icons';
 import type { Order } from '@/types';
+
 import OrderLink from './OrderLink.vue';
 import OrderStatusBadge from './OrderStatusBadge.vue';
 

@@ -7,7 +7,7 @@ interface Props {
     order: Order;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
 <template>

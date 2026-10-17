@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/core';
+import { SearchIcon } from 'lucide-vue-next';
+
 import {
     InputGroup,
     InputGroupAddon,
     InputGroupInput,
 } from '@/components/ui/input-group';
 import { useFilter } from '@/composables/useFilter';
-import { useDebounceFn } from '@vueuse/core';
-import { SearchIcon } from 'lucide-vue-next';
 
 interface Props {
     placeholder?: string;

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Form, usePage } from '@inertiajs/vue3';
+
 import DeleteUser from '@/components/settings/DeleteUser.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -18,7 +20,6 @@ import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { edit, update } from '@/routes/profile';
 import { send } from '@/routes/verification';
 import type { NavItem } from '@/types';
-import { Form, usePage } from '@inertiajs/vue3';
 
 defineProps<{
     mustVerifyEmail: boolean;

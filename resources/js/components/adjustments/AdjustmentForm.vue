@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import { FormActions } from '@/components/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -29,7 +31,7 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { ADJUSTMENT_REASON } from '@/constants';
 import { store, update } from '@/routes/adjustments';
 import type { Adjustment, AdjustmentReason } from '@/types';
-import { computed } from 'vue';
+
 import AdjustmentTypeSelector from './AdjustmentTypeSelector.vue';
 
 interface Props {
@@ -62,7 +64,7 @@ const FEE_REASONS: AdjustmentReason[] = [
 ];
 
 const reasonOptions = computed(() => {
-    return Object.entries(ADJUSTMENT_REASON).filter(([key, value]) =>
+    return Object.entries(ADJUSTMENT_REASON).filter(([, value]) =>
         form.type === 'fee'
             ? FEE_REASONS.includes(value)
             : !FEE_REASONS.includes(value),

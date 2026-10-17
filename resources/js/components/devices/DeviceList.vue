@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
+
 import { DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -20,8 +23,7 @@ import {
 import { DeviceIcon, DeviceTypeIcon } from '@/icons';
 import { show } from '@/routes/devices';
 import type { Device } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 
 interface Props {

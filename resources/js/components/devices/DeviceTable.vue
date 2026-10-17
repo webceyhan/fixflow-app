@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/table';
 import { DeviceTypeIcon } from '@/icons';
 import type { Device } from '@/types';
+
 import DeviceLink from './DeviceLink.vue';
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 import DeviceTypeBadge from './DeviceTypeBadge.vue';

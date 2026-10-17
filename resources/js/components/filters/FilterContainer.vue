@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/vue3';
 import { X } from 'lucide-vue-next';
+
+import { Button } from '@/components/ui/button';
 </script>
 
 <template>

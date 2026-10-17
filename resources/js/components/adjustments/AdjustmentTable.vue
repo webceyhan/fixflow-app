@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { AdjustmentTypeIcon } from '@/icons';
 import type { Adjustment } from '@/types';
+
 import AdjustmentLink from './AdjustmentLink.vue';
 import AdjustmentReasonBadge from './AdjustmentReasonBadge.vue';
 
