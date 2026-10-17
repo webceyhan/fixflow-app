@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\OrderStatus;
+use App\Models\Order;
 use App\Models\Ticket;
 use Database\Factories\States\ActiveStatusStates;
 use Database\Factories\States\ApprovalStates;
@@ -15,7 +16,7 @@ use Database\Factories\States\StatusStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
+ * @extends Factory<Order>
  */
 class OrderFactory extends Factory
 {

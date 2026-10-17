@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Customer;
+use App\Models\Device;
 use App\Models\Invoice;
+use App\Models\Ticket;
 use App\Models\User;
 
 use function Pest\Laravel\actingAs;
@@ -29,21 +32,21 @@ it('allows searching invoices by customer name', function () {
     $viewer = User::factory()->create();
 
     // Create customer with unique name
-    $customer = \App\Models\Customer::factory()->create(['name' => "{$uid} Tech Solutions"]);
+    $customer = Customer::factory()->create(['name' => "{$uid} Tech Solutions"]);
 
     // Create device for that customer
-    $device = \App\Models\Device::factory()->create(['customer_id' => $customer->id]);
+    $device = Device::factory()->create(['customer_id' => $customer->id]);
 
     // Create tickets for that device
-    $tickets = \App\Models\Ticket::factory()->count(2)->create(['device_id' => $device->id]);
+    $tickets = Ticket::factory()->count(2)->create(['device_id' => $device->id]);
 
     // Create invoices for those tickets
     foreach ($tickets as $ticket) {
-        \App\Models\Invoice::factory()->create(['ticket_id' => $ticket->id]);
+        Invoice::factory()->create(['ticket_id' => $ticket->id]);
     }
 
     // Create one unrelated invoice
-    \App\Models\Invoice::factory()->create();
+    Invoice::factory()->create();
 
     // Act
     $response = actingAs($viewer)->get(route('invoices.index', ['filter' => ['search' => $uid]]));

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Concerns;
 
 use App\Models\Order;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Database\Eloquent\Model;
 
 trait OrderRules
 {
@@ -17,7 +19,7 @@ trait OrderRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     * @return class-string<Model>
      */
     protected function getModelClass(): string
     {
@@ -27,7 +29,7 @@ trait OrderRules
     /**
      * Get all validation rules for order management.
      *
-     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     * @return array<string, array<int, Rule|array<mixed>|string>>
      */
     protected function orderRules(?int $orderId = null): array
     {
@@ -49,7 +51,7 @@ trait OrderRules
     /**
      * Get the validation rules used to validate order name.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, Rule|array<mixed>|string>
      */
     protected function nameRules(): array
     {
@@ -59,7 +61,7 @@ trait OrderRules
     /**
      * Get the validation rules used to validate order url.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, Rule|array<mixed>|string>
      */
     protected function urlRules(): array
     {
@@ -69,7 +71,7 @@ trait OrderRules
     /**
      * Get the validation rules used to validate order supplier.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, Rule|array<mixed>|string>
      */
     protected function supplierRules(): array
     {
@@ -79,7 +81,7 @@ trait OrderRules
     /**
      * Get the validation rules used to validate order quantity.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, Rule|array<mixed>|string>
      */
     protected function quantityRules(): array
     {

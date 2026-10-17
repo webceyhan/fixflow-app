@@ -8,6 +8,7 @@ use App\Models\Concerns\HasActiveStatus;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Observers\UserObserver;
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +21,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasActiveStatus,
         HasFactory,
         HasRef,

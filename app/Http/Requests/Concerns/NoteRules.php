@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Concerns;
 
+use Illuminate\Contracts\Validation\Rule;
+
 trait NoteRules
 {
     /**
      * Get the validation rules used to validate model notes.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, Rule|array<mixed>|string>
      */
     protected function noteRules(): array
     {

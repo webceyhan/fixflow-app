@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Adjustments;
 
 use App\Http\Requests\Concerns\AdjustmentRules;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdjustmentUpdateRequest extends FormRequest
@@ -12,7 +13,7 @@ class AdjustmentUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {

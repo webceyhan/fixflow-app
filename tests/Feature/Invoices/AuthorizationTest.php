@@ -2,6 +2,7 @@
 
 use App\Enums\UserRole;
 use App\Models\Invoice;
+use App\Models\Ticket;
 use App\Models\User;
 
 use function Pest\Laravel\actingAs;
@@ -41,7 +42,7 @@ it('handles invoice editing correctly', function (UserRole $role) {
 it('prevents invoice creation - no create route exists', function (UserRole $role) {
     // Arrange
     $user = User::factory()->ofRole($role)->create();
-    $ticket = \App\Models\Ticket::factory()->create();
+    $ticket = Ticket::factory()->create();
 
     // Act & Assert
     // Invoices are auto-created with tickets, so no create route exists

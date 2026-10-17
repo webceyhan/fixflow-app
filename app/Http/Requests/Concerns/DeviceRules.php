@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Concerns;
 
 use App\Models\Device;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
 trait DeviceRules
@@ -14,7 +15,7 @@ trait DeviceRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     * @return class-string<Model>
      */
     protected function getModelClass(): string
     {

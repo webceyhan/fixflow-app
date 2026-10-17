@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Device;
+use App\Models\Ticket;
 use Database\Factories\States\ActiveStatusStates;
 use Database\Factories\States\AssignmentStates;
 use Database\Factories\States\CancelledStatusStates;
@@ -15,7 +16,7 @@ use Database\Factories\States\StatusStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket>
+ * @extends Factory<Ticket>
  */
 class TicketFactory extends Factory
 {

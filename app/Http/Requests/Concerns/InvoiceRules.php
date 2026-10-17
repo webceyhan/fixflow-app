@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Concerns;
 
 use App\Models\Invoice;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Database\Eloquent\Model;
 
 trait InvoiceRules
 {
@@ -14,7 +16,7 @@ trait InvoiceRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     * @return class-string<Model>
      */
     protected function getModelClass(): string
     {
@@ -24,7 +26,7 @@ trait InvoiceRules
     /**
      * Get all validation rules for invoice management.
      *
-     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     * @return array<string, array<int, Rule|array<mixed>|string>>
      */
     protected function invoiceRules(?int $invoiceId = null): array
     {

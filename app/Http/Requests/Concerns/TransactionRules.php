@@ -4,6 +4,7 @@ namespace App\Http\Requests\Concerns;
 
 use App\Enums\TransactionMethod;
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
 trait TransactionRules
@@ -15,7 +16,7 @@ trait TransactionRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     * @return class-string<Model>
      */
     protected function getModelClass(): string
     {
