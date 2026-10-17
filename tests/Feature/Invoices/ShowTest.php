@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Customer;
+use App\Models\Device;
 use App\Models\Invoice;
 use App\Models\Ticket;
 use App\Models\User;
@@ -45,8 +47,8 @@ it('loads invoice with ticket relationship', function () {
 it('loads invoice with customer through ticket', function () {
     // Arrange
     $viewer = User::factory()->create();
-    $customer = \App\Models\Customer::factory()->create();
-    $device = \App\Models\Device::factory()->forCustomer($customer)->create();
+    $customer = Customer::factory()->create();
+    $device = Device::factory()->forCustomer($customer)->create();
     $ticket = Ticket::factory()->forDevice($device)->create();
     $invoice = Invoice::factory()->forTicket($ticket)->create();
 
@@ -64,7 +66,7 @@ it('loads invoice with customer through ticket', function () {
 it('loads invoice with device through ticket', function () {
     // Arrange
     $viewer = User::factory()->create();
-    $device = \App\Models\Device::factory()->create();
+    $device = Device::factory()->create();
     $ticket = Ticket::factory()->forDevice($device)->create();
     $invoice = Invoice::factory()->forTicket($ticket)->create();
 

@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\DeviceStatus;
 use App\Enums\DeviceType;
 use App\Models\Customer;
+use App\Models\Device;
 use Database\Factories\States\ActiveStatusStates;
 use Database\Factories\States\NoteStates;
 use Database\Factories\States\StatusStates;
@@ -12,7 +13,7 @@ use Database\Factories\States\TypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Device>
+ * @extends Factory<Device>
  */
 class DeviceFactory extends Factory
 {

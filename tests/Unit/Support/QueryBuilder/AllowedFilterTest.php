@@ -7,7 +7,7 @@ it('creates search filter with searchables', function () {
     $filter = AllowedFilter::search(['name', 'email']);
 
     // Assert
-    expect($filter)->toBeInstanceOf(\Spatie\QueryBuilder\AllowedFilter::class)
+    expect($filter)->toBeInstanceOf(Spatie\QueryBuilder\AllowedFilter::class)
         ->and($filter->getName())->toBe('search');
 });
 
@@ -16,7 +16,7 @@ it('creates date filter with default column', function () {
     $filter = AllowedFilter::date();
 
     // Assert
-    expect($filter)->toBeInstanceOf(\Spatie\QueryBuilder\AllowedFilter::class)
+    expect($filter)->toBeInstanceOf(Spatie\QueryBuilder\AllowedFilter::class)
         ->and($filter->getName())->toBe('created_at');
 });
 
@@ -25,7 +25,7 @@ it('creates date filter with custom column', function () {
     $filter = AllowedFilter::date('due_date');
 
     // Assert
-    expect($filter)->toBeInstanceOf(\Spatie\QueryBuilder\AllowedFilter::class)
+    expect($filter)->toBeInstanceOf(Spatie\QueryBuilder\AllowedFilter::class)
         ->and($filter->getName())->toBe('due_date');
 });
 
@@ -34,6 +34,6 @@ it('creates assignee filter', function () {
     $filter = AllowedFilter::assignee();
 
     // Assert
-    expect($filter)->toBeInstanceOf(\Spatie\QueryBuilder\AllowedFilter::class)
+    expect($filter)->toBeInstanceOf(Spatie\QueryBuilder\AllowedFilter::class)
         ->and($filter->getName())->toBe('assignee');
 });

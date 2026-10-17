@@ -4,6 +4,7 @@ namespace App\Http\Requests\Concerns;
 
 use App\Enums\AdjustmentReason;
 use App\Models\Adjustment;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
 trait AdjustmentRules
@@ -15,7 +16,7 @@ trait AdjustmentRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     * @return class-string<Model>
      */
     protected function getModelClass(): string
     {

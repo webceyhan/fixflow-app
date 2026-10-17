@@ -6,13 +6,14 @@ use App\Enums\TransactionMethod;
 use App\Enums\TransactionType;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasType;
+use Database\Factories\TransactionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaction extends Model
 {
-    /** @use HasFactory<\Database\Factories\TransactionFactory> */
+    /** @use HasFactory<TransactionFactory> */
     use HasFactory,
         HasRef,
         HasType;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Concerns;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
 trait TypeRules
@@ -9,7 +10,7 @@ trait TypeRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<\Illuminate\Database\Eloquent\Model>
+     * @return class-string<Model>
      */
     abstract protected function getModelClass(): string;
 

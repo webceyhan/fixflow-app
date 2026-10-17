@@ -11,7 +11,7 @@ it('extends spatie query builder', function () {
     $queryBuilder = QueryBuilder::for(User::class);
 
     // Assert
-    expect($queryBuilder)->toBeInstanceOf(\Spatie\QueryBuilder\QueryBuilder::class);
+    expect($queryBuilder)->toBeInstanceOf(Spatie\QueryBuilder\QueryBuilder::class);
 });
 
 it('sets default sort to -created_at', function () {

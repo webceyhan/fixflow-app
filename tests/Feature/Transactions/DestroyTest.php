@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Invoice;
 use App\Models\Transaction;
 use App\Models\User;
 
@@ -21,7 +22,7 @@ it('deletes a transaction successfully', function () {
 it('syncs invoice amounts after deleting transaction', function () {
     // Arrange
     $manager = User::factory()->manager()->create();
-    $invoice = \App\Models\Invoice::factory()->create();
+    $invoice = Invoice::factory()->create();
     $transaction = Transaction::factory()->forInvoice($invoice)->payment()->create(['amount' => 100]);
 
     // Sync first to set initial state

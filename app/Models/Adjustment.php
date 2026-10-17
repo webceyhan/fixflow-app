@@ -6,13 +6,14 @@ use App\Enums\AdjustmentReason;
 use App\Enums\AdjustmentType;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasType;
+use Database\Factories\AdjustmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Adjustment extends Model
 {
-    /** @use HasFactory<\Database\Factories\AdjustmentFactory> */
+    /** @use HasFactory<AdjustmentFactory> */
     use HasFactory,
         HasRef,
         HasType;

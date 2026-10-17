@@ -11,7 +11,7 @@ use Database\Factories\States\TypeStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Adjustment>
+ * @extends Factory<Adjustment>
  */
 class AdjustmentFactory extends Factory
 {
