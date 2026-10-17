@@ -7,8 +7,9 @@
         "build:ssr": "vite build && vite build --ssr",
         "dev": "vite",
         "format": "prettier --write resources/",
-        "format:check": "prettier --check resources/",
-        "lint": "eslint . --fix"
+        "check": "prettier --check resources/",
+        "check:fix": "eslint . --fix",
+        "types:check": "vue-tsc --noEmit"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
