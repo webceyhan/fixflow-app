@@ -8,15 +8,18 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryTransactions
 {
+    /**
+     * @return QueryBuilder<Transaction>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Transaction::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['note']),
                 AllowedFilter::exact('method'),
                 AllowedFilter::exact('type'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['method', 'amount', 'created_at']);
+            )
+            ->allowedSorts('method', 'amount', 'created_at');
     }
 }

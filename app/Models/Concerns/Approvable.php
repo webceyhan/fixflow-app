@@ -3,7 +3,13 @@
 namespace App\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @template TModel of Model
+ *
+ * @mixin TModel
+ */
 trait Approvable
 {
     private const APPROVED_AT = 'approved_at';
@@ -13,7 +19,7 @@ trait Approvable
      */
     public function initializeApprovable(): void
     {
-        $this->casts[static::APPROVED_AT] = 'datetime';
+        $this->casts[self::APPROVED_AT] = 'datetime';
     }
 
     /**
@@ -21,24 +27,28 @@ trait Approvable
      */
     public function isApproved(): bool
     {
-        return $this->{static::APPROVED_AT} !== null;
+        return $this->{self::APPROVED_AT} !== null;
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Scope a query to only include approved models.
+     *
+     * @param  Builder<TModel>  $query
      */
     public function scopeApproved(Builder $query): void
     {
-        $query->whereNotNull(static::APPROVED_AT);
+        $query->whereNotNull(self::APPROVED_AT);
     }
 
     /**
      * Scope a query to only include unapproved models.
+     *
+     * @param  Builder<TModel>  $query
      */
     public function scopeUnapproved(Builder $query): void
     {
-        $query->whereNull(static::APPROVED_AT);
+        $query->whereNull(self::APPROVED_AT);
     }
 }

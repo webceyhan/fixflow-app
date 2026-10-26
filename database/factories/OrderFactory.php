@@ -57,7 +57,7 @@ class OrderFactory extends Factory
     /**
      * Indicate that the order belongs to a specific ticket.
      */
-    public function forTicket(Ticket $ticket): static
+    public function forTicket(Ticket $ticket): self
     {
         return $this->state(fn (array $attributes) => [
             'ticket_id' => $ticket->id,
@@ -71,7 +71,7 @@ class OrderFactory extends Factory
     /**
      * Indicate that the order has been shipped.
      */
-    public function shipped(): static
+    public function shipped(): self
     {
         return $this->ofStatus(OrderStatus::Shipped)->approved();
     }
@@ -79,7 +79,7 @@ class OrderFactory extends Factory
     /**
      * Indicate that the order has been received.
      */
-    public function received(): static
+    public function received(): self
     {
         return $this->ofStatus(OrderStatus::Received)->approved();
     }

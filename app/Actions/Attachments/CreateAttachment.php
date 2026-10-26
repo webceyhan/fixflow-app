@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 
 class CreateAttachment
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Model $attachable, array $data): Attachment
     {
         /** @var UploadedFile $file */

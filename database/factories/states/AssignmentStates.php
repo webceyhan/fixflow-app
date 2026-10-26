@@ -14,7 +14,7 @@ trait AssignmentStates
     public function forAssignee(User $user): self
     {
         return $this->state(fn (array $attributes) => [
-            static::ASSIGNEE_ID => $user->id,
+            self::ASSIGNEE_ID => $user->id,
         ]);
     }
 
@@ -24,7 +24,7 @@ trait AssignmentStates
     public function assigned(): self
     {
         return $this->state(fn (array $attributes) => [
-            static::ASSIGNEE_ID => User::factory(),
+            self::ASSIGNEE_ID => User::factory(),
         ]);
     }
 
@@ -34,7 +34,7 @@ trait AssignmentStates
     public function unassigned(): self
     {
         return $this->state(fn (array $attributes) => [
-            static::ASSIGNEE_ID => null,
+            self::ASSIGNEE_ID => null,
         ]);
     }
 }

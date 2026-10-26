@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Concerns;
 
 use App\Models\Device;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -15,7 +16,7 @@ trait DeviceRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<Model>
+     * @return class-string<Device>
      */
     protected function getModelClass(): string
     {
@@ -25,7 +26,7 @@ trait DeviceRules
     /**
      * Get all validation rules for device management.
      *
-     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
     protected function deviceRules(?int $deviceId = null): array
     {
@@ -47,7 +48,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate device models.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function modelRules(): array
     {
@@ -57,7 +58,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate device brands.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function brandRules(): array
     {
@@ -67,7 +68,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate device colors.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function colorRules(): array
     {
@@ -77,7 +78,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate IMEIs.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function imeiRules(?int $deviceId = null): array
     {
@@ -94,7 +95,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate serial numbers.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function serialNumberRules(?int $deviceId = null): array
     {
@@ -111,7 +112,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate passcodes.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function passcodeRules(): array
     {
@@ -121,7 +122,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate purchase dates.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function purchaseDateRules(): array
     {
@@ -131,7 +132,7 @@ trait DeviceRules
     /**
      * Get the validation rules used to validate warranty expire dates.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function warrantyExpireDateRules(): array
     {

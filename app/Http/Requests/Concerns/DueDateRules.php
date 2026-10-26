@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Concerns;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 trait DueDateRules
 {
     /**
      * Get the validation rules used to validate due dates.
      *
-     * @return array<int, Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function dueDateRules(): array
     {

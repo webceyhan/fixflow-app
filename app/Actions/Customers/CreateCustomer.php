@@ -7,6 +7,9 @@ use App\Models\Customer;
 
 class CreateCustomer
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Customer
     {
         $isBusiness = ($data['type'] ?? null) === CustomerType::Business->value;

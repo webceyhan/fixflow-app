@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Concerns;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ trait ContactRules
     /**
      * Get the validation rules used to validate model names.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function nameRules(): array
     {
@@ -27,7 +28,7 @@ trait ContactRules
     /**
      * Get the validation rules used to validate model emails.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function emailRules(?int $modelId = null, bool $required = false): array
     {
@@ -46,7 +47,7 @@ trait ContactRules
     /**
      * Get the validation rules used to validate model phone numbers.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function phoneRules(?int $modelId = null, bool $required = false): array
     {
@@ -63,7 +64,7 @@ trait ContactRules
     /**
      * Get the validation rules used to validate model addresses.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function addressRules(): array
     {

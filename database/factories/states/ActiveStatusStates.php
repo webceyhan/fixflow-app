@@ -12,7 +12,7 @@ trait ActiveStatusStates
     public function active(): self
     {
         return $this->state(fn (array $attributes) => [
-            static::STATUS => $attributes[static::STATUS]::activeCases()[0],
+            self::STATUS => $attributes[self::STATUS]::activeCases()[0],
         ]);
     }
 }

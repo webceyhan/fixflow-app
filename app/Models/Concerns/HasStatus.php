@@ -4,9 +4,13 @@ namespace App\Models\Concerns;
 
 use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @template TModel of Model
  * @template TStatus of BackedEnum
+ *
+ * @mixin TModel
  */
 trait HasStatus
 {
@@ -18,10 +22,10 @@ trait HasStatus
     public function initializeHasStatus(): void
     {
         // Get the default status value from the model's attributes
-        $defaultStatus = $this->attributes[static::STATUS] ?? null;
+        $defaultStatus = $this->attributes[self::STATUS] ?? null;
 
         // Use the class of the default status
-        $this->casts[static::STATUS] = $defaultStatus::class;
+        $this->casts[self::STATUS] = $defaultStatus::class;
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +33,7 @@ trait HasStatus
     /**
      * Scope a query to only include users with the specified status.
      *
+     * @param  Builder<TModel>  $query
      * @param  TStatus  $status
      */
     public function scopeOfStatus(Builder $query, BackedEnum $status): void

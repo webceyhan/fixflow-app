@@ -8,15 +8,18 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryCustomers
 {
+    /**
+     * @return QueryBuilder<Customer>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Customer::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['name', 'company', 'email', 'phone']),
                 AllowedFilter::exact('type'),
                 AllowedFilter::exact('status'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['name', 'email', 'phone', 'created_at']);
+            )
+            ->allowedSorts('name', 'email', 'phone', 'created_at');
     }
 }

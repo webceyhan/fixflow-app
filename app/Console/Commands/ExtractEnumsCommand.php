@@ -7,6 +7,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
+/**
+ * @phpstan-type EnumInfo array<string, int|string>
+ * @phpstan-type EnumData array<string, EnumInfo>
+ */
 class ExtractEnumsCommand extends Command
 {
     const JSON_PATH = 'resources/js/data/enums.json';
@@ -36,22 +40,39 @@ class ExtractEnumsCommand extends Command
 
     // HELPERS /////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * @return Collection<int, class-string>
+     */
     protected function getEnums(string $enumsPath): Collection
     {
         $namespace = $this->pathToNamespace($enumsPath);
 
-        return collect(File::allFiles($enumsPath))
-            ->map(fn ($file) => $namespace.'\\'.$file->getFilenameWithoutExtension())
-            ->filter(fn ($class) => $this->isValidEnum($class));
+        /** @var Collection<int, class-string> $classes */
+        $classes = collect(File::allFiles($enumsPath))
+            ->map(fn ($file): string => $namespace.'\\'.$file->getFilenameWithoutExtension())
+            ->values();
+
+        // Filter out non-enum classes before returning
+        return $classes->filter(fn (string $class): bool => $this->isValidEnum($class));
     }
 
+    /**
+     * @return EnumData
+     */
     protected function extractEnumData(string $enumsPath): array
     {
         return $this->getEnums($enumsPath)
-            ->mapWithKeys(fn ($enumClass) => [
-                class_basename($enumClass) => collect($enumClass::cases())
-                    ->mapWithKeys(fn ($case) => [$case->name => $case->value])->toArray(),
-            ])
+            ->mapWithKeys(function (string $enumClass) {
+                /** @var array<\BackedEnum> $cases */
+                $cases = $enumClass::cases();
+
+                return [
+                    class_basename($enumClass) => collect($cases)
+                        ->mapWithKeys(fn (\BackedEnum $case) => [
+                            $case->name => $case->value,
+                        ])->toArray(),
+                ];
+            })
             ->toArray();
     }
 
@@ -75,6 +96,9 @@ class ExtractEnumsCommand extends Command
         File::put($path, $content);
     }
 
+    /**
+     * @param  EnumData  $enumData
+     */
     protected function extractAsJson(array $enumData): void
     {
         $content = $this->formatAsJson($enumData);
@@ -83,6 +107,9 @@ class ExtractEnumsCommand extends Command
         $this->info('JSON extracted to: '.self::JSON_PATH);
     }
 
+    /**
+     * @param  EnumData  $enumData
+     */
     protected function extractAsTypeScript(array $enumData): void
     {
         $headline = "// Auto-generated from PHP enums - DO NOT EDIT MANUALLY\n\n";
@@ -98,11 +125,17 @@ class ExtractEnumsCommand extends Command
 
     // FORMATTERS //////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * @param  array<array-key, mixed>  $data
+     */
     protected function formatAsJson(array $data): string
     {
-        return json_encode($data, JSON_UNESCAPED_SLASHES);
+        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * @param  EnumInfo  $data
+     */
     protected function formatAsConstant(array $data, string $key): string
     {
         $constantName = Str::of($key)->snake()->upper();
@@ -111,6 +144,9 @@ class ExtractEnumsCommand extends Command
         return "export const {$constantName} = {$constantBody} as const;";
     }
 
+    /**
+     * @param  EnumInfo  $data
+     */
     protected function formatAsType(array $data, string $key): string
     {
         $values = collect($data)->values()->map(fn ($value) => "'{$value}'")->join('|');

@@ -12,6 +12,9 @@ class UpdateAdjustment
         protected SyncInvoiceAdjustments $syncInvoiceAdjustments,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Adjustment $adjustment, array $data): Adjustment
     {
         $reason = AdjustmentReason::from($data['reason']);

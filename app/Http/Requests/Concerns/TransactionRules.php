@@ -4,6 +4,7 @@ namespace App\Http\Requests\Concerns;
 
 use App\Enums\TransactionMethod;
 use App\Models\Transaction;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -16,7 +17,7 @@ trait TransactionRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<Model>
+     * @return class-string<Transaction>
      */
     protected function getModelClass(): string
     {
@@ -26,7 +27,7 @@ trait TransactionRules
     /**
      * Get all validation rules for transaction management.
      *
-     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
     protected function transactionRules(?int $transactionId = null): array
     {
@@ -41,7 +42,7 @@ trait TransactionRules
     /**
      * Get the validation rules used to validate transaction methods.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function methodRules(): array
     {

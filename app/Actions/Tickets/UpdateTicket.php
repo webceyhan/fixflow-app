@@ -6,6 +6,9 @@ use App\Models\Ticket;
 
 class UpdateTicket
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Ticket $ticket, array $data): Ticket
     {
         $ticket->update([

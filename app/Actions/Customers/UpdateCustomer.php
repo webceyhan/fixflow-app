@@ -7,6 +7,9 @@ use App\Models\Customer;
 
 class UpdateCustomer
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Customer $customer, array $data): Customer
     {
         $isBusiness = ($data['type'] ?? $customer->type->value) === CustomerType::Business->value;

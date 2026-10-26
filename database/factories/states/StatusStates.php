@@ -14,7 +14,7 @@ trait StatusStates
     public function ofStatus(BackedEnum $status): self
     {
         return $this->state(fn (array $attributes) => [
-            static::STATUS => $status,
+            self::STATUS => $status,
         ]);
     }
 }

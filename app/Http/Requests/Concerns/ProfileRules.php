@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Concerns;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 trait ProfileRules
 {
@@ -11,7 +11,7 @@ trait ProfileRules
     /**
      * Get the validation rules used to validate user profiles.
      *
-     * @return array<string, array<int, Rule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
     protected function profileRules(?int $userId = null): array
     {

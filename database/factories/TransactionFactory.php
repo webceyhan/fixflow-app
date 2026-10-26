@@ -62,7 +62,7 @@ class TransactionFactory extends Factory
     /**
      * Indicate that the transaction is a deposit.
      */
-    public function deposit(float $amount = 0): static
+    public function deposit(float $amount = 0): self
     {
         return $this->state(['amount' => $amount])->ofType(TransactionType::Deposit);
     }
@@ -70,7 +70,7 @@ class TransactionFactory extends Factory
     /**
      * Indicate that the transaction is a payment.
      */
-    public function payment(float $amount = 0): static
+    public function payment(float $amount = 0): self
     {
         return $this->state(['amount' => $amount])->ofType(TransactionType::Payment);
     }
@@ -78,7 +78,7 @@ class TransactionFactory extends Factory
     /**
      * Indicate that the transaction is a refund.
      */
-    public function refund(float $amount = 0): static
+    public function refund(float $amount = 0): self
     {
         return $this->state(['amount' => $amount])->ofType(TransactionType::Refund);
     }

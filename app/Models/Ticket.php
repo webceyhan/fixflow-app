@@ -11,7 +11,9 @@ use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
+use Carbon\CarbonImmutable;
 use Database\Factories\TicketFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,9 +22,41 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/**
+ * @property int $id
+ * @property int $device_id
+ * @property int|null $assignee_id
+ * @property string $title
+ * @property string|null $note
+ * @property Priority $priority
+ * @property TicketStatus $status
+ * @property CarbonImmutable|null $due_date
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read User|null $assignee
+ * @property-read Collection<int, Attachment> $attachments
+ * @property-read int|null $attachments_count
+ * @property-read Customer|null $customer
+ * @property-read Device $device
+ * @property-read Invoice|null $invoice
+ * @property-read Collection<int, Order> $orders
+ * @property-read int|null $orders_count
+ * @property-read mixed $ref
+ * @property-read Collection<int, Task> $tasks
+ * @property-read int|null $tasks_count
+ */
 class Ticket extends Model
 {
-    /** @use HasFactory<TicketFactory> */
+    /**
+     * @use Assignable<$this>
+     * @use HasActiveStatus<static>
+     * @use HasCancelledStatus<static>
+     * @use HasDueDate<static>
+     * @use HasPriority<static, Priority>
+     * @use HasFactory<TicketFactory>
+     * @use HasRef<static>
+     * @use HasStatus<static, TicketStatus>
+     */
     use Assignable,
         HasActiveStatus,
         HasCancelledStatus,
@@ -37,7 +71,7 @@ class Ticket extends Model
     /**
      * The model's default values for attributes.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'priority' => Priority::Medium,
@@ -73,6 +107,8 @@ class Ticket extends Model
 
     /**
      * Get the device that owns the ticket.
+     *
+     * @return BelongsTo<Device, $this>
      */
     public function device(): BelongsTo
     {
@@ -81,6 +117,8 @@ class Ticket extends Model
 
     /**
      * Get the customer for the ticket via the device.
+     *
+     * @return HasOneThrough<Customer, Device, $this>
      */
     public function customer(): HasOneThrough
     {
@@ -89,6 +127,8 @@ class Ticket extends Model
 
     /**
      * Get the tasks for the ticket.
+     *
+     * @return HasMany<Task, $this>
      */
     public function tasks(): HasMany
     {
@@ -97,6 +137,8 @@ class Ticket extends Model
 
     /**
      * Get the orders for the ticket.
+     *
+     * @return HasMany<Order, $this>
      */
     public function orders(): HasMany
     {
@@ -105,6 +147,8 @@ class Ticket extends Model
 
     /**
      * Get the file attachments for the ticket.
+     *
+     * @return MorphMany<Attachment, $this>
      */
     public function attachments(): MorphMany
     {
@@ -113,6 +157,8 @@ class Ticket extends Model
 
     /**
      * Get the invoice for the ticket.
+     *
+     * @return HasOne<Invoice, $this>
      */
     public function invoice(): HasOne
     {

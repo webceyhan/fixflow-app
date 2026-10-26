@@ -12,7 +12,7 @@ trait NoteStates
     public function withNote(string $note): self
     {
         return $this->state(fn (array $attributes) => [
-            static::NOTE => $note,
+            self::NOTE => $note,
         ]);
     }
 }

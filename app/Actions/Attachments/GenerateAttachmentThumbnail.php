@@ -48,16 +48,12 @@ class GenerateAttachmentThumbnail
     }
 
     /**
-     * @return \GdImage|resource
+     * @param  int<1, 500>  $size
      */
-    private function createSquareThumbnail(mixed $sourceImage, int $size): mixed
+    private function createSquareThumbnail(\GdImage $sourceImage, int $size): \GdImage
     {
         $sourceWidth = imagesx($sourceImage);
         $sourceHeight = imagesy($sourceImage);
-
-        if ($sourceWidth === 0 || $sourceHeight === 0) {
-            throw new RuntimeException('Attachment image has invalid dimensions.');
-        }
 
         $scale = max($size / $sourceWidth, $size / $sourceHeight);
         $resizedWidth = (int) round($sourceWidth * $scale);
@@ -72,9 +68,9 @@ class GenerateAttachmentThumbnail
         }
 
         $background = imagecolorallocate($thumbnailImage, 0, 0, 0);
-        imagefill($thumbnailImage, 0, 0, $background);
+        imagefill($thumbnailImage, 0, 0, (int) $background);
 
-        $copied = imagecopyresampled(
+        imagecopyresampled(
             $thumbnailImage,
             $sourceImage,
             $offsetX,
@@ -86,12 +82,6 @@ class GenerateAttachmentThumbnail
             $sourceWidth,
             $sourceHeight,
         );
-
-        if (! $copied) {
-            imagedestroy($thumbnailImage);
-
-            throw new RuntimeException('Unable to resize image for thumbnail.');
-        }
 
         return $thumbnailImage;
     }

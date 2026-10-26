@@ -13,6 +13,8 @@ abstract class Fixture
 
     /**
      * Load fixture data from JSON file.
+     *
+     * @return array<string, mixed>
      */
     public static function load(string $name): array
     {
@@ -25,6 +27,8 @@ abstract class Fixture
 
     /**
      * Get all fixture data or a specific key.
+     *
+     * @return array<string, mixed>
      */
     public static function data(?string $key = null): array
     {

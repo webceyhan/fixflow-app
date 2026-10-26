@@ -5,6 +5,11 @@ namespace App\Enums\Concerns;
 use ReflectionAttribute;
 use ReflectionEnumBackedCase;
 
+/**
+ * @property-read string $name
+ *
+ * @method static array<int, static> cases()
+ */
 trait HasAttributes
 {
     /**
@@ -22,6 +27,10 @@ trait HasAttributes
 
     /**
      * Check if the enum case has a specific attribute.
+     *
+     * @template T of object
+     *
+     * @param  class-string<T>  $name
      */
     public function hasAttribute(string $name): bool
     {
@@ -30,6 +39,11 @@ trait HasAttributes
 
     /**
      * Get all enum cases that have a specific attribute.
+     *
+     * @template T of object
+     *
+     * @param  class-string<T>  $attribute
+     * @return array<int, static>
      */
     public static function casesByAttribute(string $attribute): array
     {
@@ -41,7 +55,10 @@ trait HasAttributes
     /**
      * Get the list of attributes for the enum case.
      *
-     * @return array<int, ReflectionAttribute>
+     * @template T of object
+     *
+     * @param  class-string<T>|null  $name
+     * @return array<int, ReflectionAttribute<T>>
      */
     protected function attributes(?string $name = null): array
     {

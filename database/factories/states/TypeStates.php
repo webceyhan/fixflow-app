@@ -14,7 +14,7 @@ trait TypeStates
     public function ofType(BackedEnum $type): self
     {
         return $this->state(fn (array $attributes) => [
-            static::TYPE => $type,
+            self::TYPE => $type,
         ]);
     }
 }

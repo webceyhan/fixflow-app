@@ -9,15 +9,45 @@ use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use App\Models\Concerns\HasWarranty;
+use Carbon\CarbonImmutable;
 use Database\Factories\DeviceFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $customer_id
+ * @property string $model
+ * @property string $brand
+ * @property string|null $color
+ * @property string|null $imei
+ * @property string|null $serial_number
+ * @property string|null $passcode
+ * @property CarbonImmutable|null $purchase_date
+ * @property CarbonImmutable|null $warranty_expire_date
+ * @property string|null $note
+ * @property DeviceType $type
+ * @property DeviceStatus $status
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read Customer $customer
+ * @property-read mixed $ref
+ * @property-read Collection<int, Ticket> $tickets
+ * @property-read int|null $tickets_count
+ */
 class Device extends Model
 {
-    /** @use HasFactory<DeviceFactory> */
+    /**
+     * @use HasActiveStatus<static>
+     * @use HasFactory<DeviceFactory>
+     * @use HasRef<static>
+     * @use HasStatus<static, DeviceStatus>
+     * @use HasType<static, DeviceType>
+     * @use HasWarranty<static>
+     */
     use HasActiveStatus,
         HasFactory,
         HasRef,
@@ -30,7 +60,7 @@ class Device extends Model
     /**
      * The model's default values for attributes.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'type' => DeviceType::Other,
@@ -76,6 +106,8 @@ class Device extends Model
 
     /**
      * Get the customer that owns the device.
+     *
+     * @return BelongsTo<Customer, $this>
      */
     public function customer(): BelongsTo
     {
@@ -84,6 +116,8 @@ class Device extends Model
 
     /**
      * Get the tickets for the device.
+     *
+     * @return HasMany<Ticket, $this>
      */
     public function tickets(): HasMany
     {

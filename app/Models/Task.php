@@ -14,14 +14,43 @@ use App\Models\Concerns\HasPriority;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
+use Carbon\CarbonImmutable;
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $ticket_id
+ * @property int|null $assignee_id
+ * @property float $cost
+ * @property bool $is_billable
+ * @property string|null $note
+ * @property Priority $priority
+ * @property TaskType $type
+ * @property TaskStatus $status
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $approved_at
+ * @property-read User|null $assignee
+ * @property-read mixed $ref
+ * @property-read Ticket $ticket
+ */
 class Task extends Model
 {
-    /** @use HasFactory<TaskFactory> */
+    /**
+     * @use Approvable<static>
+     * @use Assignable<$this>
+     * @use Billable<static>
+     * @use HasActiveStatus<static>
+     * @use HasCancelledStatus<static>
+     * @use HasFactory<TaskFactory>
+     * @use HasPriority<static, Priority>
+     * @use HasRef<static>
+     * @use HasStatus<static, TaskStatus>
+     * @use HasType<static, TaskType>
+     */
     use Approvable,
         Assignable,
         Billable,
@@ -38,7 +67,7 @@ class Task extends Model
     /**
      * The model's default values for attributes.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'cost' => 0,
@@ -80,6 +109,8 @@ class Task extends Model
 
     /**
      * Get the ticket that owns the task.
+     *
+     * @return BelongsTo<Ticket, $this>
      */
     public function ticket(): BelongsTo
     {

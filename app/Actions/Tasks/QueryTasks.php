@@ -8,17 +8,20 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryTasks
 {
+    /**
+     * @return QueryBuilder<Task>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Task::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['note']),
                 AllowedFilter::assignee(),
                 AllowedFilter::exact('type'),
                 AllowedFilter::exact('priority'),
                 AllowedFilter::exact('status'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['type', 'cost', 'approved_at', 'created_at']);
+            )
+            ->allowedSorts('type', 'cost', 'approved_at', 'created_at');
     }
 }

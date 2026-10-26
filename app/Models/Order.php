@@ -11,14 +11,45 @@ use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
+use Carbon\CarbonImmutable;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $ticket_id
+ * @property int|null $assignee_id
+ * @property string $name
+ * @property string|null $url
+ * @property string|null $supplier
+ * @property int $quantity
+ * @property float $cost
+ * @property bool $is_billable
+ * @property CarbonImmutable|null $due_date
+ * @property string|null $note
+ * @property OrderStatus $status
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $approved_at
+ * @property-read User|null $assignee
+ * @property-read mixed $ref
+ * @property-read Ticket $ticket
+ */
 class Order extends Model
 {
-    /** @use HasFactory<OrderFactory> */
+    /**
+     * @use Approvable<static>
+     * @use Assignable<$this>
+     * @use Billable<static>
+     * @use HasActiveStatus<static>
+     * @use HasCancelledStatus<static>
+     * @use HasDueDate<static>
+     * @use HasFactory<OrderFactory>
+     * @use HasRef<static>
+     * @use HasStatus<static, OrderStatus>
+     */
     use Approvable,
         Assignable,
         Billable,
@@ -34,7 +65,7 @@ class Order extends Model
     /**
      * The model's default values for attributes.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'quantity' => 1,
@@ -79,6 +110,8 @@ class Order extends Model
 
     /**
      * Get the ticket that owns the order.
+     *
+     * @return BelongsTo<Ticket, $this>
      */
     public function ticket(): BelongsTo
     {

@@ -11,6 +11,9 @@ class CreateTask
         protected SyncInvoiceTasks $syncInvoiceTasks,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Task
     {
         $task = Task::create([

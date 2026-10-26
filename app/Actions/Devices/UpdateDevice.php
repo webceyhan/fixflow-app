@@ -6,6 +6,9 @@ use App\Models\Device;
 
 class UpdateDevice
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Device $device, array $data): Device
     {
         $device->update([

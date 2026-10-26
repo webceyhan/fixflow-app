@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Concerns;
 
 use App\Models\Ticket;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 
 trait TicketRules
@@ -17,7 +17,7 @@ trait TicketRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<Model>
+     * @return class-string<Ticket>
      */
     protected function getModelClass(): string
     {
@@ -27,7 +27,7 @@ trait TicketRules
     /**
      * Get all validation rules for ticket management.
      *
-     * @return array<string, array<int, Rule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
     protected function ticketRules(?int $ticketId = null): array
     {
@@ -44,7 +44,7 @@ trait TicketRules
     /**
      * Get the validation rules used to validate ticket titles.
      *
-     * @return array<int, Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function titleRules(): array
     {

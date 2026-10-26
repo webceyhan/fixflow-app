@@ -8,15 +8,18 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryAdjustments
 {
+    /**
+     * @return QueryBuilder<Adjustment>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Adjustment::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['note']),
                 AllowedFilter::exact('type'),
                 AllowedFilter::exact('reason'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['id', 'amount', 'created_at']);
+            )
+            ->allowedSorts('id', 'amount', 'created_at');
     }
 }
