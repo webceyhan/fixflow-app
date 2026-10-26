@@ -13,6 +13,7 @@ use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use Carbon\CarbonImmutable;
 use Database\Factories\TicketFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property-read Collection<int, Task> $tasks
  * @property-read int|null $tasks_count
  */
+#[Fillable(['device_id', 'assignee_id', 'title', 'note', 'priority', 'status', 'due_date'])]
 class Ticket extends Model
 {
     /**
@@ -76,21 +78,6 @@ class Ticket extends Model
     protected $attributes = [
         'priority' => Priority::Medium,
         'status' => TicketStatus::Created,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'device_id',
-        'assignee_id',
-        'title',
-        'note',
-        'priority',
-        'status',
-        'due_date',
     ];
 
     /**

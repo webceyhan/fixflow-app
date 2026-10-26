@@ -8,6 +8,7 @@ use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasType;
 use Carbon\CarbonImmutable;
 use Database\Factories\AdjustmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Invoice $invoice
  * @property-read mixed $ref
  */
+#[Fillable(['invoice_id', 'amount', 'is_percent', 'note', 'type', 'reason'])]
 class Adjustment extends Model
 {
     /**
@@ -49,20 +51,6 @@ class Adjustment extends Model
         'is_percent' => false,
         'type' => AdjustmentType::Discount,
         'reason' => AdjustmentReason::Welcome,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'invoice_id',
-        'amount',
-        'is_percent',
-        'note',
-        'type',
-        'reason',
     ];
 
     /**

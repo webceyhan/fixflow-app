@@ -10,6 +10,7 @@ use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use Carbon\CarbonImmutable;
 use Database\Factories\InvoiceFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, Transaction> $transactions
  * @property-read int|null $transactions_count
  */
+#[Fillable(['ticket_id', 'total', 'task_total', 'order_total', 'discount_amount', 'fee_amount', 'paid_amount', 'refunded_amount', 'due_date', 'note', 'status'])]
 class Invoice extends Model
 {
     /**
@@ -71,25 +73,6 @@ class Invoice extends Model
         'paid_amount' => 0,
         'refunded_amount' => 0,
         'status' => InvoiceStatus::Draft,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'ticket_id',
-        'total',
-        'task_total',
-        'order_total',
-        'discount_amount',
-        'fee_amount',
-        'paid_amount',
-        'refunded_amount',
-        'due_date',
-        'note',
-        'status',
     ];
 
     /**

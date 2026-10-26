@@ -11,6 +11,7 @@ use App\Models\Concerns\HasType;
 use App\Models\Concerns\HasWarranty;
 use Carbon\CarbonImmutable;
 use Database\Factories\DeviceFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Collection<int, Ticket> $tickets
  * @property-read int|null $tickets_count
  */
+#[Fillable(['customer_id', 'model', 'brand', 'color', 'imei', 'serial_number', 'passcode', 'purchase_date', 'warranty_expire_date', 'note', 'type', 'status'])]
 class Device extends Model
 {
     /**
@@ -65,26 +67,6 @@ class Device extends Model
     protected $attributes = [
         'type' => DeviceType::Other,
         'status' => DeviceStatus::Received,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'customer_id',
-        'model',
-        'brand',
-        'color',
-        'imei',
-        'serial_number',
-        'passcode',
-        'purchase_date',
-        'warranty_expire_date',
-        'note',
-        'type',
-        'status',
     ];
 
     /**

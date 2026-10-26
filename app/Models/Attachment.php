@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\AttachmentCategory;
 use Carbon\CarbonImmutable;
 use Database\Factories\AttachmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property CarbonImmutable|null $updated_at
  * @property-read Model $attachable
  */
+#[Fillable(['attachable_type', 'attachable_id', 'name', 'path', 'mime_type', 'size', 'category'])]
 class Attachment extends Model
 {
     /**
@@ -36,21 +38,6 @@ class Attachment extends Model
      */
     protected $attributes = [
         'category' => AttachmentCategory::Other,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'attachable_type',
-        'attachable_id',
-        'name',
-        'path',
-        'mime_type',
-        'size',
-        'category',
     ];
 
     /**

@@ -13,6 +13,7 @@ use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
 use Carbon\CarbonImmutable;
 use Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read mixed $ref
  * @property-read Ticket $ticket
  */
+#[Fillable(['ticket_id', 'assignee_id', 'name', 'url', 'supplier', 'quantity', 'cost', 'is_billable', 'due_date', 'note', 'status', 'approved_at'])]
 class Order extends Model
 {
     /**
@@ -71,26 +73,6 @@ class Order extends Model
         'quantity' => 1,
         'cost' => 0,
         'status' => OrderStatus::Created,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'ticket_id',
-        'assignee_id',
-        'name',
-        'url',
-        'supplier',
-        'quantity',
-        'cost',
-        'is_billable',
-        'due_date',
-        'note',
-        'status',
-        'approved_at',
     ];
 
     /**

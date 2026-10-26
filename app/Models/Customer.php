@@ -10,6 +10,7 @@ use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use Carbon\CarbonImmutable;
 use Database\Factories\CustomerFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property-read Collection<int, Ticket> $tickets
  * @property-read int|null $tickets_count
  */
+#[Fillable(['name', 'company', 'tax_number', 'email', 'phone', 'address', 'note', 'type', 'status'])]
 class Customer extends Model
 {
     /**
@@ -60,23 +62,6 @@ class Customer extends Model
     protected $attributes = [
         'type' => CustomerType::Individual,
         'status' => CustomerStatus::Active,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'company',
-        'tax_number',
-        'email',
-        'phone',
-        'address',
-        'note',
-        'type',
-        'status',
     ];
 
     /**

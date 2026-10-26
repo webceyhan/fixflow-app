@@ -16,6 +16,7 @@ use App\Models\Concerns\HasStatus;
 use App\Models\Concerns\HasType;
 use Carbon\CarbonImmutable;
 use Database\Factories\TaskFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read mixed $ref
  * @property-read Ticket $ticket
  */
+#[Fillable(['ticket_id', 'assignee_id', 'cost', 'is_billable', 'note', 'priority', 'type', 'status', 'approved_at'])]
 class Task extends Model
 {
     /**
@@ -74,23 +76,6 @@ class Task extends Model
         'priority' => Priority::Medium,
         'type' => TaskType::Repair,
         'status' => TaskStatus::Created,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'ticket_id',
-        'assignee_id',
-        'cost',
-        'is_billable',
-        'note',
-        'priority',
-        'type',
-        'status',
-        'approved_at',
     ];
 
     /**
