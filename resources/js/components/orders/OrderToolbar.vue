@@ -11,9 +11,9 @@ import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/orders';
 import type { Order } from '@/types';
 
-interface Props {
+type Props = {
     order: Order;
-}
+};
 
 defineProps<Props>();
 </script>

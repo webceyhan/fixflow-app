@@ -3,10 +3,10 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import type { User } from '@/types';
 
-interface Props {
+type Props = {
     user: User;
     showEmail?: boolean;
-}
+};
 
 defineProps<Props>();
 

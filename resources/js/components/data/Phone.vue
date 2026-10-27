@@ -3,9 +3,9 @@ import TextLink from '@/components/TextLink.vue';
 
 import Fallback from './Fallback.vue';
 
-interface Props {
+type Props = {
     value?: string;
-}
+};
 
 defineProps<Props>();
 </script>

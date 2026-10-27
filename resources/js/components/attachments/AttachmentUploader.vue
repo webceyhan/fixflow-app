@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 import { FieldError } from '@/components/ui/field';
 import { useUploads } from '@/composables/useUploads';
 
-interface Props {
+type Props = {
     actionUrl: string;
-}
+};
 
 const props = defineProps<Props>();
 

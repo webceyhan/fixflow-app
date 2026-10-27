@@ -14,9 +14,9 @@ import type { User } from '@/types';
 
 import UserInfo from './UserInfo.vue';
 
-interface Props {
+type Props = {
     user: User;
-}
+};
 
 defineProps<Props>();
 

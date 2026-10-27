@@ -34,9 +34,9 @@ import type { Adjustment, AdjustmentReason } from '@/types';
 
 import AdjustmentTypeSelector from './AdjustmentTypeSelector.vue';
 
-interface Props {
+type Props = {
     adjustment: Adjustment;
-}
+};
 
 const { adjustment } = defineProps<Props>();
 

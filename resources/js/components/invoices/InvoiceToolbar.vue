@@ -7,9 +7,9 @@ import { edit, update } from '@/routes/invoices';
 import { create as createTransaction } from '@/routes/transactions';
 import type { Invoice } from '@/types';
 
-interface Props {
+type Props = {
     invoice: Invoice;
-}
+};
 
 defineProps<Props>();
 </script>

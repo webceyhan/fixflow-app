@@ -3,9 +3,9 @@ import StatusBadge from '@/components/StatusBadge.vue';
 import { INVOICE_STATUS_COLOR_MAP } from '@/constants';
 import type { InvoiceStatus } from '@/types';
 
-interface Props {
+type Props = {
     value: InvoiceStatus;
-}
+};
 
 defineProps<Props>();
 </script>

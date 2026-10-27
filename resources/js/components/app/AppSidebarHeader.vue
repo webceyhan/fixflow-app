@@ -3,9 +3,9 @@ import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import type { NavItem } from '@/types';
 
-interface Props {
+type Props = {
     breadcrumbs?: NavItem[];
-}
+};
 
 defineProps<Props>();
 </script>

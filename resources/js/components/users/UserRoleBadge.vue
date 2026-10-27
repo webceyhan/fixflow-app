@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { UserRole } from '@/types';
 
-interface Props {
+type Props = {
     value: UserRole;
-}
+};
 
 defineProps<Props>();
 </script>

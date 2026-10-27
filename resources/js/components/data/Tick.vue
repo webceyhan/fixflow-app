@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { CheckIcon, ClockAlertIcon, MinusIcon } from '@lucide/vue';
 
-interface Props {
+type Props = {
     value?: any;
     pending?: boolean;
-}
+};
 
 defineProps<Props>();
 </script>

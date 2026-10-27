@@ -45,7 +45,6 @@ defineProps<{
                         id="email"
                         type="email"
                         name="email"
-
                         :tabindex="1"
                         autocomplete="email"
                         placeholder="email@example.com"

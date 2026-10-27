@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { Href, Option } from '@/types';
 
-interface Props {
+type Props = {
     name: string;
     href: Href;
     data: Record<string, any>;
     options: Option<any>[];
-}
+};
 
 defineProps<Props>();
 </script>

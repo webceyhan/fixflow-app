@@ -3,10 +3,10 @@ import { formatDate, formatTimestamp } from '@/lib/utils';
 
 import Fallback from './Fallback.vue';
 
-interface Props {
+type Props = {
     value?: string;
     full?: boolean;
-}
+};
 
 defineProps<Props>();
 </script>

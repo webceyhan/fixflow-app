@@ -5,9 +5,9 @@ import { Percent } from '@/components/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Ticket } from '@/types';
 
-interface Props {
+type Props = {
     tickets?: Ticket[];
-}
+};
 
 const props = defineProps<Props>();
 

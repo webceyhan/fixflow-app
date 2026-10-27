@@ -17,9 +17,9 @@ import type { Device } from '@/types';
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 import DeviceTypeBadge from './DeviceTypeBadge.vue';
 
-interface Props {
+type Props = {
     device: Device;
-}
+};
 
 defineProps<Props>();
 </script>

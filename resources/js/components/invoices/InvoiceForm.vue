@@ -27,9 +27,9 @@ import { toIsoDate } from '@/lib/utils';
 import { update } from '@/routes/invoices';
 import type { Invoice } from '@/types';
 
-interface Props {
+type Props = {
     invoice: Invoice;
-}
+};
 
 const { invoice } = defineProps<Props>();
 

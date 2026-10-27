@@ -12,9 +12,9 @@ import { destroy, edit, update } from '@/routes/customers';
 import { create as createDevice } from '@/routes/devices';
 import type { Customer } from '@/types';
 
-interface Props {
+type Props = {
     customer: Customer;
-}
+};
 
 defineProps<Props>();
 </script>

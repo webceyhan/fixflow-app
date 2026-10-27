@@ -3,9 +3,9 @@ import StatusBadge from '@/components/StatusBadge.vue';
 import { USER_STATUS_COLOR_MAP } from '@/constants';
 import type { UserStatus } from '@/types';
 
-interface Props {
+type Props = {
     value: UserStatus;
-}
+};
 
 defineProps<Props>();
 </script>

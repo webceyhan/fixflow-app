@@ -17,10 +17,10 @@ import {
     thumbnail,
 } from '@/routes/tickets/attachments';
 
-interface Props {
+type Props = {
     ticketId: number;
     attachments?: Attachment[];
-}
+};
 
 const props = defineProps<Props>();
 

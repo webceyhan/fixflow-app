@@ -5,9 +5,9 @@ import { PlusIcon } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
 
-interface Props {
+type Props = {
     href: Href;
-}
+};
 
 defineProps<Props>();
 </script>

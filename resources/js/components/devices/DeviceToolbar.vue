@@ -12,9 +12,9 @@ import { destroy, edit, update } from '@/routes/devices';
 import { create as createTicket } from '@/routes/tickets';
 import type { Device } from '@/types';
 
-interface Props {
+type Props = {
     device: Device;
-}
+};
 
 defineProps<Props>();
 </script>

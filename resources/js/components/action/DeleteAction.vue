@@ -16,10 +16,10 @@ import {
 import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
 
-interface Props {
+type Props = {
     href: Href;
     recordName?: string;
-}
+};
 
 const props = defineProps<Props>();
 

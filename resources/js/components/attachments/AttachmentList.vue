@@ -16,10 +16,10 @@ import { AttachmentCategoryIcon } from '@/icons';
 import { formatSize } from '@/lib/utils';
 import type { Attachment } from '@/types';
 
-interface Props {
+type Props = {
     attachments?: Attachment[];
     thumbnailUrl: (id: number) => string;
-}
+};
 
 defineProps<Props>();
 

@@ -2,9 +2,9 @@
 import { TransactionMethodIcon } from '@/icons';
 import type { TransactionMethod } from '@/types';
 
-interface Props {
+type Props = {
     value: TransactionMethod;
-}
+};
 
 defineProps<Props>();
 </script>

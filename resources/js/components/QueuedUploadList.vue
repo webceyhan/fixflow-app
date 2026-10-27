@@ -14,10 +14,10 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import type { QueuedUploadItem } from '@/composables/useUploads';
 
-interface Props {
+type Props = {
     uploads: QueuedUploadItem[];
     processing: boolean;
-}
+};
 
 defineProps<Props>();
 

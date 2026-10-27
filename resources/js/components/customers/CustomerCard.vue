@@ -16,9 +16,9 @@ import type { Customer } from '@/types';
 import CustomerStatusBadge from './CustomerStatusBadge.vue';
 import CustomerTypeBadge from './CustomerTypeBadge.vue';
 
-interface Props {
+type Props = {
     customer: Customer;
-}
+};
 
 defineProps<Props>();
 </script>

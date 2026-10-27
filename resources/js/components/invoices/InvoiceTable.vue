@@ -19,9 +19,9 @@ import type { Invoice } from '@/types';
 import InvoiceLink from './InvoiceLink.vue';
 import InvoiceStatusBadge from './InvoiceStatusBadge.vue';
 
-interface Props {
+type Props = {
     invoices: Invoice[];
-}
+};
 
 defineProps<Props>();
 </script>

@@ -45,9 +45,9 @@ import { toIsoDate } from '@/lib/utils';
 import { store, update } from '@/routes/orders';
 import type { Order } from '@/types';
 
-interface Props {
+type Props = {
     order: Order;
-}
+};
 
 const { order } = defineProps<Props>();
 

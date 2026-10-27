@@ -9,9 +9,9 @@ import {
 import { Separator } from '@/components/ui/separator';
 import type { Invoice } from '@/types';
 
-interface Props {
+type Props = {
     invoice: Invoice;
-}
+};
 
 const { invoice } = defineProps<Props>();
 

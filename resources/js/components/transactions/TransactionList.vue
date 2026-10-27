@@ -27,9 +27,9 @@ import type { Transaction } from '@/types';
 
 import TransactionMethodBadge from './TransactionMethodBadge.vue';
 
-interface Props {
+type Props = {
     transactions?: Transaction[];
-}
+};
 
 defineProps<Props>();
 </script>

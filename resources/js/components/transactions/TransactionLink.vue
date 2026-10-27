@@ -3,9 +3,9 @@ import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/transactions';
 import type { Transaction } from '@/types';
 
-interface Props {
+type Props = {
     transaction: Transaction;
-}
+};
 
 defineProps<Props>();
 </script>

@@ -16,9 +16,9 @@ import type { User } from '@/types';
 import UserRoleBadge from './UserRoleBadge.vue';
 import UserStatusBadge from './UserStatusBadge.vue';
 
-interface Props {
+type Props = {
     user: User;
-}
+};
 
 defineProps<Props>();
 </script>

@@ -3,10 +3,10 @@ import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/users';
 import type { User } from '@/types';
 
-interface Props {
+type Props = {
     user?: User;
     placeholder?: string;
-}
+};
 
 defineProps<Props>();
 </script>

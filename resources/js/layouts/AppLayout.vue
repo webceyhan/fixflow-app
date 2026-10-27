@@ -6,9 +6,9 @@ import AppSidebarHeader from '@/components/app/AppSidebarHeader.vue';
 import { Toaster } from '@/components/ui/sonner';
 import type { NavItem } from '@/types';
 
-interface Props {
+type Props = {
     breadcrumbs?: NavItem[];
-}
+};
 
 defineProps<Props>();
 </script>

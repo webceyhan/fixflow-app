@@ -40,9 +40,9 @@ const WARRANTY_DURATIONS = [
     { value: '36', label: '3 Years' },
 ];
 
-interface Props {
+type Props = {
     device: Device;
-}
+};
 
 const { device } = defineProps<Props>();
 

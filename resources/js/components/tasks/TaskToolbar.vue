@@ -11,9 +11,9 @@ import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/tasks';
 import type { Task } from '@/types';
 
-interface Props {
+type Props = {
     task: Task;
-}
+};
 
 defineProps<Props>();
 </script>

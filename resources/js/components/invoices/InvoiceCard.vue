@@ -20,10 +20,10 @@ import InvoiceLink from './InvoiceLink.vue';
 import InvoiceStatusBadge from './InvoiceStatusBadge.vue';
 import InvoiceSummary from './InvoiceSummary.vue';
 
-interface Props {
+type Props = {
     invoice: Invoice;
     embedded?: boolean;
-}
+};
 
 defineProps<Props>();
 </script>

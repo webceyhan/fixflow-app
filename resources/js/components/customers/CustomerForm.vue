@@ -27,9 +27,9 @@ import type { Customer } from '@/types';
 
 import CustomerTypeSelector from './CustomerTypeSelector.vue';
 
-interface Props {
+type Props = {
     customer: Customer;
-}
+};
 
 const { customer } = defineProps<Props>();
 

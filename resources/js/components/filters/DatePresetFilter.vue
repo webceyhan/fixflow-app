@@ -6,11 +6,11 @@ import { toOptions } from '@/lib/utils';
 
 import SelectFilter from './SelectFilter.vue';
 
-interface Props {
+type Props = {
     name: string;
     title?: string;
     placeholder?: string;
-}
+};
 
 defineProps<Props>();
 </script>

@@ -27,9 +27,9 @@ import type { User } from '@/types';
 
 import UserRoleSelector from './UserRoleSelector.vue';
 
-interface Props {
+type Props = {
     user: User;
-}
+};
 
 const { user } = defineProps<Props>();
 

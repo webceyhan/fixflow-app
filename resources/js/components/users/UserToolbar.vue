@@ -6,9 +6,9 @@ import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/users';
 import type { User } from '@/types';
 
-interface Props {
+type Props = {
     user: User;
-}
+};
 
 defineProps<Props>();
 </script>

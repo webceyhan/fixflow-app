@@ -27,9 +27,9 @@ import type { Task } from '@/types';
 
 import TaskStatusBadge from './TaskStatusBadge.vue';
 
-interface Props {
+type Props = {
     tasks?: Task[];
-}
+};
 
 defineProps<Props>();
 </script>

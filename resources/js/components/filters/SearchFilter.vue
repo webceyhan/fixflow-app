@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/input-group';
 import { useFilter } from '@/composables/useFilter';
 
-interface Props {
+type Props = {
     placeholder?: string;
-}
+};
 
 defineProps<Props>();
 

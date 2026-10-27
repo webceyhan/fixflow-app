@@ -13,9 +13,9 @@ import { create as createTask } from '@/routes/tasks';
 import { destroy, edit, update } from '@/routes/tickets';
 import type { Ticket } from '@/types';
 
-interface Props {
+type Props = {
     ticket: Ticket;
-}
+};
 
 defineProps<Props>();
 </script>

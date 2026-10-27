@@ -13,9 +13,9 @@ import type { StateColor } from '@/types';
  * text-neutral border-neutral/50
  */
 
-interface Props {
+type Props = {
     color: StateColor;
-}
+};
 
 defineProps<Props>();
 </script>

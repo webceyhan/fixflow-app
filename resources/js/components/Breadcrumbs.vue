@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/breadcrumb';
 import type { NavItem } from '@/types';
 
-interface Props {
+type Props = {
     breadcrumbs: NavItem[];
-}
+};
 
 defineProps<Props>();
 </script>

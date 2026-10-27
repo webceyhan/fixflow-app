@@ -3,9 +3,9 @@ import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/orders';
 import type { Order } from '@/types';
 
-interface Props {
+type Props = {
     order: Order;
-}
+};
 
 defineProps<Props>();
 </script>

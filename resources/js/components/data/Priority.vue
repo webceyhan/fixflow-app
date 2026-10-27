@@ -8,9 +8,9 @@ import type { Priority } from '@/types';
  * text-info
  * text-error
  */
-interface Props {
+type Props = {
     value: Priority;
-}
+};
 
 defineProps<Props>();
 </script>

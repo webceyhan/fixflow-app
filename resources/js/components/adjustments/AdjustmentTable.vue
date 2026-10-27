@@ -18,9 +18,9 @@ import type { Adjustment } from '@/types';
 import AdjustmentLink from './AdjustmentLink.vue';
 import AdjustmentReasonBadge from './AdjustmentReasonBadge.vue';
 
-interface Props {
+type Props = {
     adjustments: Adjustment[];
-}
+};
 
 defineProps<Props>();
 </script>

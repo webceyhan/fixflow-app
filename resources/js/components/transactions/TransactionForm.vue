@@ -30,9 +30,9 @@ import type { Transaction } from '@/types';
 
 import TransactionTypeSelector from './TransactionTypeSelector.vue';
 
-interface Props {
+type Props = {
     transaction: Transaction;
-}
+};
 
 const { transaction } = defineProps<Props>();
 

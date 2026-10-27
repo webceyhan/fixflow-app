@@ -19,9 +19,9 @@ import type { Order } from '@/types';
 import OrderLink from './OrderLink.vue';
 import OrderStatusBadge from './OrderStatusBadge.vue';
 
-interface Props {
+type Props = {
     orders: Order[];
-}
+};
 
 defineProps<Props>();
 </script>

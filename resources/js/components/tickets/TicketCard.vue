@@ -17,9 +17,9 @@ import type { Ticket } from '@/types';
 
 import TicketStatusBadge from './TicketStatusBadge.vue';
 
-interface Props {
+type Props = {
     ticket: Ticket;
-}
+};
 
 defineProps<Props>();
 </script>

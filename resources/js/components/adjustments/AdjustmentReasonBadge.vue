@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { AdjustmentReason } from '@/types';
 
-interface Props {
+type Props = {
     value: AdjustmentReason;
-}
+};
 
 defineProps<Props>();
 

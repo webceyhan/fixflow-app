@@ -3,9 +3,9 @@ import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/adjustments';
 import type { Adjustment } from '@/types';
 
-interface Props {
+type Props = {
     adjustment: Adjustment;
-}
+};
 
 defineProps<Props>();
 </script>

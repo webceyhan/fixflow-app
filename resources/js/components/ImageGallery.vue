@@ -28,10 +28,10 @@ interface ImageGalleryItem {
     thumbnailUrl?: string;
 }
 
-interface Props {
+type Props = {
     images: ImageGalleryItem[];
     initialIndex?: number;
-}
+};
 
 const props = withDefaults(defineProps<Props>(), {
     initialIndex: 0,

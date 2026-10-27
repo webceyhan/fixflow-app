@@ -9,9 +9,9 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import type { Option } from '@/types';
 
-interface Props {
+type Props = {
     options: Option[];
-}
+};
 
 defineProps<Props>();
 

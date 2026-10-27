@@ -5,10 +5,10 @@ import { BriefcaseIcon } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
 
-interface Props {
+type Props = {
     href: Href;
     data: Record<string, any>;
-}
+};
 
 defineProps<Props>();
 </script>

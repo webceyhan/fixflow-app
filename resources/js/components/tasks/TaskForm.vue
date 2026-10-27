@@ -40,9 +40,9 @@ import type { Task } from '@/types';
 
 import TaskTypeSelector from './TaskTypeSelector.vue';
 
-interface Props {
+type Props = {
     task: Task;
-}
+};
 
 const { task } = defineProps<Props>();
 

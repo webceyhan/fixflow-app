@@ -3,9 +3,9 @@ import StatusBadge from '@/components/StatusBadge.vue';
 import { DEVICE_STATUS_COLOR_MAP } from '@/constants';
 import type { DeviceStatus } from '@/types';
 
-interface Props {
+type Props = {
     value: DeviceStatus;
-}
+};
 
 defineProps<Props>();
 </script>

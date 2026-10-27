@@ -36,9 +36,9 @@ import { PRIORITY, TICKET_STATUS } from '@/constants';
 import { store, update } from '@/routes/tickets';
 import type { Ticket } from '@/types';
 
-interface Props {
+type Props = {
     ticket: Ticket;
-}
+};
 
 const { ticket } = defineProps<Props>();
 

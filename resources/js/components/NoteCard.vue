@@ -11,10 +11,10 @@ import {
 import { toUrl } from '@/lib/utils';
 import type { Href } from '@/types';
 
-interface Props {
+type Props = {
     href: Href;
     data: Record<string, any>;
-}
+};
 
 const props = defineProps<Props>();
 

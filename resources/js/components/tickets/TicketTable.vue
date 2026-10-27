@@ -19,9 +19,9 @@ import type { Ticket } from '@/types';
 import TicketLink from './TicketLink.vue';
 import TicketStatusBadge from './TicketStatusBadge.vue';
 
-interface Props {
+type Props = {
     tickets: Ticket[];
-}
+};
 
 defineProps<Props>();
 </script>
