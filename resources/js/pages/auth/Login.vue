@@ -45,10 +45,11 @@ defineProps<{
                         id="email"
                         type="email"
                         name="email"
-                        autofocus
+
                         :tabindex="1"
                         autocomplete="email"
                         placeholder="email@example.com"
+                        v-focus
                     />
                     <FieldError :message="errors.email" />
                 </Field>

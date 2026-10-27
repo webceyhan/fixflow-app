@@ -79,7 +79,7 @@ const code = ref<string>('');
                             v-model="code"
                             :maxlength="6"
                             :disabled="processing"
-                            autofocus
+                            v-focus
                         >
                             <InputOTPGroup>
                                 <InputOTPSlot
@@ -124,7 +124,7 @@ const code = ref<string>('');
                         name="recovery_code"
                         type="text"
                         placeholder="Enter recovery code"
-                        :autofocus="showRecoveryInput"
+                        v-focus="showRecoveryInput"
                         required
                     />
                     <FieldError :message="errors.recovery_code" />

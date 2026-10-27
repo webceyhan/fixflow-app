@@ -37,11 +37,11 @@ import { store } from '@/routes/register';
                     <Input
                         id="name"
                         type="text"
-                        autofocus
                         :tabindex="1"
                         autocomplete="name"
                         name="name"
                         placeholder="Full name"
+                        v-focus
                     />
                     <FieldError :message="errors.name" />
                 </Field>

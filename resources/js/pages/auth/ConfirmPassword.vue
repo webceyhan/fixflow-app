@@ -31,7 +31,7 @@ import { store } from '@/routes/password/confirm';
                         type="password"
                         name="password"
                         autocomplete="current-password"
-                        autofocus
+                        v-focus
                     />
                     <FieldError :message="errors.password" />
                 </Field>

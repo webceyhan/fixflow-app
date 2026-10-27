@@ -34,8 +34,8 @@ import { email } from '@/routes/password';
                         type="email"
                         name="email"
                         autocomplete="off"
-                        autofocus
                         placeholder="email@example.com"
+                        v-focus
                     />
                     <FieldError :message="errors.email" />
                 </Field>

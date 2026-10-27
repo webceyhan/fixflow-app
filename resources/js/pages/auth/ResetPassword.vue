@@ -52,8 +52,8 @@ const inputEmail = ref(props.email);
                         type="password"
                         name="password"
                         autocomplete="new-password"
-                        autofocus
                         placeholder="Password"
+                        v-focus
                     />
                     <FieldError :message="errors.password" />
                 </Field>
