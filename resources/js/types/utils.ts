@@ -1,11 +1,8 @@
-import type { InertiaLinkProps } from '@inertiajs/vue3';
 import type { LucideIcon } from '@lucide/vue';
 
 export type Icon = LucideIcon;
 
-export type Href = NonNullable<InertiaLinkProps['href']>;
-
-export interface Option<T = any> {
+export type Option<T = any> = {
     value: T;
     label: string;
     icon?: Icon;
@@ -13,16 +10,9 @@ export interface Option<T = any> {
     checked?: boolean;
     pinned?: boolean;
     [key: string]: any;
-}
+};
 
-export interface NavItem {
-    title: string;
-    href: Href;
-    icon?: Icon;
-    isActive?: boolean;
-}
-
-export interface Paginated<T> {
+export type Paginated<T> = {
     data: T[];
     current_page: number;
     last_page: number;
@@ -30,4 +20,4 @@ export interface Paginated<T> {
     total: number;
     from: number | null;
     to: number | null;
-}
+};
