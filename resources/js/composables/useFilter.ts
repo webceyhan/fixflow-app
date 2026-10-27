@@ -24,7 +24,7 @@ export function useFilter<TValue = string | null>({
     // Methods
     const update = (value: TValue) => {
         state.value = value;
-        nextTick(() => onChange(value));
+        void nextTick(() => onChange(value));
         setFilterData(name, encode(value));
     };
 

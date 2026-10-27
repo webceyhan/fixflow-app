@@ -53,10 +53,8 @@ export default function laravelWatcher({
     watchers = [],
     verbose = false,
 }: LaravelWatcherOptions): Plugin {
-    const {
-        info = () => {}, // print messages
-        warn = () => {}, // print warnings
-    } = verbose ? console : {};
+    const info = verbose ? console.info : () => {};
+    const warn = verbose ? console.warn : () => {};
 
     return <Plugin>{
         name: 'laravel-watcher',

@@ -21,7 +21,11 @@ function watchStatus() {
 
 export function useToast() {
     return {
-        ...toast,
+        success: toast.success,
+        info: toast.info,
+        warning: toast.warning,
+        error: toast.error,
+        loading: toast.loading,
         watchStatus,
     };
 }
