@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
-import { ArrowUpIcon } from 'lucide-vue-next';
+import { ArrowUpIcon } from '@lucide/vue';
 
 import {
     InputGroup,

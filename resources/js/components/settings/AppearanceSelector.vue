@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Monitor, Moon, Sun } from 'lucide-vue-next';
+import { Monitor, Moon, Sun } from '@lucide/vue';
 import { computed } from 'vue';
 
 import { FormSelector } from '@/components/form';

@@ -38,7 +38,7 @@ export {
     Ticket as TicketIcon,
     ArrowRightLeft as TransactionIcon,
     Users as UserIcon,
-} from 'lucide-vue-next';
+} from '@lucide/vue';
 
 export const PriorityIcon = ({ value }: { value: Priority }) =>
     h(PRIORITY_ICON_MAP[value]);

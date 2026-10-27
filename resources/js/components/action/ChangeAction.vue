@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { RefreshCwIcon } from 'lucide-vue-next';
+import { RefreshCwIcon } from '@lucide/vue';
 
 import { Button } from '@/components/ui/button';
 import {

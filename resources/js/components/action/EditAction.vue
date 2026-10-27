@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { PenIcon } from 'lucide-vue-next';
+import { PenIcon } from '@lucide/vue';
 
 import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';

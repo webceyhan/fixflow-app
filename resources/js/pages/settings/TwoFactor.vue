@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form } from '@inertiajs/vue3';
-import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
+import { ShieldBan, ShieldCheck } from '@lucide/vue';
 import { onUnmounted, ref, watch } from 'vue';
 
 import TwoFactorRecoveryCodes from '@/components/settings/TwoFactorRecoveryCodes.vue';

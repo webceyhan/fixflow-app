@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TrashIcon, XIcon } from 'lucide-vue-next';
+import { TrashIcon, XIcon } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';

@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { Icon } from '@/types';
-import { FilterIcon } from 'lucide-vue-next';
+import { FilterIcon } from '@lucide/vue';
 import FilterFacade from './FilterFacade.vue';
 
 interface Props {

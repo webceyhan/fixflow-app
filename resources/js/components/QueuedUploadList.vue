@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ClockIcon, FileWarningIcon, XIcon } from 'lucide-vue-next';
+import { ClockIcon, FileWarningIcon, XIcon } from '@lucide/vue';
 
 import {
     AttachmentAction,

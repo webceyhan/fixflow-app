@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
-import { TrashIcon } from 'lucide-vue-next';
+import { TrashIcon } from '@lucide/vue';
 
 import {
     AlertDialog,

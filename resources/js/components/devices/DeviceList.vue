@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
 
 import { DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';

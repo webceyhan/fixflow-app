@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckIcon, ClockAlertIcon, MinusIcon } from 'lucide-vue-next';
+import { CheckIcon, ClockAlertIcon, MinusIcon } from '@lucide/vue';
 
 interface Props {
     value?: any;

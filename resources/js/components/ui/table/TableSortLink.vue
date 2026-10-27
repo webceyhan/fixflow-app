@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Icon, SortDirection } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { ArrowDown, ArrowDownUp, ArrowUp } from 'lucide-vue-next';
+import { ArrowDown, ArrowDownUp, ArrowUp } from '@lucide/vue';
 import { computed } from 'vue';
 
 interface Props {

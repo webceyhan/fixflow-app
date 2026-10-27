@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UploadIcon } from 'lucide-vue-next';
+import { UploadIcon } from '@lucide/vue';
 import { ref } from 'vue';
 
 import FileDropzone from '@/components/FileDropzone.vue';
