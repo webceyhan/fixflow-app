@@ -1,22 +1,18 @@
 import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { type DefineComponent, createApp, h } from 'vue';
-
 import { initializeTheme } from '@/composables/useAppearance';
-import { APP_NAME } from '@/constants';
-import '../css/app.css';
 
-createInertiaApp({
-    title: (title) => (title ? `${title} - ${APP_NAME}` : APP_NAME),
-    resolve: (name) =>
-        resolvePageComponent(
-            `./pages/${name}.vue`,
-            import.meta.glob<DefineComponent>('./pages/**/*.vue'),
-        ),
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .mount(el);
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+void createInertiaApp({
+    title: (title) => (title ? `${title} - ${appName}` : appName),
+    withApp: (app) => {
+        app.directive('focus', {
+            mounted: (el: HTMLElement, shouldFocus) => {
+                if (shouldFocus.value !== false) {
+                    el.focus();
+                }
+            },
+        });
     },
     progress: {
         color: '#4B5563',
