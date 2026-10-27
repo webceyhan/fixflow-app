@@ -4,7 +4,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { ArrowDown, ArrowDownUp, ArrowUp } from '@lucide/vue';
 import { computed } from 'vue';
 
-interface Props {
+type Props = {
     name: string;
 }
 

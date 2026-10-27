@@ -3,7 +3,7 @@ import type { AlertDialogDescriptionProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import {
-  AlertDialogDescription,
+    AlertDialogDescription,
 } from "reka-ui"
 import { cn } from "@/lib/utils"
 

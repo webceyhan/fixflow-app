@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CommandGroup } from '@/components/ui/command';
 
-interface Props {
+type Props = {
     stickyTop?: boolean;
     stickyBottom?: boolean;
 }

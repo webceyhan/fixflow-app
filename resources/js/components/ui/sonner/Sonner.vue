@@ -18,8 +18,6 @@ const props = defineProps<ToasterProps>()
       '--border-radius': 'var(--radius)',
     }"
     v-bind="props"
-    theme="system"
-    rich-colors
   >
     <template #success-icon>
       <CircleCheckIcon class="size-4" />

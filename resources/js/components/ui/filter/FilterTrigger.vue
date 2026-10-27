@@ -5,7 +5,7 @@ import type { Icon } from '@/types';
 import { FilterIcon } from '@lucide/vue';
 import FilterFacade from './FilterFacade.vue';
 
-interface Props {
+type Props = {
     title: string;
     icon?: Icon;
     facades: string[];

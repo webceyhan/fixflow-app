@@ -3,10 +3,10 @@ import type { AlertDialogContentEmits, AlertDialogContentProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import {
-  AlertDialogContent,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  useForwardPropsEmits,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogPortal,
+    useForwardPropsEmits,
 } from "reka-ui"
 import { cn } from "@/lib/utils"
 

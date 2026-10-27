@@ -29,10 +29,10 @@ useToast().watchStatus();
             </Link>
         </div>
         <div class="lg:p-8">
-            <Toaster />
             <div class="mx-auto space-y-10! sm:w-87.5 [&>header]:text-center">
                 <slot />
             </div>
         </div>
+        <Toaster />
     </div>
 </template>

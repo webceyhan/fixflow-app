@@ -21,10 +21,10 @@ useToast().watchStatus();
         <AppSidebar />
         <AppContent>
             <AppSidebarHeader :breadcrumbs />
-            <Toaster />
             <div class="h-full p-4 md:p-10">
                 <slot />
             </div>
         </AppContent>
+        <Toaster />
     </AppShell>
 </template>

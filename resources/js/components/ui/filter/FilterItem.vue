@@ -5,7 +5,7 @@ import { CheckIcon } from '@lucide/vue';
 import { AcceptableValue } from 'reka-ui';
 import { Checkbox } from '../checkbox';
 
-interface Props {
+type Props = {
     value: AcceptableValue;
     label: string;
     class?: string;
