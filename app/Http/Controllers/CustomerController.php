@@ -46,6 +46,8 @@ class CustomerController extends Controller
     {
         $customer = $createCustomer->handle($request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Customer created.')]);
+
         return redirect()->route('customers.show', $customer);
     }
 
@@ -79,6 +81,8 @@ class CustomerController extends Controller
     {
         $updateCustomer->handle($customer, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Customer updated.')]);
+
         return redirect()->route('customers.show', $customer);
     }
 
@@ -88,6 +92,8 @@ class CustomerController extends Controller
     public function destroy(Customer $customer, DeleteCustomer $deleteCustomer): RedirectResponse
     {
         $deleteCustomer->handle($customer);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Customer deleted.')]);
 
         return redirect()->route('customers.index');
     }

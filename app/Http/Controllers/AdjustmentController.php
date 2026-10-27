@@ -50,10 +50,12 @@ class AdjustmentController extends Controller
      */
     public function store(AdjustmentStoreRequest $request, Invoice $invoice, CreateAdjustment $createAdjustment): RedirectResponse
     {
-        $adjustment = $createAdjustment->handle([
+        $createAdjustment->handle([
             ...$request->validated(),
             'invoice_id' => $invoice->id,
         ]);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Adjustment created.')]);
 
         return redirect()->route('invoices.show', $invoice);
     }
@@ -86,6 +88,8 @@ class AdjustmentController extends Controller
     {
         $updateAdjustment->handle($adjustment, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Adjustment updated.')]);
+
         return redirect()->route('invoices.show', $adjustment->invoice_id);
     }
 
@@ -95,6 +99,8 @@ class AdjustmentController extends Controller
     public function destroy(Adjustment $adjustment, DeleteAdjustment $deleteAdjustment): RedirectResponse
     {
         $deleteAdjustment->handle($adjustment);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Adjustment deleted.')]);
 
         return redirect()->route('invoices.show', $adjustment->invoice_id);
     }

@@ -41,7 +41,6 @@ const action = transaction.id
     : store(transaction.invoice_id);
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Transaction',
     action,
     data: {
         amount: transaction.amount ?? 0,

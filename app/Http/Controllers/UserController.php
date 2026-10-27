@@ -46,6 +46,8 @@ class UserController extends Controller
     {
         $user = $createUser->handle($request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('User created.')]);
+
         return redirect()->route('users.show', $user);
     }
 
@@ -77,6 +79,8 @@ class UserController extends Controller
     {
         $updateUser->handle($user, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('User updated.')]);
+
         return redirect()->route('users.show', $user);
     }
 
@@ -86,6 +90,8 @@ class UserController extends Controller
     public function destroy(User $user, DeleteUser $deleteUser): RedirectResponse
     {
         $deleteUser->handle($user);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('User deleted.')]);
 
         return redirect()->route('users.index');
     }

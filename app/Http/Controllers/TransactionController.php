@@ -55,6 +55,8 @@ class TransactionController extends Controller
             'invoice_id' => $invoice->id,
         ]);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Transaction created.')]);
+
         return redirect()->route('invoices.show', $invoice);
     }
 
@@ -85,6 +87,8 @@ class TransactionController extends Controller
     {
         $updateTransaction->handle($transaction, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Transaction updated.')]);
+
         return redirect()->route('invoices.show', $transaction->invoice_id);
     }
 
@@ -94,6 +98,8 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction, DeleteTransaction $deleteTransaction): RedirectResponse
     {
         $deleteTransaction->handle($transaction);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Transaction deleted.')]);
 
         return redirect()->route('invoices.show', $transaction->invoice_id);
     }

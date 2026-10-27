@@ -55,6 +55,8 @@ class OrderController extends Controller
             'ticket_id' => $ticket->id,
         ]);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Order created.')]);
+
         return redirect()->route('orders.show', $order);
     }
 
@@ -89,6 +91,8 @@ class OrderController extends Controller
     {
         $updateOrder->handle($order, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Order updated.')]);
+
         return redirect()->route('orders.show', $order);
     }
 
@@ -98,6 +102,8 @@ class OrderController extends Controller
     public function destroy(Order $order, DeleteOrder $deleteOrder): RedirectResponse
     {
         $deleteOrder->handle($order);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Order deleted.')]);
 
         return redirect()->route('orders.index');
     }

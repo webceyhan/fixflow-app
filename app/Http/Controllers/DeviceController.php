@@ -53,6 +53,8 @@ class DeviceController extends Controller
             'customer_id' => $customer->id,
         ]);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Device created.')]);
+
         return redirect()->route('devices.show', $device);
     }
 
@@ -88,6 +90,8 @@ class DeviceController extends Controller
     {
         $updateDevice->handle($device, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Device updated.')]);
+
         return redirect()->route('devices.show', $device);
     }
 
@@ -97,6 +101,8 @@ class DeviceController extends Controller
     public function destroy(Device $device, DeleteDevice $deleteDevice): RedirectResponse
     {
         $deleteDevice->handle($device);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Device deleted.')]);
 
         return redirect()->route('devices.index');
     }

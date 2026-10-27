@@ -36,7 +36,6 @@ const { customer } = defineProps<Props>();
 const action = customer.id ? update(customer) : store();
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Customer',
     action,
     data: {
         name: customer.name ?? '',

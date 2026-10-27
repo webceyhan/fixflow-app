@@ -4,7 +4,6 @@ import AppShell from '@/components/app/AppShell.vue';
 import AppSidebar from '@/components/app/AppSidebar.vue';
 import AppSidebarHeader from '@/components/app/AppSidebarHeader.vue';
 import { Toaster } from '@/components/ui/sonner';
-import { useToast } from '@/composables/useToast';
 import type { NavItem } from '@/types';
 
 interface Props {
@@ -12,8 +11,6 @@ interface Props {
 }
 
 defineProps<Props>();
-
-useToast().watchStatus();
 </script>
 
 <template>

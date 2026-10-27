@@ -12,13 +12,10 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { edit, update } from '@/routes/user-password';
 import type { NavItem } from '@/types';
-
-const toast = useToast();
 
 const breadcrumbs: NavItem[] = [
     {
@@ -35,7 +32,6 @@ const breadcrumbs: NavItem[] = [
                 v-bind="update.form()"
                 v-slot="{ errors, processing }"
                 :options="{ preserveScroll: true }"
-                @success="toast.success('Password updated successfully!')"
                 reset-on-success
                 :reset-on-error="[
                     'password',

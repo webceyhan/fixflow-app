@@ -54,7 +54,6 @@ const { order } = defineProps<Props>();
 const action = order.id ? update(order) : store(order.ticket_id);
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Order',
     action,
     data: {
         assignee_id: order.assignee_id ?? '',

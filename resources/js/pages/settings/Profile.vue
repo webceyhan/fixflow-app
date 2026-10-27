@@ -14,7 +14,6 @@ import {
     FieldSet,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/composables/useToast';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { edit, update } from '@/routes/profile';
@@ -32,18 +31,13 @@ const breadcrumbs: NavItem[] = [
     },
 ];
 
-const toast = useToast();
 const { user } = usePage().props.auth;
 </script>
 
 <template>
     <AppLayout :breadcrumbs>
         <SettingsLayout>
-            <Form
-                v-bind="update.form()"
-                v-slot="{ errors, processing }"
-                @success="toast.success('Profile updated successfully!')"
-            >
+            <Form v-bind="update.form()" v-slot="{ errors, processing }">
                 <FieldSet>
                     <FieldLegend>Profile information</FieldLegend>
                     <FieldDescription>

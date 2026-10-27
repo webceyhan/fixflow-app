@@ -43,7 +43,7 @@ class TicketAttachmentController extends Controller
 
         abort_unless(Storage::disk('local')->exists($attachment->path), 404);
 
-        return Storage::disk('local')->download($attachment->path, $attachment->name);
+        return Storage::download($attachment->path, $attachment->name);
     }
 
     /**

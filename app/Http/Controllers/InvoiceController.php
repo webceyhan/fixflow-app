@@ -58,6 +58,8 @@ class InvoiceController extends Controller
     {
         $updateInvoice->handle($invoice, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Invoice updated.')]);
+
         return redirect()->route('invoices.show', $invoice);
     }
 

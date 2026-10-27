@@ -49,7 +49,6 @@ const { device } = defineProps<Props>();
 const action = device.id ? update(device) : store(device.customer_id);
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Device',
     action,
     data: {
         model: device.model ?? '',

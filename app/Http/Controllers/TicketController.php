@@ -55,6 +55,8 @@ class TicketController extends Controller
             'device_id' => $device->id,
         ]);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Ticket created.')]);
+
         return redirect()->route('tickets.show', $ticket);
     }
 
@@ -89,6 +91,8 @@ class TicketController extends Controller
     {
         $updateTicket->handle($ticket, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Ticket updated.')]);
+
         return redirect()->route('tickets.show', $ticket);
     }
 
@@ -98,6 +102,8 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket, DeleteTicket $deleteTicket): RedirectResponse
     {
         $deleteTicket->handle($ticket);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Ticket deleted.')]);
 
         return redirect()->route('tickets.index');
     }

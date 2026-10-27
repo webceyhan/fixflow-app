@@ -6,7 +6,6 @@ import FileDropzone from '@/components/FileDropzone.vue';
 import QueuedUploadList from '@/components/QueuedUploadList.vue';
 import { Button } from '@/components/ui/button';
 import { FieldError } from '@/components/ui/field';
-import { useToast } from '@/composables/useToast';
 import { useUploads } from '@/composables/useUploads';
 
 interface Props {
@@ -15,7 +14,10 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const toast = useToast();
+const emit = defineEmits<{
+    (e: 'success', successCount: number): void;
+}>();
+
 const dropzone = ref<InstanceType<typeof FileDropzone> | null>(null);
 
 const {
@@ -29,11 +31,7 @@ const {
 } = useUploads({
     action: props.actionUrl,
     onSuccess: (successCount) => {
-        toast.success(
-            successCount === 1
-                ? '1 attachment uploaded successfully.'
-                : `${successCount} attachments uploaded successfully.`,
-        );
+        emit('success', successCount);
     },
     onFinish: ({ hasPendingUploads }) => {
         if (!hasPendingUploads) {

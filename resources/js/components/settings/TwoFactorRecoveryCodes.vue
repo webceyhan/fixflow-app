@@ -12,11 +12,10 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/composables/useToast';
+import { toast } from 'vue-sonner';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
 
-const toast = useToast();
 const { recoveryCodesList, fetchRecoveryCodes } = useTwoFactorAuth();
 const isRecoveryCodesVisible = ref<boolean>(false);
 const recoveryCodeSectionRef = useTemplateRef('recoveryCodeSectionRef');
@@ -32,6 +31,11 @@ const toggleRecoveryCodesVisibility = async () => {
         await nextTick();
         recoveryCodeSectionRef.value?.scrollIntoView({ behavior: 'smooth' });
     }
+};
+
+const onRegenerateSuccess = () => {
+    fetchRecoveryCodes();
+    toast.success('Recovery codes regenerated!');
 };
 
 onMounted(async () => {
@@ -71,12 +75,7 @@ onMounted(async () => {
                     v-if="isRecoveryCodesVisible && recoveryCodesList.length"
                     v-bind="regenerateRecoveryCodes.form()"
                     :options="{ preserveScroll: true }"
-                    @success="
-                        () => {
-                            fetchRecoveryCodes();
-                            toast.success('Recovery codes regenerated!');
-                        }
-                    "
+                    @success="onRegenerateSuccess"
                     #default="{ processing }"
                 >
                     <Button variant="ghost" size="sm" :disabled="processing">

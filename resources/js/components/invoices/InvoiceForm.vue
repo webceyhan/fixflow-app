@@ -34,7 +34,6 @@ interface Props {
 const { invoice } = defineProps<Props>();
 
 const { errors, form, processing } = useSaveForm({
-    entityName: 'Invoice',
     action: update(invoice),
     data: {
         total: invoice.total ?? 0,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from '@inertiajs/vue3';
 import { ShieldBan, ShieldCheck } from '@lucide/vue';
-import { onUnmounted, ref, watch } from 'vue';
+import { onUnmounted, ref } from 'vue';
 
 import TwoFactorRecoveryCodes from '@/components/settings/TwoFactorRecoveryCodes.vue';
 import TwoFactorSetupModal from '@/components/settings/TwoFactorSetupModal.vue';
@@ -15,7 +15,6 @@ import {
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
-import { useToast } from '@/composables/useToast';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
@@ -39,20 +38,9 @@ const breadcrumbs: NavItem[] = [
         href: show(),
     },
 ];
-const toast = useToast();
+
 const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth();
 const showSetupModal = ref<boolean>(false);
-
-watch(
-    () => props.twoFactorEnabled,
-    (enabled) => {
-        if (enabled === undefined) return;
-
-        toast.success(
-            `Two-factor authentication ${enabled ? 'enabled' : 'disabled'}!`,
-        );
-    },
-);
 
 onUnmounted(() => {
     clearTwoFactorAuthData();

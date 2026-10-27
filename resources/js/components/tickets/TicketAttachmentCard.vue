@@ -6,7 +6,7 @@ import AttachmentList from '@/components/attachments/AttachmentList.vue';
 import AttachmentUploader from '@/components/attachments/AttachmentUploader.vue';
 import ImageGallery from '@/components/ImageGallery.vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/composables/useToast';
+import { toast } from 'vue-sonner';
 import type { Attachment } from '@/types';
 
 import {
@@ -23,8 +23,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-const toast = useToast();
 
 const isGalleryOpen = ref(false);
 const selectedPhotoIndex = ref(0);
@@ -87,6 +85,14 @@ const deleteAttachment = (attachmentId: number): void => {
         },
     );
 };
+
+const onAttachmentUploadSuccess = (successCount: number): void => {
+    toast.success(
+        successCount === 1
+            ? '1 attachment uploaded successfully.'
+            : `${successCount} attachments uploaded successfully.`,
+    );
+};
 </script>
 
 <template>
@@ -106,6 +112,7 @@ const deleteAttachment = (attachmentId: number): void => {
 
             <AttachmentUploader
                 :action-url="store.url({ ticket: props.ticketId })"
+                @success="onAttachmentUploadSuccess"
             />
         </CardContent>
     </Card>
