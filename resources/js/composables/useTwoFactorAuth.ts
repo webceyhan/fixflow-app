@@ -1,22 +1,27 @@
+import { useHttp } from '@inertiajs/vue3';
+import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
 
+import { useToast } from './useToast';
 import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 
-import { useToast } from './useToast';
-
-const fetchJson = async <T>(url: string): Promise<T> => {
-    const response = await fetch(url, {
-        headers: { Accept: 'application/json' },
-    });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
-    }
-
-    return response.json();
+export type UseTwoFactorAuthReturn = {
+    qrCodeSvg: Ref<string | null>;
+    manualSetupKey: Ref<string | null>;
+    recoveryCodesList: Ref<string[]>;
+    errors: Ref<string[]>;
+    hasSetupData: ComputedRef<boolean>;
+    clearSetupData: () => void;
+    clearErrors: () => void;
+    clearTwoFactorAuthData: () => void;
+    fetchQrCode: () => Promise<void>;
+    fetchSetupKey: () => Promise<void>;
+    fetchSetupData: () => Promise<void>;
+    fetchRecoveryCodes: () => Promise<void>;
 };
 
 const toast = useToast();
+const errors = ref<string[]>([]);
 const manualSetupKey = ref<string | null>(null);
 const qrCodeSvg = ref<string | null>(null);
 const recoveryCodesList = ref<string[]>([]);
@@ -25,29 +30,34 @@ const hasSetupData = computed<boolean>(
     () => qrCodeSvg.value !== null && manualSetupKey.value !== null,
 );
 
-export const useTwoFactorAuth = () => {
+export const useTwoFactorAuth = (): UseTwoFactorAuthReturn => {
+    const http = useHttp();
+
     const fetchQrCode = async (): Promise<void> => {
         try {
-            const { svg } = await fetchJson<{ svg: string; url: string }>(
-                qrCode.url(),
-            );
+            const { svg } = (await http.submit(qrCode())) as {
+                svg: string;
+                url: string;
+            };
 
             qrCodeSvg.value = svg;
         } catch {
             toast.error('Failed to fetch QR code');
+            // errors.value.push('Failed to fetch QR code');
             qrCodeSvg.value = null;
         }
     };
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const { secretKey: key } = await fetchJson<{ secretKey: string }>(
-                secretKey.url(),
-            );
+            const { secretKey: key } = (await http.submit(secretKey())) as {
+                secretKey: string;
+            };
 
             manualSetupKey.value = key;
         } catch {
             toast.error('Failed to fetch setup key');
+            // errors.value.push('Failed to fetch a setup key');
             manualSetupKey.value = null;
         }
     };
@@ -55,26 +65,34 @@ export const useTwoFactorAuth = () => {
     const clearSetupData = (): void => {
         manualSetupKey.value = null;
         qrCodeSvg.value = null;
+        clearErrors();
+    };
+
+    const clearErrors = (): void => {
+        errors.value = [];
     };
 
     const clearTwoFactorAuthData = (): void => {
         clearSetupData();
+        clearErrors();
         recoveryCodesList.value = [];
     };
 
     const fetchRecoveryCodes = async (): Promise<void> => {
         try {
-            recoveryCodesList.value = await fetchJson<string[]>(
-                recoveryCodes.url(),
-            );
+            clearErrors();
+            recoveryCodesList.value = (await http.submit(
+                recoveryCodes(),
+            )) as string[];
         } catch {
-            toast.error('Failed to fetch recovery codes');
+            errors.value.push('Failed to fetch recovery codes');
             recoveryCodesList.value = [];
         }
     };
 
     const fetchSetupData = async (): Promise<void> => {
         try {
+            clearErrors();
             await Promise.all([fetchQrCode(), fetchSetupKey()]);
         } catch {
             qrCodeSvg.value = null;
@@ -86,8 +104,10 @@ export const useTwoFactorAuth = () => {
         qrCodeSvg,
         manualSetupKey,
         recoveryCodesList,
+        errors,
         hasSetupData,
         clearSetupData,
+        clearErrors,
         clearTwoFactorAuthData,
         fetchQrCode,
         fetchSetupKey,
