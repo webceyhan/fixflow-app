@@ -1,39 +1,38 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { setLayoutProps } from '@inertiajs/vue3';
 
 import DeviceForm from '@/components/devices/DeviceForm.vue';
 import Heading from '@/components/Heading.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/devices';
-import type { Device, NavItem } from '@/types';
+import type { Device } from '@/types';
 
 const props = defineProps<{
     device: Device;
 }>();
 
-const breadcrumbs = computed<NavItem[]>(() => [
-    {
-        title: 'Devices',
-        href: index(),
-    },
-    {
-        title: props.device.ref,
-        href: show(props.device),
-    },
-    {
-        title: 'Edit',
-        href: '',
-    },
-]);
+setLayoutProps({
+    breadcrumbs: [
+        {
+            title: 'Devices',
+            href: index(),
+        },
+        {
+            title: props.device.ref,
+            href: show(props.device),
+        },
+        {
+            title: 'Edit',
+            href: '',
+        },
+    ],
+});
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading title="Edit Device" />
+    <Heading title="Edit Device" />
 
-        <EditLayout>
-            <DeviceForm :device />
-        </EditLayout>
-    </AppLayout>
+    <EditLayout>
+        <DeviceForm :device />
+    </EditLayout>
 </template>

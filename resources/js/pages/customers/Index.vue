@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { setLayoutProps } from '@inertiajs/vue3';
+
 import { CreateAction } from '@/components/action';
 import CustomerTable from '@/components/customers/CustomerTable.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
@@ -8,53 +10,52 @@ import SearchFilter from '@/components/filters/SearchFilter.vue';
 import Heading from '@/components/Heading.vue';
 import Pagination from '@/components/Pagination.vue';
 import { CUSTOMER_STATUS, CUSTOMER_TYPE } from '@/constants';
-import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { create, index } from '@/routes/customers';
-import type { Customer, NavItem, Paginated } from '@/types';
+import type { Customer, Paginated } from '@/types';
 
 defineProps<{
     customers: Paginated<Customer>;
     isAdmin?: boolean;
 }>();
 
-const breadcrumbs: NavItem[] = [
-    {
-        title: 'Customers',
-        href: index(),
-    },
-];
+setLayoutProps({
+    breadcrumbs: [
+        {
+            title: 'Customers',
+            href: index(),
+        },
+    ],
+});
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading title="Customers">
-            <CreateAction v-if="isAdmin" :href="create()" />
-        </Heading>
+    <Heading title="Customers">
+        <CreateAction v-if="isAdmin" :href="create()" />
+    </Heading>
 
-        <IndexLayout>
-            <FilterContainer>
-                <SearchFilter placeholder="Search customers..." />
+    <IndexLayout>
+        <FilterContainer>
+            <SearchFilter placeholder="Search customers..." />
 
-                <MultiSelectFilter
-                    name="type"
-                    title="Type"
-                    :options="toOptions(CUSTOMER_TYPE)"
-                />
+            <MultiSelectFilter
+                name="type"
+                title="Type"
+                :options="toOptions(CUSTOMER_TYPE)"
+            />
 
-                <MultiSelectFilter
-                    name="status"
-                    title="Status"
-                    :options="toOptions(CUSTOMER_STATUS)"
-                />
+            <MultiSelectFilter
+                name="status"
+                title="Status"
+                :options="toOptions(CUSTOMER_STATUS)"
+            />
 
-                <DatePresetFilter name="created_at" />
-            </FilterContainer>
+            <DatePresetFilter name="created_at" />
+        </FilterContainer>
 
-            <CustomerTable :customers="customers.data" />
+        <CustomerTable :customers="customers.data" />
 
-            <Pagination v-bind="customers" />
-        </IndexLayout>
-    </AppLayout>
+        <Pagination v-bind="customers" />
+    </IndexLayout>
 </template>

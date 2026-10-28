@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { setLayoutProps } from '@inertiajs/vue3';
+
 import AssigneeFilter from '@/components/filters/AssigneeFilter.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
@@ -8,46 +10,45 @@ import Heading from '@/components/Heading.vue';
 import OrderTable from '@/components/orders/OrderTable.vue';
 import Pagination from '@/components/Pagination.vue';
 import { ORDER_STATUS } from '@/constants';
-import AppLayout from '@/layouts/AppLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/orders';
-import type { NavItem, Order, Paginated } from '@/types';
+import type { Order, Paginated } from '@/types';
 
 defineProps<{
     orders: Paginated<Order>;
 }>();
 
-const breadcrumbs: NavItem[] = [
-    {
-        title: 'Orders',
-        href: index(),
-    },
-];
+setLayoutProps({
+    breadcrumbs: [
+        {
+            title: 'Orders',
+            href: index(),
+        },
+    ],
+});
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading title="Orders" />
+    <Heading title="Orders" />
 
-        <IndexLayout>
-            <FilterContainer>
-                <SearchFilter placeholder="Search orders..." />
+    <IndexLayout>
+        <FilterContainer>
+            <SearchFilter placeholder="Search orders..." />
 
-                <AssigneeFilter />
+            <AssigneeFilter />
 
-                <MultiSelectFilter
-                    name="status"
-                    title="Status"
-                    :options="toOptions(ORDER_STATUS)"
-                />
+            <MultiSelectFilter
+                name="status"
+                title="Status"
+                :options="toOptions(ORDER_STATUS)"
+            />
 
-                <DatePresetFilter name="created_at" />
-            </FilterContainer>
+            <DatePresetFilter name="created_at" />
+        </FilterContainer>
 
-            <OrderTable :orders="orders.data" />
+        <OrderTable :orders="orders.data" />
 
-            <Pagination v-bind="orders" />
-        </IndexLayout>
-    </AppLayout>
+        <Pagination v-bind="orders" />
+    </IndexLayout>
 </template>

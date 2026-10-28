@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import Heading from '@/components/Heading.vue';
 import OrderForm from '@/components/orders/OrderForm.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/orders';
 import type { NavItem, Order } from '@/types';
@@ -29,11 +29,9 @@ const breadcrumbs = computed<NavItem[]>(() => [
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading title="Edit Order" />
+    <Heading title="Edit Order" />
 
-        <EditLayout>
-            <OrderForm :order />
-        </EditLayout>
-    </AppLayout>
+    <EditLayout>
+        <OrderForm :order />
+    </EditLayout>
 </template>

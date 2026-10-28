@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { setLayoutProps } from '@inertiajs/vue3';
+
 import Heading from '@/components/Heading.vue';
 import TransactionForm from '@/components/transactions/TransactionForm.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/invoices';
-import type { Invoice, NavItem, Transaction } from '@/types';
+import type { Invoice, Transaction } from '@/types';
 
 const props = defineProps<{
     transaction: Transaction;
@@ -13,28 +14,28 @@ const props = defineProps<{
 
 const title = 'Create Transaction';
 
-const breadcrumbs: NavItem[] = [
-    {
-        title: 'Invoices',
-        href: index(),
-    },
-    {
-        title: props.invoice.ref,
-        href: show(props.invoice),
-    },
-    {
-        title,
-        href: '',
-    },
-];
+setLayoutProps({
+    breadcrumbs: [
+        {
+            title: 'Invoices',
+            href: index(),
+        },
+        {
+            title: props.invoice.ref,
+            href: show(props.invoice),
+        },
+        {
+            title,
+            href: '',
+        },
+    ],
+});
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading :title />
+    <Heading :title />
 
-        <EditLayout>
-            <TransactionForm :transaction />
-        </EditLayout>
-    </AppLayout>
+    <EditLayout>
+        <TransactionForm :transaction />
+    </EditLayout>
 </template>

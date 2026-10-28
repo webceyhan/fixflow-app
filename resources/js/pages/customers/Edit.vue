@@ -1,37 +1,38 @@
 <script setup lang="ts">
+import { setLayoutProps } from '@inertiajs/vue3';
+
 import CustomerForm from '@/components/customers/CustomerForm.vue';
 import Heading from '@/components/Heading.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/customers';
-import type { Customer, NavItem } from '@/types';
+import type { Customer } from '@/types';
 
 const props = defineProps<{
     customer: Customer;
 }>();
 
-const breadcrumbs: NavItem[] = [
-    {
-        title: 'Customers',
-        href: index(),
-    },
-    {
-        title: props.customer.name,
-        href: show(props.customer),
-    },
-    {
-        title: 'Edit',
-        href: '',
-    },
-];
+setLayoutProps({
+    breadcrumbs: [
+        {
+            title: 'Customers',
+            href: index(),
+        },
+        {
+            title: props.customer.name,
+            href: show(props.customer),
+        },
+        {
+            title: 'Edit',
+            href: '',
+        },
+    ],
+});
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading :title="`Edit ${customer.name}`" />
+    <Heading :title="`Edit ${customer.name}`" />
 
-        <EditLayout>
-            <CustomerForm :customer />
-        </EditLayout>
-    </AppLayout>
+    <EditLayout>
+        <CustomerForm :customer />
+    </EditLayout>
 </template>

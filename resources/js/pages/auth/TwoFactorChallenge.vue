@@ -17,7 +17,6 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from '@/components/ui/input-otp';
-import AuthLayout from '@/layouts/AuthLayout.vue';
 import { store } from '@/routes/two-factor/login';
 
 interface AuthConfigContent {
@@ -56,97 +55,91 @@ const code = ref<string>('');
 </script>
 
 <template>
-    <AuthLayout>
-        <Heading
-            head="Two-Factor Authentication"
-            :title="authConfigContent.title"
-            :description="authConfigContent.description"
-        />
+    <Heading
+        head="Two-Factor Authentication"
+        :title="authConfigContent.title"
+        :description="authConfigContent.description"
+    />
 
-        <Form
-            v-if="!showRecoveryInput"
-            v-bind="store.form()"
-            reset-on-error
-            @error="code = ''"
-            #default="{ errors, processing, clearErrors }"
-        >
-            <input type="hidden" name="code" :value="code" />
-            <FieldSet>
-                <Field>
-                    <div class="flex w-full items-center justify-center">
-                        <InputOTP
-                            id="otp"
-                            v-model="code"
-                            :maxlength="6"
-                            :disabled="processing"
-                            v-focus
-                        >
-                            <InputOTPGroup>
-                                <InputOTPSlot
-                                    v-for="index in 6"
-                                    :key="index"
-                                    :index="index - 1"
-                                />
-                            </InputOTPGroup>
-                        </InputOTP>
-                    </div>
-                    <FieldError :message="errors.code" />
-                </Field>
-
-                <Field>
-                    <Button type="submit" :disabled="processing">
-                        Continue
-                    </Button>
-                </Field>
-
-                <FieldDescription class="text-center">
-                    or you can
-                    <TextLink
-                        @click.capture.prevent="
-                            () => toggleRecoveryMode(clearErrors)
-                        "
+    <Form
+        v-if="!showRecoveryInput"
+        v-bind="store.form()"
+        reset-on-error
+        @error="code = ''"
+        #default="{ errors, processing, clearErrors }"
+    >
+        <input type="hidden" name="code" :value="code" />
+        <FieldSet>
+            <Field>
+                <div class="flex w-full items-center justify-center">
+                    <InputOTP
+                        id="otp"
+                        v-model="code"
+                        :maxlength="6"
+                        :disabled="processing"
+                        v-focus
                     >
-                        {{ authConfigContent.toggleText }}
-                    </TextLink>
-                </FieldDescription>
-            </FieldSet>
-        </Form>
+                        <InputOTPGroup>
+                            <InputOTPSlot
+                                v-for="index in 6"
+                                :key="index"
+                                :index="index - 1"
+                            />
+                        </InputOTPGroup>
+                    </InputOTP>
+                </div>
+                <FieldError :message="errors.code" />
+            </Field>
 
-        <Form
-            v-else
-            v-bind="store.form()"
-            reset-on-error
-            #default="{ errors, processing, clearErrors }"
-        >
-            <FieldSet>
-                <Field>
-                    <Input
-                        name="recovery_code"
-                        type="text"
-                        placeholder="Enter recovery code"
-                        v-focus="showRecoveryInput"
-                        required
-                    />
-                    <FieldError :message="errors.recovery_code" />
-                </Field>
+            <Field>
+                <Button type="submit" :disabled="processing"> Continue </Button>
+            </Field>
 
-                <Field>
-                    <Button type="submit" :disabled="processing">
-                        Continue
-                    </Button>
-                </Field>
+            <FieldDescription class="text-center">
+                or you can
+                <TextLink
+                    @click.capture.prevent="
+                        () => toggleRecoveryMode(clearErrors)
+                    "
+                >
+                    {{ authConfigContent.toggleText }}
+                </TextLink>
+            </FieldDescription>
+        </FieldSet>
+    </Form>
 
-                <FieldDescription class="text-center">
-                    or you can
-                    <TextLink
-                        @click.capture.prevent="
-                            () => toggleRecoveryMode(clearErrors)
-                        "
-                    >
-                        {{ authConfigContent.toggleText }}
-                    </TextLink>
-                </FieldDescription>
-            </FieldSet>
-        </Form>
-    </AuthLayout>
+    <Form
+        v-else
+        v-bind="store.form()"
+        reset-on-error
+        #default="{ errors, processing, clearErrors }"
+    >
+        <FieldSet>
+            <Field>
+                <Input
+                    name="recovery_code"
+                    type="text"
+                    placeholder="Enter recovery code"
+                    v-focus="showRecoveryInput"
+                    required
+                />
+                <FieldError :message="errors.recovery_code" />
+            </Field>
+
+            <Field>
+                <Button type="submit" :disabled="processing"> Continue </Button>
+            </Field>
+
+            <FieldDescription class="text-center">
+                or you can
+                <TextLink
+                    @click.capture.prevent="
+                        () => toggleRecoveryMode(clearErrors)
+                    "
+                >
+                    {{ authConfigContent.toggleText }}
+                </TextLink>
+            </FieldDescription>
+        </FieldSet>
+    </Form>
 </template>

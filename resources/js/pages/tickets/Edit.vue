@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import Heading from '@/components/Heading.vue';
 import TicketForm from '@/components/tickets/TicketForm.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/tickets';
 import type { NavItem, Ticket } from '@/types';
@@ -29,11 +29,9 @@ const breadcrumbs = computed<NavItem[]>(() => [
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
-        <Heading title="Edit Ticket" />
+    <Heading title="Edit Ticket" />
 
-        <EditLayout>
-            <TicketForm :ticket />
-        </EditLayout>
-    </AppLayout>
+    <EditLayout>
+        <TicketForm :ticket />
+    </EditLayout>
 </template>
