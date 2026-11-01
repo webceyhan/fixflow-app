@@ -11,7 +11,8 @@ it('displays password update page', function () {
 
     // Act
     $response = actingAs($user)
-        ->get(route('user-password.edit'));
+        ->withSession(['auth.password_confirmed_at' => time()])
+        ->get(route('security.edit'));
 
     // Assert
     $response->assertOk();
@@ -23,7 +24,7 @@ it('updates password', function () {
 
     // Act
     $response = actingAs($user)
-        ->from(route('user-password.edit'))
+        ->from(route('security.edit'))
         ->put(route('user-password.update'), [
             'current_password' => 'password',
             'password' => 'new-password',
@@ -33,7 +34,7 @@ it('updates password', function () {
     // Assert
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect(route('user-password.edit'));
+        ->assertRedirect(route('security.edit'));
 
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
@@ -44,7 +45,7 @@ it('requires correct password to update password', function () {
 
     // Act
     $response = actingAs($user)
-        ->from(route('user-password.edit'))
+        ->from(route('security.edit'))
         ->put(route('user-password.update'), [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
@@ -54,5 +55,5 @@ it('requires correct password to update password', function () {
     // Assert
     $response
         ->assertSessionHasErrors('current_password')
-        ->assertRedirect(route('user-password.edit'));
+        ->assertRedirect(route('security.edit'));
 });

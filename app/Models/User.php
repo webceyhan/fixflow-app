@@ -22,6 +22,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\Contracts\PasskeyUser;
+use Laravel\Fortify\PasskeyAuthenticatable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
@@ -53,7 +55,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 #[Fillable(['name', 'email', 'phone', 'password', 'note', 'role', 'status', 'email_verified_at'])]
 #[Hidden(['password', 'remember_token', 'two_factor_secret', 'two_factor_recovery_codes'])]
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /**
      * @use HasActiveStatus<static>
@@ -66,6 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
         HasRef,
         HasStatus,
         Notifiable,
+        PasskeyAuthenticatable,
         TwoFactorAuthenticatable;
 
     protected string $refPrefix = 'USR';
