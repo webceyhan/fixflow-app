@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Device } from '@/types';
+
 import {
     ChangeAction,
     CreateAction,
@@ -10,7 +12,6 @@ import { DEVICE_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/devices';
 import { create as createTicket } from '@/routes/tickets';
-import type { Device } from '@/types';
 
 type Props = {
     device: Device;

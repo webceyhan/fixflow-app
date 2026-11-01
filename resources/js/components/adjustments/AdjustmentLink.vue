@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Adjustment } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/adjustments';
-import type { Adjustment } from '@/types';
 
 type Props = {
     adjustment: Adjustment;

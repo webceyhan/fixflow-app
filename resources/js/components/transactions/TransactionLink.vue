@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Transaction } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/transactions';
-import type { Transaction } from '@/types';
 
 type Props = {
     transaction: Transaction;

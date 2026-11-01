@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Invoice } from '@/types';
+
 import { CreateAction } from '@/components/action';
 import AdjustmentList from '@/components/adjustments/AdjustmentList.vue';
 import Heading from '@/components/Heading.vue';
@@ -12,7 +14,6 @@ import ShowLayout from '@/layouts/ShowLayout.vue';
 import { create as createAdjustment } from '@/routes/adjustments';
 import { index, update } from '@/routes/invoices';
 import { create as createTransaction } from '@/routes/transactions';
-import type { Invoice } from '@/types';
 
 const props = defineProps<{
     invoice: Invoice;

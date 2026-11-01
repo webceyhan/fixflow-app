@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Task } from '@/types';
+
 import {
     AssignAction,
     ChangeAction,
@@ -9,7 +11,6 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { TASK_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/tasks';
-import type { Task } from '@/types';
 
 type Props = {
     task: Task;

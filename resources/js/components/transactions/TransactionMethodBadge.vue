@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { TransactionMethodIcon } from '@/icons';
 import type { TransactionMethod } from '@/types';
+
+import { TransactionMethodIcon } from '@/icons';
 
 type Props = {
     value: TransactionMethod;

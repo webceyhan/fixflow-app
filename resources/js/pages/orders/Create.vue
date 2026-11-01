@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Order, Ticket } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import OrderForm from '@/components/orders/OrderForm.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/tickets';
-import type { Order, Ticket } from '@/types';
 
 const props = defineProps<{
     order: Order;

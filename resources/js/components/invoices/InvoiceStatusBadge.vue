@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { InvoiceStatus } from '@/types';
+
 import StatusBadge from '@/components/StatusBadge.vue';
 import { INVOICE_STATUS_COLOR_MAP } from '@/constants';
-import type { InvoiceStatus } from '@/types';
 
 type Props = {
     value: InvoiceStatus;

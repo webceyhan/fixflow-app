@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Invoice } from '@/types';
+
 import { FormActions } from '@/components/form';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
@@ -25,7 +27,6 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { INVOICE_STATUS } from '@/constants';
 import { toIsoDate } from '@/lib/utils';
 import { update } from '@/routes/invoices';
-import type { Invoice } from '@/types';
 
 type Props = {
     invoice: Invoice;

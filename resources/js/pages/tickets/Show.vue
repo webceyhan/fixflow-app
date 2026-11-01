@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Ticket } from '@/types';
+
 import { CreateAction } from '@/components/action';
 import Heading from '@/components/Heading.vue';
 import InvoiceCard from '@/components/invoices/InvoiceCard.vue';
@@ -16,7 +18,6 @@ import ShowLayout from '@/layouts/ShowLayout.vue';
 import { create as createOrder } from '@/routes/orders';
 import { create as createTask } from '@/routes/tasks';
 import { index, update } from '@/routes/tickets';
-import type { Ticket } from '@/types';
 
 const props = defineProps<{
     ticket: Ticket;

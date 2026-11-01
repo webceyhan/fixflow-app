@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import type { Icon, Option } from '@/types';
+
 import {
     Filter,
     FilterClear,
@@ -15,7 +17,6 @@ import {
 } from '@/components/ui/popover';
 import { useFilter } from '@/composables/useFilter';
 import { useOptions } from '@/composables/useOptions';
-import type { Icon, Option } from '@/types';
 
 type Props = {
     name: string;

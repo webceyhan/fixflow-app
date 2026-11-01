@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Transaction } from '@/types';
+
 import { FormActions } from '@/components/form';
 import {
     Field,
@@ -26,7 +28,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { TRANSACTION_METHOD } from '@/constants';
 import { store, update } from '@/routes/transactions';
-import type { Transaction } from '@/types';
 
 import TransactionTypeSelector from './TransactionTypeSelector.vue';
 

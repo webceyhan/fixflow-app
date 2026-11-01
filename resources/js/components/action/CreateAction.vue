@@ -2,8 +2,9 @@
 import { Link } from '@inertiajs/vue3';
 import { PlusIcon } from '@lucide/vue';
 
-import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
+
+import { Button } from '@/components/ui/button';
 
 type Props = {
     href: Href;

@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { usePasskeyRegister } from '@laravel/passkeys/vue';
 import { ref } from 'vue';
 
-import { usePasskeyRegister } from '@laravel/passkeys/vue';
-import { FieldError } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
+import { FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 

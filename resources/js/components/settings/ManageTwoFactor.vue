@@ -2,6 +2,7 @@
 import { Form } from '@inertiajs/vue3';
 import { ShieldCheck } from '@lucide/vue';
 import { onUnmounted, ref } from 'vue';
+
 import Heading from '@/components/Heading.vue';
 import TwoFactorRecoveryCodes from '@/components/settings/TwoFactorRecoveryCodes.vue';
 import TwoFactorSetupModal from '@/components/settings/TwoFactorSetupModal.vue';

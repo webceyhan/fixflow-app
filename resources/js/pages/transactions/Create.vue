@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Invoice, Transaction } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import TransactionForm from '@/components/transactions/TransactionForm.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/invoices';
-import type { Invoice, Transaction } from '@/types';
 
 const props = defineProps<{
     transaction: Transaction;

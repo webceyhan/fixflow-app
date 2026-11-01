@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { User } from '@/types';
+
 import { DateTime, Email, Phone, Tick } from '@/components/data';
 import {
     Card,
@@ -11,7 +13,6 @@ import {
     DescriptionList,
     DescriptionListItem,
 } from '@/components/ui/description-list';
-import type { User } from '@/types';
 
 import UserRoleBadge from './UserRoleBadge.vue';
 import UserStatusBadge from './UserStatusBadge.vue';

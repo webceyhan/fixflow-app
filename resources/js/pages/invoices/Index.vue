@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Invoice, Paginated } from '@/types';
+
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
 import MultiSelectFilter from '@/components/filters/MultiSelectFilter.vue';
@@ -12,7 +14,6 @@ import { INVOICE_STATUS } from '@/constants';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/invoices';
-import type { Invoice, Paginated } from '@/types';
 
 defineProps<{
     invoices: Paginated<Invoice>;

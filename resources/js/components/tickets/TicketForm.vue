@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+import type { Ticket } from '@/types';
+
 import { DateTime } from '@/components/data';
 import { FormActions } from '@/components/form';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -34,7 +36,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { PRIORITY, TICKET_STATUS } from '@/constants';
 import { store, update } from '@/routes/tickets';
-import type { Ticket } from '@/types';
 
 type Props = {
     ticket: Ticket;

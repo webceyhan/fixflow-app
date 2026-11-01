@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { NavItem } from '@/types';
+
 import AppContent from '@/components/app/AppContent.vue';
 import AppShell from '@/components/app/AppShell.vue';
 import AppSidebar from '@/components/app/AppSidebar.vue';
 import AppSidebarHeader from '@/components/app/AppSidebarHeader.vue';
 import { Toaster } from '@/components/ui/sonner';
-import type { NavItem } from '@/types';
 
 type Props = {
     breadcrumbs?: NavItem[];

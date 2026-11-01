@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
+
+import type { User } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import UserForm from '@/components/users/UserForm.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index } from '@/routes/users';
-import type { User } from '@/types';
 
 defineProps<{
     user: User;

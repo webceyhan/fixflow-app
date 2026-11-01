@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import type { Invoice } from '@/types';
+
 import { Currency } from '@/components/data';
 import {
     DescriptionList,
     DescriptionListItem,
 } from '@/components/ui/description-list';
 import { Separator } from '@/components/ui/separator';
-import type { Invoice } from '@/types';
 
 type Props = {
     invoice: Invoice;

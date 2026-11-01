@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
+import type { Order } from '@/types';
+
 import { FormActions } from '@/components/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -43,7 +45,6 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { ORDER_STATUS } from '@/constants';
 import { toIsoDate } from '@/lib/utils';
 import { store, update } from '@/routes/orders';
-import type { Order } from '@/types';
 
 type Props = {
     order: Order;

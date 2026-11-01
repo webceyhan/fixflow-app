@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Customer } from '@/types';
+
 import {
     ChangeAction,
     CreateAction,
@@ -10,7 +12,6 @@ import { CUSTOMER_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/customers';
 import { create as createDevice } from '@/routes/devices';
-import type { Customer } from '@/types';
 
 type Props = {
     customer: Customer;

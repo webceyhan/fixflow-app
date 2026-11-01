@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Priority } from '@/types';
+
 import { PRIORITY_COLOR_MAP } from '@/constants';
 import { PriorityIcon } from '@/icons';
-import type { Priority } from '@/types';
 
 /**
  * text-netural

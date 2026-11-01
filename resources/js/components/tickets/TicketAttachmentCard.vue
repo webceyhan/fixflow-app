@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { toast } from 'vue-sonner';
+
+import type { Attachment } from '@/types';
 
 import AttachmentList from '@/components/attachments/AttachmentList.vue';
 import AttachmentUploader from '@/components/attachments/AttachmentUploader.vue';
 import ImageGallery from '@/components/ImageGallery.vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from 'vue-sonner';
-import type { Attachment } from '@/types';
-
 import {
     destroy,
     download,

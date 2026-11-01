@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Task } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import Placeholder from '@/components/Placeholder.vue';
@@ -8,7 +10,6 @@ import TaskCard from '@/components/tasks/TaskCard.vue';
 import TaskToolbar from '@/components/tasks/TaskToolbar.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
 import { index, update } from '@/routes/tasks';
-import type { Task } from '@/types';
 
 const props = defineProps<{
     task: Task;

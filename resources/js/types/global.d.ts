@@ -1,4 +1,5 @@
 import type { Directive } from 'vue';
+
 import type { Auth } from '@/types/auth';
 
 // Extend ImportMeta interface for Vite...

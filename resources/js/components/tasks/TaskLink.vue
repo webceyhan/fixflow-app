@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Task } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/tasks';
-import type { Task } from '@/types';
 
 type Props = {
     task: Task;

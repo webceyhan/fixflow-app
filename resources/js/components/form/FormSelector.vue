@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Option } from '@/types';
+
 import {
     Field,
     FieldContent,
@@ -7,7 +9,6 @@ import {
     FieldTitle,
 } from '@/components/ui/field';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import type { Option } from '@/types';
 
 type Props = {
     options: Option[];

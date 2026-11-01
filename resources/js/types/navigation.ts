@@ -1,4 +1,5 @@
 import type { InertiaLinkProps } from '@inertiajs/vue3';
+
 import { Icon } from './utils';
 
 export type Href = NonNullable<InertiaLinkProps['href']>;

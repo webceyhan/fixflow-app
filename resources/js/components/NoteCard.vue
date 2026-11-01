@@ -2,6 +2,8 @@
 import { useForm } from '@inertiajs/vue3';
 import { ArrowUpIcon } from '@lucide/vue';
 
+import type { Href } from '@/types';
+
 import {
     InputGroup,
     InputGroupAddon,
@@ -9,7 +11,6 @@ import {
     InputGroupTextarea,
 } from '@/components/ui/input-group';
 import { toUrl } from '@/lib/utils';
-import type { Href } from '@/types';
 
 type Props = {
     href: Href;

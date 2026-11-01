@@ -11,8 +11,8 @@ import {
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
-import { update } from '@/routes/user-password';
 import { PasswordInput } from '@/components/ui/password-input';
+import { update } from '@/routes/user-password';
 
 export type Props = {
     passwordRules: string;

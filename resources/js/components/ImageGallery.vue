@@ -2,9 +2,10 @@
 import { TrashIcon, XIcon } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
 
+import type { CarouselApi } from '@/components/ui/carousel';
+
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
-import type { CarouselApi } from '@/components/ui/carousel';
 import {
     Carousel,
     CarouselContent,

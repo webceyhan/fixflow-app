@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import type { Adjustment, AdjustmentReason } from '@/types';
+
 import { FormActions } from '@/components/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -30,7 +32,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { ADJUSTMENT_REASON } from '@/constants';
 import { store, update } from '@/routes/adjustments';
-import type { Adjustment, AdjustmentReason } from '@/types';
 
 import AdjustmentTypeSelector from './AdjustmentTypeSelector.vue';
 

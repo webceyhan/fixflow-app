@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Device } from '@/types';
+
 import { CreateAction } from '@/components/action';
 import DeviceCard from '@/components/devices/DeviceCard.vue';
 import DeviceTicketStats from '@/components/devices/DeviceTicketStats.vue';
@@ -11,7 +13,6 @@ import TicketList from '@/components/tickets/TicketList.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
 import { index, update } from '@/routes/devices';
 import { create as createTicket } from '@/routes/tickets';
-import type { Device } from '@/types';
 
 const props = defineProps<{
     device: Device;

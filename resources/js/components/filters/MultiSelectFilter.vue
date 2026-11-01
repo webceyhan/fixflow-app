@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Icon, Option } from '@/types';
+
 import {
     Filter,
     FilterClear,
@@ -13,7 +15,6 @@ import {
 } from '@/components/ui/popover';
 import { useToggleFilter } from '@/composables/useFilter';
 import { useOptions } from '@/composables/useOptions';
-import type { Icon, Option } from '@/types';
 
 type Props = {
     name: string;

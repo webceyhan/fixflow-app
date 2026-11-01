@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Order } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import OrderCard from '@/components/orders/OrderCard.vue';
@@ -8,7 +10,6 @@ import OrderToolbar from '@/components/orders/OrderToolbar.vue';
 import Placeholder from '@/components/Placeholder.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
 import { index, update } from '@/routes/orders';
-import type { Order } from '@/types';
 
 const props = defineProps<{
     order: Order;

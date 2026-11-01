@@ -2,6 +2,8 @@
 import { router } from '@inertiajs/vue3';
 import { TrashIcon } from '@lucide/vue';
 
+import type { Href } from '@/types';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -14,7 +16,6 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import type { Href } from '@/types';
 
 type Props = {
     href: Href;

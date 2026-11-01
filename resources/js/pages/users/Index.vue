@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Paginated, User } from '@/types';
+
 import { CreateAction } from '@/components/action';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
@@ -13,7 +15,6 @@ import { USER_ROLE, USER_ROLE_ICON_MAP, USER_STATUS } from '@/constants';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { create, index } from '@/routes/users';
-import type { Paginated, User } from '@/types';
 
 defineProps<{
     users: Paginated<User>;

@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { User } from '@/types';
+
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
-import type { User } from '@/types';
 
 type Props = {
     user: User;

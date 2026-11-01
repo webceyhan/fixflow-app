@@ -2,6 +2,8 @@
 import { Link } from '@inertiajs/vue3';
 import { ChevronRight } from '@lucide/vue';
 
+import type { Ticket } from '@/types';
+
 import { DateTime, Priority } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +26,6 @@ import {
 import UserLink from '@/components/users/UserLink.vue';
 import { TicketIcon } from '@/icons';
 import { show } from '@/routes/tickets';
-import type { Ticket } from '@/types';
 
 import TicketStatusBadge from './TicketStatusBadge.vue';
 

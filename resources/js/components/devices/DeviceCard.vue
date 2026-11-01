@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Device } from '@/types';
+
 import CustomerLink from '@/components/customers/CustomerLink.vue';
 import { DateTime } from '@/components/data';
 import {
@@ -12,7 +14,6 @@ import {
     DescriptionList,
     DescriptionListItem,
 } from '@/components/ui/description-list';
-import type { Device } from '@/types';
 
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 import DeviceTypeBadge from './DeviceTypeBadge.vue';

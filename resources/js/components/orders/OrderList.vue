@@ -2,6 +2,8 @@
 import { Link } from '@inertiajs/vue3';
 import { ChevronRight } from '@lucide/vue';
 
+import type { Order } from '@/types';
+
 import { Currency, DateTime, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -23,7 +25,6 @@ import {
 } from '@/components/ui/item';
 import { OrderIcon } from '@/icons';
 import { show } from '@/routes/orders';
-import type { Order } from '@/types';
 
 import OrderStatusBadge from './OrderStatusBadge.vue';
 

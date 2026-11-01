@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { DeviceStatus } from '@/types';
+
 import StatusBadge from '@/components/StatusBadge.vue';
 import { DEVICE_STATUS_COLOR_MAP } from '@/constants';
-import type { DeviceStatus } from '@/types';
 
 type Props = {
     value: DeviceStatus;

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Adjustment } from '@/types';
+
 import { Currency, DateTime, Percent } from '@/components/data';
 import InvoiceLink from '@/components/invoices/InvoiceLink.vue';
 import TicketLink from '@/components/tickets/TicketLink.vue';
@@ -13,7 +15,6 @@ import {
     TableSortLink,
 } from '@/components/ui/table';
 import { AdjustmentTypeIcon } from '@/icons';
-import type { Adjustment } from '@/types';
 
 import AdjustmentLink from './AdjustmentLink.vue';
 import AdjustmentReasonBadge from './AdjustmentReasonBadge.vue';

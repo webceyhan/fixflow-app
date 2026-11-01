@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
+import type { Task } from '@/types';
+
 import { FormActions } from '@/components/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -36,7 +38,6 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { PRIORITY, TASK_STATUS } from '@/constants';
 import { toIsoDate } from '@/lib/utils';
 import { store, update } from '@/routes/tasks';
-import type { Task } from '@/types';
 
 import TaskTypeSelector from './TaskTypeSelector.vue';
 

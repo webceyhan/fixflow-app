@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { TaskStatus } from '@/types';
+
 import StatusBadge from '@/components/StatusBadge.vue';
 import { TASK_STATUS_COLOR_MAP } from '@/constants';
-import type { TaskStatus } from '@/types';
 
 type Props = {
     value: TaskStatus;

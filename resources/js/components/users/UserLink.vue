@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { User } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/users';
-import type { User } from '@/types';
 
 type Props = {
     user?: User;

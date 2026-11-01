@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Transaction } from '@/types';
+
 import { Currency, DateTime } from '@/components/data';
 import InvoiceLink from '@/components/invoices/InvoiceLink.vue';
 import TicketLink from '@/components/tickets/TicketLink.vue';
@@ -13,7 +15,6 @@ import {
     TableSortLink,
 } from '@/components/ui/table';
 import { TransactionTypeIcon } from '@/icons';
-import type { Transaction } from '@/types';
 
 import TransactionLink from './TransactionLink.vue';
 import TransactionMethodBadge from './TransactionMethodBadge.vue';

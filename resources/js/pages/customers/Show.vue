@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Customer } from '@/types';
+
 import { CreateAction } from '@/components/action';
 import CustomerCard from '@/components/customers/CustomerCard.vue';
 import CustomerToolbar from '@/components/customers/CustomerToolbar.vue';
@@ -10,7 +12,6 @@ import NoteCard from '@/components/NoteCard.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
 import { index, update } from '@/routes/customers';
 import { create as createDevice } from '@/routes/devices';
-import type { Customer } from '@/types';
 
 const props = defineProps<{
     customer: Customer;

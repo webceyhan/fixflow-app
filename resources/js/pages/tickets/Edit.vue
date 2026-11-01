@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import type { NavItem, Ticket } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import TicketForm from '@/components/tickets/TicketForm.vue';
-
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/tickets';
-import type { NavItem, Ticket } from '@/types';
 
 const props = defineProps<{
     ticket: Ticket;

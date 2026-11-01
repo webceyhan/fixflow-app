@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Device, Paginated } from '@/types';
+
 import DeviceTable from '@/components/devices/DeviceTable.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
@@ -12,7 +14,6 @@ import { DEVICE_STATUS, DEVICE_TYPE } from '@/constants';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/devices';
-import type { Device, Paginated } from '@/types';
 
 defineProps<{
     devices: Paginated<Device>;

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { XIcon } from '@lucide/vue';
 
+import type { Attachment } from '@/types';
+
 import {
     AttachmentAction,
     AttachmentActions,
@@ -14,7 +16,6 @@ import {
 } from '@/components/ui/attachment';
 import { AttachmentCategoryIcon } from '@/icons';
 import { formatSize } from '@/lib/utils';
-import type { Attachment } from '@/types';
 
 type Props = {
     attachments?: Attachment[];

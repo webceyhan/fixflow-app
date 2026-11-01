@@ -2,6 +2,8 @@
 import { Link } from '@inertiajs/vue3';
 import { ChevronRight } from '@lucide/vue';
 
+import type { Transaction } from '@/types';
+
 import { Currency, DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -23,7 +25,6 @@ import {
 } from '@/components/ui/item';
 import { TransactionIcon, TransactionTypeIcon } from '@/icons';
 import { show } from '@/routes/transactions';
-import type { Transaction } from '@/types';
 
 import TransactionMethodBadge from './TransactionMethodBadge.vue';
 

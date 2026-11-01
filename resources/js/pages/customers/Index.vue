@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Customer, Paginated } from '@/types';
+
 import { CreateAction } from '@/components/action';
 import CustomerTable from '@/components/customers/CustomerTable.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
@@ -13,7 +15,6 @@ import { CUSTOMER_STATUS, CUSTOMER_TYPE } from '@/constants';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { create, index } from '@/routes/customers';
-import type { Customer, Paginated } from '@/types';
 
 defineProps<{
     customers: Paginated<Customer>;

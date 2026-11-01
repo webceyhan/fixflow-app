@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ClockIcon, FileWarningIcon, XIcon } from '@lucide/vue';
 
+import type { QueuedUploadItem } from '@/composables/useUploads';
+
 import {
     AttachmentAction,
     AttachmentActions,
@@ -12,7 +14,6 @@ import {
     Attachment as UiAttachment,
 } from '@/components/ui/attachment';
 import { Spinner } from '@/components/ui/spinner';
-import type { QueuedUploadItem } from '@/composables/useUploads';
 
 type Props = {
     uploads: QueuedUploadItem[];

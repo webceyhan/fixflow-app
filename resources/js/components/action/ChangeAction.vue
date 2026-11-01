@@ -2,6 +2,8 @@
 import { Link } from '@inertiajs/vue3';
 import { RefreshCwIcon } from '@lucide/vue';
 
+import type { Href, Option } from '@/types';
+
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -9,7 +11,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Href, Option } from '@/types';
 
 type Props = {
     name: string;

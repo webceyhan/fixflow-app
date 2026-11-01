@@ -2,6 +2,8 @@
 import { Link } from '@inertiajs/vue3';
 import { ChevronRight } from '@lucide/vue';
 
+import type { Device } from '@/types';
+
 import { DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -22,7 +24,6 @@ import {
 } from '@/components/ui/item';
 import { DeviceIcon, DeviceTypeIcon } from '@/icons';
 import { show } from '@/routes/devices';
-import type { Device } from '@/types';
 
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 

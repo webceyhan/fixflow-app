@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Invoice } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/invoices';
-import type { Invoice } from '@/types';
 
 type Props = {
     invoice: Invoice;

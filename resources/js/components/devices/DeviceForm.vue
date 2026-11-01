@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 
+import type { Device } from '@/types';
+
 import { DateTime } from '@/components/data';
 import { FormActions } from '@/components/form';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -27,7 +29,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { DEVICE_STATUS, DEVICE_TYPE } from '@/constants';
 import { store, update } from '@/routes/devices';
-import type { Device } from '@/types';
 
 import DeviceTypeSelector from './DeviceTypeSelector.vue';
 

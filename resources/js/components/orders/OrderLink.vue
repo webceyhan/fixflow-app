@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Order } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/orders';
-import type { Order } from '@/types';
 
 type Props = {
     order: Order;

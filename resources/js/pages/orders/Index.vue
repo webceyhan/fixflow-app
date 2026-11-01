@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Order, Paginated } from '@/types';
+
 import AssigneeFilter from '@/components/filters/AssigneeFilter.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
@@ -13,7 +15,6 @@ import { ORDER_STATUS } from '@/constants';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/orders';
-import type { Order, Paginated } from '@/types';
 
 defineProps<{
     orders: Paginated<Order>;

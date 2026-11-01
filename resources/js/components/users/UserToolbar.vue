@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { User } from '@/types';
+
 import { ChangeAction, DeleteAction, EditAction } from '@/components/action';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { USER_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/users';
-import type { User } from '@/types';
 
 type Props = {
     user: User;

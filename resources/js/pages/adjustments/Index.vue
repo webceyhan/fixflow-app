@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Adjustment, Paginated } from '@/types';
+
 import AdjustmentTable from '@/components/adjustments/AdjustmentTable.vue';
 import DatePresetFilter from '@/components/filters/DatePresetFilter.vue';
 import FilterContainer from '@/components/filters/FilterContainer.vue';
@@ -12,7 +14,6 @@ import { ADJUSTMENT_REASON, ADJUSTMENT_TYPE } from '@/constants';
 import IndexLayout from '@/layouts/IndexLayout.vue';
 import { toOptions } from '@/lib/utils';
 import { index } from '@/routes/adjustments';
-import type { Adjustment, Paginated } from '@/types';
 
 defineProps<{
     adjustments: Paginated<Adjustment>;

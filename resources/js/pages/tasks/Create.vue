@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Task, Ticket } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import TaskForm from '@/components/tasks/TaskForm.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/tickets';
-import type { Task, Ticket } from '@/types';
 
 const props = defineProps<{
     task: Task;

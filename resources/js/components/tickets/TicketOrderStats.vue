@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import type { Order } from '@/types';
+
 import { Percent } from '@/components/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Order } from '@/types';
 
 type Props = {
     orders?: Order[];

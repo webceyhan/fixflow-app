@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Badge } from '@/components/ui/badge';
 import type { StateColor } from '@/types';
+
+import { Badge } from '@/components/ui/badge';
 
 /**
  * Dynamic classes

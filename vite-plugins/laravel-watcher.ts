@@ -1,6 +1,6 @@
-import { execSync } from 'child_process';
-
 import type { Plugin } from 'vite';
+
+import { execSync } from 'child_process';
 import { normalizePath } from 'vite';
 
 export interface Watcher {

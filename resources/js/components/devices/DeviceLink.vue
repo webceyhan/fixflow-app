@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Device } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/devices';
-import type { Device } from '@/types';
 
 type Props = {
     device: Device;

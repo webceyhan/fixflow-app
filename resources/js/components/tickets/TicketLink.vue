@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Ticket } from '@/types';
+
 import TextLink from '@/components/TextLink.vue';
 import { show } from '@/routes/tickets';
-import type { Ticket } from '@/types';
 
 type Props = {
     ticket: Ticket;

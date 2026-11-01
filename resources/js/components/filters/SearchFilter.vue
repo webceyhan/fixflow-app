@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core';
 import { SearchIcon } from '@lucide/vue';
+import { useDebounceFn } from '@vueuse/core';
 
 import {
     InputGroup,

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Ticket } from '@/types';
+
 import CustomerLink from '@/components/customers/CustomerLink.vue';
 import { DateTime, Priority } from '@/components/data';
 import DeviceLink from '@/components/devices/DeviceLink.vue';
@@ -14,7 +16,6 @@ import {
 } from '@/components/ui/table';
 import UserLink from '@/components/users/UserLink.vue';
 import { TicketIcon } from '@/icons';
-import type { Ticket } from '@/types';
 
 import TicketLink from './TicketLink.vue';
 import TicketStatusBadge from './TicketStatusBadge.vue';

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { Device, Ticket } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import TicketForm from '@/components/tickets/TicketForm.vue';
 import EditLayout from '@/layouts/EditLayout.vue';
 import { index, show } from '@/routes/devices';
-import type { Device, Ticket } from '@/types';
 
 const props = defineProps<{
     ticket: Ticket;

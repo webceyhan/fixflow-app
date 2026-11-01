@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { NavItem } from '@/types';
+
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import type { NavItem } from '@/types';
 
 type Props = {
     breadcrumbs?: NavItem[];

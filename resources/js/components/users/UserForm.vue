@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { User } from '@/types';
+
 import { FormActions } from '@/components/form';
 import {
     Field,
@@ -23,7 +25,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { USER_STATUS } from '@/constants';
 import { store, update } from '@/routes/users';
-import type { User } from '@/types';
 
 import UserRoleSelector from './UserRoleSelector.vue';
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Invoice } from '@/types';
+
 import CustomerLink from '@/components/customers/CustomerLink.vue';
 import { DateTime } from '@/components/data';
 import TicketLink from '@/components/tickets/TicketLink.vue';
@@ -14,7 +16,6 @@ import {
     DescriptionList,
     DescriptionListItem,
 } from '@/components/ui/description-list';
-import type { Invoice } from '@/types';
 
 import InvoiceLink from './InvoiceLink.vue';
 import InvoiceStatusBadge from './InvoiceStatusBadge.vue';

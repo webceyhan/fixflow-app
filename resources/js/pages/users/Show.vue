@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { setLayoutProps } from '@inertiajs/vue3';
 
+import type { User } from '@/types';
+
 import Heading from '@/components/Heading.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import Placeholder from '@/components/Placeholder.vue';
@@ -8,7 +10,6 @@ import UserCard from '@/components/users/UserCard.vue';
 import UserToolbar from '@/components/users/UserToolbar.vue';
 import ShowLayout from '@/layouts/ShowLayout.vue';
 import { index, update } from '@/routes/users';
-import type { User } from '@/types';
 
 const props = defineProps<{
     user: User;
