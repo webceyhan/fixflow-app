@@ -1,6 +1,6 @@
-import { execSync } from 'child_process';
-
 import type { Plugin } from 'vite';
+
+import { execSync } from 'child_process';
 import { normalizePath } from 'vite';
 
 export interface Watcher {
@@ -53,10 +53,8 @@ export default function laravelWatcher({
     watchers = [],
     verbose = false,
 }: LaravelWatcherOptions): Plugin {
-    const {
-        info = () => {}, // print messages
-        warn = () => {}, // print warnings
-    } = verbose ? console : {};
+    const info = verbose ? console.info : () => {};
+    const warn = verbose ? console.warn : () => {};
 
     return <Plugin>{
         name: 'laravel-watcher',

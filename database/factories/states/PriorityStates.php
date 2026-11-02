@@ -14,7 +14,7 @@ trait PriorityStates
     public function ofPriority(BackedEnum $priority): self
     {
         return $this->state(fn (array $attributes) => [
-            static::PRIORITY => $priority,
+            self::PRIORITY => $priority,
         ]);
     }
 }

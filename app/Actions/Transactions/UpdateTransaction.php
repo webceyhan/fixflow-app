@@ -11,6 +11,9 @@ class UpdateTransaction
         protected SyncInvoiceTransactions $syncInvoiceTransactions,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Transaction $transaction, array $data): Transaction
     {
         $transaction->update([

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 
-interface Props {
+type Props = {
     head?: string;
     title: string;
     description?: string;
-}
+};
 
 defineProps<Props>();
 </script>

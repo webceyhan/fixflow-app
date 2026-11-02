@@ -3,8 +3,8 @@ import type { NavigationMenuContentEmits, NavigationMenuContentProps } from "rek
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import {
-  NavigationMenuContent,
-  useForwardPropsEmits,
+    NavigationMenuContent,
+    useForwardPropsEmits,
 } from "reka-ui"
 import { cn } from "@/lib/utils"
 

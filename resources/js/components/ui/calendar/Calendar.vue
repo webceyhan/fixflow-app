@@ -51,6 +51,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         </div>
         <NativeSelect
           class="text-xs h-8 pr-6 pl-2 text-transparent relative"
+          :model-value="date.month"
           @change="(e: Event) => {
             placeholder = placeholder.set({
               month: Number((e?.target as any)?.value),
@@ -73,6 +74,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         </div>
         <NativeSelect
           class="text-xs h-8 pr-6 pl-2 text-transparent relative"
+          :model-value="date.year"
           @change="(e: Event) => {
             placeholder = placeholder.set({
               year: Number((e?.target as any)?.value),
@@ -95,15 +97,6 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     :class="cn('p-3', props.class)"
   >
     <CalendarHeader class="pt-0">
-      <nav class="flex items-center gap-1 absolute top-0 inset-x-0 justify-between">
-        <CalendarPrevButton>
-          <slot name="calendar-prev-icon" />
-        </CalendarPrevButton>
-        <CalendarNextButton>
-          <slot name="calendar-next-icon" />
-        </CalendarNextButton>
-      </nav>
-
       <slot name="calendar-heading" :date="date" :month="ReuseMonthTemplate" :year="ReuseYearTemplate">
         <template v-if="layout === 'month-and-year'">
           <div class="flex items-center justify-center gap-1">
@@ -127,6 +120,15 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
           <CalendarHeading />
         </template>
       </slot>
+
+      <nav class="pointer-events-none flex items-center gap-1 absolute top-0 inset-x-0 justify-between">
+        <CalendarPrevButton>
+          <slot name="calendar-prev-icon" />
+        </CalendarPrevButton>
+        <CalendarNextButton>
+          <slot name="calendar-next-icon" />
+        </CalendarNextButton>
+      </nav>
     </CalendarHeader>
 
     <div class="flex flex-col gap-y-4 mt-4 sm:flex-row sm:gap-x-4 sm:gap-y-0">

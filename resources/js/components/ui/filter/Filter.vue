@@ -6,7 +6,7 @@ import {
     CommandList,
 } from '@/components/ui/command';
 
-interface Props {
+type Props = {
     placeholder?: string;
     highlightOnHover?: boolean;
     searchable?: boolean;

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { Percent } from '@/components/data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Task } from '@/types';
 
-interface Props {
+import { Percent } from '@/components/data';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+type Props = {
     tasks?: Task[];
-}
+};
 
 const props = defineProps<Props>();
 

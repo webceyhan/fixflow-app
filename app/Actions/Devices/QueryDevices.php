@@ -8,17 +8,20 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryDevices
 {
+    /**
+     * @return QueryBuilder<Device>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Device::class)
             ->with('customer')
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['model', 'brand', 'imei', 'serial_number']),
                 AllowedFilter::exact('type'),
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('customer_id'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['model', 'brand', 'purchase_date', 'warranty_expire_date', 'created_at']);
+            )
+            ->allowedSorts('model', 'brand', 'purchase_date', 'warranty_expire_date', 'created_at');
     }
 }

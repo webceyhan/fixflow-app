@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Concerns;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 trait BooleanRules
 {
     /**
      * Get the validation rules used to validate boolean fields.
      *
-     * @return array<int, Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function booleanRules(): array
     {

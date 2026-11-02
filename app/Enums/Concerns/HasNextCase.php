@@ -2,6 +2,9 @@
 
 namespace App\Enums\Concerns;
 
+/**
+ * @method static array<int, static> cases()
+ */
 trait HasNextCase
 {
     /**

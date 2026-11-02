@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { TransactionMethodIcon } from '@/icons';
 import type { TransactionMethod } from '@/types';
 
-interface Props {
+import { TransactionMethodIcon } from '@/icons';
+
+type Props = {
     value: TransactionMethod;
-}
+};
 
 defineProps<Props>();
 </script>

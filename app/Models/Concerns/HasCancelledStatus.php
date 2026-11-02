@@ -3,7 +3,13 @@
 namespace App\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @template TModel of Model
+ *
+ * @mixin TModel
+ */
 trait HasCancelledStatus
 {
     private const STATUS = 'status';
@@ -22,6 +28,8 @@ trait HasCancelledStatus
 
     /**
      * Scope a query to only include cancelled models.
+     *
+     * @param  Builder<TModel>  $query
      */
     public function scopeCancelled(Builder $query): void
     {
@@ -30,6 +38,8 @@ trait HasCancelledStatus
 
     /**
      * Scope a query to only include not cancelled models.
+     *
+     * @param  Builder<TModel>  $query
      */
     public function scopeNotCancelled(Builder $query): void
     {

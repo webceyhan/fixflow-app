@@ -21,7 +21,7 @@ it('downloads a ticket attachment', function () {
         'category' => AttachmentCategory::Other,
     ]);
 
-    Storage::disk('local')->put($attachment->path, 'pdf-content');
+    Storage::disk()->put($attachment->path, 'pdf-content');
 
     // Act
     $response = actingAs($user)->get(route('tickets.attachments.download', [$ticket, $attachment]));
@@ -73,7 +73,7 @@ it('previews a ticket photo attachment inline', function () {
         'category' => AttachmentCategory::Photo,
     ]);
 
-    Storage::disk('local')->put($attachment->path, 'fake-jpeg');
+    Storage::disk()->put($attachment->path, 'fake-jpeg');
 
     // Act
     $response = actingAs($user)->get(route('tickets.attachments.preview', [$ticket, $attachment]));
@@ -95,7 +95,7 @@ it('returns 404 when previewing a non-photo attachment', function () {
         'category' => AttachmentCategory::Other,
     ]);
 
-    Storage::disk('local')->put($attachment->path, 'fake-pdf');
+    Storage::disk()->put($attachment->path, 'fake-pdf');
 
     // Act
     $response = actingAs($user)->get(route('tickets.attachments.preview', [$ticket, $attachment]));
@@ -116,7 +116,7 @@ it('previews a ticket photo thumbnail inline', function () {
         'category' => AttachmentCategory::Photo,
     ]);
 
-    Storage::disk('local')->put(
+    Storage::disk()->put(
         AttachmentThumbnailPath::fromAttachment($attachment),
         'fake-thumbnail',
     );
@@ -140,7 +140,7 @@ it('falls back to original image when thumbnail file is missing from storage', f
         'mime_type' => 'image/jpeg',
         'category' => AttachmentCategory::Photo,
     ]);
-    Storage::disk('local')->put($attachment->path, 'fake-jpeg');
+    Storage::disk()->put($attachment->path, 'fake-jpeg');
 
     // Act
     $response = actingAs($user)->get(route('tickets.attachments.thumbnail', [$ticket, $attachment]));
@@ -162,7 +162,7 @@ it('returns 404 when previewing a thumbnail for a non-photo attachment', functio
         'category' => AttachmentCategory::Other,
     ]);
 
-    Storage::disk('local')->put(
+    Storage::disk()->put(
         AttachmentThumbnailPath::fromAttachment($attachment),
         'fake-thumbnail',
     );

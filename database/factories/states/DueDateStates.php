@@ -18,7 +18,7 @@ trait DueDateStates
     public function dueInDays(int $days = 2): self
     {
         return $this->state(fn (array $attributes) => [
-            static::DUE_DATE => now()->addDays($days)->startOfDay(),
+            self::DUE_DATE => now()->addDays($days)->startOfDay(),
         ]);
     }
 

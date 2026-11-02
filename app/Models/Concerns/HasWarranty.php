@@ -3,7 +3,13 @@
 namespace App\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @template TModel of Model
+ *
+ * @mixin TModel
+ */
 trait HasWarranty
 {
     private const WARRANTY_EXPIRE_DATE = 'warranty_expire_date';
@@ -13,7 +19,7 @@ trait HasWarranty
      */
     public function initializeHasWarranty(): void
     {
-        $this->casts[static::WARRANTY_EXPIRE_DATE] = 'date';
+        $this->casts[self::WARRANTY_EXPIRE_DATE] = 'date';
     }
 
     /**
@@ -28,9 +34,11 @@ trait HasWarranty
 
     /**
      * Scope a query to only include models with warranty.
+     *
+     * @param  Builder<TModel>  $query
      */
     public function scopeWithWarranty(Builder $query): void
     {
-        $query->where(static::WARRANTY_EXPIRE_DATE, '>', now());
+        $query->where(self::WARRANTY_EXPIRE_DATE, '>', now());
     }
 }

@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import type { Transaction } from '@/types';
+
 import { DeleteAction } from '@/components/action';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { destroy } from '@/routes/transactions';
-import type { Transaction } from '@/types';
 
-interface Props {
+type Props = {
     transaction: Transaction;
-}
+};
 
 defineProps<Props>();
 </script>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Invoice } from '@/types';
+
 import CustomerLink from '@/components/customers/CustomerLink.vue';
 import { Currency, DateTime } from '@/components/data';
 import DeviceLink from '@/components/devices/DeviceLink.vue';
@@ -14,14 +16,13 @@ import {
     TableSortLink,
 } from '@/components/ui/table';
 import { InvoiceIcon } from '@/icons';
-import type { Invoice } from '@/types';
 
 import InvoiceLink from './InvoiceLink.vue';
 import InvoiceStatusBadge from './InvoiceStatusBadge.vue';
 
-interface Props {
+type Props = {
     invoices: Invoice[];
-}
+};
 
 defineProps<Props>();
 </script>

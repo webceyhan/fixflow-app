@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Order } from '@/types';
+
 import { Currency, DateTime } from '@/components/data';
 import TextLink from '@/components/TextLink.vue';
 import TicketLink from '@/components/tickets/TicketLink.vue';
@@ -14,13 +16,12 @@ import {
     DescriptionListItem,
 } from '@/components/ui/description-list';
 import UserLink from '@/components/users/UserLink.vue';
-import type { Order } from '@/types';
 
 import OrderStatusBadge from './OrderStatusBadge.vue';
 
-interface Props {
+type Props = {
     order: Order;
-}
+};
 
 defineProps<Props>();
 </script>

@@ -6,14 +6,35 @@ use App\Enums\AdjustmentReason;
 use App\Enums\AdjustmentType;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasType;
+use Carbon\CarbonImmutable;
 use Database\Factories\AdjustmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $invoice_id
+ * @property float $amount
+ * @property bool $is_percent
+ * @property string|null $note
+ * @property AdjustmentType $type
+ * @property AdjustmentReason $reason
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read Invoice $invoice
+ * @property-read mixed $ref
+ */
+#[Fillable(['invoice_id', 'amount', 'is_percent', 'note', 'type', 'reason'])]
 class Adjustment extends Model
 {
-    /** @use HasFactory<AdjustmentFactory> */
+    /**
+     * @use HasFactory<AdjustmentFactory>
+     * @use HasRef<static>
+     * @use HasType<static, AdjustmentType>
+     */
     use HasFactory,
         HasRef,
         HasType;
@@ -23,27 +44,13 @@ class Adjustment extends Model
     /**
      * The model's default values for attributes.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'amount' => 0,
         'is_percent' => false,
         'type' => AdjustmentType::Discount,
         'reason' => AdjustmentReason::Welcome,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'invoice_id',
-        'amount',
-        'is_percent',
-        'note',
-        'type',
-        'reason',
     ];
 
     /**
@@ -64,6 +71,8 @@ class Adjustment extends Model
 
     /**
      * Get the invoice that owns the adjustment.
+     *
+     * @return BelongsTo<Invoice, $this>
      */
     public function invoice(): BelongsTo
     {
@@ -74,8 +83,10 @@ class Adjustment extends Model
 
     /**
      * Scope a query to only include adjustments of a given reason.
+     *
+     * @param  Builder<static>  $query
      */
-    public function scopeOfReason($query, AdjustmentReason $reason): void
+    public function scopeOfReason(Builder $query, AdjustmentReason $reason): void
     {
         $query->where('reason', $reason);
     }

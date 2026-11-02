@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Task } from '@/types';
+
 import { Currency, DateTime, Priority, Tick } from '@/components/data';
 import TicketLink from '@/components/tickets/TicketLink.vue';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -13,16 +15,14 @@ import {
 } from '@/components/ui/table';
 import UserLink from '@/components/users/UserLink.vue';
 import { TaskTypeIcon } from '@/icons';
-import type { Task } from '@/types';
 
 import DeviceLink from '../devices/DeviceLink.vue';
-
 import TaskLink from './TaskLink.vue';
 import TaskStatusBadge from './TaskStatusBadge.vue';
 
-interface Props {
+type Props = {
     tasks: Task[];
-}
+};
 
 defineProps<Props>();
 </script>

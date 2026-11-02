@@ -58,13 +58,15 @@ class InvoiceController extends Controller
     {
         $updateInvoice->handle($invoice, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Invoice updated.')]);
+
         return redirect()->route('invoices.show', $invoice);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invoice $invoice)
+    public function destroy(Invoice $invoice): RedirectResponse
     {
         abort(404);
     }

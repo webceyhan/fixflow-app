@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
+
+import type { Adjustment } from '@/types';
 
 import { Currency, DateTime, Percent } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -23,13 +25,12 @@ import {
 } from '@/components/ui/item';
 import { AdjustmentIcon, AdjustmentTypeIcon } from '@/icons';
 import { show } from '@/routes/adjustments';
-import type { Adjustment } from '@/types';
 
 import AdjustmentReasonBadge from './AdjustmentReasonBadge.vue';
 
-interface Props {
+type Props = {
     adjustments?: Adjustment[];
-}
+};
 
 defineProps<Props>();
 </script>

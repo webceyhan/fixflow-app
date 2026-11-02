@@ -3,6 +3,7 @@
 namespace App\Actions\Invoices;
 
 use App\Enums\AdjustmentType;
+use App\Models\Adjustment;
 use App\Models\Invoice;
 
 class SyncInvoiceAdjustments
@@ -24,7 +25,7 @@ class SyncInvoiceAdjustments
     /**
      * Calculate the actual amount for an adjustment based on whether it's percentage-based.
      */
-    protected function calculateAmount($adjustment, Invoice $invoice): float
+    protected function calculateAmount(Adjustment $adjustment, Invoice $invoice): float
     {
         if ($adjustment->is_percent) {
             $baseAmount = $invoice->task_total + $invoice->order_total;

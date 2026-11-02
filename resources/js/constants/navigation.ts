@@ -1,3 +1,5 @@
+import type { NavItem } from '@/types';
+
 import {
     AdjustmentIcon,
     CustomerIcon,
@@ -22,7 +24,6 @@ import { index as tasks } from '@/routes/tasks';
 import { index as tickets } from '@/routes/tickets';
 import { index as transactions } from '@/routes/transactions';
 import { index as users } from '@/routes/users';
-import type { NavItem } from '@/types';
 
 export const MAIN_NAV_ITEMS: NavItem[] = [
     {

@@ -2,10 +2,23 @@
     "agents": [
         "copilot"
     ],
-    "editors": [
-        "vscode"
+    "cloud": true,
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch": false,
+    "packages": [
+        "spatie/laravel-query-builder"
     ],
-    "guidelines": [
-        "laravel/fortify"
+    "sail": false,
+    "skills": [
+        "infer-conventions",
+        "deploying-to-cloud",
+        "fortify-development",
+        "laravel-best-practices",
+        "testing-best-practices",
+        "wayfinder-development",
+        "inertia-vue-development",
+        "tailwindcss-development",
+        "laravel-query-builder"
     ]
 }

@@ -6,6 +6,9 @@ use App\Models\Invoice;
 
 class UpdateInvoice
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Invoice $invoice, array $data): Invoice
     {
         $invoice->update([

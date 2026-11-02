@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Concerns;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ trait StatusRules
     /**
      * Get the validation rules used to validate model statuses.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function statusRules(bool $required = false): array
     {

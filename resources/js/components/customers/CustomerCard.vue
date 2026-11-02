@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Customer } from '@/types';
+
 import { Address, DateTime, Email, Phone } from '@/components/data';
 import {
     Card,
@@ -11,14 +13,13 @@ import {
     DescriptionList,
     DescriptionListItem,
 } from '@/components/ui/description-list';
-import type { Customer } from '@/types';
 
 import CustomerStatusBadge from './CustomerStatusBadge.vue';
 import CustomerTypeBadge from './CustomerTypeBadge.vue';
 
-interface Props {
+type Props = {
     customer: Customer;
-}
+};
 
 defineProps<Props>();
 </script>

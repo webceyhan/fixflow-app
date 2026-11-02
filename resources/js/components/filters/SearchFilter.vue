@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { SearchIcon } from '@lucide/vue';
 import { useDebounceFn } from '@vueuse/core';
-import { SearchIcon } from 'lucide-vue-next';
 
 import {
     InputGroup,
@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/input-group';
 import { useFilter } from '@/composables/useFilter';
 
-interface Props {
+type Props = {
     placeholder?: string;
-}
+};
 
 defineProps<Props>();
 

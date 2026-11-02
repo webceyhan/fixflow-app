@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
+
+import type { Ticket } from '@/types';
 
 import { DateTime, Priority } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -24,13 +26,12 @@ import {
 import UserLink from '@/components/users/UserLink.vue';
 import { TicketIcon } from '@/icons';
 import { show } from '@/routes/tickets';
-import type { Ticket } from '@/types';
 
 import TicketStatusBadge from './TicketStatusBadge.vue';
 
-interface Props {
+type Props = {
     tickets?: Ticket[];
-}
+};
 
 defineProps<Props>();
 </script>

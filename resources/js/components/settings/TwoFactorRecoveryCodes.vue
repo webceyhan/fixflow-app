@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Form } from '@inertiajs/vue3';
-import { Eye, EyeOffIcon, LockKeyhole, RefreshCw } from 'lucide-vue-next';
+import { Eye, EyeOffIcon, LockKeyhole, RefreshCw } from '@lucide/vue';
 import { nextTick, onMounted, ref, useTemplateRef } from 'vue';
+import { toast } from 'vue-sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,11 +13,9 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/composables/useToast';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
 
-const toast = useToast();
 const { recoveryCodesList, fetchRecoveryCodes } = useTwoFactorAuth();
 const isRecoveryCodesVisible = ref<boolean>(false);
 const recoveryCodeSectionRef = useTemplateRef('recoveryCodeSectionRef');
@@ -32,6 +31,11 @@ const toggleRecoveryCodesVisibility = async () => {
         await nextTick();
         recoveryCodeSectionRef.value?.scrollIntoView({ behavior: 'smooth' });
     }
+};
+
+const onRegenerateSuccess = () => {
+    fetchRecoveryCodes();
+    toast.success('Recovery codes regenerated!');
 };
 
 onMounted(async () => {
@@ -71,12 +75,7 @@ onMounted(async () => {
                     v-if="isRecoveryCodesVisible && recoveryCodesList.length"
                     v-bind="regenerateRecoveryCodes.form()"
                     :options="{ preserveScroll: true }"
-                    @success="
-                        () => {
-                            fetchRecoveryCodes();
-                            toast.success('Recovery codes regenerated!');
-                        }
-                    "
+                    @success="onRegenerateSuccess"
                     #default="{ processing }"
                 >
                     <Button variant="ghost" size="sm" :disabled="processing">

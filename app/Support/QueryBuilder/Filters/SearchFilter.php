@@ -3,8 +3,14 @@
 namespace App\Support\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\Filters\Filter;
 
+/**
+ * @template TModelClass of Model
+ *
+ * @implements Filter<TModelClass>
+ */
 class SearchFilter implements Filter
 {
     /**
@@ -18,6 +24,8 @@ class SearchFilter implements Filter
      * Create a search filter for query builder.
      *
      * Supports searching across multiple columns and relationships.
+     *
+     * @param  Builder<TModelClass>  $query
      */
     public function __invoke(Builder $query, mixed $value, string $property): void
     {
@@ -62,6 +70,8 @@ class SearchFilter implements Filter
 
     /**
      * Add an OR WHERE LIKE condition for a direct column search.
+     *
+     * @param  Builder<TModelClass>  $query
      */
     private function whereLike(Builder $query, string $column, string $value): void
     {
@@ -72,6 +82,9 @@ class SearchFilter implements Filter
      * Add an OR WHERE HAS condition for relationship column search.
      *
      * Searches across multiple columns in the related model using whereAny.
+     *
+     * @param  Builder<TModelClass>  $query
+     * @param  array<string>  $columns
      */
     private function whereRelationLike(Builder $query, string $relation, array $columns, string $value): void
     {

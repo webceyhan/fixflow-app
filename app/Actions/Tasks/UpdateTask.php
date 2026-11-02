@@ -11,6 +11,9 @@ class UpdateTask
         protected SyncInvoiceTasks $syncInvoiceTasks,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Task $task, array $data): Task
     {
         $task->update([

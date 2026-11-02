@@ -4,8 +4,10 @@ namespace App\Models\Concerns;
 
 use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @template TModel of Model
  * @template TType of BackedEnum
  */
 trait HasType
@@ -18,10 +20,10 @@ trait HasType
     public function initializeHasType(): void
     {
         // Get the default type value from the model's attributes
-        $defaultType = $this->attributes[static::TYPE] ?? null;
+        $defaultType = $this->attributes[self::TYPE] ?? null;
 
         // Use the class of the default type
-        $this->casts[static::TYPE] = $defaultType::class;
+        $this->casts[self::TYPE] = $defaultType::class;
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +31,7 @@ trait HasType
     /**
      * Scope a query to only include records with the specified type.
      *
+     * @param  Builder<TModel>  $query
      * @param  TType  $type
      */
     public function scopeOfType(Builder $query, BackedEnum $type): void

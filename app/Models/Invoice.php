@@ -8,15 +8,48 @@ use App\Models\Concerns\HasCancelledStatus;
 use App\Models\Concerns\HasDueDate;
 use App\Models\Concerns\HasRef;
 use App\Models\Concerns\HasStatus;
+use Carbon\CarbonImmutable;
 use Database\Factories\InvoiceFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $ticket_id
+ * @property float $total
+ * @property float $task_total
+ * @property float $order_total
+ * @property float $discount_amount
+ * @property float $fee_amount
+ * @property float $paid_amount
+ * @property float $refunded_amount
+ * @property CarbonImmutable $due_date
+ * @property string|null $note
+ * @property InvoiceStatus $status
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read Collection<int, Adjustment> $adjustments
+ * @property-read int|null $adjustments_count
+ * @property-read mixed $ref
+ * @property-read Ticket $ticket
+ * @property-read Collection<int, Transaction> $transactions
+ * @property-read int|null $transactions_count
+ */
+#[Fillable(['ticket_id', 'total', 'task_total', 'order_total', 'discount_amount', 'fee_amount', 'paid_amount', 'refunded_amount', 'due_date', 'note', 'status'])]
 class Invoice extends Model
 {
-    /** @use HasFactory<InvoiceFactory> */
+    /**
+     * @use HasActiveStatus<static>
+     * @use HasCancelledStatus<static>
+     * @use HasDueDate<static>
+     * @use HasFactory<InvoiceFactory>
+     * @use HasRef<static>
+     * @use HasStatus<static, InvoiceStatus>
+     */
     use HasActiveStatus,
         HasCancelledStatus,
         HasDueDate,
@@ -29,7 +62,7 @@ class Invoice extends Model
     /**
      * The model's default values for attributes.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'total' => 0,
@@ -40,25 +73,6 @@ class Invoice extends Model
         'paid_amount' => 0,
         'refunded_amount' => 0,
         'status' => InvoiceStatus::Draft,
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'ticket_id',
-        'total',
-        'task_total',
-        'order_total',
-        'discount_amount',
-        'fee_amount',
-        'paid_amount',
-        'refunded_amount',
-        'due_date',
-        'note',
-        'status',
     ];
 
     /**
@@ -83,6 +97,8 @@ class Invoice extends Model
 
     /**
      * Get the ticket that owns the invoice.
+     *
+     * @return BelongsTo<Ticket, $this>
      */
     public function ticket(): BelongsTo
     {
@@ -91,6 +107,8 @@ class Invoice extends Model
 
     /**
      * Get the transactions for the invoice.
+     *
+     * @return HasMany<Transaction, $this>
      */
     public function transactions(): HasMany
     {
@@ -99,6 +117,8 @@ class Invoice extends Model
 
     /**
      * Get the adjustments for the invoice.
+     *
+     * @return HasMany<Adjustment, $this>
      */
     public function adjustments(): HasMany
     {

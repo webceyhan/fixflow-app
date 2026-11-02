@@ -6,6 +6,9 @@ use App\Models\Device;
 
 class CreateDevice
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Device
     {
         return Device::create([

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { User } from '@/types';
+
 import { DateTime, Email, Phone, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -11,15 +13,14 @@ import {
     TableSortLink,
 } from '@/components/ui/table';
 import { UserRoleIcon } from '@/icons';
-import type { User } from '@/types';
 
 import UserLink from './UserLink.vue';
 import UserRoleBadge from './UserRoleBadge.vue';
 import UserStatusBadge from './UserStatusBadge.vue';
 
-interface Props {
+type Props = {
     users: User[];
-}
+};
 
 defineProps<Props>();
 </script>

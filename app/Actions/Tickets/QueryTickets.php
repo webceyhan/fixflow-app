@@ -8,16 +8,19 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryTickets
 {
+    /**
+     * @return QueryBuilder<Ticket>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Ticket::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['title']),
                 AllowedFilter::assignee(),
                 AllowedFilter::exact('priority'),
                 AllowedFilter::exact('status'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['title', 'due_date', 'created_at']);
+            )
+            ->allowedSorts('title', 'due_date', 'created_at');
     }
 }

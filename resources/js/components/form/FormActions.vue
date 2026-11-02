@@ -2,10 +2,10 @@
 import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
 
-interface Props {
+type Props = {
     processing: boolean;
     isEditing?: boolean;
-}
+};
 
 defineProps<Props>();
 

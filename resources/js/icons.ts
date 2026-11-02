@@ -1,16 +1,5 @@
 import { h } from 'vue';
 
-import {
-    ADJUSTMENT_TYPE_ICON_MAP,
-    ATTACHMENT_CATEGORY_ICON_MAP,
-    CUSTOMER_TYPE_ICON_MAP,
-    DEVICE_TYPE_ICON_MAP,
-    PRIORITY_ICON_MAP,
-    TASK_TYPE_ICON_MAP,
-    TRANSACTION_METHOD_ICON_MAP,
-    TRANSACTION_TYPE_ICON_MAP,
-    USER_ROLE_ICON_MAP,
-} from '@/constants';
 import type {
     AdjustmentType,
     AttachmentCategory,
@@ -22,6 +11,18 @@ import type {
     TransactionType,
     UserRole,
 } from '@/types';
+
+import {
+    ADJUSTMENT_TYPE_ICON_MAP,
+    ATTACHMENT_CATEGORY_ICON_MAP,
+    CUSTOMER_TYPE_ICON_MAP,
+    DEVICE_TYPE_ICON_MAP,
+    PRIORITY_ICON_MAP,
+    TASK_TYPE_ICON_MAP,
+    TRANSACTION_METHOD_ICON_MAP,
+    TRANSACTION_TYPE_ICON_MAP,
+    USER_ROLE_ICON_MAP,
+} from '@/constants';
 
 export {
     Calculator as AdjustmentIcon,
@@ -38,7 +39,7 @@ export {
     Ticket as TicketIcon,
     ArrowRightLeft as TransactionIcon,
     Users as UserIcon,
-} from 'lucide-vue-next';
+} from '@lucide/vue';
 
 export const PriorityIcon = ({ value }: { value: Priority }) =>
     h(PRIORITY_ICON_MAP[value]);

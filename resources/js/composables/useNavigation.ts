@@ -3,14 +3,14 @@ import { computed } from 'vue';
 import { FOOTER_NAV_ITEMS, MAIN_NAV_ITEMS } from '@/constants';
 import { toUrl } from '@/lib/utils';
 
-import { useActiveUrl } from './useActiveUrl';
+import { useCurrentUrl } from './useCurrentUrl';
 
-const { urlIsActive } = useActiveUrl();
+const { isCurrentUrl } = useCurrentUrl();
 
 const mainNavItems = computed(() =>
     MAIN_NAV_ITEMS.map((item) => ({
         ...item,
-        isActive: urlIsActive(item.href),
+        isActive: isCurrentUrl(item.href),
     })),
 );
 

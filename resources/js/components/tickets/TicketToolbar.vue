@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Ticket } from '@/types';
+
 import {
     AssignAction,
     ChangeAction,
@@ -11,11 +13,10 @@ import { TICKET_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
 import { create as createTask } from '@/routes/tasks';
 import { destroy, edit, update } from '@/routes/tickets';
-import type { Ticket } from '@/types';
 
-interface Props {
+type Props = {
     ticket: Ticket;
-}
+};
 
 defineProps<Props>();
 </script>

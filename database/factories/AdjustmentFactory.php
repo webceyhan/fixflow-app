@@ -38,7 +38,7 @@ class AdjustmentFactory extends Factory
     /**
      * Configure the model factory.
      */
-    public function configure(): static
+    public function configure(): self
     {
         return $this->afterMaking(function (Adjustment $adjustment) {
             // Ensure consistency between reason and type
@@ -51,7 +51,7 @@ class AdjustmentFactory extends Factory
     /**
      * Indicate that the adjustment is for a specific invoice.
      */
-    public function forInvoice(Invoice $invoice): static
+    public function forInvoice(Invoice $invoice): self
     {
         return $this->state(fn (array $attributes) => [
             'invoice_id' => $invoice->id,
@@ -64,7 +64,7 @@ class AdjustmentFactory extends Factory
     /**
      * Indicate that the adjustment is a discount.
      */
-    public function discount(): static
+    public function discount(): self
     {
         $discountReasons = AdjustmentReason::casesByType(AdjustmentType::Discount);
 
@@ -77,7 +77,7 @@ class AdjustmentFactory extends Factory
     /**
      * Indicate that the adjustment is a fee.
      */
-    public function fee(): static
+    public function fee(): self
     {
         $feeReasons = AdjustmentReason::casesByType(AdjustmentType::Fee);
 
@@ -90,7 +90,7 @@ class AdjustmentFactory extends Factory
     /**
      * Indicate that the adjustment is percentage-based.
      */
-    public function percentage(?float $amount = null): static
+    public function percentage(?float $amount = null): self
     {
         return $this->state(fn (array $attributes) => [
             'amount' => $amount ?? fake()->randomFloat(2, 5, 25),
@@ -101,7 +101,7 @@ class AdjustmentFactory extends Factory
     /**
      * Indicate that the adjustment is fixed amount.
      */
-    public function fixed(?float $amount = null): static
+    public function fixed(?float $amount = null): self
     {
         return $this->state(fn (array $attributes) => [
             'amount' => $amount ?? fake()->randomFloat(2, 10, 100),

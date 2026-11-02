@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { PlusIcon } from 'lucide-vue-next';
+import { PlusIcon } from '@lucide/vue';
 
-import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
 
-interface Props {
+import { Button } from '@/components/ui/button';
+
+type Props = {
     href: Href;
-}
+};
 
 defineProps<Props>();
 </script>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { DeviceType } from '@/types';
 
-interface Props {
+type Props = {
     value: DeviceType;
-}
+};
 
 defineProps<Props>();
 </script>

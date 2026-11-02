@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
+import type { Order } from '@/types';
+
 import { FormActions } from '@/components/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -43,18 +45,16 @@ import { useSaveForm } from '@/composables/useSaveForm';
 import { ORDER_STATUS } from '@/constants';
 import { toIsoDate } from '@/lib/utils';
 import { store, update } from '@/routes/orders';
-import type { Order } from '@/types';
 
-interface Props {
+type Props = {
     order: Order;
-}
+};
 
 const { order } = defineProps<Props>();
 
 const action = order.id ? update(order) : store(order.ticket_id);
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Order',
     action,
     data: {
         assignee_id: order.assignee_id ?? '',
@@ -129,10 +129,12 @@ function handleAssign() {
 
                     <Field>
                         <FieldLabel for="url">URL</FieldLabel>
+                        <!-- Workaround for Vue language tools issue with escaped slashes in placeholder -->
+                        <!-- Issue: https://github.com/vuejs/language-tools/pull/6241 -->
                         <Input
                             id="url"
                             type="url"
-                            placeholder="https://..."
+                            placeholder="https:/\/..."
                             v-model="form.url"
                         />
                         <FieldDescription>

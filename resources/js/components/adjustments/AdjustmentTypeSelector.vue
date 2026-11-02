@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { AdjustmentType, Option } from '@/types';
+
 import { FormSelector } from '@/components/form';
 import { ADJUSTMENT_TYPE, ADJUSTMENT_TYPE_ICON_MAP } from '@/constants';
 import { toOptions } from '@/lib/utils';
-import type { AdjustmentType, Option } from '@/types';
 
 const options: Option<AdjustmentType>[] = toOptions(
     ADJUSTMENT_TYPE,

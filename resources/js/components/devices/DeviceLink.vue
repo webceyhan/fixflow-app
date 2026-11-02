@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import TextLink from '@/components/TextLink.vue';
-import { show } from '@/routes/devices';
 import type { Device } from '@/types';
 
-interface Props {
+import TextLink from '@/components/TextLink.vue';
+import { show } from '@/routes/devices';
+
+type Props = {
     device: Device;
     full?: boolean;
-}
+};
 
 defineProps<Props>();
 </script>

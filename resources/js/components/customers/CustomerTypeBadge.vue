@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { CustomerType } from '@/types';
 
-interface Props {
+type Props = {
     value: CustomerType;
-}
+};
 
 defineProps<Props>();
 </script>

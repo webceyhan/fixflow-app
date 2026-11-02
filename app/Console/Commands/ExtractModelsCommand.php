@@ -10,6 +10,41 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ReflectionClass;
 
+/**
+ * @phpstan-type RawAttribute array{
+ *     name: string,
+ *     type: string,
+ *     hidden: bool,
+ *     nullable: bool,
+ *     fillable: bool,
+ *     cast: mixed|null
+ * }
+ * @phpstan-type RawRelation array{
+ *     name: string,
+ *     type: string,
+ *     related: class-string
+ * }
+ * @phpstan-type RawModelInfo array{
+ *     table: string,
+ *     class: class-string,
+ *     attributes: array<string, RawAttribute>,
+ *     relations: array<string, RawRelation>
+ *  }
+ * @phpstan-type ModelInfo array{
+ *     table: string,
+ *     attributes: array<string, array{
+ *         type: string,
+ *         required: bool,
+ *         readonly: bool,
+ *         cast: mixed|null
+ *     }>,
+ *     relations: array<string, array{
+ *         type: string,
+ *         related: string
+ *     }>
+ *  }
+ * @phpstan-type ModelData array<string, ModelInfo>
+ */
 class ExtractModelsCommand extends Command
 {
     const JSON_PATH = 'resources/js/data/models.json';
@@ -37,6 +72,9 @@ class ExtractModelsCommand extends Command
 
     // HELPERS /////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * @return Collection<int, string>
+     */
     protected function getModels(string $modelsPath): Collection
     {
         $namespace = $this->pathToNamespace($modelsPath);
@@ -61,9 +99,14 @@ class ExtractModelsCommand extends Command
         return str_replace('/', '\\', ucfirst($relativePath));
     }
 
+    /**
+     * @return array<string, ModelInfo>
+     */
     protected function extractModelData(string $modelsPath): array
     {
         $models = $this->getModels($modelsPath);
+
+        /** @var ModelData */
         $modelData = [];
 
         foreach ($models as $modelName) {
@@ -76,6 +119,8 @@ class ExtractModelsCommand extends Command
 
                 if ($exitCode === 0) {
                     $jsonOutput = Artisan::output();
+
+                    /** @var RawModelInfo */
                     $modelInfo = json_decode($jsonOutput, true);
                     $modelData[$modelName] = $this->processModelInfo($modelInfo);
                 }
@@ -87,8 +132,13 @@ class ExtractModelsCommand extends Command
         return $modelData;
     }
 
+    /**
+     * @param  RawModelInfo  $modelInfo
+     * @return ModelInfo
+     */
     protected function processModelInfo(array $modelInfo): array
     {
+        /** @var ModelInfo */
         $processedData = [
             'table' => $modelInfo['table'],
             'attributes' => [],
@@ -98,15 +148,15 @@ class ExtractModelsCommand extends Command
         // Process attributes
         foreach ($modelInfo['attributes'] as $attribute) {
             // Skip hidden attributes
-            if ($attribute['hidden'] ?? false) {
+            if ($attribute['hidden']) {
                 continue;
             }
 
             $processedData['attributes'][$attribute['name']] = [
                 'type' => $this->parseAttributeType($attribute, $modelInfo['class']) ?? 'any',
-                'required' => ! $attribute['nullable'] ?? false,
-                'readonly' => ! $attribute['fillable'] ?? false,
-                'cast' => $attribute['cast'] ?? null,
+                'required' => ! $attribute['nullable'],
+                'readonly' => ! $attribute['fillable'],
+                'cast' => $attribute['cast'],
             ];
         }
 
@@ -124,6 +174,12 @@ class ExtractModelsCommand extends Command
         return $processedData;
     }
 
+    /**
+     * Parse the attribute type based on the attribute array and model class.
+     *
+     * @param  RawAttribute  $attribute
+     * @param  class-string  $modelClass
+     */
     protected function parseAttributeType(array $attribute, string $modelClass): ?string
     {
         // Extract attribute array
@@ -135,7 +191,7 @@ class ExtractModelsCommand extends Command
 
         if (! $cast) {
             // Map database column types to JSON types
-            return $this->mapToJsonType($type ?? '');
+            return $this->mapToJsonType($type);
         }
 
         // Skip attribute casts
@@ -149,15 +205,20 @@ class ExtractModelsCommand extends Command
         }
 
         // Normalize and map to JSON type
-        return $this->mapToJsonType(explode(':', $cast)[0] ?? $cast);
+        return $this->mapToJsonType(explode(':', $cast)[0]);
     }
 
+    /**
+     * Parse the attribute type from the model's DocBlock.
+     *
+     * @param  class-string  $modelClass
+     */
     protected function parseAttributeTypeFromDocBlock(string $attributeName, string $modelClass): ?string
     {
         try {
             $reflection = new ReflectionClass($modelClass);
             $method = $reflection->getMethod(Str::camel($attributeName));
-            $docComment = $method?->getDocComment();
+            $docComment = $method->getDocComment();
 
             // Skip if no doc comment is found
             if (! $docComment) {
@@ -209,6 +270,11 @@ class ExtractModelsCommand extends Command
         File::put($path, $content);
     }
 
+    /**
+     * Extract the model data as JSON and write it to the designated file.
+     *
+     * @param  array<string, array<string, mixed>>  $modelData
+     */
     protected function extractAsJson(array $modelData): void
     {
         $content = $this->formatAsJson($modelData);
@@ -217,6 +283,11 @@ class ExtractModelsCommand extends Command
         $this->info('JSON extracted to: '.self::JSON_PATH);
     }
 
+    /**
+     * Extract the model data as TypeScript and write it to the designated file.
+     *
+     * @param  ModelData  $modelData
+     */
     protected function extractAsTypeScript(array $modelData): void
     {
         $content = $this->formatAsTypeScript($modelData);
@@ -227,11 +298,21 @@ class ExtractModelsCommand extends Command
 
     // FORMATTERS //////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Format the model data as JSON.
+     *
+     * @param  array<string, array<string, mixed>>  $data
+     */
     protected function formatAsJson(array $data): string
     {
-        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * Format the model data as TypeScript.
+     *
+     * @param  ModelData  $modelData
+     */
     protected function formatAsTypeScript(array $modelData): string
     {
         $content = "// Auto-generated from PHP models - DO NOT EDIT MANUALLY\n\n";
@@ -257,17 +338,17 @@ class ExtractModelsCommand extends Command
         // Add model interfaces
         foreach ($modelData as $modelName => $data) {
             // Add model attributes
-            $modelBody = collect($data['attributes'])->map(function ($attr, $name) {
-                // skip base model attributes
-                if (in_array($name, ['id', 'created_at', 'updated_at'])) {
-                    return;
-                }
+            $modelBody = collect($data['attributes'])
 
-                $type = $attr['type'];
-                $suffix = $attr['required'] ? '' : '?';
+            // Filter out base model attributes before mapping
+                ->filter(fn ($attr, $name) => ! in_array($name, ['id', 'created_at', 'updated_at']))
+                ->map(function (array $attr, string $name): string {
+                    $type = $attr['type'];
+                    $suffix = $attr['required'] ? '' : '?';
 
-                return "{$name}{$suffix}:{$type};";
-            })->filter()->join('');
+                    return "{$name}{$suffix}:{$type};";
+                })
+                ->join('');
 
             // Add relationships as optional properties
             if (! empty($data['relations'])) {
@@ -287,6 +368,12 @@ class ExtractModelsCommand extends Command
         return $content;
     }
 
+    /**
+     * Collect all enum types used in the model data.
+     *
+     * @param  ModelData  $modelData
+     * @return array<int, string>
+     */
     protected function collectEnumTypes(array $modelData): array
     {
         return collect($modelData)

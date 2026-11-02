@@ -19,7 +19,7 @@ trait HasActiveCase
     /**
      * Get list of active enum cases.
      *
-     * @return list<self>
+     * @return array<int, static>
      */
     public static function activeCases(): array
     {

@@ -6,6 +6,9 @@ use App\Models\Invoice;
 
 class CreateInvoice
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Invoice
     {
         return Invoice::create([

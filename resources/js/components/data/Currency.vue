@@ -1,8 +1,8 @@
 <script setup lang="ts">
-interface Props {
+type Props = {
     value?: number;
     off?: boolean;
-}
+};
 
 defineProps<Props>();
 

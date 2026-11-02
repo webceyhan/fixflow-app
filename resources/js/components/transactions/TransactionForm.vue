@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Transaction } from '@/types';
+
 import { FormActions } from '@/components/form';
 import {
     Field,
@@ -26,13 +28,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { TRANSACTION_METHOD } from '@/constants';
 import { store, update } from '@/routes/transactions';
-import type { Transaction } from '@/types';
 
 import TransactionTypeSelector from './TransactionTypeSelector.vue';
 
-interface Props {
+type Props = {
     transaction: Transaction;
-}
+};
 
 const { transaction } = defineProps<Props>();
 
@@ -41,7 +42,6 @@ const action = transaction.id
     : store(transaction.invoice_id);
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Transaction',
     action,
     data: {
         amount: transaction.amount ?? 0,

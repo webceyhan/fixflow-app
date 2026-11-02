@@ -8,15 +8,18 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryOrders
 {
+    /**
+     * @return QueryBuilder<Order>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Order::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['name', 'supplier', 'note']),
                 AllowedFilter::assignee(),
                 AllowedFilter::exact('status'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['name', 'cost', 'due_date', 'approved_at', 'created_at']);
+            )
+            ->allowedSorts('name', 'cost', 'due_date', 'approved_at', 'created_at');
     }
 }

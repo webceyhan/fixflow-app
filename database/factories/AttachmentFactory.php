@@ -24,7 +24,7 @@ class AttachmentFactory extends Factory
         return [
             'attachable_type' => Ticket::class,
             'attachable_id' => Ticket::factory(),
-            'name' => fake()->words(3, true).'.pdf',
+            'name' => fake()->sentence(3).'.pdf',
             'path' => 'tickets/'.fake()->numberBetween(1, 999).'/'.fake()->uuid().'.pdf',
             'mime_type' => 'application/pdf',
             'size' => fake()->numberBetween(10_000, 500_000),
@@ -35,7 +35,7 @@ class AttachmentFactory extends Factory
     /**
      * Indicate that the attachment belongs to a specific ticket.
      */
-    public function forTicket(Ticket $ticket): static
+    public function forTicket(Ticket $ticket): self
     {
         return $this->state(fn (array $attributes) => [
             'attachable_type' => Ticket::class,

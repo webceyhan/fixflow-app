@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
     {
         // Create 1-2 orders for 40% of tickets with specific parts/suppliers
         Ticket::all()
-            ->random((int) Ticket::count() * 0.4)
+            ->random((int) (Ticket::count() * 0.4))
             ->each(function (Ticket $ticket) {
                 Order::factory(rand(1, 2))
                     ->forTicket($ticket)
@@ -27,21 +27,21 @@ class OrderSeeder extends Seeder
 
         // Mark 30% of orders as shipped
         Order::all()
-            ->random((int) Order::count() * 0.3)
+            ->random((int) (Order::count() * 0.3))
             ->each(fn (Order $order) => $order->update([
                 'status' => OrderStatus::Shipped,
             ]));
 
         // Mark 50% of orders as received
         Order::all()
-            ->random((int) Order::count() * 0.5)
+            ->random((int) (Order::count() * 0.5))
             ->each(fn (Order $order) => $order->update([
                 'status' => OrderStatus::Received,
             ]));
 
         // Mark 10% of orders as cancelled
         Order::all()
-            ->random((int) Order::count() * 0.1)
+            ->random((int) (Order::count() * 0.1))
             ->each(fn (Order $order) => $order->update([
                 'status' => OrderStatus::Cancelled,
             ]));

@@ -55,6 +55,8 @@ class TaskController extends Controller
             'ticket_id' => $ticket->id,
         ]);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Task created.')]);
+
         return redirect()->route('tasks.show', $task);
     }
 
@@ -89,6 +91,8 @@ class TaskController extends Controller
     {
         $updateTask->handle($task, $request->validated());
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Task updated.')]);
+
         return redirect()->route('tasks.show', $task);
     }
 
@@ -98,6 +102,8 @@ class TaskController extends Controller
     public function destroy(Task $task, DeleteTask $deleteTask): RedirectResponse
     {
         $deleteTask->handle($task);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Task deleted.')]);
 
         return redirect()->route('tasks.index');
     }

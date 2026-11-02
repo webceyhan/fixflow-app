@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Customer } from '@/types';
+
 import { DateTime, Email, Phone } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -11,14 +13,13 @@ import {
     TableSortLink,
 } from '@/components/ui/table';
 import { CustomerTypeIcon } from '@/icons';
-import type { Customer } from '@/types';
 
 import CustomerLink from './CustomerLink.vue';
 import CustomerStatusBadge from './CustomerStatusBadge.vue';
 
-interface Props {
+type Props = {
     customers: Customer[];
-}
+};
 
 defineProps<Props>();
 </script>

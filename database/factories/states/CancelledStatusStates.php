@@ -12,7 +12,7 @@ trait CancelledStatusStates
     public function cancelled(): self
     {
         return $this->state(fn (array $attributes) => [
-            static::STATUS => 'cancelled',
+            self::STATUS => 'cancelled',
         ]);
     }
 }

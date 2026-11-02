@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Concerns;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ trait PriorityRules
     /**
      * Get the validation rules used to validate model priorities.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function priorityRules(bool $required = false): array
     {

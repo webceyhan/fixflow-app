@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Icon, Option } from '@/types';
+
 import {
     Filter,
     FilterClear,
@@ -13,15 +15,14 @@ import {
 } from '@/components/ui/popover';
 import { useToggleFilter } from '@/composables/useFilter';
 import { useOptions } from '@/composables/useOptions';
-import type { Icon, Option } from '@/types';
 
-interface Props {
+type Props = {
     name: string;
     title: string;
     icon?: Icon;
     options: Option[];
     highlightOnHover?: boolean;
-}
+};
 
 const props = defineProps<Props>();
 

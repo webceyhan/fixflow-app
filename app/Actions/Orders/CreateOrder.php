@@ -11,6 +11,9 @@ class CreateOrder
         protected SyncInvoiceOrders $syncInvoiceOrders,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Order
     {
         $order = Order::create([

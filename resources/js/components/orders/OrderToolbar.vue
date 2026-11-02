@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Order } from '@/types';
+
 import {
     AssignAction,
     ChangeAction,
@@ -9,11 +11,10 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { ORDER_STATUS } from '@/constants';
 import { toOptions } from '@/lib/utils';
 import { destroy, edit, update } from '@/routes/orders';
-import type { Order } from '@/types';
 
-interface Props {
+type Props = {
     order: Order;
-}
+};
 
 defineProps<Props>();
 </script>

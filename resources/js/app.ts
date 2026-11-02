@@ -1,22 +1,33 @@
 import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { type DefineComponent, createApp, h } from 'vue';
 
 import { initializeTheme } from '@/composables/useAppearance';
-import { APP_NAME } from '@/constants';
-import '../css/app.css';
+import AppLayout from '@/layouts/AppLayout.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
+import { initializeFlashToast } from '@/lib/flashToast';
+import { initializeStatusToast } from '@/lib/statusToast';
 
-createInertiaApp({
-    title: (title) => (title ? `${title} - ${APP_NAME}` : APP_NAME),
-    resolve: (name) =>
-        resolvePageComponent(
-            `./pages/${name}.vue`,
-            import.meta.glob<DefineComponent>('./pages/**/*.vue'),
-        ),
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .mount(el);
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+void createInertiaApp({
+    title: (title) => (title ? `${title} - ${appName}` : appName),
+    layout: (name) => {
+        switch (true) {
+            case name === 'Welcome':
+                return null;
+            case name.startsWith('auth/'):
+                return AuthLayout;
+            default:
+                return AppLayout;
+        }
+    },
+    withApp: (app) => {
+        app.directive('focus', {
+            mounted: (el: HTMLElement, shouldFocus) => {
+                if (shouldFocus.value !== false) {
+                    el.focus();
+                }
+            },
+        });
     },
     progress: {
         color: '#4B5563',
@@ -25,3 +36,9 @@ createInertiaApp({
 
 // This will set light / dark mode on page load...
 initializeTheme();
+
+// This will listen for flash toast data from the server...
+initializeFlashToast();
+
+// This will listen for status toast data from the server...
+initializeStatusToast();

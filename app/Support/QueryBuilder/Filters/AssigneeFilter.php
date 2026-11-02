@@ -3,9 +3,15 @@
 namespace App\Support\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\Filters\Filter;
 
+/**
+ * @template TModelClass of Model
+ *
+ * @implements Filter<TModelClass>
+ */
 class AssigneeFilter implements Filter
 {
     private const PRESET_ME = 'me';
@@ -26,6 +32,8 @@ class AssigneeFilter implements Filter
      * - 'others': Assigned to any user except the current user
      * - 'none': Not assigned to any user
      * - numeric ID: Assigned to a specific user ID
+     *
+     * @param  Builder<TModelClass>  $query
      */
     public function __invoke(Builder $query, mixed $value, string $property): void
     {

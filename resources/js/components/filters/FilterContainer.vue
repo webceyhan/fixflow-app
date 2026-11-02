@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { X } from 'lucide-vue-next';
+import { X } from '@lucide/vue';
 
 import { Button } from '@/components/ui/button';
 </script>

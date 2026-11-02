@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Task } from '@/types';
+
 import { Currency, DateTime, Priority } from '@/components/data';
 import TicketLink from '@/components/tickets/TicketLink.vue';
 import {
@@ -13,13 +15,12 @@ import {
     DescriptionListItem,
 } from '@/components/ui/description-list';
 import UserLink from '@/components/users/UserLink.vue';
-import type { Task } from '@/types';
 
 import TaskStatusBadge from './TaskStatusBadge.vue';
 
-interface Props {
+type Props = {
     task: Task;
-}
+};
 
 defineProps<Props>();
 </script>

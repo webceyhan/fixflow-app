@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
 
+import type { Paginated } from '@/types';
+
 import {
     Pagination,
     PaginationContent,
@@ -9,7 +11,6 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
-import type { Paginated } from '@/types';
 
 type Props = Paginated<any>;
 

@@ -58,7 +58,7 @@ class InvoiceFactory extends Factory
     /**
      * Indicate that the invoice belongs to a specific ticket.
      */
-    public function forTicket(Ticket $ticket): static
+    public function forTicket(Ticket $ticket): self
     {
         return $this->state(fn (array $attributes) => [
             'ticket_id' => $ticket->id,
@@ -71,7 +71,7 @@ class InvoiceFactory extends Factory
     /**
      * Indicate that the invoice is in draft status.
      */
-    public function draft(): static
+    public function draft(): self
     {
         return $this->ofStatus(InvoiceStatus::Draft);
     }
@@ -79,7 +79,7 @@ class InvoiceFactory extends Factory
     /**
      * Indicate that the invoice has been issued.
      */
-    public function issued(): static
+    public function issued(): self
     {
         return $this->ofStatus(InvoiceStatus::Issued);
     }
@@ -87,7 +87,7 @@ class InvoiceFactory extends Factory
     /**
      * Indicate that the invoice has been sent.
      */
-    public function sent(): static
+    public function sent(): self
     {
         return $this->ofStatus(InvoiceStatus::Sent);
     }
@@ -95,7 +95,7 @@ class InvoiceFactory extends Factory
     /**
      * Indicate that the invoice has been paid.
      */
-    public function paid(): static
+    public function paid(): self
     {
         return $this
             ->ofStatus(InvoiceStatus::Paid)
@@ -107,7 +107,7 @@ class InvoiceFactory extends Factory
     /**
      * Indicate that the invoice has been refunded.
      */
-    public function refunded(): static
+    public function refunded(): self
     {
         return $this
             ->ofStatus(InvoiceStatus::Refunded)

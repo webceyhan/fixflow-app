@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
+
+import type { Task } from '@/types';
 
 import { Currency, DateTime, Priority, Tick } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -23,13 +25,12 @@ import {
 } from '@/components/ui/item';
 import { TaskIcon, TaskTypeIcon } from '@/icons';
 import { show } from '@/routes/tasks';
-import type { Task } from '@/types';
 
 import TaskStatusBadge from './TaskStatusBadge.vue';
 
-interface Props {
+type Props = {
     tasks?: Task[];
-}
+};
 
 defineProps<Props>();
 </script>

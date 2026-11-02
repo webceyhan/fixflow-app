@@ -8,14 +8,17 @@ use App\Support\QueryBuilder\AllowedFilter;
 
 class QueryInvoices
 {
+    /**
+     * @return QueryBuilder<Invoice>
+     */
     public function handle(): QueryBuilder
     {
         return QueryBuilder::for(Invoice::class)
-            ->allowedFilters([
+            ->allowedFilters(
                 AllowedFilter::search(['ticket.customer.name']),
                 AllowedFilter::exact('status'),
                 AllowedFilter::date(),
-            ])
-            ->allowedSorts(['id', 'total', 'due_date', 'created_at']);
+            )
+            ->allowedSorts('id', 'total', 'due_date', 'created_at');
     }
 }

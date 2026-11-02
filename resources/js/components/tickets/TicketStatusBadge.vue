@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import StatusBadge from '@/components/StatusBadge.vue';
-import { TICKET_STATUS_COLOR_MAP } from '@/constants';
 import type { TicketStatus } from '@/types';
 
-interface Props {
+import StatusBadge from '@/components/StatusBadge.vue';
+import { TICKET_STATUS_COLOR_MAP } from '@/constants';
+
+type Props = {
     value: TicketStatus;
-}
+};
 
 defineProps<Props>();
 </script>

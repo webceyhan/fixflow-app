@@ -13,7 +13,7 @@ use function Pest\Laravel\actingAs;
 
 it('stores a ticket attachment', function () {
     // Arrange
-    Storage::fake('local');
+    Storage::fake();
     Queue::fake();
     $user = User::factory()->manager()->create();
     $ticket = Ticket::factory()->create();
@@ -35,7 +35,7 @@ it('stores a ticket attachment', function () {
         ->and($attachment->name)->toBe('invoice.pdf')
         ->and($attachment->category)->toBe(AttachmentCategory::Other);
 
-    Storage::disk('local')->assertExists($attachment->path);
+    Storage::assertExists($attachment->path);
     Queue::assertNotPushed(GenerateAttachmentThumbnail::class);
 });
 

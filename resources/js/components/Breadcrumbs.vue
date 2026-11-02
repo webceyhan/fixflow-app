@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 
+import type { NavItem } from '@/types';
+
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -9,11 +11,10 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import type { NavItem } from '@/types';
 
-interface Props {
+type Props = {
     breadcrumbs: NavItem[];
-}
+};
 
 defineProps<Props>();
 </script>

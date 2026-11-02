@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Customer } from '@/types';
+
 import { FormActions } from '@/components/form';
 import {
     Field,
@@ -23,20 +25,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSaveForm } from '@/composables/useSaveForm';
 import { CUSTOMER_STATUS } from '@/constants';
 import { store, update } from '@/routes/customers';
-import type { Customer } from '@/types';
 
 import CustomerTypeSelector from './CustomerTypeSelector.vue';
 
-interface Props {
+type Props = {
     customer: Customer;
-}
+};
 
 const { customer } = defineProps<Props>();
 
 const action = customer.id ? update(customer) : store();
 
 const { errors, form, isEditing, processing } = useSaveForm({
-    entityName: 'Customer',
     action,
     data: {
         name: customer.name ?? '',

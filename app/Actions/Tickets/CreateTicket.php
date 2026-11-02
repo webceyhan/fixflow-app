@@ -11,6 +11,9 @@ class CreateTicket
         protected CreateInvoice $createInvoice,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Ticket
     {
         $ticket = Ticket::create([

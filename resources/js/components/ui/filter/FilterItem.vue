@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { CommandItem } from '@/components/ui/command';
 import type { Icon } from '@/types';
-import { CheckIcon } from 'lucide-vue-next';
+import { CheckIcon } from '@lucide/vue';
 import { AcceptableValue } from 'reka-ui';
 import { Checkbox } from '../checkbox';
 
-interface Props {
+type Props = {
     value: AcceptableValue;
     label: string;
     class?: string;

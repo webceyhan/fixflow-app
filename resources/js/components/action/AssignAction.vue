@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BriefcaseIcon } from 'lucide-vue-next';
+import { BriefcaseIcon } from '@lucide/vue';
 
-import { Button } from '@/components/ui/button';
 import type { Href } from '@/types';
 
-interface Props {
+import { Button } from '@/components/ui/button';
+
+type Props = {
     href: Href;
     data: Record<string, any>;
-}
+};
 
 defineProps<Props>();
 </script>

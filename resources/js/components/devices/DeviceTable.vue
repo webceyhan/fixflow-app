@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Device } from '@/types';
+
 import CustomerLink from '@/components/customers/CustomerLink.vue';
 import { DateTime } from '@/components/data';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -12,15 +14,14 @@ import {
     TableSortLink,
 } from '@/components/ui/table';
 import { DeviceTypeIcon } from '@/icons';
-import type { Device } from '@/types';
 
 import DeviceLink from './DeviceLink.vue';
 import DeviceStatusBadge from './DeviceStatusBadge.vue';
 import DeviceTypeBadge from './DeviceTypeBadge.vue';
 
-interface Props {
+type Props = {
     devices: Device[];
-}
+};
 
 defineProps<Props>();
 </script>

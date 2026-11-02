@@ -9,6 +9,9 @@ use Spatie\QueryBuilder\AllowedFilter as SpatieAllowedFilter;
 
 class AllowedFilter extends SpatieAllowedFilter
 {
+    /**
+     * @param  list<string>  $searchables
+     */
     public static function search(array $searchables): AllowedFilter
     {
         return self::custom('search', new SearchFilter($searchables));

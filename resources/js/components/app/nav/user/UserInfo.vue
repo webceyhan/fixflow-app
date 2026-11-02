@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { useInitials } from '@/composables/useInitials';
 import type { User } from '@/types';
 
-interface Props {
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useInitials } from '@/composables/useInitials';
+
+type Props = {
     user: User;
     showEmail?: boolean;
-}
+};
 
 defineProps<Props>();
 

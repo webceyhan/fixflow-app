@@ -4,6 +4,7 @@ namespace App\Http\Requests\Concerns;
 
 use App\Enums\AdjustmentReason;
 use App\Models\Adjustment;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -26,7 +27,7 @@ trait AdjustmentRules
     /**
      * Get all validation rules for adjustment management.
      *
-     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
     protected function adjustmentRules(?int $adjustmentId = null): array
     {
@@ -41,7 +42,7 @@ trait AdjustmentRules
     /**
      * Get the validation rules used to validate adjustment reasons.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
+     * @return array<int, ValidationRule|array<mixed>|string>
      */
     protected function reasonRules(bool $required = false): array
     {

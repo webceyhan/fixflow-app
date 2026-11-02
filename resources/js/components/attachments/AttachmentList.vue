@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { XIcon } from 'lucide-vue-next';
+import { XIcon } from '@lucide/vue';
+
+import type { Attachment } from '@/types';
 
 import {
     AttachmentAction,
@@ -14,12 +16,11 @@ import {
 } from '@/components/ui/attachment';
 import { AttachmentCategoryIcon } from '@/icons';
 import { formatSize } from '@/lib/utils';
-import type { Attachment } from '@/types';
 
-interface Props {
+type Props = {
     attachments?: Attachment[];
     thumbnailUrl: (id: number) => string;
-}
+};
 
 defineProps<Props>();
 

@@ -4,9 +4,15 @@ namespace App\Support\QueryBuilder\Filters;
 
 use App\Enums\DatePreset;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;
 use Spatie\QueryBuilder\Filters\Filter;
 
+/**
+ * @template TModelClass of Model
+ *
+ * @implements Filter<TModelClass>
+ */
 class DateFilter implements Filter
 {
     public function __construct(
@@ -17,6 +23,8 @@ class DateFilter implements Filter
      * Create a date filter for query builder.
      *
      * Supports both DatePreset enum values and date ranges with 'from' and 'to' keys.
+     *
+     * @param  Builder<TModelClass>  $query
      */
     public function __invoke(Builder $query, mixed $value, string $property): void
     {
@@ -42,6 +50,8 @@ class DateFilter implements Filter
 
     /**
      * Apply date range query to the given query.
+     *
+     * @param  Builder<TModelClass>  $query
      */
     private function queryBetweenDates(
         Builder $query,

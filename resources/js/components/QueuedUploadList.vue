@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ClockIcon, FileWarningIcon, XIcon } from 'lucide-vue-next';
+import { ClockIcon, FileWarningIcon, XIcon } from '@lucide/vue';
+
+import type { QueuedUploadItem } from '@/composables/useUploads';
 
 import {
     AttachmentAction,
@@ -12,12 +14,11 @@ import {
     Attachment as UiAttachment,
 } from '@/components/ui/attachment';
 import { Spinner } from '@/components/ui/spinner';
-import type { QueuedUploadItem } from '@/composables/useUploads';
 
-interface Props {
+type Props = {
     uploads: QueuedUploadItem[];
     processing: boolean;
-}
+};
 
 defineProps<Props>();
 

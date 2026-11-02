@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import TextLink from '@/components/TextLink.vue';
-import { show } from '@/routes/invoices';
 import type { Invoice } from '@/types';
 
-interface Props {
+import TextLink from '@/components/TextLink.vue';
+import { show } from '@/routes/invoices';
+
+type Props = {
     invoice: Invoice;
-}
+};
 
 defineProps<Props>();
 </script>

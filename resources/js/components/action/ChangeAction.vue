@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { RefreshCwIcon } from 'lucide-vue-next';
+import { RefreshCwIcon } from '@lucide/vue';
+
+import type { Href, Option } from '@/types';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -9,14 +11,13 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Href, Option } from '@/types';
 
-interface Props {
+type Props = {
     name: string;
     href: Href;
     data: Record<string, any>;
     options: Option<any>[];
-}
+};
 
 defineProps<Props>();
 </script>

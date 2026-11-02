@@ -3,49 +3,31 @@ import type { ScrollAreaRootProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import {
-  ScrollAreaCorner,
-  ScrollAreaRoot,
-  ScrollAreaScrollbar,
-  ScrollAreaThumb,
-  ScrollAreaViewport,
+    ScrollAreaCorner,
+    ScrollAreaRoot,
+    ScrollAreaViewport,
 } from "reka-ui"
 import { cn } from "@/lib/utils"
+import ScrollBar from "./ScrollBar.vue"
 
-const props = defineProps<ScrollAreaRootProps & {
-  class?: HTMLAttributes["class"]
-  viewportClass?: HTMLAttributes["class"]
-}>()
+const props = defineProps<ScrollAreaRootProps & { class?: HTMLAttributes["class"] }>()
 
-const delegatedProps = reactiveOmit(props, "class", "viewportClass")
+const delegatedProps = reactiveOmit(props, "class")
 </script>
 
 <template>
   <ScrollAreaRoot
     data-slot="scroll-area"
     v-bind="delegatedProps"
-    :class="cn('relative overflow-hidden', props.class)"
+    :class="cn('relative', props.class)"
   >
     <ScrollAreaViewport
       data-slot="scroll-area-viewport"
-      :class="cn('size-full rounded-[inherit]', props.viewportClass)"
+      class="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-3 focus-visible:outline-1"
     >
       <slot />
     </ScrollAreaViewport>
-
-    <ScrollAreaScrollbar
-      data-slot="scroll-area-scrollbar"
-      orientation="vertical"
-      class="flex touch-none select-none border-l border-l-transparent p-px transition-colors data-[orientation=vertical]:h-full data-[orientation=vertical]:w-2.5"
-    >
-      <ScrollAreaThumb
-        data-slot="scroll-area-thumb"
-        class="relative flex-1 rounded-full bg-border"
-      />
-    </ScrollAreaScrollbar>
-
-    <ScrollAreaCorner
-      data-slot="scroll-area-corner"
-      class="bg-border"
-    />
+    <ScrollBar />
+    <ScrollAreaCorner />
   </ScrollAreaRoot>
 </template>

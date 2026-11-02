@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
-import { ArrowUpIcon } from 'lucide-vue-next';
+import { ArrowUpIcon } from '@lucide/vue';
+
+import type { Href } from '@/types';
 
 import {
     InputGroup,
@@ -9,12 +11,11 @@ import {
     InputGroupTextarea,
 } from '@/components/ui/input-group';
 import { toUrl } from '@/lib/utils';
-import type { Href } from '@/types';
 
-interface Props {
+type Props = {
     href: Href;
     data: Record<string, any>;
-}
+};
 
 const props = defineProps<Props>();
 

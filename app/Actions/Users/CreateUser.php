@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 
 class CreateUser
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): User
     {
         $user = User::create([

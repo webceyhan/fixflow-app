@@ -2,9 +2,9 @@
 import { DatePicker } from '@/components/ui/date-picker';
 import { useFilter } from '@/composables/useFilter';
 
-interface Props {
+type Props = {
     name: string;
-}
+};
 
 const props = defineProps<Props>();
 

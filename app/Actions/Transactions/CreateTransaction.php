@@ -11,6 +11,9 @@ class CreateTransaction
         protected SyncInvoiceTransactions $syncInvoiceTransactions,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(array $data): Transaction
     {
         $transaction = Transaction::create([

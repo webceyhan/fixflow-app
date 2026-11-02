@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { UploadIcon } from 'lucide-vue-next';
+import { UploadIcon } from '@lucide/vue';
 import { ref } from 'vue';
 
-interface Props {
+type Props = {
     id?: string;
     accept?: string;
     multiple?: boolean;
@@ -10,7 +10,7 @@ interface Props {
     maxSizeMb?: number;
     title?: string;
     description?: string;
-}
+};
 
 withDefaults(defineProps<Props>(), {
     id: undefined,

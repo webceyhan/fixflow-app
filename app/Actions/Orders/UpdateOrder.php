@@ -11,6 +11,9 @@ class UpdateOrder
         protected SyncInvoiceOrders $syncInvoiceOrders,
     ) {}
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function handle(Order $order, array $data): Order
     {
         $order->update([

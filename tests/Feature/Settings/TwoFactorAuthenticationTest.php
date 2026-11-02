@@ -22,9 +22,10 @@ it('renders two factor settings page', function () {
     // Act & Assert
     actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->get(route('two-factor.show'))
+        ->get(route('security.edit'))
         ->assertInertia(fn (Assert $page) => $page
-            ->component('settings/TwoFactor')
+            ->component('settings/Security')
+            ->where('canManageTwoFactor', true)
             ->where('twoFactorEnabled', false)
         );
 });
@@ -44,47 +45,34 @@ it('requires password confirmation for two factor settings page when enabled', f
 
     // Act
     $response = actingAs($user)
-        ->get(route('two-factor.show'));
+        ->get(route('security.edit'));
 
     // Assert
     $response->assertRedirect(route('password.confirm'));
 });
 
-it('does not require password confirmation for two factor settings page when disabled', function () {
-    // Arrange
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
-
+it('renders security settings page when two factor is disabled', function () {
     $user = User::factory()->create();
-
-    Features::twoFactorAuthentication([
-        'confirm' => true,
-        'confirmPassword' => false,
-    ]);
-
-    // Act & Assert
-    actingAs($user)
-        ->get(route('two-factor.show'))
-        ->assertOk()
-        ->assertInertia(fn (Assert $page) => $page
-            ->component('settings/TwoFactor')
-        );
-});
-
-it('returns forbidden response for two factor settings page when two factor is disabled', function () {
-    // Arrange
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
 
     config(['fortify.features' => []]);
-
-    $user = User::factory()->create();
 
     // Act & Assert
     actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->get(route('two-factor.show'))
-        ->assertForbidden();
+        ->get(route('security.edit'))
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('settings/Security')
+            ->where('canManageTwoFactor', false)
+        );
+});
+
+it('exposes passkey well-known endpoints route', function () {
+    $response = $this->get(route('well-known.passkeys'));
+
+    $response
+        ->assertOk()
+        ->assertJson([
+            'enroll' => route('security.edit'),
+            'manage' => route('security.edit'),
+        ]);
 });

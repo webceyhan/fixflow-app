@@ -3,10 +3,7 @@ import { Link } from '@inertiajs/vue3';
 
 import AppLogo from '@/components/app/AppLogo.vue';
 import { Toaster } from '@/components/ui/sonner';
-import { useToast } from '@/composables/useToast';
 import { home } from '@/routes';
-
-useToast().watchStatus();
 </script>
 
 <template>
@@ -29,10 +26,10 @@ useToast().watchStatus();
             </Link>
         </div>
         <div class="lg:p-8">
-            <Toaster />
             <div class="mx-auto space-y-10! sm:w-87.5 [&>header]:text-center">
                 <slot />
             </div>
         </div>
+        <Toaster />
     </div>
 </template>

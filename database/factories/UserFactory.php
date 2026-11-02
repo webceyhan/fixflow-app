@@ -37,7 +37,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->unique()->phoneNumber(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => self::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
@@ -54,7 +54,7 @@ class UserFactory extends Factory
     /**
      * Indicate that the user has two-factor authentication configured.
      */
-    public function withTwoFactor(): static
+    public function withTwoFactor(): self
     {
         return $this->state(fn (array $attributes) => [
             'two_factor_secret' => encrypt('secret'),
@@ -124,7 +124,7 @@ class UserFactory extends Factory
     /**
      * Indicate that the user's email address should be unverified.
      */
-    public function unverified(): static
+    public function unverified(): self
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,

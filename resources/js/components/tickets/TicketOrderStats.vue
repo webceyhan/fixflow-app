@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { Percent } from '@/components/data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Order } from '@/types';
 
-interface Props {
+import { Percent } from '@/components/data';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+type Props = {
     orders?: Order[];
-}
+};
 
 const props = defineProps<Props>();
 

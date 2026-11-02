@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Concerns;
 
 use App\Models\Task;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 
 trait TaskRules
@@ -20,7 +20,7 @@ trait TaskRules
     /**
      * Get the model class to use for validation.
      *
-     * @return class-string<Model>
+     * @return class-string<Task>
      */
     protected function getModelClass(): string
     {
@@ -30,7 +30,7 @@ trait TaskRules
     /**
      * Get all validation rules for task management.
      *
-     * @return array<string, array<int, Rule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
     protected function taskRules(?int $taskId = null): array
     {
