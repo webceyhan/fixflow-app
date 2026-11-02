@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Tickets\GenerateTicketQrCode;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Customer;
@@ -107,7 +108,7 @@ it('creates a ticket successfully with all fields', function () {
     expect($ticket->assignee_id)->toBe($assignee->id);
     expect($ticket->priority)->toBe(Priority::High);
     expect($ticket->status)->toBe(TicketStatus::Created);
-    Storage::disk()->assertExists("qrcodes/tickets/{$ticket->ref}.svg");
+    Storage::assertExists(GenerateTicketQrCode::pathFromTicket($ticket));
 });
 
 it('creates a ticket with minimal required fields', function () {

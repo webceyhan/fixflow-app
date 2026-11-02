@@ -28,6 +28,6 @@ class GenerateTicketQrCode
 
     public static function pathFromTicket(Ticket $ticket): string
     {
-        return "qrcodes/tickets/{$ticket->ref}.svg";
+        return "tickets/{$ticket->id}/qrcode.svg";
     }
 }

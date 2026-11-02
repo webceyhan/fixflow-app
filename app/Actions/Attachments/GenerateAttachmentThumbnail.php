@@ -30,16 +30,20 @@ class GenerateAttachmentThumbnail
 
         try {
             $thumbnailImage = $this->createSquareThumbnail($sourceImage, 320);
+            $thumbnailPath = AttachmentThumbnailPath::fromAttachment($attachment);
 
             ob_start();
-            imagejpeg($thumbnailImage, null, 82);
+            $this->encodeThumbnailByExtension(
+                thumbnailImage: $thumbnailImage,
+                extension: pathinfo($thumbnailPath, PATHINFO_EXTENSION),
+            );
             $binary = ob_get_clean();
 
             if ($binary === false) {
                 throw new RuntimeException('Unable to encode thumbnail image.');
             }
 
-            $disk->put(AttachmentThumbnailPath::fromAttachment($attachment), $binary);
+            $disk->put($thumbnailPath, $binary);
 
             imagedestroy($thumbnailImage);
         } finally {
@@ -84,5 +88,23 @@ class GenerateAttachmentThumbnail
         );
 
         return $thumbnailImage;
+    }
+
+    private function encodeThumbnailByExtension(\GdImage $thumbnailImage, string $extension): void
+    {
+        $normalizedExtension = strtolower($extension);
+
+        $encoded = match ($normalizedExtension) {
+            'jpg', 'jpeg' => imagejpeg($thumbnailImage, null, 82),
+            'png' => imagepng($thumbnailImage, null, 6),
+            'webp' => function_exists('imagewebp')
+                ? imagewebp($thumbnailImage, null, 82)
+                : false,
+            default => false,
+        };
+
+        if (! $encoded) {
+            throw new RuntimeException('Unable to encode thumbnail image.');
+        }
     }
 }

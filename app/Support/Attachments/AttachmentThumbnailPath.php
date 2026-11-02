@@ -11,11 +11,15 @@ class AttachmentThumbnailPath
     {
         $directory = Str::beforeLast($attachment->path, '/');
         $filename = pathinfo($attachment->path, PATHINFO_FILENAME);
+        $extension = pathinfo($attachment->path, PATHINFO_EXTENSION);
+        $thumbnailFilename = $extension === ''
+            ? "{$filename}_thumb"
+            : "{$filename}_thumb.{$extension}";
 
         if ($directory === $attachment->path) {
-            return "{$filename}_thumb.jpg";
+            return $thumbnailFilename;
         }
 
-        return "{$directory}/{$filename}_thumb.jpg";
+        return "{$directory}/{$thumbnailFilename}";
     }
 }

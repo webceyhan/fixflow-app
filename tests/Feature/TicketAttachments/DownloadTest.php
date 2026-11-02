@@ -16,7 +16,7 @@ it('downloads a ticket attachment', function () {
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'name' => 'report.pdf',
-        'path' => "tickets/{$ticket->id}/report.pdf",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.pdf",
         'mime_type' => 'application/pdf',
         'category' => AttachmentCategory::Other,
     ]);
@@ -51,7 +51,7 @@ it('returns 404 when file is missing from storage', function () {
     $user = User::factory()->manager()->create();
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
-        'path' => "tickets/{$ticket->id}/missing.pdf",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.pdf",
     ]);
 
     // Act
@@ -68,7 +68,7 @@ it('previews a ticket photo attachment inline', function () {
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'name' => 'device.jpg',
-        'path' => "tickets/{$ticket->id}/device.jpg",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.jpg",
         'mime_type' => 'image/jpeg',
         'category' => AttachmentCategory::Photo,
     ]);
@@ -90,7 +90,7 @@ it('returns 404 when previewing a non-photo attachment', function () {
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'name' => 'report.pdf',
-        'path' => "tickets/{$ticket->id}/report.pdf",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.pdf",
         'mime_type' => 'application/pdf',
         'category' => AttachmentCategory::Other,
     ]);
@@ -111,7 +111,7 @@ it('previews a ticket photo thumbnail inline', function () {
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'name' => 'device.jpg',
-        'path' => "tickets/{$ticket->id}/device.jpg",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.jpg",
         'mime_type' => 'image/jpeg',
         'category' => AttachmentCategory::Photo,
     ]);
@@ -136,7 +136,7 @@ it('falls back to original image when thumbnail file is missing from storage', f
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'name' => 'device.jpg',
-        'path' => "tickets/{$ticket->id}/device.jpg",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.jpg",
         'mime_type' => 'image/jpeg',
         'category' => AttachmentCategory::Photo,
     ]);
@@ -157,7 +157,7 @@ it('returns 404 when previewing a thumbnail for a non-photo attachment', functio
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'name' => 'report.pdf',
-        'path' => "tickets/{$ticket->id}/report.pdf",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.pdf",
         'mime_type' => 'application/pdf',
         'category' => AttachmentCategory::Other,
     ]);

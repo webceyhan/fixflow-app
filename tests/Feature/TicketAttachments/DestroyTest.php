@@ -15,7 +15,7 @@ it('deletes a ticket attachment from database and storage', function () {
     $user = User::factory()->manager()->create();
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
-        'path' => "tickets/{$ticket->id}/delete-me.pdf",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.pdf",
     ]);
     Storage::disk()->put($attachment->path, 'file-content');
 
@@ -34,7 +34,7 @@ it('deletes a photo thumbnail from storage when deleting photo attachment', func
     $user = User::factory()->manager()->create();
     $ticket = Ticket::factory()->create();
     $attachment = Attachment::factory()->forTicket($ticket)->create([
-        'path' => "tickets/{$ticket->id}/delete-me.jpg",
+        'path' => "tickets/{$ticket->id}/attachments/8bf7f924-580f-4895-b546-c82f2c120fd5.jpg",
         'mime_type' => 'image/jpeg',
         'category' => AttachmentCategory::Photo,
     ]);

@@ -33,7 +33,8 @@ it('stores a ticket attachment', function () {
         ->and($attachment->attachable_type)->toBe(Ticket::class)
         ->and($attachment->attachable_id)->toBe($ticket->id)
         ->and($attachment->name)->toBe('invoice.pdf')
-        ->and($attachment->category)->toBe(AttachmentCategory::Other);
+        ->and($attachment->category)->toBe(AttachmentCategory::Other)
+        ->and($attachment->path)->toMatch('/^tickets\/'.$ticket->id.'\/attachments\/[0-9a-f-]{36}\.pdf$/');
 
     Storage::assertExists($attachment->path);
     Queue::assertNotPushed(GenerateAttachmentThumbnail::class);

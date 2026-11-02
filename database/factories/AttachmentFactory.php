@@ -25,7 +25,7 @@ class AttachmentFactory extends Factory
             'attachable_type' => Ticket::class,
             'attachable_id' => Ticket::factory(),
             'name' => fake()->sentence(3).'.pdf',
-            'path' => 'tickets/'.fake()->numberBetween(1, 999).'/'.fake()->uuid().'.pdf',
+            'path' => 'tickets/'.fake()->numberBetween(1, 999).'/attachments/'.fake()->uuid().'.pdf',
             'mime_type' => 'application/pdf',
             'size' => fake()->numberBetween(10_000, 500_000),
             'category' => fake()->randomElement(AttachmentCategory::cases()),
