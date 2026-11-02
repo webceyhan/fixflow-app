@@ -15,10 +15,12 @@ type Props = ManagePasswordProps & ManagePasskeysProps & ManageTwoFactorProps;
 
 defineProps<Props>();
 
+const title = 'Security settings';
+
 setLayoutProps({
     breadcrumbs: [
         {
-            title: 'Security settings',
+            title,
             href: edit(),
         },
     ],
@@ -27,7 +29,7 @@ setLayoutProps({
 
 <template>
     <SettingsLayout>
-        <h1 class="sr-only">Security settings</h1>
+        <Head :title />
 
         <ManagePassword :passwordRules />
 
@@ -38,7 +40,5 @@ setLayoutProps({
         />
 
         <ManagePasskeys :canManagePasskeys :passkeys />
-
-        <Head title="Security settings" />
     </SettingsLayout>
 </template>

@@ -3,10 +3,10 @@ import { Form } from '@inertiajs/vue3';
 import { ShieldCheck } from '@lucide/vue';
 import { onUnmounted, ref } from 'vue';
 
-import Heading from '@/components/Heading.vue';
 import TwoFactorRecoveryCodes from '@/components/settings/TwoFactorRecoveryCodes.vue';
 import TwoFactorSetupModal from '@/components/settings/TwoFactorSetupModal.vue';
 import { Button } from '@/components/ui/button';
+import { FieldDescription, FieldLegend } from '@/components/ui/field';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { disable, enable } from '@/routes/two-factor';
 
@@ -30,11 +30,10 @@ onUnmounted(() => clearTwoFactorAuthData());
 
 <template>
     <div v-if="canManageTwoFactor" class="space-y-6">
-        <Heading
-            variant="small"
-            title="Two-factor authentication"
-            description="Manage your two-factor authentication settings"
-        />
+        <FieldLegend> Two-factor authentication</FieldLegend>
+        <FieldDescription>
+            Manage your two-factor authentication settings here.
+        </FieldDescription>
 
         <div
             v-if="!twoFactorEnabled"

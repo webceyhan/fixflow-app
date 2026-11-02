@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, usePage, setLayoutProps } from '@inertiajs/vue3';
+import { Form, usePage, setLayoutProps, Head } from '@inertiajs/vue3';
 
 import DeleteUser from '@/components/settings/DeleteUser.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -22,10 +22,12 @@ defineProps<{
     mustVerifyEmail: boolean;
 }>();
 
+const title = 'Profile settings';
+
 setLayoutProps({
     breadcrumbs: [
         {
-            title: 'Profile settings',
+            title,
             href: edit(),
         },
     ],
@@ -36,6 +38,8 @@ const { user } = usePage().props.auth;
 
 <template>
     <SettingsLayout>
+        <Head :title />
+
         <Form v-bind="update.form()" v-slot="{ errors, processing }">
             <FieldSet>
                 <FieldLegend>Profile information</FieldLegend>

@@ -5,6 +5,7 @@ use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\get;
 
 it('renders two factor settings page', function () {
     // Arrange
@@ -30,7 +31,7 @@ it('renders two factor settings page', function () {
         );
 });
 
-it('requires password confirmation for two factor settings page when enabled', function () {
+it('renders two factor settings page without password confirmation', function () {
     // Arrange
     if (! Features::canManageTwoFactorAuthentication()) {
         $this->markTestSkipped('Two-factor authentication is not enabled.');
@@ -43,12 +44,14 @@ it('requires password confirmation for two factor settings page when enabled', f
         'confirmPassword' => true,
     ]);
 
-    // Act
+    // Act & Assert
     $response = actingAs($user)
         ->get(route('security.edit'));
 
-    // Assert
-    $response->assertRedirect(route('password.confirm'));
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('settings/Security')
+        ->where('canManageTwoFactor', true)
+    );
 });
 
 it('renders security settings page when two factor is disabled', function () {
@@ -67,7 +70,7 @@ it('renders security settings page when two factor is disabled', function () {
 });
 
 it('exposes passkey well-known endpoints route', function () {
-    $response = $this->get(route('well-known.passkeys'));
+    $response = get(route('well-known.passkeys'));
 
     $response
         ->assertOk()

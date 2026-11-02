@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setLayoutProps } from '@inertiajs/vue3';
+import { setLayoutProps, Head } from '@inertiajs/vue3';
 
 import AppearanceSelector from '@/components/settings/AppearanceSelector.vue';
 import {
@@ -11,10 +11,12 @@ import {
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import { edit } from '@/routes/appearance';
 
+const title = 'Appearance settings';
+
 setLayoutProps({
     breadcrumbs: [
         {
-            title: 'Appearance settings',
+            title,
             href: edit(),
         },
     ],
@@ -23,6 +25,8 @@ setLayoutProps({
 
 <template>
     <SettingsLayout>
+        <Head :title />
+
         <FieldSet>
             <FieldLegend> Appearance Settings </FieldLegend>
             <FieldDescription>

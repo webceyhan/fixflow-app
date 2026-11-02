@@ -5,9 +5,9 @@ import { KeyRound } from '@lucide/vue';
 import type { Passkey } from '@/types/auth';
 
 import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController';
-import Heading from '@/components/Heading.vue';
 import PasskeyItem from '@/components/settings/PasskeyItem.vue';
 import PasskeyRegister from '@/components/settings/PasskeyRegister.vue';
+import { FieldDescription, FieldLegend } from '@/components/ui/field';
 
 export type Props = {
     canManagePasskeys?: boolean;
@@ -33,11 +33,10 @@ const handleRegisterSuccess = () => {
 
 <template>
     <div v-if="canManagePasskeys" class="space-y-6">
-        <Heading
-            variant="small"
-            title="Passkeys"
-            description="Manage your passkeys for passwordless sign-in"
-        />
+        <FieldLegend>Passkeys</FieldLegend>
+        <FieldDescription>
+            Manage your passkeys for passwordless sign-in.
+        </FieldDescription>
 
         <div class="overflow-hidden rounded-lg border border-border">
             <template v-if="passkeys.length">
