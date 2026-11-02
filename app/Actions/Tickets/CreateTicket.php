@@ -9,6 +9,7 @@ class CreateTicket
 {
     public function __construct(
         protected CreateInvoice $createInvoice,
+        protected GenerateTicketQrCode $generateTicketQrCode,
     ) {}
 
     /**
@@ -31,6 +32,8 @@ class CreateTicket
             'ticket_id' => $ticket->id,
             'due_date' => $ticket->due_date,
         ]);
+
+        $this->generateTicketQrCode->handle($ticket);
 
         return $ticket;
     }

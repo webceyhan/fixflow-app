@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Device;
 use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 use function Pest\Laravel\actingAs;
 
@@ -80,6 +81,8 @@ it('validates due date is not in the past', function () {
 
 it('creates a ticket successfully with all fields', function () {
     // Arrange
+    Storage::fake();
+
     $customer = Customer::factory()->create();
     $device = Device::factory()->forCustomer($customer)->create();
     $assignee = User::factory()->create();
@@ -104,6 +107,7 @@ it('creates a ticket successfully with all fields', function () {
     expect($ticket->assignee_id)->toBe($assignee->id);
     expect($ticket->priority)->toBe(Priority::High);
     expect($ticket->status)->toBe(TicketStatus::Created);
+    Storage::disk()->assertExists("qrcodes/tickets/{$ticket->ref}.svg");
 });
 
 it('creates a ticket with minimal required fields', function () {

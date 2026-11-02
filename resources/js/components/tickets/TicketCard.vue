@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { QrCode } from '@lucide/vue';
+
 import type { Ticket } from '@/types';
 
 import { DateTime, Priority } from '@/components/data';
 import DeviceLink from '@/components/devices/DeviceLink.vue';
+import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -14,7 +17,13 @@ import {
     DescriptionList,
     DescriptionListItem,
 } from '@/components/ui/description-list';
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import UserLink from '@/components/users/UserLink.vue';
+import { qrCode } from '@/routes/tickets';
 
 import TicketStatusBadge from './TicketStatusBadge.vue';
 
@@ -43,6 +52,23 @@ defineProps<Props>();
 
                 <DescriptionListItem title="Assignee">
                     <UserLink :user="ticket.assignee" />
+                </DescriptionListItem>
+
+                <DescriptionListItem title="QR Code">
+                    <HoverCard :open-delay="200">
+                        <HoverCardTrigger as-child>
+                            <Button variant="ghost" size="icon" class="-my-4">
+                                <QrCode />
+                            </Button>
+                        </HoverCardTrigger>
+                        <HoverCardContent class="w-64">
+                            <img
+                                :src="qrCode(ticket).url"
+                                alt="QR Code"
+                                class="w-full"
+                            />
+                        </HoverCardContent>
+                    </HoverCard>
                 </DescriptionListItem>
 
                 <DescriptionListItem title="Priority">
