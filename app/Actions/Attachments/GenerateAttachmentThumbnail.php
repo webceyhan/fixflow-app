@@ -16,7 +16,7 @@ class GenerateAttachmentThumbnail
             return;
         }
 
-        $disk = Storage::disk('local');
+        $disk = Storage::disk();
 
         if (! $disk->exists($attachment->path)) {
             throw new RuntimeException('Attachment file does not exist.');

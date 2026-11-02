@@ -41,7 +41,7 @@ class TicketAttachmentController extends Controller
     {
         $this->ensureBelongsToTicket($ticket, $attachment);
 
-        abort_unless(Storage::disk('local')->exists($attachment->path), 404);
+        abort_unless(Storage::disk()->exists($attachment->path), 404);
 
         return Storage::download($attachment->path, $attachment->name);
     }
@@ -54,10 +54,10 @@ class TicketAttachmentController extends Controller
         $this->ensureBelongsToTicket($ticket, $attachment);
 
         abort_unless($attachment->category === AttachmentCategory::Photo, 404);
-        abort_unless(Storage::disk('local')->exists($attachment->path), 404);
+        abort_unless(Storage::disk()->exists($attachment->path), 404);
 
         return response()->file(
-            Storage::disk('local')->path($attachment->path),
+            Storage::disk()->path($attachment->path),
             [
                 'Content-Disposition' => 'inline; filename="'.$attachment->name.'"',
             ]
@@ -74,7 +74,7 @@ class TicketAttachmentController extends Controller
         abort_unless($attachment->category === AttachmentCategory::Photo, 404);
 
         $thumbnailPath = AttachmentThumbnailPath::fromAttachment($attachment);
-        $disk = Storage::disk('local');
+        $disk = Storage::disk();
         $path = $disk->exists($thumbnailPath) ? $thumbnailPath : $attachment->path;
 
         abort_unless($disk->exists($path), 404);

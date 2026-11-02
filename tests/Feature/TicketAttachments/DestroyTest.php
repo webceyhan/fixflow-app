@@ -17,7 +17,7 @@ it('deletes a ticket attachment from database and storage', function () {
     $attachment = Attachment::factory()->forTicket($ticket)->create([
         'path' => "tickets/{$ticket->id}/delete-me.pdf",
     ]);
-    Storage::disk('local')->put($attachment->path, 'file-content');
+    Storage::disk()->put($attachment->path, 'file-content');
 
     // Act
     $response = actingAs($user)->delete(route('tickets.attachments.destroy', [$ticket, $attachment]));
@@ -25,7 +25,7 @@ it('deletes a ticket attachment from database and storage', function () {
     // Assert
     $response->assertRedirect(route('tickets.show', $ticket));
     expect($attachment->fresh())->toBeNull();
-    Storage::disk('local')->assertMissing($attachment->path);
+    Storage::assertMissing($attachment->path);
 });
 
 it('deletes a photo thumbnail from storage when deleting photo attachment', function () {
@@ -40,16 +40,16 @@ it('deletes a photo thumbnail from storage when deleting photo attachment', func
     ]);
 
     $thumbnailPath = AttachmentThumbnailPath::fromAttachment($attachment);
-    Storage::disk('local')->put($attachment->path, 'photo-content');
-    Storage::disk('local')->put($thumbnailPath, 'thumb-content');
+    Storage::disk()->put($attachment->path, 'photo-content');
+    Storage::disk()->put($thumbnailPath, 'thumb-content');
 
     // Act
     $response = actingAs($user)->delete(route('tickets.attachments.destroy', [$ticket, $attachment]));
 
     // Assert
     $response->assertRedirect(route('tickets.show', $ticket));
-    Storage::disk('local')->assertMissing($attachment->path);
-    Storage::disk('local')->assertMissing($thumbnailPath);
+    Storage::assertMissing($attachment->path);
+    Storage::assertMissing($thumbnailPath);
 });
 
 it('returns 404 when deleting attachment from another ticket', function () {

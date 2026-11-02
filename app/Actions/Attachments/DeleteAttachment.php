@@ -11,10 +11,10 @@ class DeleteAttachment
 {
     public function handle(Attachment $attachment): void
     {
-        Storage::disk('local')->delete($attachment->path);
+        Storage::disk()->delete($attachment->path);
 
         if ($attachment->category === AttachmentCategory::Photo) {
-            Storage::disk('local')->delete(
+            Storage::disk()->delete(
                 AttachmentThumbnailPath::fromAttachment($attachment),
             );
         }
