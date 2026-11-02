@@ -129,10 +129,12 @@ function handleAssign() {
 
                     <Field>
                         <FieldLabel for="url">URL</FieldLabel>
+                        <!-- Workaround for Vue language tools issue with escaped slashes in placeholder -->
+                        <!-- Issue: https://github.com/vuejs/language-tools/pull/6241 -->
                         <Input
                             id="url"
                             type="url"
-                            placeholder="https://..."
+                            placeholder="https:/\/..."
                             v-model="form.url"
                         />
                         <FieldDescription>
